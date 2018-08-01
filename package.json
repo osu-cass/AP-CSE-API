@@ -1,0 +1,71 @@
+{
+  "name": "ap-cse-pdf",
+  "version": "0.0.0",
+  "description": "A service for generating PDFs with a POST request",
+  "main": "dist/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "build-maps": "tsc --sourceMap",
+    "dev": "concurrently -n w: npm:watch-*",
+    "watch-ts": "tsc -w",
+    "watch-server": "nodemon --watch dist dist/index.js",
+    "lint": "tslint -c ./tslint.json -p ./tsconfig.json --fix",
+    "monitor": "cross-env NODE_OPTIONS='--require appmetrics-dash/monitor' node dist/index.js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{ts}": [
+      "tslint -c ./tslint.json -p ./tsconfig.json --fix",
+      "prettier --single-quote --print-width 100",
+      "git add"
+    ],
+    "src/**/*.{js,json}": [
+      "prettier --single-quote --print-width 100",
+      "git add"
+    ],
+    "**/*.md": [
+      "prettier --print-width 100",
+      "git add"
+    ]
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "morgan": "^1.9.0",
+    "signale": "^1.2.1"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^7.0.0",
+    "@commitlint/config-conventional": "^7.0.1",
+    "@osu-cass/tslint-config": "^1.3.0",
+    "@types/body-parser": "^1.17.0",
+    "@types/express": "^4.16.0",
+    "@types/morgan": "^1.7.35",
+    "@types/signale": "^1.2.0",
+    "appmetrics-dash": "^4.0.0",
+    "concurrently": "^3.6.1",
+    "cross-env": "^5.2.0",
+    "husky": "^1.0.0-rc.13",
+    "lint-staged": "^7.2.0",
+    "nodemon": "^1.18.3",
+    "prettier": "^1.4.0-beta",
+    "tslint": "^5.11.0",
+    "tslint-language-service": "^0.9.9",
+    "typescript": "^3.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/osu-cass/AP-CSE-PDF.git"
+  },
+  "author": "",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/osu-cass/AP-CSE-PDF/issues"
+  },
+  "homepage": "https://github.com/osu-cass/AP-CSE-PDF#readme"
+}
