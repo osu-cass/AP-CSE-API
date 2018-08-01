@@ -5,6 +5,7 @@
   "main": "dist/index.ts",
   "scripts": {
     "build": "tsc",
+    "build-maps": "tsc --sourceMap",
     "dev": "concurrently -n w: npm:watch-*",
     "watch-ts": "tsc -w",
     "watch-server": "nodemon --watch dist dist/index.js",
