@@ -4,7 +4,7 @@
   "description": "A service for generating PDFs with a POST request",
   "main": "dist/index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc"
   },
   "husky": {
     "hooks": {
