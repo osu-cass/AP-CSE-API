@@ -1,0 +1,39 @@
+node_defaults: &node
+  working_directory: ~/repo
+  docker:
+    - image: circleci/node
+
+version: 2
+jobs:
+  build:
+    <<: *node
+    steps:
+      - checkout
+      - run:
+          name: Install Dependencies
+          command: npm ci
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - node_modules
+      - run:
+          name: Compile Typescript
+          command: npm run build
+  lint:
+    <<: *node
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Run TSLint
+          command: npm run lint
+
+workflows:
+  version: 2
+  build_and_lint:
+    jobs:
+      - build
+      - lint:
+          requires:
+            - build
