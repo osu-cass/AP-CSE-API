@@ -1,0 +1,19 @@
+{
+  "name": "ap-cse-pdf",
+  "version": "0.0.0",
+  "description": "A service for generating PDFs with a POST request",
+  "main": "dist/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/osu-cass/AP-CSE-PDF.git"
+  },
+  "author": "",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/osu-cass/AP-CSE-PDF/issues"
+  },
+  "homepage": "https://github.com/osu-cass/AP-CSE-PDF#readme"
+}
