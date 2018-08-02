@@ -1,5 +1,4 @@
 node_defaults: &node
-  working_directory: ~/repo
   docker:
     - image: circleci/node
 
@@ -13,27 +12,51 @@ jobs:
           name: Install Dependencies
           command: npm ci
       - persist_to_workspace:
-          root: ~/repo
+          root: ~/project
           paths:
             - node_modules
       - run:
           name: Compile Typescript
           command: npm run build
+
+  unit_tests:
+    docker:
+      - image: circleci/node
+        environment:
+          COVERALLS_SERVICE_NAME: circle-ci
+          COVERALLS_REPO_TOKEN: $COVERALLS_REPO_TOKEN
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/project
+      - run:
+          name: Run unit tests
+          command: npm run test-ci
+      - run:
+          name: Report code coverage
+          command: npm run report-coverage
+      - store_test_results:
+          path: reports
+      - store_artifacts:
+          path: reports/jest
   lint:
     <<: *node
     steps:
       - checkout
       - attach_workspace:
-          at: ~/repo
+          at: ~/project
       - run:
           name: Run TSLint
           command: npm run lint
 
 workflows:
   version: 2
-  build_and_lint:
+  build_and_test:
     jobs:
       - build
+      - unit_tests:
+          requires:
+            - build
       - lint:
           requires:
             - build
