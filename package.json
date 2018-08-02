@@ -10,6 +10,9 @@
     "watch-ts": "tsc -w",
     "watch-server": "nodemon --watch dist dist/index.js",
     "test": "jest",
+    "test-ci": "jest --coverage --ci --runInBand",
+    "coverage": "jest --coverage",
+    "report-coverage": "cat ./coverage/lcov.info | coveralls",
     "lint": "tslint -c ./tslint.json -p ./tsconfig.json --fix",
     "monitor": "cross-env NODE_OPTIONS='--require appmetrics-dash/monitor' node dist/index.js"
   },
@@ -48,6 +51,15 @@
         "tsConfigFile": "tsconfig.json"
       }
     },
+    "reporters": [
+      "default",
+      [
+        "jest-junit",
+        {
+          "output": "reports/jest/results.xml"
+        }
+      ]
+    ],
     "testMatch": [
       "**/*.spec.+(ts)"
     ]
@@ -69,9 +81,11 @@
     "@types/signale": "^1.2.0",
     "appmetrics-dash": "^4.0.0",
     "concurrently": "^3.6.1",
+    "coveralls": "^3.0.2",
     "cross-env": "^5.2.0",
     "husky": "^1.0.0-rc.13",
     "jest": "^23.4.2",
+    "jest-junit": "^5.1.0",
     "lint-staged": "^7.2.0",
     "nodemon": "^1.18.3",
     "prettier": "^1.4.0-beta",
