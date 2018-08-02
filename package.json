@@ -20,7 +20,7 @@
     }
   },
   "lint-staged": {
-    "src/**/*.{ts}": [
+    "src/**/*.ts": [
       "tslint -c ./tslint.json -p ./tsconfig.json --fix",
       "prettier --single-quote --print-width 100",
       "git add"
