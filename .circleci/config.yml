@@ -1,5 +1,4 @@
 node_defaults: &node
-  working_directory: ~/repo
   docker:
     - image: circleci/node
 
@@ -13,7 +12,7 @@ jobs:
           name: Install Dependencies
           command: npm ci
       - persist_to_workspace:
-          root: ~/repo
+          root: ~/project
           paths:
             - node_modules
       - run:
@@ -29,7 +28,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: ~/repo
+          at: ~/project
       - run:
           name: Run unit tests
           command: npm run test-ci
@@ -45,14 +44,14 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: ~/repo
+          at: ~/project
       - run:
           name: Run TSLint
           command: npm run lint
 
 workflows:
   version: 2
-  build_and_lint:
+  build_and_test:
     jobs:
       - build
       - unit_tests:
