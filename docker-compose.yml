@@ -1,36 +1,17 @@
-version: '3.1'
-services:
-  api:
-    build:
-      dockerfile: "./Dockerfile-dev"
-      context: .
-    container_name: express
-    command: npm run debug
-    volumes:
-      - ./dist:/server/dist
-    networks:
-      - db
-      - search
-      - logs
-    ports:
-      - 3000:3000
-      - 9222:9222
+version: '3'
+services: 
   mongo:
     image: "mongo:4"
     container_name: mongo
     restart: always
     networks: 
       - db
-    volumes:
-      - mongodata:/usr/share/mongo/data
     environment: 
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
   mongo-express:
     image: mongo-express
     container_name: mongo-express
-    depends_on:
-      - mongo
     restart: always
     ports:
       - 8081:8081
@@ -50,9 +31,9 @@ services:
       MINIO_ACCESS_KEY: minio
       MINIO_SECRET_KEY: minio123
     command: server /data
-  es-search:
+  elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.3.2
-    container_name: es-search
+    container_name: elasticsearch
     environment:
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
@@ -61,68 +42,21 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - searchdata:/usr/share/elasticsearch/data
+      - esdata:/usr/share/elasticsearch/data
     networks: 
-      - search
-  kibana-search:
+      - es
+  kibana:
     image: docker.elastic.co/kibana/kibana:6.3.2
-    container_name: kibana-search
-    depends_on: 
-      - es-search
-    environment: 
-      ELASTICSEARCH_URL: "http://es-search:9200"
+    container_name: kibana
     networks: 
-      - search
+      - es
     ports: 
       - 5601:5601
-  es-logs:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.3.2
-    container_name: es-logs
-    environment:
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    volumes:
-      - logsdata:/usr/share/elasticsearch/data
-    networks: 
-      - logs
-  kibana-logs:
-    image: docker.elastic.co/kibana/kibana:6.3.2
-    container_name: kibana-logs
-    depends_on:
-      - es-logs
-    environment: 
-      ELASTICSEARCH_URL: "http://es-logs:9200"
-    networks: 
-      - logs
-    ports: 
-      - 5602:5601
-  logstash:
-    image: docker.elastic.co/logstash/logstash:6.3.2
-    container_name: logstash
-    environment:
-      XPACK_MONITORING_ENABLED: "false"
-    depends_on: 
-      - es-logs
-    secrets:
-      - source: logstash.conf
-        target: /usr/share/logstash/pipeline/logstash.conf
-    networks:
-      - logs
 
-secrets:
-  logstash.conf:
-    file: ./config/logstash.conf
 volumes: 
   miniodata:
-  searchdata:
-  logsdata:
-  mongodata:
+  esdata:
 
 networks: 
   db:
-  search:
-  logs:
+  es:
