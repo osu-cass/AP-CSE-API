@@ -24,7 +24,7 @@
   },
   "lint-staged": {
     "src/**/*.ts": [
-      "tslint -c ./tslint.json -p ./tsconfig.json --fix",
+      "tslint -c ./tslint.json --fix",
       "prettier --single-quote --print-width 100",
       "git add"
     ],
