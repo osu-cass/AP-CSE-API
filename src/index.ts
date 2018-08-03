@@ -3,7 +3,7 @@ import morgan from 'morgan';
 import signale from 'signale';
 import bodyParser from 'body-parser';
 
-import { generate } from './routes/generate';
+import { home } from './routes/home';
 
 signale.pending('Starting server...');
 
@@ -13,7 +13,7 @@ const port = process.env.PORT as string || 3000 as number;
 app.use(bodyParser.json());
 app.use(morgan(process.env.NODE_ENV === 'production' ? 'short' : 'dev'));
 
-app.post('/generate', generate);
+app.post('/', home);
 
 app.listen(port, () => {
   signale.success(`Server ready!`);

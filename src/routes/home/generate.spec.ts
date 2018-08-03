@@ -1,4 +1,4 @@
-import { generate } from '.';
+import { home } from '.';
 import { Request, Response, NextFunction, Send } from 'express';
 import { MockResponse, MockSend } from '../__mocks__/express';
 
@@ -10,7 +10,7 @@ describe('PDF generation middleware function', () => {
     };
     const next: Partial<NextFunction> = {};
 
-    generate(<Request>req, <Response>res, <NextFunction>next);
+    home(<Request>req, <Response>res, <NextFunction>next);
 
     expect(((<MockResponse>res).send.mock).calls.length).toBe(1);
     expect(((<MockResponse>res).send.mock as jest.MockContext<Send>).calls[0]).toContain('Hello, World');
