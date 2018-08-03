@@ -6,8 +6,12 @@ export const authorize: VerifyFunction = ( username, passwd, done ) => {
       name: 'Thomas Noelcke'
     };
 
-    return done(undefined, user);
+    done(undefined, user);
+
+    return;
   }
 
-  return done(undefined, false);
+  done(undefined, false);
+
+  return;
 };

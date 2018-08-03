@@ -1,4 +1,4 @@
-import e from 'express';
+import e, { RequestHandler } from 'express';
 import morgan from 'morgan';
 import signale from 'signale';
 import passport from 'passport';
@@ -22,7 +22,7 @@ app.use(morgan(process.env.NODE_ENV === 'production' ? 'short' : 'dev'));
 app.use(passport.initialize());
 
 app.get('/', home);
-app.post('/greet', passport.authenticate('local', { failureRedirect: '/', session: false }), greet);
+app.post('/greet', (passport.authenticate('local', { failureRedirect: '/', session: false }) as RequestHandler), greet);
 
 app.listen(port, () => {
   signale.success(`Server ready!`);

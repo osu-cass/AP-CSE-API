@@ -14,6 +14,6 @@ describe('Greet middleware function', () => {
 
     greet(<Request>req, <Response>res);
 
-    expect(res.send).toBeCalledWith(`Hello, ${req.user.name}`);
+    expect(res.send).toBeCalledWith(`Hello, Thomas Noelcke`);
   });
 });
