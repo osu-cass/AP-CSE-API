@@ -4,6 +4,7 @@
   "description": "A service for generating PDFs with a POST request",
   "main": "dist/index.ts",
   "scripts": {
+    "start": "node dist/index.js",
     "build": "tsc",
     "build-maps": "tsc --sourceMap",
     "dev": "concurrently -n w: npm:watch-*",
