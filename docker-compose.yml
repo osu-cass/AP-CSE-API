@@ -1,11 +1,26 @@
 version: '3'
-services: 
+services:
+  app:
+    build: 
+      dockerfile: Dockerfile
+      context: .
+    container_name: express
+    command: npm run dev
+    volumes:
+      - ./dist:/dist
+    networks:
+      - db
+      - es
+    ports:
+      - 3000:3000
   mongo:
     image: "mongo:4"
     container_name: mongo
     restart: always
     networks: 
       - db
+    volumes:
+      - mongodata:/usr/share/mongo/data
     environment: 
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
@@ -56,6 +71,7 @@ services:
 volumes: 
   miniodata:
   esdata:
+  mongodata:
 
 networks: 
   db:
