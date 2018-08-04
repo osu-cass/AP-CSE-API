@@ -1,18 +1,17 @@
 FROM node:10 as build
 
-WORKDIR /server
+WORKDIR /api
 COPY ./package* ./
 RUN npm ci
 COPY . .
 RUN npm run build
 
 FROM node:10-alpine
-WORKDIR /server
-COPY --from=build /server/package* ./
+COPY --from=build /api/package* ./
 ENV NODE_ENV=production
-RUN npm ci
-COPY --from=build /server/dist ./dist
+RUN npm install
+COPY --from=build /api/dist .
 
 EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD node .
