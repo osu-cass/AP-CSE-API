@@ -3,4 +3,3 @@
 coverage/
 reports/
 dist
-**/*.spec.ts

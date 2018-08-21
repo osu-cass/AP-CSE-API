@@ -1,13 +1,14 @@
 version: '3'
 services:
-  app:
+  api:
     build: 
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-dev
       context: .
     container_name: express
     command: npm run dev
     volumes:
-      - ./dist:/dist
+      - ./dist:/api/dist
+      - ./src:/api/src
     networks:
       - db
       - es
