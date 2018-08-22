@@ -1,4 +1,4 @@
-version: '3'
+version: '3.1'
 services:
   api:
     build: 
@@ -11,7 +11,8 @@ services:
       - ./src:/api/src
     networks:
       - db
-      - es
+      - search
+      - logs
     ports:
       - 3000:3000
   mongo:
@@ -28,6 +29,8 @@ services:
   mongo-express:
     image: mongo-express
     container_name: mongo-express
+    depends_on:
+      - mongo
     restart: always
     ports:
       - 8081:8081
@@ -47,9 +50,9 @@ services:
       MINIO_ACCESS_KEY: minio
       MINIO_SECRET_KEY: minio123
     command: server /data
-  elasticsearch:
+  es-search:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.3.2
-    container_name: elasticsearch
+    container_name: es-search
     environment:
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
@@ -58,22 +61,68 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - esdata:/usr/share/elasticsearch/data
+      - searchdata:/usr/share/elasticsearch/data
     networks: 
-      - es
-  kibana:
+      - search
+  kibana-search:
     image: docker.elastic.co/kibana/kibana:6.3.2
-    container_name: kibana
+    container_name: kibana-search
+    depends_on: 
+      - es-search
+    environment: 
+      ELASTICSEARCH_URL: "http://es-search:9200"
     networks: 
-      - es
+      - search
     ports: 
       - 5601:5601
+  es-logs:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.3.2
+    container_name: es-logs
+    environment:
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - logsdata:/usr/share/elasticsearch/data
+    networks: 
+      - logs
+  kibana-logs:
+    image: docker.elastic.co/kibana/kibana:6.3.2
+    container_name: kibana-logs
+    depends_on:
+      - es-logs
+    environment: 
+      ELASTICSEARCH_URL: "http://es-logs:9200"
+    networks: 
+      - logs
+    ports: 
+      - 5602:5601
+  logstash:
+    image: docker.elastic.co/logstash/logstash:6.3.2
+    container_name: logstash
+    environment:
+      XPACK_MONITORING_ENABLED: "false"
+    depends_on: 
+      - es-logs
+    secrets:
+      - source: logstash.conf
+        target: /usr/share/logstash/pipeline/logstash.conf
+    networks:
+      - logs
 
+secrets:
+  logstash.conf:
+    file: ./config/logstash.conf
 volumes: 
   miniodata:
-  esdata:
+  searchdata:
+  logsdata:
   mongodata:
 
 networks: 
   db:
-  es:
+  search:
+  logs:
