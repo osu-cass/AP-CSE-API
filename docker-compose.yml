@@ -1,20 +1,20 @@
 version: '3.1'
 services:
   api:
-    build: 
-      dockerfile: Dockerfile-dev
+    build:
+      dockerfile: "./Dockerfile-dev"
       context: .
     container_name: express
-    command: npm run dev
+    command: npm run debug
     volumes:
-      - ./dist:/api/dist
-      - ./src:/api/src
+      - ./dist:/server/dist
     networks:
       - db
       - search
       - logs
     ports:
       - 3000:3000
+      - 9222:9222
   mongo:
     image: "mongo:4"
     container_name: mongo
