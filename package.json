@@ -1,7 +1,7 @@
 {
   "name": "ap-cse-api",
   "version": "0.0.0",
-  "description": "A service for generating PDFs with a POST request",
+  "description": "Express API for the Smarter Balanced Content Specification Explorer",
   "main": "dist/index.js",
   "scripts": {
     "start": "node dist/index.js",
