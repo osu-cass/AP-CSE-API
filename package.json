@@ -13,8 +13,7 @@
     "test-ci": "jest --coverage --ci --runInBand",
     "coverage": "jest --coverage",
     "report-coverage": "cat ./coverage/lcov.info | coveralls",
-    "lint": "tslint -c ./tslint.json -p ./tsconfig.json --fix",
-    "monitor": "cross-env NODE_OPTIONS='--require appmetrics-dash/monitor' node dist/index.js"
+    "lint": "tslint -c ./tslint.json -p ./tsconfig.json --fix"
   },
   "husky": {
     "hooks": {
@@ -84,7 +83,6 @@
     "@types/passport": "^0.4.6",
     "@types/passport-local": "^1.0.33",
     "@types/signale": "^1.2.0",
-    "appmetrics-dash": "^4.0.0",
     "concurrently": "^3.6.1",
     "coveralls": "^3.0.2",
     "cross-env": "^5.2.0",
