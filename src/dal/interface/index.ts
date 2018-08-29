@@ -11,25 +11,24 @@ export class DbClient {
     private db?: Db;
 
     constructor(args: IDbClient) {
-        this.uri = `${args.url}/${args.port}`;
-        MongoClient.connect(this.uri, (err: MongoError, client: MongoClient) => {
-            if(err) {
-                throw err;
-            }
+        this.uri = `${args.url}:${args.port}`;
+        MongoClient.connect(this.uri).then((client: MongoClient) => {
             try {
                 this.db = client.db(args.dbName);
             } catch (err) {
-                console.error(err.message);
+                throw err;
             }
             client.close();
+        }).catch((err: MongoError) => {
+            throw err;
         });
     }
 
-    public getBySearchParam(param: string): void {
-        return;
-    }
+    // public getBySearchParam(param: string): void {
+    //     return;
+    // }
 
-    public getByFilter(filter: string): void {
-        return;
-    }
+    // public getByFilter(filter: string): void {
+    //     return;
+    // }
 }
