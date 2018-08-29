@@ -24,11 +24,11 @@ export class DbClient {
         });
     }
 
-    // public getBySearchParam(param: string): void {
-    //     return;
-    // }
+    public getBySearchParam(param: string): void {
+        return;
+    }
 
-    // public getByFilter(filter: string): void {
-    //     return;
-    // }
+    public getByFilter(filter: string): void {
+        return;
+    }
 }
