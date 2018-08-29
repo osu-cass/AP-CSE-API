@@ -6,27 +6,23 @@ export interface IDbClient {
     dbName: string;
 }
 
-// tslint:disable:completed-docs
 export class DbClient {
-    public uri: string;
-    public dbName: string;
+    private uri: string;
     private db?: Db;
 
     constructor(args: IDbClient) {
-        this.uri = `${args.url}:${args.port}`;
-        this.dbName = args.dbName;
-    }
-
-    // tslint:disable:no-floating-promises
-    public async connect(): Promise<void> {
-        let client: MongoClient;
-        try {
-            client = await MongoClient.connect(this.uri);
-            this.db = client.db(this.dbName);
-        } catch(err) {
-            throw err;
-        }
-        client.close();
+        this.uri = `${args.url}/${args.port}`;
+        MongoClient.connect(this.uri, (err: MongoError, client: MongoClient) => {
+            if(err) {
+                throw err;
+            }
+            try {
+                this.db = client.db(args.dbName);
+            } catch (err) {
+                console.error(err.message);
+            }
+            client.close();
+        });
     }
 
     public getBySearchParam(param: string): void {
