@@ -32,10 +32,6 @@
     "src/**/*.{js,json}": [
       "prettier --single-quote --print-width 100",
       "git add"
-    ],
-    "**/*.md": [
-      "prettier --print-width 100",
-      "git add"
     ]
   },
   "jest": {
