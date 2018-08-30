@@ -7,21 +7,24 @@ export interface IDbClient {
 }
 
 export class DbClient {
-    private uri: string;
+    public uri: string;
+    public dbName: string;
     private db?: Db;
 
     constructor(args: IDbClient) {
         this.uri = `${args.url}:${args.port}`;
-        MongoClient.connect(this.uri).then((client: MongoClient) => {
-            try {
-                this.db = client.db(args.dbName);
-            } catch (err) {
-                throw err;
-            }
-            client.close();
-        }).catch((err: MongoError) => {
+        this.dbName = args.dbName;
+    }
+
+    public async connect(): Promise<void> {
+        let client: MongoClient;
+        try {
+            client = await MongoClient.connect(this.uri);
+            this.db = client.db(this.dbName);
+        } catch(err) {
             throw err;
-        });
+        }
+        client.close();
     }
 
     public getBySearchParam(param: string): void {

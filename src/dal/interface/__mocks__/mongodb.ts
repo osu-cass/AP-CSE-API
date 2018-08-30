@@ -5,7 +5,7 @@ MongoClient = {
     // tslint:disable-next-line:no-empty
     db: jest.fn().mockImplementationOnce(() => {})
     .mockImplementationOnce(() => {
-       throw new Error();
+       throw new Error('db init failed');
     }),
     close: jest.fn()
 };
@@ -18,7 +18,7 @@ MongoClient.connect = jest.fn().mockResolvedValueOnce({
     close: MongoClient.close
 }).mockRejectedValueOnce({
     error: {
-        message: 'did not create'
+        message: 'connect failed'
     }
 });
 

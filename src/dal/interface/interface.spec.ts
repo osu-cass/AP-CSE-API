@@ -6,8 +6,10 @@ jest.mock('mongodb');
 
 describe('MongoDb Database client', () => {
 
-    describe('db initialization', () => {
+    describe('DbClient initialization', () => {
         let dbInitArgs: IDbClient;
+        let uri: string;
+        let client: DbClient;
 
         beforeAll(() => {
             dbInitArgs = {
@@ -15,6 +17,7 @@ describe('MongoDb Database client', () => {
                 port: 27017,
                 dbName: 'test-db'
             };
+            uri = `${dbInitArgs.url}:${dbInitArgs.port}`;
         });
 
         beforeEach(() => {
@@ -22,32 +25,48 @@ describe('MongoDb Database client', () => {
             close.mockClear();
         });
 
-        it('creates DbClient with no errors', async () => {
-            const { url, port, dbName } = dbInitArgs;
-            const client = await new DbClient(dbInitArgs);
+        it('constructs DbClient', () => {
+            const { dbName } = dbInitArgs;
+            client = new DbClient(dbInitArgs);
+            expect.assertions(2);
+            expect(client.uri).toEqual(uri);
+            expect(client.dbName).toEqual(dbName);
+
+        });
+
+        it('connects to db succesfully', async () => {
+            const { dbName } = dbInitArgs;
+            const test = await client.connect();
             expect.assertions(3);
-            expect(MongoClient.connect).toHaveBeenCalledWith(`${url}:${port}`);
+            expect(MongoClient.connect).toHaveBeenCalledWith(uri);
             expect(db).toHaveBeenCalledWith(dbName);
             expect(close).toHaveBeenCalledTimes(1);
         });
 
-        it('throws error when getting db instance', async () => {
-            const { url, port, dbName } = dbInitArgs;
-            const client = await new DbClient(dbInitArgs);
-            expect.assertions(3);
-            expect(MongoClient.connect).toHaveBeenCalledWith(`${url}:${port}`);
-            expect(db).toHaveBeenCalledWith(dbName);
+        it('throws error on connection to database by name', async () => {
+            expect.assertions(4);
+            try {
+                await client.connect();
+            } catch(err) {
+                expect(err).toEqual(new Error('db init failed'));
+            }
+            expect(MongoClient.connect).toHaveBeenCalledWith(uri);
+            expect(db).toHaveBeenCalledTimes(1);
             expect(close).toHaveBeenCalledTimes(0);
         });
 
-        it('throws error on connection to database uri', () => {
-            const { url, port, dbName } = dbInitArgs;
-            const client = new DbClient(dbInitArgs);
-            expect.assertions(3);
-            expect(MongoClient.connect).toHaveBeenCalledWith(`${url}:${port}`);
+        it('throws error on connection', async () => {
+            expect.assertions(4);
+            try {
+                await client.connect();
+            } catch(err) {
+                expect(err).toEqual({error: {message: 'connect failed'}});
+            }
+            expect(MongoClient.connect).toHaveBeenCalledWith(uri);
             expect(db).toHaveBeenCalledTimes(0);
             expect(close).toHaveBeenCalledTimes(0);
         });
+
     });
 
     describe('getting data from db', () => {
