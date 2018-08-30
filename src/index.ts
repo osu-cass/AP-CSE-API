@@ -8,6 +8,7 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import { authorize } from './passport';
 
 import { home } from './routes/home';
+import { dbInit } from './routes/dbInit';
 import { greet } from './routes/greet';
 
 signale.pending('Starting server...');
@@ -22,6 +23,7 @@ app.use(morgan(process.env.NODE_ENV === 'production' ? 'short' : 'dev'));
 app.use(passport.initialize());
 
 app.get('/', home);
+app.post('/init', dbInit);
 app.post('/greet', (passport.authenticate('local', { failureRedirect: '/', session: false }) as RequestHandler), greet);
 
 app.listen(port, () => {

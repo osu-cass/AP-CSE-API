@@ -13,7 +13,7 @@ export class DbClient {
     private db?: Db;
 
     constructor(args: IDbClient) {
-        this.uri = `${args.url}:${args.port}`;
+        this.uri = `${args.url}:${args.port}/${args.dbName}`;
         this.dbName = args.dbName;
     }
 
@@ -21,12 +21,29 @@ export class DbClient {
     public async connect(): Promise<void> {
         let client: MongoClient;
         try {
-            client = await MongoClient.connect(this.uri);
+            client = await MongoClient.connect(this.uri, { auth: { user: 'root', password: 'example' } });
             this.db = client.db(this.dbName);
-        } catch(err) {
+        } catch (err) {
             throw err;
         }
-        client.close();
+    }
+    public async insert(json: object[]) {
+        let result;
+        let collections;
+        if (this.db) {
+            try {
+                collections = await this.db.collections();
+                if(collections.find(collection => collection.collectionName === 'claims')) {
+                    this.db.dropCollection('claims');
+                }
+                this.db.createCollection('claims');
+                result = await this.db.collection('claims').insertMany(json);
+            } catch (err) {
+                throw err;
+            }
+
+            return result;
+        }
     }
 
     public getBySearchParam(param: string): void {
