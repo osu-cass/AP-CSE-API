@@ -25,6 +25,7 @@ describe('MongoDb Database client', () => {
         it('creates DbClient with no errors', async () => {
             const { url, port, dbName } = dbInitArgs;
             const client = await new DbClient(dbInitArgs);
+            expect.assertions(3);
             expect(MongoClient.connect).toHaveBeenCalledWith(`${url}:${port}`);
             expect(db).toHaveBeenCalledWith(dbName);
             expect(close).toHaveBeenCalledTimes(1);
@@ -33,6 +34,7 @@ describe('MongoDb Database client', () => {
         it('throws error when getting db instance', async () => {
             const { url, port, dbName } = dbInitArgs;
             const client = await new DbClient(dbInitArgs);
+            expect.assertions(3);
             expect(MongoClient.connect).toHaveBeenCalledWith(`${url}:${port}`);
             expect(db).toHaveBeenCalledWith(dbName);
             expect(close).toHaveBeenCalledTimes(0);
@@ -41,6 +43,7 @@ describe('MongoDb Database client', () => {
         it('throws error on connection to database uri', () => {
             const { url, port, dbName } = dbInitArgs;
             const client = new DbClient(dbInitArgs);
+            expect.assertions(3);
             expect(MongoClient.connect).toHaveBeenCalledWith(`${url}:${port}`);
             expect(db).toHaveBeenCalledTimes(0);
             expect(close).toHaveBeenCalledTimes(0);
