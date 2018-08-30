@@ -1,0 +1,6 @@
+.circleci/
+.vscode/
+coverage/
+reports/
+dist
+**/*.spec.ts

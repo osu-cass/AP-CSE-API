@@ -10,10 +10,7 @@
         "isDefault": true
       },
       "command": "npm",
-      "args": [
-        "run",
-        "build-maps"
-      ],
+      "args": ["run", "build-maps"],
       "presentation": {
         "echo": true,
         "reveal": "always",
@@ -21,8 +18,24 @@
         "panel": "shared",
         "showReuseMessage": true
       },
-      "identifier": "ts-build",
+      "identifier": "tsc-build",
       "problemMatcher": "$tsc"
+    },
+    {
+      "label": "Watch and Build Typescript",
+      "identifier": "tsc-watch",
+      "group": "build",
+      "command": "npm",
+      "args": ["run", "watch-ts"],
+      "isBackground": true,
+      "problemMatcher": "$tsc-watch",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true
+      }
     }
   ]
 }
