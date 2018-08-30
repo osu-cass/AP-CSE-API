@@ -6,6 +6,7 @@ export interface IDbClient {
     dbName: string;
 }
 
+// tslint:disable:completed-docs
 export class DbClient {
     public uri: string;
     public dbName: string;
@@ -16,6 +17,7 @@ export class DbClient {
         this.dbName = args.dbName;
     }
 
+    // tslint:disable:no-floating-promises
     public async connect(): Promise<void> {
         let client: MongoClient;
         try {

@@ -1,3 +1,4 @@
+// tslint:disable
 let MongoClient = require.requireActual('mongodb').MongoClient;
 
 MongoClient = {
@@ -20,8 +21,8 @@ MongoClient.connect = jest.fn().mockResolvedValueOnce({
     }
 });
 
-const db = MongoClient.db;
+const db: jest.Mock = MongoClient.db;
 
-const close = MongoClient.close;
+const close: jest.Mock = MongoClient.close;
 
 export { MongoClient, db, close };
