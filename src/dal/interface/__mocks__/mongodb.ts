@@ -16,7 +16,7 @@ MongoClient.connect = jest.fn().mockResolvedValueOnce({
     close: MongoClient.close
 }).mockRejectedValueOnce({
     error: {
-        message: 'did not create'
+        message: 'connect failed'
     }
 });
 
