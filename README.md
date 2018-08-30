@@ -41,11 +41,16 @@ The easiest way to run the server in development is to use the following command
 npm run dev
 ```
 
-This command will compile the Typescript sourcefiles and watch the `dist` output directory, recompiling and relaunching the server whenever you change a file. This launches the server **without any associated databases.**
+This command will compile the Typescript sourcefiles and watch the `dist` output directory, recompiling and relaunching the server whenever you change a file. This launches the server _without any associated databases._
 
 #### Via Visual Studio Code
 
-If you're using VSCode, you can run the server with debugging using the Debug Server launch option. This will launch the `tsc-watch` task, which will recompile sourcecode on change, launch the server with `nodemon` so the server can autoreload on recompilation, and then attach a Node debugger on port 9222.
+If you're using VSCode, you can run the server with debugging using the Debug Server launch option. This will launch the server with `nodemon` so the server can autoreload on recompilation, and then attach a Node debugger on port 9222. For the best development experience, open a new CLI tab/window and run the following command:
+
+```sh
+# Recompile on file change
+npm run watch-ts
+```
 
 ### Running the API Server with Associated Resources
 
@@ -81,7 +86,7 @@ Use the following table to figure out how to use each of these services in both 
 
 #### Running the services
 
-First, make sure that you have `docker-compose`:
+First, make sure that you have `docker-compose` installed:
 
 ```sh
 docker-compose
@@ -109,4 +114,4 @@ This will watch and rebuild the Typescript sourcefiles, and the instance of the 
 
 #### Debugging
 
-In VSCode, we have a convenient launch configuration for debugging the server from within the Docker container. Simply launch the **Attach to Docker** launch configuration, and VSCode will attach a debugger instance. As long as you're running the `watch-ts` NPM script, you should be able to make changes and inspect the running code with breakpoints.
+In VSCode, we have a convenient launch configuration for debugging the server from within the Docker container. Simply launch the **Attach to Docker** launch configuration _after you've followed the previous section_, and VSCode will attach a debugger instance. With both the VSCode debug configuration and the `watch-ts` script running, you'll be able use breakpoints to debug the API server as you develop.
