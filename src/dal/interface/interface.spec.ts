@@ -36,7 +36,7 @@ describe('MongoDb Database client', () => {
 
         it('connects to db succesfully', async () => {
             const { dbName } = dbInitArgs;
-            const test = await client.connect();
+            await client.connect();
             expect.assertions(3);
             expect(MongoClient.connect).toHaveBeenCalledWith(uri);
             expect(db).toHaveBeenCalledWith(dbName);
@@ -78,6 +78,6 @@ describe('MongoDb Database client', () => {
         it('gets data by filter parameter', () => {
             expect.assertions(0);
         });
-    })
+    });
 
 });

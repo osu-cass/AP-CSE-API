@@ -1,8 +1,8 @@
+// tslint:disable
 let MongoClient = require.requireActual('mongodb').MongoClient;
 
 MongoClient = {
     ...MongoClient,
-    // tslint:disable-next-line:no-empty
     db: jest.fn().mockImplementationOnce(() => {})
     .mockImplementationOnce(() => {
        throw new Error('db init failed');
@@ -22,8 +22,8 @@ MongoClient.connect = jest.fn().mockResolvedValueOnce({
     }
 });
 
-const db = MongoClient.db;
+const db: jest.Mock = MongoClient.db;
 
-const close = MongoClient.close;
+const close: jest.Mock = MongoClient.close;
 
 export { MongoClient, db, close };
