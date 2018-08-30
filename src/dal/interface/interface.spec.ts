@@ -70,12 +70,25 @@ describe('MongoDb Database client', () => {
     });
 
     describe('getting data from db', () => {
+        let client: DbClient;
+        let dbInitArgs: IDbClient;
+
+        beforeAll(() => {
+            dbInitArgs = {
+                url: 'http://mongodb',
+                port: 27017,
+                dbName: 'test-db'
+            };
+            client = new DbClient(dbInitArgs);
+        });
 
         it('gets data by search parameter/string', () => {
+            client.getByFilter('');
             expect.assertions(0);
         });
 
         it('gets data by filter parameter', () => {
+            client.getBySearchParam('');
             expect.assertions(0);
         });
     });
