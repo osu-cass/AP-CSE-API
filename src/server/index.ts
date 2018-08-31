@@ -6,7 +6,7 @@ import passport from 'passport';
 import bodyParser from 'body-parser';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { authorize } from '../passport';
-import { router } from '../routes';
+import { home, greet } from '../routes';
 
 export class Server {
     private app: express.Application;
@@ -19,8 +19,13 @@ export class Server {
         this.routes();
     }
 
+    public authenticate(): express.RequestHandler {
+        return passport.authenticate('local', { failureRedirect: '/', session: false }) as express.RequestHandler;
+    }
+
     public routes(): void {
-        this.app.use('/', router);
+        this.app.get('/', home);
+        this.app.post('/greet', this.authenticate, greet);
     }
 
     public configure(): void {
