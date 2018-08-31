@@ -1,8 +1,6 @@
 import { DbClient, IDbClient } from './index';
 import { MongoClient } from 'mongodb';
-import { db, close } from './__mocks__/mongodb';
-
-jest.mock('mongodb');
+import { db, close } from '../../../__mocks__/mongodb';
 
 describe('MongoDb Database client', () => {
 
