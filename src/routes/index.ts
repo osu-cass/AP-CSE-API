@@ -1,4 +1,3 @@
-import { home } from './home';
-import { greet } from './greet';
-
-export { home, greet };
+export { home } from './home';
+export { greet } from './greet';
+export { dbInit } from './dbInit';
