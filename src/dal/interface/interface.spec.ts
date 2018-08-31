@@ -1,6 +1,10 @@
 import { DbClient, IDbClient } from './index';
 import { MongoClient } from 'mongodb';
+<<<<<<< HEAD
 import { db, close, collections, dropCollection, createCollection, collection } from '../../__mocks__/mongodb';
+=======
+import { db, close } from '../../../__mocks__/mongodb';
+>>>>>>> 73ef953... test: moves node_module mocks adjacent to node_modules as per jest spec
 
 describe('MongoDb Database client', () => {
 
