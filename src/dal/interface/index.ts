@@ -1,4 +1,4 @@
-import { MongoClient, Db, MongoError } from 'mongodb';
+import { MongoClient, Db, Collection, InsertWriteOpResult } from 'mongodb';
 
 export interface IDbClient {
     url: string;
@@ -27,13 +27,15 @@ export class DbClient {
             throw err;
         }
     }
+
     public async insert(json: object[]) {
-        let result;
-        let collections;
+        let result: InsertWriteOpResult;
+        // tslint:disable:no-any
+        let collections: Collection<any>[];
         if (this.db) {
             try {
                 collections = await this.db.collections();
-                if(collections.find(collection => collection.collectionName === 'claims')) {
+                if(collections && collections.find(collection => collection.collectionName === 'claims')) {
                     this.db.dropCollection('claims');
                 }
                 this.db.createCollection('claims');
