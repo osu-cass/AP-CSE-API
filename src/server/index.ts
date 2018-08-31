@@ -6,7 +6,7 @@ import passport from 'passport';
 import bodyParser from 'body-parser';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { authorize } from '../passport';
-import { home, greet } from '../routes';
+import { home, greet, dbInit } from '../routes';
 
 export class Server {
     private app: express.Application;
@@ -26,6 +26,7 @@ export class Server {
     public routes(): void {
         this.app.get('/', home);
         this.app.post('/greet', this.authenticate, greet);
+        this.app.post('/init', dbInit);
     }
 
     public configure(): void {
