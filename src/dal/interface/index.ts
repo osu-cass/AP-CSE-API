@@ -25,7 +25,7 @@ export class DbClient {
             this.db = client.db(this.dbName);
         } catch (err) {
             throw err;
-        }  
+        }
     }
 
     public async insert(json: object[]): Promise<InsertWriteOpResult> {
@@ -45,7 +45,7 @@ export class DbClient {
             }
 
             return result;
-        }else{
+        } else {
             throw new Error('db is not defined');
         }
     }
