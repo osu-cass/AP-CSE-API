@@ -13,7 +13,7 @@ export class DbClient {
     private db?: Db;
 
     constructor(args: IDbClient) {
-        this.uri = `${args.url}:${args.port}/${args.dbName}`;
+        this.uri = `${args.url}:${args.port}`;
         this.dbName = args.dbName;
     }
 
@@ -25,7 +25,7 @@ export class DbClient {
             this.db = client.db(this.dbName);
         } catch (err) {
             throw err;
-        }
+        }  
     }
 
     public async insert(json: object[]) {

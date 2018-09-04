@@ -16,7 +16,7 @@ describe('MongoDb Database client', () => {
                 port: 27017,
                 dbName: 'test-db'
             };
-            uri = `${dbInitArgs.url}:${dbInitArgs.port}/${dbInitArgs.dbName}`;
+            uri = `${dbInitArgs.url}:${dbInitArgs.port}`;
             authInfo = {
                 auth: {
                     user: 'root',
