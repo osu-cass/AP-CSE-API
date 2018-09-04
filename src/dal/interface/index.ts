@@ -28,7 +28,7 @@ export class DbClient {
         }  
     }
 
-    public async insert(json: object[]) {
+    public async insert(json: object[]): Promise<InsertWriteOpResult> {
         let result: InsertWriteOpResult;
         // tslint:disable:no-any
         let collections: Collection<any>[];
@@ -45,6 +45,8 @@ export class DbClient {
             }
 
             return result;
+        }else{
+            throw new Error('db is not defined');
         }
     }
 
