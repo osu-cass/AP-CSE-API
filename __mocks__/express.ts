@@ -1,3 +1,4 @@
+// tslint:disable
 let express = require.requireActual('express');
 const router = require.requireActual('express').Router;
 
@@ -14,10 +15,9 @@ express = jest.fn().mockImplementation(() => ({
 }));
 
 export const use: jest.Mock = application.use;
-// tslint:disable:no-reserved-keywords
+
 export const get: jest.Mock = application.get;
 export const post: jest.Mock = application.post;
 export const listen: jest.Mock = application.listen;
 
-// tslint:disable:no-default-export
 export default express;
