@@ -8,6 +8,9 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import { authorize } from '../passport';
 import { home, greet, dbInit } from '../routes';
 
+/**
+ * This class encapsulates the server and it's configuration.
+ */
 export class Server {
     private app: express.Application;
     private port: string | number;
