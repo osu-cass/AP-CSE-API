@@ -169,6 +169,6 @@ describe('MongoDb Database client', () => {
             client.getBySearchParam('');
             expect.assertions(0);
         });
-    })
+    });
 
 });

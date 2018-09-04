@@ -1,10 +1,11 @@
 import express from 'express';
 import { use, listen, get, post} from '../__mocks__/express';
-import passport from 'passport';
+import morgan from 'morgan';
 import { home, greet } from '../routes';
 import { Server } from './';
 
 jest.mock('passport');
+jest.mock('morgan');
 
 describe('Server', () => {
     let server: Server;
@@ -32,6 +33,13 @@ describe('Server', () => {
         const app = server.start();
         expect(express).toHaveBeenCalledTimes(1);
         expect(listen).toHaveBeenCalledTimes(1);
+    });
+
+    it('it initializes logger based on NODe_ENV', () => {
+        process.env.NODE_ENV = 'production';
+        server.configure();
+        expect.assertions(1);
+        expect(morgan).toHaveBeenCalledWith('short');
     });
 
     // it('authenticates the user', () => {
