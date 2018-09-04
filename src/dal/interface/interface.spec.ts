@@ -1,6 +1,6 @@
 import { DbClient, IDbClient } from './index';
 import { MongoClient } from 'mongodb';
-import { db, close, collections, dropCollection, createCollection, collection } from '../../../__mocks__/mongodb';
+import { db, close, collections, dropCollection, createCollection, collection } from '../../__mocks__/mongodb';
 
 describe('MongoDb Database client', () => {
 
