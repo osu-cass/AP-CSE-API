@@ -1,6 +1,3 @@
 {
   "extends": "@osu-cass/tslint-config",
-  "rules": {
-    "strict-boolean-expressions": false
-  }
 }
