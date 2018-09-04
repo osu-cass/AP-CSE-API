@@ -71,7 +71,7 @@ describe('MongoDb Database client', () => {
 
     });
 
-    describe('data manipulation', () => {
+    describe('data insertion', () => {
         let client: DbClient;
         let dbInitArgs: IDbClient;
         let testData: object[];
@@ -129,6 +129,37 @@ describe('MongoDb Database client', () => {
             expect(collection).toHaveBeenCalledTimes(0);
         });
 
+        it('fails to insert with bad connection', async () => {
+            let result;
+            client = new DbClient({
+                url: 'http://test',
+                port: 27017,
+                dbName: 'test-db'
+            });
+            result = await client.insert(testData);
+            expect.assertions(5);
+            expect(result).toBe(undefined);
+            expect(collections).toHaveBeenCalledTimes(0);
+            expect(dropCollection).toHaveBeenCalledTimes(0);
+            expect(createCollection).toHaveBeenCalledTimes(0);
+            expect(collection).toHaveBeenCalledTimes(0);
+        });
+
+    });
+
+    describe('data retrieval', () => {
+        let client: DbClient;
+        let dbInitArgs: IDbClient;
+
+        beforeAll(() => {
+            dbInitArgs = {
+                url: 'http://mongodb',
+                port: 27017,
+                dbName: 'test-db'
+            };
+            client = new DbClient(dbInitArgs);
+        });
+
         it('gets data by search parameter/string', () => {
             client.getByFilter('');
             expect.assertions(0);
@@ -138,6 +169,6 @@ describe('MongoDb Database client', () => {
             client.getBySearchParam('');
             expect.assertions(0);
         });
-    });
+    })
 
 });

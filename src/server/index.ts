@@ -29,7 +29,6 @@ export class Server {
         });
     }
 
-
     public routes(): void {
         this.app.get('/', home);
         this.app.get('/search', search);

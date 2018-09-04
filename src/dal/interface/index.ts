@@ -36,7 +36,7 @@ export class DbClient {
             try {
                 collections = await this.db.collections();
                 if(collections && collections.find(collection => collection.collectionName === 'claims')) {
-                    this.db.dropCollection('claims');
+                    await this.db.dropCollection('claims');
                 }
                 this.db.createCollection('claims');
                 result = await this.db.collection('claims').insertMany(json);
