@@ -8,7 +8,8 @@
       "type": "node",
       "request": "launch",
       "name": "Debug Server",
-      "preLaunchTask": "tsc-watch",
+      // Launching tasks doesn't work on Windows.
+      // "preLaunchTask": "tsc-watch",
       "port": 9222,
       "restart": true,
       "runtimeExecutable": "npm",
@@ -20,7 +21,8 @@
       "type": "node",
       "request": "attach",
       "name": "Attach to Docker",
-      "preLaunchTask": "tsc-watch",
+      // Launching tasks doesn't work on Windows.
+      // "preLaunchTask": "tsc-watch",
       "port": 9222,
       "restart": true,
       "localRoot": "${workspaceFolder}",
