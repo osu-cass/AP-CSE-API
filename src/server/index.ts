@@ -6,7 +6,7 @@ import passport from 'passport';
 import bodyParser from 'body-parser';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { authorize } from '../passport';
-import { home, greet } from '../routes';
+import { home, greet, dbInit, search, filter } from '../routes';
 import { DbClient } from '../dal/interface/index';
 
 export class Server {
@@ -29,8 +29,10 @@ export class Server {
 
     public routes(): void {
         this.app.get('/', home);
+        this.app.get('/search', search);
+        this.app.get('/filter', filter);
         this.app.post('/greet', greet);
-        this.app.post('/init', greet);
+        this.app.post('/init', dbInit);
     }
 
     public configure(): void {
