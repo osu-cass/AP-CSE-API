@@ -1,6 +1,3 @@
 {
-  "extends": "@osu-cass/tslint-config",
-  "rules": {
-    "strict-boolean-expressions": [true, "allow-string", "allow-number", "allow-boolean-or-undefined", "allow-mix"]
-  }
+  "extends": "@osu-cass/tslint-config"
 }
