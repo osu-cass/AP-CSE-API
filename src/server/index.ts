@@ -22,21 +22,15 @@ export class Server {
         this.routes();
     }
 
-    public authenticate(): e.RequestHandler {
-        return passport.authenticate('local', { failureRedirect: '/', session: false }) as e.RequestHandler;
-    }
-
     public routes(): void {
         this.app.get('/', home);
-        this.app.post('/greet', this.authenticate, greet);
+        this.app.post('/greet', greet);
         this.app.post('/init', dbInit);
     }
 
     public configure(): void {
-        passport.use(new LocalStrategy(authorize));
         this.app.use(bodyParser.json());
         this.app.use(morgan(process.env.NODE_ENV === 'production' ? 'short' : 'dev'));
-        this.app.use(passport.initialize());
     }
 
     public start(): http.Server {
