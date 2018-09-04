@@ -1,5 +1,5 @@
 import express from 'express';
-import { use, listen, get, post} from '../../__mocks__/express';
+import { use, listen, get, post} from '../__mocks__/express';
 import passport from 'passport';
 import { home, greet } from '../routes';
 import { Server } from './';
