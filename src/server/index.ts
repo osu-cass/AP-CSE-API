@@ -25,7 +25,7 @@ export class Server {
         this.client = new DbClient({
             url: 'mongodb://mongo',
             port: 27017,
-            dbName: 'admin'
+            dbName: 'cse'
         });
     }
 

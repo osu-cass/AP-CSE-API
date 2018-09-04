@@ -8,7 +8,7 @@ export async function dbInit(req: Request, res: Response) {
     const dbArgs: IDbClient = {
         url: 'mongodb://mongo',
         port: 27017,
-        dbName: 'admin'
+        dbName: 'cse'
     };
     const client: DbClient = new DbClient(dbArgs);
     await client.connect();
