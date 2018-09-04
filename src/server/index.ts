@@ -1,4 +1,4 @@
-import express from 'express';
+import e from 'express';
 import morgan from 'morgan';
 import http from 'http';
 import signale from 'signale';
@@ -9,13 +9,16 @@ import { authorize } from '../passport';
 import { home, greet, dbInit, search, filter } from '../routes';
 import { DbClient } from '../dal/interface/index';
 
+/**
+ * Encapsulates the server configuration and routes logic.
+ */
 export class Server {
     private client: DbClient;
-    private app: express.Application;
+    private app: e.Application;
     private port: string | number;
 
     constructor() {
-        this.app = express();
+        this.app = e();
         this.port = process.env.PORT as string || 3000 as number;
         this.configure();
         this.routes();
