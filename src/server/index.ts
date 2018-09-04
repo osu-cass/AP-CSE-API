@@ -1,4 +1,4 @@
-import express from 'express';
+import e from 'express';
 import morgan from 'morgan';
 import http from 'http';
 import signale from 'signale';
@@ -12,18 +12,18 @@ import { home, greet, dbInit } from '../routes';
  * This class encapsulates the server and it's configuration.
  */
 export class Server {
-    private app: express.Application;
+    private app: e.Application;
     private port: string | number;
 
     constructor() {
-        this.app = express();
+        this.app = e();
         this.port = process.env.PORT as string || 3000 as number;
         this.configure();
         this.routes();
     }
 
-    public authenticate(): express.RequestHandler {
-        return passport.authenticate('local', { failureRedirect: '/', session: false }) as express.RequestHandler;
+    public authenticate(): e.RequestHandler {
+        return passport.authenticate('local', { failureRedirect: '/', session: false }) as e.RequestHandler;
     }
 
     public routes(): void {

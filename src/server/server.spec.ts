@@ -1,4 +1,4 @@
-import express from 'express';
+import e from 'express';
 import { use, listen, get, post} from '../../__mocks__/express';
 import passport from 'passport';
 import { home, greet, dbInit } from '../routes';
@@ -31,7 +31,7 @@ describe('Server', () => {
     it('returns an http.Server instance', () => {
         expect.assertions(2);
         const app = server.start();
-        expect(express).toHaveBeenCalledTimes(1);
+        expect(e).toHaveBeenCalledTimes(1);
         expect(listen).toHaveBeenCalledTimes(1);
     });
 
