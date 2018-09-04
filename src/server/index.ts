@@ -7,8 +7,10 @@ import bodyParser from 'body-parser';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { authorize } from '../passport';
 import { home, greet } from '../routes';
+import { DbClient } from '../dal/interface/index';
 
 export class Server {
+    private client: DbClient;
     private app: express.Application;
     private port: string | number;
 
@@ -17,22 +19,28 @@ export class Server {
         this.port = process.env.PORT as string || 3000 as number;
         this.configure();
         this.routes();
+        this.client = new DbClient({
+            url: 'mongodb://mongo',
+            port: 27017,
+            dbName: 'admin'
+        });
     }
 
-    public authenticate(): express.RequestHandler {
-        return passport.authenticate('local', { failureRedirect: '/', session: false }) as express.RequestHandler;
-    }
 
     public routes(): void {
         this.app.get('/', home);
-        this.app.post('/greet', this.authenticate, greet);
+        this.app.post('/greet', greet);
+        this.app.post('/init', greet);
     }
 
     public configure(): void {
-        passport.use(new LocalStrategy(authorize));
+        // passport.use(new LocalStrategy(authorize));
         this.app.use(bodyParser.json());
         this.app.use(morgan(process.env.NODE_ENV === 'production' ? 'short' : 'dev'));
-        this.app.use(passport.initialize());
+        // this.app.use(passport.initialize());
+        this.app.locals = {
+            dbClient: this.client
+        };
     }
 
     public start(): http.Server {
