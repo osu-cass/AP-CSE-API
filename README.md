@@ -81,8 +81,9 @@ Use the following table to figure out how to use each of these services in both 
 | Elasticearch (search) |                               | `http://es-search` |      9200      |
 | Kibana (search)       | [5601](http://localhost:5601) |                    |                |
 | Elasticsearch (logs)  |                               | `http://es-logs`   |      9200      |
-| Kibana (logs)         | [5602](http://localhost:8081) |                    |                |
+| Kibana (logs)         | [5602](http://localhost:5602) |                    |                |
 | Logstash              |                               | `http://logstash`  |     13337      |
+| Jaeger UI             | [16686](http://localhost:16686) | `http://jaeger-query`  |     16686      |
 
 #### Running the services
 
