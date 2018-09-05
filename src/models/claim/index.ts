@@ -1,4 +1,4 @@
-import { ITarget } from "../target";
+import { ITarget } from '../target';
 
 export interface IClaim {
     title: string;
@@ -9,4 +9,4 @@ export interface IClaim {
     shortCode:string;
     domain?: string;
     target: ITarget[];
-};
+}

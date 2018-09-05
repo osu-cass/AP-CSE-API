@@ -1,3 +1,5 @@
+// tslint:disable:no-reserved-keywords
+
 export interface ITarget {
     title: string;
     shortCode: string;
