@@ -1,6 +1,8 @@
 import { DbClient, IDbClient } from './index';
 import { MongoClient } from 'mongodb';
-import { db, close,collection, collections, dropCollection, createCollection } from '../../__mocks__/mongodb';
+import { db, close, collection, collections, dropCollection, createCollection } from '../../__mocks__/mongodb';
+
+jest.mock('mongodb');
 
 describe('MongoDb Database client', () => {
 
@@ -23,6 +25,7 @@ describe('MongoDb Database client', () => {
                     password: 'example'
                 }
             };
+            client = new DbClient(dbInitArgs);
         });
 
         beforeEach(() => {
@@ -32,7 +35,6 @@ describe('MongoDb Database client', () => {
 
         it('constructs DbClient', () => {
             const { dbName } = dbInitArgs;
-            client = new DbClient(dbInitArgs);
             expect.assertions(2);
             expect(client.uri).toEqual(uri);
             expect(client.dbName).toEqual(dbName);
