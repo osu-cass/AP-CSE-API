@@ -134,6 +134,10 @@ const claimv = {
 	]
 };
 export async function importDbEntries() {
+	if(!fs.existsSync('./dist/routes/import/')) {
+		fs.mkdirSync('./dist/routes/import/');
+		fs.mkdirSync('./dist/routes/import/docs/');
+	}
 	const temp = await fetch('https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments?limit=99999999999&offset=0&sort&orderBy&filter&fields');
 	const idDoc = await temp.json();
 	for (let j = 0; j < idDoc.CFDocuments.length; j++) {
