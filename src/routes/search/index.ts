@@ -1,5 +1,8 @@
-import {Request, Response} from 'express';
+import {Request, Response, RequestHandler} from 'express';
+import { applyTracing } from '../../utils/tracer/index';
 
-export function search(req: Request, res: Response) {
+export const handler = (req: Request, res: Response): void => {
     res.send('search endpoint');
-}
+};
+
+export const search = applyTracing('/search', handler);

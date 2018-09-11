@@ -1,10 +1,10 @@
-import { Response, Request } from 'express';
+import { Response, Request, RequestHandler, NextFunction } from 'express';
 import { Span, Tags } from 'opentracing';
 import { CSEResponse } from '../../server/index';
+import { applyTracing } from '../../utils/tracer';
 
-export function home(req: Request, res: CSEResponse): void {
-  const { span } = res.locals;
-  span.log({event: 'home/', status: 'done'}, Date.now());
+export const handler = (req: Request, res: CSEResponse): void => {
   res.send('Hello, World');
-  span.finish();
-}
+};
+
+export const home = applyTracing('/', handler);
