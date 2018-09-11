@@ -137,7 +137,7 @@ describe('MongoDb Database client', () => {
                 dbName: 'test-db'
             });
             expect.assertions(6);
-            try{
+            try {
                 result = await client.insert(testData);
             } catch(err) {
                 expect(err).toEqual(new Error('db is not defined'));

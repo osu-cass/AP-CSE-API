@@ -1,27 +1,17 @@
-import { dbInit } from './';
-import { Request, Response } from 'express';
-import { DbClient } from '../../dal/interface';
-import { data } from './output';
-import { request } from 'http';
+import { handler as dbInit } from './';
+import { Request, Response, Send } from 'express';
 
 jest.mock('express');
 
 jest.mock('../../dal/interface', () => {
-    // tslint:disable:no-function-expression
     return {
-        DbClient: jest.fn().mockImplementationOnce(() => {
-            return {
-                connect: jest.fn().mockResolvedValue({}),
-                insert: jest.fn()
-                    .mockResolvedValueOnce({ result: 'good'})
-            };
-        }).mockImplementationOnce(() => {
-            return {
-                connect: jest.fn().mockResolvedValue({}),
-                insert: jest.fn()
-                    .mockResolvedValueOnce(undefined)
-            };
-        })
+        DbClient: jest.fn().mockImplementationOnce(() => ({
+            connect: jest.fn().mockResolvedValue({}),
+            insert: jest.fn().mockResolvedValue({ result: 'good' })
+        })).mockImplementationOnce(() => ({
+            connect: jest.fn().mockResolvedValue({}),
+            insert: jest.fn().mockResolvedValue(undefined)
+        }))
     };
 });
 
@@ -33,10 +23,11 @@ describe('dbInit', () => {
     beforeAll(() => {
         req = {};
         res = {
-            setHeader: jest.fn(),
+            header: jest.fn(),
             send: jest.fn()
         };
     });
+
 
     it('initializes the database with data', async () => {
         expect.assertions(1);
