@@ -1,10 +1,7 @@
 import e, { Request, Response, NextFunction, Application } from 'express';
 import http from 'http';
 import signale from 'signale';
-import passport from 'passport';
 import bodyParser from 'body-parser';
-import { Strategy as LocalStrategy } from 'passport-local';
-import { authorize } from '../passport';
 import { router } from '../routes';
 import { DbClient } from '../dal/interface/index';
 import { Tracer, Span, Tags } from 'opentracing';
@@ -41,7 +38,6 @@ export class Server {
     private client: DbClient;
     private app: Application;
     private port: string | number;
-    private tracer: Tracer;
     private context: ServerContext;
 
     constructor() {
@@ -50,34 +46,35 @@ export class Server {
         this.configure();
         this.registerMiddleware();
         this.routes();
-        this.tracer = createTracer();
         this.client = new DbClient({
             url: 'mongodb://mongo',
             port: 27017,
             dbName: 'cse'
         });
         this.context = {
-            tracer: this.tracer,
+            tracer: createTracer(),
             dbClient: this.client
         };
     }
 
-    public middleware(req: Request, res: CSEResponse, next: NextFunction): void {
-        const span: Span = this.tracer.startSpan('base request');
-        span.setTag(Tags.SAMPLING_PRIORITY, 1);
-        span.log({
-            event: 'HTTP request',
-            status: 'beginning'
-        }, Date.now());
-        res.locals = {
-            span,
-            ...this.context
-        };
-        next();
-    }
+    // public middleware = (req: Request, res: CSEResponse, next: NextFunction) => {
+    //     const span: Span = this.context.tracer.startSpan('request');
+    //     span.setTag(Tags.SAMPLING_PRIORITY, 1);
+    //     span.tracer().startSpan('request');
+    //     res.locals = { span, ...this.context };
+    //     next();
+    //     span.finish();
+    // }
 
     public registerMiddleware(): void {
-        this.app.use(this.middleware);
+        this.app.use((req: Request, res: CSEResponse, next: NextFunction) => {
+            const span: Span = this.context.tracer.startSpan('cse-api');
+            span.setTag(Tags.SAMPLING_PRIORITY, 1);
+            span.tracer().startSpan('/api');
+            res.locals = { span, ...this.context };
+            next();
+            span.finish();
+        });
     }
 
     public routes(): void {
