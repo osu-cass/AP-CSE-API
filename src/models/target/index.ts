@@ -2,8 +2,8 @@
 
 export interface ITaskModel {
     taskName: string;
-    taskDesc: string;
-    examples: string;
+    taskDesc?: string;
+    examples?: string;
     stimulus?: string;
 }
 
