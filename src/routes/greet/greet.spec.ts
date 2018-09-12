@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { greet } from './';
+import { handler as greet } from './';
 
 describe('Greet middleware function', () => {
   it('Greets a user', () => {

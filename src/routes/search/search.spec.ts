@@ -1,4 +1,4 @@
-import { search } from './';
+import { handler as search } from './';
 import { Request, Response } from 'express';
 
 describe('search', () => {

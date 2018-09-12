@@ -15,9 +15,9 @@ express = jest.fn().mockImplementation(() => ({
 }));
 
 export const use: jest.Mock = application.use;
-
 export const get: jest.Mock = application.get;
 export const post: jest.Mock = application.post;
 export const listen: jest.Mock = application.listen;
+export const Router: jest.Mock = router;
 
 export default express;

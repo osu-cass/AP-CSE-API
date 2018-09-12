@@ -1,4 +1,4 @@
-import { filter } from './';
+import { handler as filter } from './';
 import { Request, Response } from 'express';
 
 describe('filter', () => {

@@ -70,14 +70,15 @@ services:
     depends_on: 
       - es-search
     environment: 
-      ELASTICSEARCH_URL: "http://es-search:9200"
+      ELASTICSEARCH_URL: http://es-search:9200
     networks: 
       - search
     ports: 
-      - 5601:5601
+      - "5601:5601"
   es-logs:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.3.2
     container_name: es-logs
+    hostname: es-logs
     environment:
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
@@ -95,11 +96,11 @@ services:
     depends_on:
       - es-logs
     environment: 
-      ELASTICSEARCH_URL: "http://es-logs:9200"
+      ELASTICSEARCH_URL: http://es-logs:9200
     networks: 
       - logs
     ports: 
-      - 5602:5601
+      - "5602:5601"
   logstash:
     image: docker.elastic.co/logstash/logstash:6.3.2
     container_name: logstash
@@ -112,6 +113,53 @@ services:
         target: /usr/share/logstash/pipeline/logstash.conf
     networks:
       - logs
+  jaeger-collector:
+    image: jaegertracing/jaeger-collector:latest
+    environment:
+      SPAN_STORAGE_TYPE: elasticsearch
+    ports:
+      - "14267:14267"
+      - "14268:14268"
+      - "9411:9411"
+    depends_on:
+    - logstash
+    container_name: jaeger-collector
+    hostname: jaeger-collector
+    restart: on-failure
+    networks:
+    - logs
+    command: ["--es.server-urls=http://es-logs:9200"]
+  jaeger-agent:
+    image: jaegertracing/jaeger-agent:latest
+    ports:
+      - "5775:5775/udp"
+      - "5778:5778"
+      - "6831:6831/udp"
+      - "6832:6832/udp"
+    depends_on:
+    - jaeger-collector
+    restart: on-failure
+    container_name: jaeger-agent
+    hostname: jaeger-agent
+    networks:
+    - logs
+    command: ["--collector.host-port=jaeger-collector:14267"]
+  jaeger-query:
+    image: jaegertracing/jaeger-query:latest
+    environment:
+      SPAN_STORAGE_TYPE: elasticsearch
+    ports:
+      - 16686:16686
+    depends_on:
+      - jaeger-agent
+    restart: on-failure
+    container_name: jaeger-query
+    hostname: jaeger-query
+    networks:
+    - logs
+    command: ["--es.server-urls=http://es-logs:9200", "--log-level=debug"]
+
+
 
 secrets:
   logstash.conf:
