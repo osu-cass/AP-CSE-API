@@ -1,4 +1,4 @@
-import e, { Request, Response, NextFunction, Application } from 'express';
+import e, { Request, Response, NextFunction, Application, RequestHandler } from 'express';
 import http from 'http';
 import signale from 'signale';
 import bodyParser from 'body-parser';
@@ -62,8 +62,7 @@ export class Server {
 
     public registerMiddleware(): void {
         this.app.use((req: Request, res: CSEResponse, next: NextFunction) => {
-            const { logger, tracer } = this.context;
-            const span: Span = tracer.startSpan('/api');
+            const span: Span = this.context.tracer.startSpan('/api');
             span.setTag(Tags.SAMPLING_PRIORITY, 1);
             span.tracer().startSpan('/api');
             res.locals = { span, ...this.context };
@@ -87,6 +86,6 @@ export class Server {
         return this.app.listen(this.port, () => {
             signale.success(`Server ready!`);
             signale.info(`Listening at http://localhost:${this.port}`);
-          });
+        });
     }
 }
