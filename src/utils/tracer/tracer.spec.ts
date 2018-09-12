@@ -1,13 +1,13 @@
-import { Tracer } from 'opentracing';
 import { createTracer, applyTracing  } from '.';
 import { RequestHandler, Request, Response } from 'express';
 import { NextFunction } from 'connect';
+import { initTracer } from '../../__mocks__/jaeger-client';
+
+jest.mock('jaeger-client', () => ({
+    initTracer: jest.fn()
+}));
 
 describe('tracer', () => {
-
-    jest.mock('jaeger-client', () => ({
-        initTracer: jest.fn()
-    }));
 
     describe('createTracer', () => {
         // tslint:disable:no-any no-unsafe-any
@@ -19,7 +19,7 @@ describe('tracer', () => {
 
         it('returns Tracer object', () => {
             expect.assertions(1);
-            expect(tracer._tags['cse-api']).toEqual('0.0.0');
+            expect(initTracer).toHaveBeenCalled();
         });
     });
 
