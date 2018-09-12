@@ -5,11 +5,11 @@ import { createLogger, Logger, transports } from 'winston';
 const consoleOpts = {
     level: 'debug',
     handleExceptions: true,
-    json: false,
+    json: true,
     colorize: true,
 };
 
-const logger = createLogger({
+const logger: Logger = createLogger({
     level: 'info',
     transports: [
         new transports.Console(consoleOpts),
