@@ -1,14 +1,35 @@
 // tslint:disable:no-reserved-keywords
 
+export interface ITaskModel {
+    taskName: string;
+    taskDesc: string;
+    examples: string;
+    rubrics: string[];
+    stimulus: string;
+}
+
+export interface IStem {
+    stemDesc: string;
+    shortStem: string;
+}
+
+export interface IDOK {
+    dokCode: string;
+    dokDesc: string;
+    dokShort: string;
+}
+
+export interface IStandards {
+    stdCode: string;
+    stdDesc: string;
+}
+
 export interface ITarget {
     title: string;
     shortCode: string;
     description: string;
-    standards: string[];
-    stdDesc: string[];
-    DOK: string[];
-    DOKDesc: string[];
-    shortDOK: string[];
+    standards: IStandards[];
+    DOK: IDOK[];
     type: string;
     clarification: string;
     heading: string;
@@ -20,11 +41,6 @@ export interface ITarget {
     complexity: string;
     dualText: string;
     accessibility: string;
-    stem: string[];
-    taskDescription: string[];
-    taskModel: string[];
-    examples: string[];
-    rubrics: string[];
-    stimulus: string[];
-    shortStem: string[];
+    stem: IStem[];
+    taskModel: ITaskModel[];
 }
