@@ -1,14 +1,31 @@
 // tslint:disable:no-require-imports no-var-requires no-any no-unsafe-any
 const LogstashTransport = require('winston-logstash-transport').LogstashTransport;
-const winston = require('winston');
+import { createLogger, Logger, transports } from 'winston';
 
-export const logger = winston.createLogger({
+const consoleOpts = {
+    level: 'debug',
+    handleExceptions: true,
+    json: false,
+    colorize: true,
+};
+
+const logger = createLogger({
     level: 'info',
-    format: winston.format.combine(
-        winston.format.json(),
-        winston.format.timestamp()
-    ),
     transports: [
-        new LogstashTransport({ host: 'logstash', port: 13337 })
-    ]
+        new transports.Console(consoleOpts),
+        new LogstashTransport({ host: '0.0.0.0', port: 13337 })
+    ],
+    exitOnError: false
 });
+
+/**
+ * Represents a stream that a logging serive can use to write to
+ * both transports in the logger
+ */
+class LoggingStream {
+    write(message: string) {
+        logger.info(message);
+    }
+}
+
+export { logger, LoggingStream };
