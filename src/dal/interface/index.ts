@@ -7,8 +7,8 @@ export interface IDbClient {
 }
 
 /**
- * This class encaspulates and handles communication with Elasticsearch and 
- * MongoDB. 
+ * This class encaspulates and handles communication with Elasticsearch and
+ * MongoDB.
  */
 export class DbClient {
     public uri: string;

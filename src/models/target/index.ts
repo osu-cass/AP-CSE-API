@@ -4,8 +4,7 @@ export interface ITaskModel {
     taskName: string;
     taskDesc: string;
     examples: string;
-    rubrics: string[];
-    stimulus: string;
+    stimulus?: string;
 }
 
 export interface IStem {
@@ -42,5 +41,6 @@ export interface ITarget {
     dualText: string;
     accessibility: string;
     stem: IStem[];
-    taskModel: ITaskModel[];
+    taskModels: ITaskModel[];
+    rubrics?: string[];
 }
