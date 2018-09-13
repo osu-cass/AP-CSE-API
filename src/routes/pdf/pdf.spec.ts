@@ -1,5 +1,5 @@
 import { handler as home } from '.';
-import { Request, Response, NextFunction, Send } from 'express';
+import { Request, Response } from 'express';
 
 describe('PDF generation middleware function', () => {
   it('returns a response', () => {

@@ -1,5 +1,4 @@
-import { Response, Request, RequestHandler, NextFunction } from 'express';
-import { Span, Tags } from 'opentracing';
+import { Request } from 'express';
 import { CSEResponse } from '../../server/index';
 import { applyTracing } from '../../utils/tracer';
 
