@@ -1,4 +1,4 @@
-import { handler as home } from '.';
+import { handler as pdfDownload } from '.';
 import { Request, Response } from 'express';
 
 describe('PDF generation middleware function', () => {
@@ -8,7 +8,7 @@ describe('PDF generation middleware function', () => {
       send: jest.fn()
     };
 
-    home(<Request>req, <Response>res);
+    pdfDownload(<Request>req, <Response>res);
 
     expect(res.send).toBeCalledWith('pdf endpoint');
   });

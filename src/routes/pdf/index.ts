@@ -6,4 +6,4 @@ export const handler = (req: Request, res: CSEResponse): void => {
   res.send('pdf endpoint');
 };
 
-export const pdfDownload = applyTracing('/', handler);
+export const pdfDownload = applyTracing('/pdf', handler);

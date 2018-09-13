@@ -14,7 +14,7 @@ describe('target', () => {
 
     it('handles request for target', (() => {
         target(<Request>req, <Response>res);
-        expect(res.send).toHaveBeenCalledWith('filter endpoint');
+        expect(res.send).toHaveBeenCalledWith('target endpoint');
     }));
 
 });
