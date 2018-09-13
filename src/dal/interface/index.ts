@@ -1,4 +1,5 @@
-import { MongoClient, Db, Collection, InsertWriteOpResult } from 'mongodb';
+import { MongoClient, Db, Collection, InsertWriteOpResult, Cursor } from 'mongodb';
+import { ITargetParams } from '../../routes/target/index';
 
 export interface IDbClient {
     url: string;
@@ -33,7 +34,7 @@ export class DbClient {
 
     public async insert(json: object[]): Promise<InsertWriteOpResult> {
         let result: InsertWriteOpResult;
-        // tslint:disable:no-any
+        // tslint:disable-next-line:no-any
         let collections: Collection<any>[];
         if (this.db) {
             try {
@@ -43,8 +44,8 @@ export class DbClient {
                 }
                 this.db.createCollection('claims');
                 result = await this.db.collection('claims').insertMany(json);
-            } catch (err) {
-                throw err;
+            } catch (error) {
+                throw error;
             }
 
             return result;
@@ -53,11 +54,28 @@ export class DbClient {
         }
     }
 
+    // tslint:disable-next-line:no-any
+    public async getTargets(searchParams: ITargetParams): Promise<any> {
+        const { subject, grades, claim, target } = searchParams;
+        // tslint:disable-next-line:no-any
+        let results: any;
+
+        if (this.db) {
+            try {
+                results = await this.db.collection('claims').find({
+                    subject,
+                    grades
+                }).toArray();
+            } catch (error) {
+                throw error;
+            }
+        }
+
+        return results;
+    }
+
     public getBySearchParam(param: string): void {
         return;
     }
 
-    public getTargets(filter: string): void {
-        return;
-    }
 }

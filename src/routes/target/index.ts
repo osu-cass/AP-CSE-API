@@ -1,18 +1,29 @@
-import { Request, Response } from 'express';
-import { applyTracing } from '../../utils/tracer/index';
+import { Request } from 'express';
+import { applyTracing } from '../../utils/tracer';
+import { DbClient } from '../../dal/interface';
+import { CSEResponse } from '../../server/index';
 
 export interface ITargetParams {
     subject: string;
-    grade: string[] | number;
+    grades: string[] | number;
     claim: number;
     target: number;
 }
 
-export const handler = (req: Request, res: Response) => {
-    // const { dbClient } = res.locals;
-    // const targetParams: ITargetParams = req.params;
-    // console.log(targetParams);
-    res.send('target endpoint');
+export const handler = (req: Request, res: CSEResponse) => {
+    const dbClient: DbClient = res.locals.dbClient;
+    const targetParams: ITargetParams = req.params as ITargetParams;
+    let results;
+    dbClient.connect().then(async () => {
+        try {
+            results = await dbClient.getTargets(targetParams);
+            res.send(results);
+        } catch (error) {
+            throw error;
+        }
+    }).catch((error) => {
+        res.send(error);
+    });
 };
 
 export const target = applyTracing('/target', handler);
