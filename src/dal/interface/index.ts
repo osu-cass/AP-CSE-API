@@ -57,7 +57,7 @@ export class DbClient {
         return;
     }
 
-    public getByFilter(filter: string): void {
+    public getTargets(filter: string): void {
         return;
     }
 }

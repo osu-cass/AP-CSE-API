@@ -165,7 +165,7 @@ describe('MongoDb Database client', () => {
         });
 
         it('gets data by search parameter/string', () => {
-            client.getByFilter('');
+            client.getTargets('');
             expect.assertions(0);
         });
 

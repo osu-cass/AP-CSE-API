@@ -8,7 +8,7 @@ const router: Router = Router();
 
 router.get('/pdf', pdfDownload);
 router.get('/search', search);
-router.get('/target', target);
+router.get('/target/subject=:subject&grade=:grade&claim=:claim&target=:target', target);
 router.post('/init', dbInit);
 
 export { router };
