@@ -4,9 +4,11 @@ import fetch  from 'node-fetch';
 const arr: any = [];
 const docs = ['smarter_balanced_ela_content_specification', 'air_deprecated_ela_claims_and_targets', 'air_deprecated_math_claims_and_targets', 'ccss_imported_from_digital_library',
 	'common_core_state_standards_for_ela', 'common_core_state_standards_for_mathematics', 'item_type_response_type', 'major_vs__additional_supporting__math_', 'major_vs__additional_supporting__math_', 'smarter_balanced_math_content_specification', 'norm_webb_s_depth_of_knowledge__dok__levels_of_cognitive_difficulty'];
-const packages: any = [];
+
 const claimArray: any = [1000];
 const claimArrayv: any = [1000];
+let docArr: any = [];
+let docNames: any = [];
 let jsonData;
 const claim = {
 	title: 'string',
@@ -133,39 +135,28 @@ const claimv = {
 		}
 	]
 };
+
 export async function importDbEntries() {
-	if(!fs.existsSync('./dist/routes/import/')) {
-		fs.mkdirSync('./dist/routes/import/');
-		fs.mkdirSync('./dist/routes/import/docs/');
-	}
-	const temp = await fetch('https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments?limit=99999999999&offset=0&sort&orderBy&filter&fields');
-	const idDoc = await temp.json();
-	for (let j = 0; j < idDoc.CFDocuments.length; j++) {
-		packages.push(idDoc.CFDocuments[j].identifier);
-	}
-	console.log('Starting import...');
-	for (let i = 0; i < packages.length; i++) {
-		console.log(((i / packages.length) * 100).toPrecision(3) + '%');
-		const stuff = await fetch('https://case.smarterbalanced.org/ims/case/v1p0/CFPackages/' + packages[i]);
-		const json = await stuff.json();
-		const title = json.CFDocument.title;
-		const filename = title.replace(/[^a-z0-9]/gi, '_').toLowerCase();
-		if (!docs.includes(filename)) {
-			arr.push(json);
+
+	let total = await importDocs();
+	let ELASpec: any;
+	let MATHSpec: any;
+	let DOKDOC: any;
+for(let i = 0; i < docNames.length; i++) {
+	
+
+		if(docNames[i].includes('smarter_balanced_ela_content_specification')) {
+			ELASpec = docArr[i];
 		}
-		else {
-			fs.writeFileSync('./dist/routes/import/docs/' + filename + '.json', JSON.stringify(json));
+		else if(docNames[i].includes('smarter_balanced_math_content_specification')) {
+				MATHSpec = docArr[i];
+			}
+		else if(docNames[i].includes('norm_webb_s_depth_of_knowledge__dok__levels_of_cognitive_difficulty')) {
+			DOKDOC = docArr[i];
 		}
 	}
+	
 
-
-
-
-
-
-	const ELASpec = JSON.parse(fs.readFileSync('./dist/routes/import/docs/smarter_balanced_ela_content_specification.json', 'utf-8'));
-	const MATHSpec = JSON.parse(fs.readFileSync('./dist/routes/import/docs/smarter_balanced_math_content_specification.json', 'utf-8'));
-	const DOKDOC = JSON.parse(fs.readFileSync('./dist/routes/import/docs/norm_webb_s_depth_of_knowledge__dok__levels_of_cognitive_difficulty.json', 'utf-8'));
 	for (let i = 0; i < arr.length; i++) {
 		jsonData = arr;
 		claimArray[i] = JSON.parse(JSON.stringify(claim));
@@ -397,24 +388,7 @@ export async function importDbEntries() {
 		}
 	}
 
-	function getClaimShortCode(subject: any, claim: any, grade: any) {
-		let gradeLevel;
-		if (parseInt(grade, 10) > 8) {
-			gradeLevel = 'HS';
-		}
-		else {
-			gradeLevel = grade;
-		}
-		if (subject === 'English Language Arts') {
-
-			const shortcode = 'E.G' + gradeLevel + '.' + claim;
-			return shortcode;
-		}
-		else {
-			const shortcode = 'M.G' + gradeLevel + '.' + claim;
-			return shortcode;
-		}
-	}
+	
 	function getClaimDesc(subject: any, shortCode: any) {
 		let jsData;
 		if (subject === 'English Language Arts') {
@@ -457,45 +431,7 @@ export async function importDbEntries() {
 		}
 	}
 
-	function getClaim(title: any, subject: any, grades: any) {
-		let titlecopy = (' ' + title).slice(1);
-		let titlearray = [];
-		const grading = grades;
-		if (grades[0] === '0') {
-			const grading = grades.pop();
-		}
-		if (subject === 'English Language Arts') {
-			if (!title.includes('Performance')) {
-				titlearray = titlecopy.split(' ');
-				return 'C' + titlearray[7];
-
-			}
-			else {
-				titlecopy = titlecopy.replace('English Language Arts Performance Task Specification: ', '');
-				titlecopy = titlecopy.replace('Grade ', '');
-				titlecopy = titlecopy.replace(grades, '');
-				titlecopy = titlecopy.replace(' ', '');
-				return 'C' + titlecopy;
-			}
-		}
-		else {
-			titlearray = titlecopy.split(' ');
-			if (title.includes('Grade ')) {
-				return titlearray[5];
-			}
-			else if (title.includes('Grades ')) {
-				return 'C' + titlearray[4];
-			}
-			else if (title.includes('Mathematics ')) {
-				return titlearray[4];
-			}
-			else {
-				return 'C' + titlearray[4];
-			}
-
-
-		}
-	}
+	
 
 	let r = 0;
 	for (let p = 0; p < claimArrayv.length; p++) {
@@ -530,4 +466,96 @@ export async function importDbEntries() {
 
 	}
 	return (JSON.stringify(claimArrayv, null, 4));
+}
+
+export function getClaimShortCode(subject: any, claim: any, grade: any) {
+	let gradeLevel;
+	if (parseInt(grade, 10) > 8) {
+		gradeLevel = 'HS';
+	}
+	else {
+		gradeLevel = grade;
+	}
+	if (subject === 'English Language Arts') {
+
+		const shortcode = 'E.G' + gradeLevel + '.' + claim;
+		return shortcode;
+	}
+	else {
+		const shortcode = 'M.G' + gradeLevel + '.' + claim;
+		return shortcode;
+	}
+}
+
+export function getClaim(title: any, subject: any, grades: any) {
+	let titlecopy = (' ' + title).slice(1);
+	let titlearray = [];
+
+	if (grades[0] === '0') {
+		const grading = grades.pop();
+	}
+	if (subject === 'English Language Arts') {
+		if (!title.includes('Performance')) {
+			titlearray = titlecopy.split(' ');
+			return 'C' + titlearray[7];
+
+		}
+		else {
+			titlecopy = titlecopy.replace('English Language Arts Performance Task Specification: ', '');
+			titlecopy = titlecopy.replace('Grade ', '');
+			titlecopy = titlecopy.replace(grades, '');
+			titlecopy = titlecopy.replace(' ', '');
+			return 'C' + titlecopy;
+		}
+	}
+	else {
+		titlearray = titlecopy.split(' ');
+		if (title.includes('Grade ')) {
+			return titlearray[5];
+		}
+		else if (title.includes('Grades ')) {
+			return 'C' + titlearray[4];
+		}
+		else if (title.includes('Mathematics ')) {
+			return titlearray[4];
+		}
+		else {
+			return 'C' + titlearray[4];
+		}
+
+
+	}
+}
+export async function importDocs() {
+	
+	const packages: any = await fetchAllDocs();
+console.log('Starting import...');
+for (let i = 0; i < packages.length; i++) {
+	let total = i;
+	console.log(((i / packages.length) * 100).toPrecision(3) + '%');
+	const stuff = await fetch('https://case.smarterbalanced.org/ims/case/v1p0/CFPackages/' + packages[i]);
+	const jsonData = await stuff.json();
+	const title = jsonData.CFDocument.title;
+	const filename = title.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+	if (!docs.includes(filename)) {
+		arr.push(jsonData);
+	}
+	else {
+		docNames.push(filename);
+		docArr.push(jsonData);
+	}
+}
+return packages.length;
+}
+
+
+export async function fetchAllDocs() {
+	let p: any = [];
+	const temp = await fetch('https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments?limit=99999999999&offset=0&sort&orderBy&filter&fields');
+	const idDoc = await temp.json();
+	for (let j = 0; j < idDoc.CFDocuments.length; j++) {
+		p.push(idDoc.CFDocuments[j].identifier);
+	}
+
+	return p;
 }
