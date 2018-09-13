@@ -1,4 +1,4 @@
-import { handler as dbInit } from './';
+import { handler as dbInit } from './index';
 import { Request, Response, Send } from 'express';
 
 jest.mock('express');
@@ -16,7 +16,7 @@ jest.mock('../../dal/interface', () => {
 });
 
 
-describe('dbInit', () => {
+describe('init', () => {
     let req: Partial<Request>;
     let res: Partial<Response>;
 
