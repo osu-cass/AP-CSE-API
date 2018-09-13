@@ -6,7 +6,10 @@ export interface IDbClient {
     dbName: string;
 }
 
-// tslint:disable:completed-docs
+/**
+ * This class encaspulates and handles communication with Elasticsearch and
+ * MongoDB.
+ */
 export class DbClient {
     public uri: string;
     public dbName: string;
