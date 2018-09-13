@@ -5,4 +5,4 @@ export const handler = (req: Request, res: Response) => {
     res.send('filter endpoint');
 };
 
-export const filter = applyTracing('/filter', handler);
+export const target = applyTracing('/filter', handler);

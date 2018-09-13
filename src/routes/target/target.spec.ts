@@ -1,7 +1,7 @@
-import { handler as filter } from './';
+import { handler as target } from './index';
 import { Request, Response } from 'express';
 
-describe('filter', () => {
+describe('target', () => {
     let req: Partial<Request>;
     let res: Partial<Response>;
 
@@ -12,8 +12,8 @@ describe('filter', () => {
         };
     });
 
-    it('handles filter request', (() => {
-        filter(<Request>req, <Response>res);
+    it('handles request for target', (() => {
+        target(<Request>req, <Response>res);
         expect(res.send).toHaveBeenCalledWith('filter endpoint');
     }));
 
