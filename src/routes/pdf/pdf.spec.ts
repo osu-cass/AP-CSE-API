@@ -2,7 +2,7 @@ import { handler as home } from '.';
 import { Request, Response, NextFunction, Send } from 'express';
 
 describe('PDF generation middleware function', () => {
-  it('returns Hello World', () => {
+  it('returns a response', () => {
     const req: Partial<Request> = {};
     const res: Partial<Response> = {
       send: jest.fn()
@@ -10,6 +10,6 @@ describe('PDF generation middleware function', () => {
 
     home(<Request>req, <Response>res);
 
-    expect(res.send).toBeCalledWith('Hello, World');
+    expect(res.send).toBeCalledWith('pdf endpoint');
   });
 });

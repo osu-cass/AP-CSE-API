@@ -1,12 +1,12 @@
 import { Router } from 'express';
-import { home } from './home';
+import { pdfDownload } from './pdf';
 import { dbInit } from './init';
 import { search } from './search';
 import { target } from './target';
 
 const router: Router = Router();
 
-router.get('/', home);
+router.get('/pdf', pdfDownload);
 router.get('/search', search);
 router.get('/target', target);
 router.post('/init', dbInit);

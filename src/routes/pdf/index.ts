@@ -4,7 +4,7 @@ import { CSEResponse } from '../../server/index';
 import { applyTracing } from '../../utils/tracer';
 
 export const handler = (req: Request, res: CSEResponse): void => {
-  res.send('Hello, World');
+  res.send('pdf endpoint');
 };
 
-export const home = applyTracing('/', handler);
+export const pdfDownload = applyTracing('/', handler);
