@@ -298,10 +298,11 @@ for(let i = 0; i < docNames.length; i++) {
 			}
 		}
 		let dokSpec;
+
 		if (claimArray[i].subject === 'English Language Arts') {
 			dokSpec = ELASpec;
 		}
-		else {
+		else if(claimArray[i].subject === 'Math') {
 			dokSpec = MATHSpec;
 		}
 		let y = 0;
@@ -422,9 +423,7 @@ for(let i = 0; i < docNames.length; i++) {
 				if (jsData.CFItems[i + 1].CFItemType === 'Domain') {
 					return jsData.CFItems[i + 1].fullStatement;
 				}
-				else {
-					return null;
-				}
+				
 			}
 
 
