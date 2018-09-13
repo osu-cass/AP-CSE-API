@@ -458,10 +458,6 @@ for(let i = 0; i < docNames.length; i++) {
 				claimArrayv[p].title = titlecopy.slice(0, 6).join(' ');
 			}
 
-			else if (claimArrayv[p].title.includes('Mathematics ')) {
-				claimArrayv[p].title = titlecopy.slice(0, 5).join(' ');
-			}
-
 		}
 
 	}
