@@ -1,7 +1,6 @@
 // tslint:disable-next-line
 import fetch from 'jest-fetch-mock';
 jest.setMock('node-fetch', fetch);
-import fs from 'fs';
 import { importDbEntries, getClaimShortCode, getClaim, importDocs, fetchAllDocs } from './import';
 import { mockData } from './__mocks__/mockAllDocs';
 import { mockPack } from './__mocks__/mockELAPackage';
