@@ -14,11 +14,13 @@ const subject = ['English Language Arts', 'Math'];
 const claim: string = 'C1';
 const grade: string = '3';
 const hs: string  = '10';
+const gradeZero = ['0', '10'];
 const title = [
     'English Language Arts Specification: Grade 3 Claim 1 Target 1',
     'Grade 3 Mathematics Item Specification C1 TH',
     'HS Mathematics Item Specification C1 TH',
-    'Math Grades 6-9, Claim 1'
+    'Math Grades 6-9, Claim 1',
+    'Math High School, Claim 1'
 ];
 const shortCode = ['E.G3.C1', 'M.G3.C1', 'M.GHS.C1'];
 const packages = [
@@ -52,7 +54,7 @@ describe('Case API Scraper', () => {
             [JSON.stringify(mockMATH)],
             [JSON.stringify(mockDOK)],
             [JSON.stringify(mockPT)],
-            [JSON.stringify(mockPT)]);
+            [JSON.stringify(mockMATHPackage)]);
         const result = await importDocs();
         expect(fetch.mock.calls.length).toBe(7);
         expect(result).toBe(6);
@@ -64,7 +66,7 @@ describe('Case API Scraper', () => {
             [JSON.stringify(mockMATH)],
             [JSON.stringify(mockDOK)],
             [JSON.stringify(mockPT)],
-            [JSON.stringify(mockPT)]);
+            [JSON.stringify(mockMATHPackage)]);
         const result = await importDbEntries();
         expect(fetch.mock.calls.length).toBe(7);
         expect(result).toEqual(JSON.stringify(mockDB, undefined, 4));
@@ -82,7 +84,8 @@ describe('Case API Scraper', () => {
         const MATHresult = getClaim(title[1], subject[1], grade);
         const MATHAlt = getClaim(title[2], subject[1], grade);
         const MATHAlt1 = getClaim(title[3], subject[1], grade);
-        expect(ELAresult).toEqual(claim);
+        expect(getClaim(title[4], subject[1], gradeZero)).toEqual(claim);
+        expect(getClaim(title[4], subject[1], grade)).toEqual(claim);
         expect(MATHresult).toEqual(claim);
         expect(MATHAlt).toEqual(claim);
         expect(MATHAlt1).toEqual(claim);
