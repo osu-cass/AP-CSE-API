@@ -64,7 +64,9 @@ export class DbClient {
             try {
                 results = await this.db.collection('claims').find({
                     subject,
-                    grades
+                    grades,
+                    claimNumber: claim,
+                    'target.shortCode': target
                 }).toArray();
             } catch (error) {
                 throw error;
