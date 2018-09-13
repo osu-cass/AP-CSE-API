@@ -6,7 +6,9 @@ export const mockDB =
     claimNumber: "C1",
     grades: 3,
     subject: "English Language Arts",
+    description: "Students can read closely and analytically to comprehend a range of increasingly complex literary and informational texts.",
     shortCode: "E.G3.C1",
+    domain: "Literary Texts",
     target: [
       {
         title: "English Language Arts Specification: Grade 3 Claim 1 Target 1",
@@ -37,7 +39,7 @@ export const mockDB =
         devNotes: "NA",
         complexity: "NA",
         dualText: "When a dual-text set contains one literary and one informational text, the literary text (text #1) is the primary focus, and the set of items must include items from the literary stimulus as well as items written across both texts. The informational text (text #2) must only be used as a foundational piece for the literary text, and no items can be written for only the informational text. If both texts are literary, items may be written to either or both. All dual-text stimuli sets should contain between 25-40% items written across both texts. \r\n\r\nWhen developing items from dual-text, Task Model 5 (short text constructed response-WR) should be written using the Appropriate Stems for Dual-Text Stimuli only to ensure students will have the opportunity to respond in writing to information from both texts.  Between 25-40% of all other items written in the dual-text set should be written across both texts. \r\n\r\nThe title of the each text should be included in the stem when more than one text is used.  Dual-text is considered long text.",
-        accessibility: "string",
+        accessibility: "Refer to the Smarter Balanced Assessment Consortium: Usability, Accessibility, and Accommodations Guidelines for information on accessibility.",
         stem: [
           {
             stemDesc: "-   Which [detail/sentence/line] from the passage **best** supports [provide inference or conclusion based on the passage]?\r\n\r\n-   [Provide inference or conclusion based on the passage]. Which [detail/sentence/line] from the passage **best** supports this [inference/conclusion] OR **best** shows [provide inference or conclusion]?\r\n\r\n-   The reader can [infer/conclude] [provide inference or conclusion based on the passage]. Which [detail/sentence/line] from the passage **best** supports this [inference/conclusion] OR **best** shows [provide inference/conclusion]?\r\n\r\n-   The [author/narrator] [infers/concludes] that [provide inference/conclusion based on the passage]. Which [detail/sentence/line] from the passage **best** supports this [inference/conclusion] OR **best** shows [provide inference/conclusion]?\r\n\r\n-   Read this [inference/conclusion].\r\n    [Provide inference or conclusion based on the passage].\r\n    Which [detail/sentence/line] from the passage **best** supports this [inference/conclusion] OR **best** shows [provide inference or conclusion]?",
@@ -119,7 +121,7 @@ export const mockDB =
         devNotes: "NA",
         complexity: "NA",
         dualText: "When a dual-text set contains one literary and one informational text, the literary text (text #1) is the primary focus, and the set of items must include items from the literary stimulus as well as items written across both texts. The informational text (text #2) must only be used as a foundational piece for the literary text, and no items can be written for only the informational text. If both texts are literary, items may be written to either or both. All dual-text stimuli sets should contain between 25-40% items written across both texts. \r\n\r\nWhen developing items from dual-text, Task Model 5 (short text constructed response-WR) should be written using the Appropriate Stems for Dual-Text Stimuli only to ensure students will have the opportunity to respond in writing to information from both texts.  Between 25-40% of all other items written in the dual-text set should be written across both texts. \r\n\r\nThe title of the each text should be included in the stem when more than one text is used.  Dual-text is considered long text.",
-        accessibility: "string",
+        accessibility: "Refer to the Smarter Balanced Assessment Consortium: Usability, Accessibility, and Accommodations Guidelines for information on accessibility.",
         stem: [
           {
             stemDesc: "-   Which [detail/sentence/line] from the passage **best** supports [provide inference or conclusion based on the passage]?\r\n\r\n-   [Provide inference or conclusion based on the passage]. Which [detail/sentence/line] from the passage **best** supports this [inference/conclusion] OR **best** shows [provide inference or conclusion]?\r\n\r\n-   The reader can [infer/conclude] [provide inference or conclusion based on the passage]. Which [detail/sentence/line] from the passage **best** supports this [inference/conclusion] OR **best** shows [provide inference/conclusion]?\r\n\r\n-   The [author/narrator] [infers/concludes] that [provide inference/conclusion based on the passage]. Which [detail/sentence/line] from the passage **best** supports this [inference/conclusion] OR **best** shows [provide inference/conclusion]?\r\n\r\n-   Read this [inference/conclusion].\r\n    [Provide inference or conclusion based on the passage].\r\n    Which [detail/sentence/line] from the passage **best** supports this [inference/conclusion] OR **best** shows [provide inference or conclusion]?",
@@ -269,7 +271,7 @@ export const mockDB =
         devNotes: "When there is more than one DOK listed, DOK 3 is for machine-scored items and DOK 4 is for short-text items.",
         complexity: "PT stimuli should follow the guidelines in the stimulus specifications document: Smarter Balanced Assessment Consortium: English Language Arts & Literacy Computer Adaptive Test (CAT) and Performance Task (PT) Stimulus Specifications; however, the complexity of the stimuli, taken as a whole, should be at approximately the lower end of the target grade level. The vocabulary used in the stimulus and the item should be on or below grade level. In some instances, vocabulary may be above grade level as long as the stimulus has sufficient context to support the meaning of the word. In other cases, a complex authentic source that is at a reading level above the target grade (e.g., a historical primary source document) may be included, but these should be used with caution and with appropriate supports (e.g., historical context, definitions of key terms).",
         dualText: "NA",
-        accessibility: "string",
+        accessibility: "Students will be required to read short and long stimuli, interpret information from text and/or graphic sources, and use a mouse. Students with physical impairments may need to use an adapted mouse or a computer with eye- scanning capabilities. Students who are visually impaired or blind may need enlarged or brailled text and picture descriptions of art. Illustrations that need to be interpreted will need to have detailed written descriptions in order for them to be accessible for students who are blind. Students with reading disabilities may need to read the text to themselves, or use trackers or maskers to follow along. Students with visual-processing impairments may benefit from using a tracker or masker when reading. Other formats or supports may be necessary for students with other disabilities. The accommodations listed here are suggestions and could be altered depending on what accommodations will be allowable. Refer to the *Smarter Balanced Assessment Consortium: Usability, Accessibility, and Accommodations Guidelines* for information on accessibility concerns.",
         stem: [
           {
             stemDesc: "**Lead-in:** No lead-in\r\n\r\n**Stimulus:** No additional stimulus\r\n\r\n**Stems:**\r\n\r\n-   Source \\#1 discusses &#60topic&#62. Explain how the information in Source \\#2 adds to the reader’s understanding of &#60topic&#62. Give **two** [details/examples] from Source \\#2 to support your explanation.\r\n\r\n-   Source \\#1 and Source \\#3 discuss &#60topic&#62. Explain what the sources say about &#60topic&#62. Use **two** details, one detail from Source \\#1 and one detail from Source \\#3, to support your explanation. For each detail, include the source title or number.",
@@ -514,7 +516,7 @@ export const mockDB =
         devNotes: "When there is more than one DOK listed, DOK 3 is for machine-scored items and DOK 4 is for short-text items.",
         complexity: "PT stimuli should follow the guidelines in the stimulus specifications document: Smarter Balanced Assessment Consortium: English Language Arts & Literacy Computer Adaptive Test (CAT) and Performance Task (PT) Stimulus Specifications; however, the complexity of the stimuli, taken as a whole, should be at approximately the lower end of the target grade level. The vocabulary used in the stimulus and the item should be on or below grade level. In some instances, vocabulary may be above grade level as long as the stimulus has sufficient context to support the meaning of the word. In other cases, a complex authentic source that is at a reading level above the target grade (e.g., a historical primary source document) may be included, but these should be used with caution and with appropriate supports (e.g., historical context, definitions of key terms).",
         dualText: "NA",
-        accessibility: "string",
+        accessibility: "Students will be required to read short and long stimuli, interpret information from text and/or graphic sources, and use a mouse. Students with physical impairments may need to use an adapted mouse or a computer with eye- scanning capabilities. Students who are visually impaired or blind may need enlarged or brailled text and picture descriptions of art. Illustrations that need to be interpreted will need to have detailed written descriptions in order for them to be accessible for students who are blind. Students with reading disabilities may need to read the text to themselves, or use trackers or maskers to follow along. Students with visual-processing impairments may benefit from using a tracker or masker when reading. Other formats or supports may be necessary for students with other disabilities. The accommodations listed here are suggestions and could be altered depending on what accommodations will be allowable. Refer to the *Smarter Balanced Assessment Consortium: Usability, Accessibility, and Accommodations Guidelines* for information on accessibility concerns.",
         stem: [
           {
             stemDesc: "**Lead-in:** No lead-in\r\n\r\n**Stimulus:** No additional stimulus\r\n\r\n**Stems:**\r\n\r\n-   Source \\#1 discusses &#60topic&#62. Explain how the information in Source \\#2 adds to the reader’s understanding of &#60topic&#62. Give **two** [details/examples] from Source \\#2 to support your explanation.\r\n\r\n-   Source \\#1 and Source \\#3 discuss &#60topic&#62. Explain what the sources say about &#60topic&#62. Use **two** details, one detail from Source \\#1 and one detail from Source \\#3, to support your explanation. For each detail, include the source title or number.",
@@ -681,6 +683,7 @@ export const mockDB =
     claimNumber: "C1",
     grades: 3,
     subject: "Math",
+    description: "Students can explain and apply mathematical concepts and carry out mathematical procedures with precision and fluency.",
     shortCode: "M.G3.C1",
     domain: "string",
     target: [
@@ -700,9 +703,14 @@ export const mockDB =
         ],
         DOK: [
           {
-            dokCode: "string",
-            dokDesc: "string",
-            dokShort: "string"
+            dokCode: "M-DOK1",
+            dokDesc: "Recall includes the recall of information such as fact, definition, term, or a simple procedure, as well as performing a simple algorithm or  applying a formula. That is, in mathematics a one-step, well-defined, and straight algorithmic procedure should be included at this lowest level. Other  key words that signify a Level 1 include \"identify,\" \"recall,\" \"recognize,\" \"use,\" and \"measure.\" Verbs such as \"describe\" and \"explain\" could be  classified at different levels depending on what is to be described and explained.",
+            dokShort: "Level 1: Recall and Reproduction"
+          },
+          {
+            dokCode: "M-DOK2",
+            dokDesc: "Skill/Concept includes the engagement of some mental processing beyond a habitual response. A Level 2 assessment item requires students to make some decisions as to how to approach the problem or activity, whereas Level 1 requires students to demonstrate a rote response, perform a well-known algorithm, follow a set procedure (like a recipe), or perform a clearly defined series of steps. Keywords that generally distinguish a Level 2 item include \"classify,\" \"organize,\" \"estimate,\" \"make observations,\" \"collect and display data,\" and \"compare data.\" These actions imply more than one step. For example, to compare data requires first identifying characteristics of the objects or phenomenon and then grouping or ordering the objects. Some action verbs, such as \"explain,\" \"describe,\" or \"interpret\" could be classified at different levels depending on the object of the action. For example, if an item required students to explain how light affects mass by indicating there is a relationship between light and heat, this is considered a Level 2. Interpreting information from a simple graph, requiring reading information from the graph, also is a Level 2. Interpreting information from a complex graph that requires some decisions on what features of the graph need to be considered and how information from the graph can be aggregated is a Level 3. Caution is warranted in interpreting Level 2 as only skills because some reviewers will interpret skills very narrowly, as primarily numerical skills, and such interpretation excludes from this level other skills such as visualization skills and probability skills, which may be more complex simply because they are less common. Other Level 2 activities include explaining the purpose and use of experimental procedures; carrying out experimental procedures; making observations and collecting data; classifying, organizing, and comparing data; and organizing and displaying data in tables, graphs, and charts.",
+            dokShort: "Level 2: Skills and Concepts"
           }
         ],
         type: "string",
@@ -719,7 +727,7 @@ export const mockDB =
         devNotes: "Items where students are required to generate measurement data and make a line plot (per CCSS 3.MD.B.4) will be covered in Claims 2 and 4.",
         complexity: "string",
         dualText: "string",
-        accessibility: "string",
+        accessibility: "Hot spot items are not currently able to be Brailled. Minimize the number of items developed to this TM.",
         stem: [
           {
             stemDesc: "string",
@@ -766,9 +774,14 @@ export const mockDB =
         ],
         DOK: [
           {
-            dokCode: "string",
-            dokDesc: "string",
-            dokShort: "string"
+            dokCode: "M-DOK1",
+            dokDesc: "Recall includes the recall of information such as fact, definition, term, or a simple procedure, as well as performing a simple algorithm or  applying a formula. That is, in mathematics a one-step, well-defined, and straight algorithmic procedure should be included at this lowest level. Other  key words that signify a Level 1 include \"identify,\" \"recall,\" \"recognize,\" \"use,\" and \"measure.\" Verbs such as \"describe\" and \"explain\" could be  classified at different levels depending on what is to be described and explained.",
+            dokShort: "Level 1: Recall and Reproduction"
+          },
+          {
+            dokCode: "M-DOK2",
+            dokDesc: "Skill/Concept includes the engagement of some mental processing beyond a habitual response. A Level 2 assessment item requires students to make some decisions as to how to approach the problem or activity, whereas Level 1 requires students to demonstrate a rote response, perform a well-known algorithm, follow a set procedure (like a recipe), or perform a clearly defined series of steps. Keywords that generally distinguish a Level 2 item include \"classify,\" \"organize,\" \"estimate,\" \"make observations,\" \"collect and display data,\" and \"compare data.\" These actions imply more than one step. For example, to compare data requires first identifying characteristics of the objects or phenomenon and then grouping or ordering the objects. Some action verbs, such as \"explain,\" \"describe,\" or \"interpret\" could be classified at different levels depending on the object of the action. For example, if an item required students to explain how light affects mass by indicating there is a relationship between light and heat, this is considered a Level 2. Interpreting information from a simple graph, requiring reading information from the graph, also is a Level 2. Interpreting information from a complex graph that requires some decisions on what features of the graph need to be considered and how information from the graph can be aggregated is a Level 3. Caution is warranted in interpreting Level 2 as only skills because some reviewers will interpret skills very narrowly, as primarily numerical skills, and such interpretation excludes from this level other skills such as visualization skills and probability skills, which may be more complex simply because they are less common. Other Level 2 activities include explaining the purpose and use of experimental procedures; carrying out experimental procedures; making observations and collecting data; classifying, organizing, and comparing data; and organizing and displaying data in tables, graphs, and charts.",
+            dokShort: "Level 2: Skills and Concepts"
           }
         ],
         type: "string",
@@ -785,7 +798,7 @@ export const mockDB =
         devNotes: "Items where students are required to generate measurement data and make a line plot (per CCSS 3.MD.B.4) will be covered in Claims 2 and 4.",
         complexity: "string",
         dualText: "string",
-        accessibility: "string",
+        accessibility: "Hot spot items are not currently able to be Brailled. Minimize the number of items developed to this TM.",
         stem: [
           {
             stemDesc: "string",

@@ -32,6 +32,50 @@ export const mockELA = {
       humanCodingScheme: "E.GHS.C4R.T4",
       fullStatement: "Cite evidence to support arguments, ideas, analyses, hypotheses, or conjectures.",
       abbreviatedStatement: "Use Evidence"
+    },
+    {
+      uri: "https://case.smarterbalanced.org/ims/case/v1p0/CFItems/b54bc0fe-428f-54a0-a4a2-0047e691bb3c",
+      identifier: "b54bc0fe-428f-54a0-a4a2-0047e691bb3c",
+      lastChangeDateTime: "2017-05-10T16:09:43+00:00",
+      CFDocumentURI: {
+        title: "Smarter Balanced ELA Content Specification",
+        identifier: "cbbb8d01-63fc-4adf-9803-a3781839b6b6",
+        uri: "https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/cbbb8d01-63fc-4adf-9803-a3781839b6b6"
+      },
+      CFItemType: "Claim",
+      CFItemTypeURI: {
+        title: "Claim",
+        identifier: "b200c638-86b6-5df7-a2df-36c556e7db3c",
+        uri: "https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/b200c638-86b6-5df7-a2df-36c556e7db3c"
+      },
+      educationLevel: [
+        "03"
+      ],
+      humanCodingScheme: "E.G3.C1",
+      fullStatement: "Students can read closely and analytically to comprehend a range of increasingly complex literary and informational texts.",
+      abbreviatedStatement: "Reading"
+    },
+    {
+      uri: "https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ee0fec14-d5a4-5436-8cf2-5544cded4e90",
+      identifier: "ee0fec14-d5a4-5436-8cf2-5544cded4e90",
+      lastChangeDateTime: "2018-03-02T17:35:08+00:00",
+      CFDocumentURI: {
+        title: "Smarter Balanced ELA Content Specification",
+        identifier: "cbbb8d01-63fc-4adf-9803-a3781839b6b6",
+        uri: "https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/cbbb8d01-63fc-4adf-9803-a3781839b6b6"
+      },
+      CFItemType: "Domain",
+      CFItemTypeURI: {
+        title: "Domain",
+        identifier: "89d67580-f024-5f77-abd7-acfaef39b204",
+        uri: "https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/89d67580-f024-5f77-abd7-acfaef39b204"
+      },
+      educationLevel: [
+        "03"
+      ],
+      humanCodingScheme: "E.G3.C1RL",
+      fullStatement: "Literary Texts",
+      abbreviatedStatement: "Literary Texts"
     }
   ],
   CFAssociations: [

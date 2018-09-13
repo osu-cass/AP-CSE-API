@@ -229,7 +229,7 @@ for(let i = 0; i < docNames.length; i++) {
 					x++;
 				}
 			}
-			if (jsonData[i].CFItems[p].CFItemType === 'Acessibility') {
+			if (jsonData[i].CFItems[p].CFItemType === 'Accessibility') {
 				claimArray[i].target[0].accessibility = jsonData[i].CFItems[p].fullStatement;
 			}
 			if (jsonData[i].CFItems[p].CFItemType === 'Task Model') {
@@ -413,9 +413,6 @@ for(let i = 0; i < docNames.length; i++) {
 		let jsData;
 		if (subject === 'English Language Arts') {
 			jsData = ELASpec;
-		}
-		else {
-			jsData = MATHSpec;
 		}
 		for (let i = 0; i < jsData.CFItems.length; i++) {
 
