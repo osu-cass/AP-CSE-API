@@ -1,6 +1,7 @@
 import { DbClient, IDbClient } from './index';
 import { MongoClient } from 'mongodb';
-import { db, close,collection, collections, dropCollection, createCollection } from '../../__mocks__/mongodb';
+import { db, close, collection, collections, dropCollection, createCollection } from '../../__mocks__/mongodb';
+import { ITargetParams } from '../../routes/target/index';
 
 describe('MongoDb Database client', () => {
 
@@ -154,6 +155,7 @@ describe('MongoDb Database client', () => {
     describe('data retrieval', () => {
         let client: DbClient;
         let dbInitArgs: IDbClient;
+        let mockTargetParams: ITargetParams;
 
         beforeAll(() => {
             dbInitArgs = {
@@ -161,15 +163,33 @@ describe('MongoDb Database client', () => {
                 port: 27017,
                 dbName: 'test-db'
             };
+            mockTargetParams = {
+                subject: 'Math',
+                grades: ['5','6'],
+                claimNumber: 'C2',
+                targetShortCode: 'MG.D.C2.TD'
+            };
             client = new DbClient(dbInitArgs);
         });
 
-        it('gets data by search parameter/string', () => {
-            // client.getTargets('');
+
+        it('gets Target by ITargetParams', async () => {
+            await client.connect();
+            const result = await client.getTargets(mockTargetParams);
             expect.assertions(0);
         });
 
-        it('gets data by filter parameter', () => {
+        it('throws error getting Target', async () => {
+            let result;
+            try {
+                result = await client.getTargets(mockTargetParams);
+            } catch (err) {
+                expect.assertions(1);
+                expect(err).toEqual(new Error('error'));
+            }
+        });
+
+        it('gets data by search parameter', () => {
             client.getBySearchParam('');
             expect.assertions(0);
         });
