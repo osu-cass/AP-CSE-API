@@ -6,8 +6,8 @@ import { CSEResponse } from '../../server/index';
 export interface ITargetParams {
     subject: string;
     grades: string[] | number;
-    claim: number;
-    target: number;
+    claimNumber: string;
+    targetShortCode: string;
 }
 
 export const handler = async (req: Request, res: CSEResponse) => {
