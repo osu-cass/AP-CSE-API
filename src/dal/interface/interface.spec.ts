@@ -176,7 +176,7 @@ describe('MongoDb Database client', () => {
 
             it('gets Target by ITargetParams', async () => {
                 await client.connect();
-                const result = await client.getTargets(mockTargetParams);
+                const result = await client.getTarget(mockTargetParams);
                 expect.assertions(1);
                 expect(result).toEqual([{ test: 'passed' }]);
             });
@@ -184,7 +184,7 @@ describe('MongoDb Database client', () => {
             it('throws error getting Target', async () => {
                 let result;
                 try {
-                    result = await client.getTargets(mockTargetParams);
+                    result = await client.getTarget(mockTargetParams);
                 } catch (err) {
                     expect.assertions(1);
                     expect(err).toEqual(new Error('error'));
@@ -195,7 +195,7 @@ describe('MongoDb Database client', () => {
                 let result;
                 try {
                     await client.connect();
-                    result = await client.getTargets(mockTargetParams);
+                    result = await client.getTarget(mockTargetParams);
                 } catch (err) {
                     expect.assertions(1);
                     expect(err).toEqual(new Error('db is not defined'));

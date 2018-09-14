@@ -55,7 +55,7 @@ export class DbClient {
         }
     }
 
-    public async getTargets(searchParams: ITargetParams): Promise<IClaim[]> {
+    public async getTarget(searchParams: ITargetParams): Promise<IClaim[]> {
         const { subject, grades, claimNumber, targetShortCode } = searchParams;
         let result: IClaim[];
         if (this.db) {

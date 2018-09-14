@@ -21,7 +21,7 @@ describe('target', () => {
         };
         dbClient = {
             connect: jest.fn().mockResolvedValue({}),
-            getTargets: jest.fn().mockResolvedValueOnce(result).mockRejectedValueOnce(new Error('error'))
+            getTarget: jest.fn().mockResolvedValueOnce(result).mockRejectedValueOnce(new Error('error'))
         };
         res = {
             send: jest.fn(),

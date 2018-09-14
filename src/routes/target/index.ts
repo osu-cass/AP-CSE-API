@@ -16,7 +16,7 @@ export const handler = async (req: Request, res: CSEResponse) => {
     let results;
     try {
         await dbClient.connect();
-        results = await dbClient.getTargets(targetParams);
+        results = await dbClient.getTarget(targetParams);
     } catch (error) {
         res.send(error);
     }
