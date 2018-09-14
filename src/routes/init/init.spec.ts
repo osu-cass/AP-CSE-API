@@ -1,5 +1,5 @@
 import { handler as dbInit } from './index';
-import { Request, Response, Send } from 'express';
+import { Request, Response} from 'express';
 
 jest.mock('express');
 
