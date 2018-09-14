@@ -57,9 +57,10 @@ export class DbClient {
 
     public async getTargets(searchParams: ITargetParams): Promise<IClaim[]> {
         const { subject, grades, claimNumber, targetShortCode } = searchParams;
+        let result: IClaim[];
         if (this.db) {
             try {
-                return await this.db.collection('claims').find({
+                result = await this.db.collection('claims').find({
                     subject,
                     grades,
                     claimNumber,
@@ -71,6 +72,8 @@ export class DbClient {
         } else {
             throw new Error('db is not defined');
         }
+
+        return result;
     }
 
     public getBySearchParam(param: string): void {
