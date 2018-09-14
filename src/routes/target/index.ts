@@ -10,20 +10,17 @@ export interface ITargetParams {
     target: number;
 }
 
-export const handler = (req: Request, res: CSEResponse) => {
+export const handler = async (req: Request, res: CSEResponse) => {
     const dbClient: DbClient = res.locals.dbClient;
     const targetParams: ITargetParams = req.params as ITargetParams;
     let results;
-    dbClient.connect().then(async () => {
-        try {
-            results = await dbClient.getTargets(targetParams);
-            res.send(results);
-        } catch (error) {
-            throw error;
-        }
-    }).catch((error) => {
+    try {
+        await dbClient.connect();
+        results = await dbClient.getTargets(targetParams);
+    } catch (error) {
         res.send(error);
-    });
+    }
+    res.send(results);
 };
 
 export const target = applyTracing('/target', handler);
