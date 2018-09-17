@@ -1,0 +1,180 @@
+{
+	"info": {
+		"_postman_id": "27b24276-6fa9-4967-bffa-185261a1b827",
+		"name": "cse-api",
+		"description": "Collection of requests for testing the cse-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Targets",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3fb1fb27-9f1a-4417-b724-57371608fd82",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{api-domain}}/{{target-endpoint}}/{{subject}}/{{grades}}/{{claim}}/{{target}}",
+					"host": [
+						"{{api-domain}}"
+					],
+					"path": [
+						"{{target-endpoint}}",
+						"{{subject}}",
+						"{{grades}}",
+						"{{claim}}",
+						"{{target}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Init Database",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{api-domain}}/{{init-endpoint}}",
+					"host": [
+						"{{api-domain}}"
+					],
+					"path": [
+						"{{init-endpoint}}"
+					]
+				},
+				"description": "Clears the existing db instance and re-populates in"
+			},
+			"response": []
+		},
+		{
+			"name": "Search",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{api-domain}}/{{search}}",
+					"host": [
+						"{{api-domain}}"
+					],
+					"path": [
+						"{{search}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PDF download",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{api-domain}}/{{pdf}}",
+					"host": [
+						"{{api-domain}}"
+					],
+					"path": [
+						"{{pdf}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "59afedc0-12c2-4fac-897a-40c6b18a619d",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "dfb559ce-7f2f-403a-abe6-493f3763776e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "557a34e8-3392-474f-9293-5c4a2ca2685a",
+			"key": "api-domain",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"id": "78bda9f5-39b3-4abd-abeb-9571ee268fe6",
+			"key": "pdf-endpoint",
+			"value": "api/pdf",
+			"type": "string"
+		},
+		{
+			"id": "e1cd0f04-e884-4756-9bcf-98a72dbf2140",
+			"key": "search-endpoint",
+			"value": "api/search",
+			"type": "string"
+		},
+		{
+			"id": "90735292-aadf-4b64-b979-4b3970ad5f99",
+			"key": "init-endpoint",
+			"value": "api/init",
+			"type": "string"
+		},
+		{
+			"id": "2350788e-4143-40d1-8082-cdd4cdebc1c7",
+			"key": "target-endpoint",
+			"value": "api/target",
+			"type": "string"
+		},
+		{
+			"id": "39571730-02f5-4059-88d6-bdaf074b135b",
+			"key": "subject",
+			"value": "Math",
+			"type": "string"
+		},
+		{
+			"id": "d27759c7-0b96-44f6-9428-8a2453ba338a",
+			"key": "grades",
+			"value": "11",
+			"type": "string"
+		},
+		{
+			"id": "9ca678ce-6e69-4879-a7af-2c54e2a2f53c",
+			"key": "claim",
+			"value": "C2",
+			"type": "string"
+		},
+		{
+			"id": "ff8096d9-86e6-4db6-b401-52e00d42b1f9",
+			"key": "target",
+			"value": "M.GHS.C2.TD",
+			"type": "string"
+		}
+	]
+}
