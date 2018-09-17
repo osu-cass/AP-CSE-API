@@ -1,13 +1,13 @@
 {
 	"info": {
 		"_postman_id": "27b24276-6fa9-4967-bffa-185261a1b827",
-		"name": "cse-api",
+		"name": "cse-api/",
 		"description": "Collection of requests for testing the cse-api",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Get Targets",
+			"name": "target/",
 			"event": [
 				{
 					"listen": "test",
@@ -39,12 +39,13 @@
 						"{{claim}}",
 						"{{target}}"
 					]
-				}
+				},
+				"description": "Returns an ITarget based on grade, subject, claimNumber, and target.shortCode. As of now, none of these arguments can be null."
 			},
 			"response": []
 		},
 		{
-			"name": "Init Database",
+			"name": "init/",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -63,7 +64,7 @@
 			"response": []
 		},
 		{
-			"name": "Search",
+			"name": "search/",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -81,7 +82,7 @@
 			"response": []
 		},
 		{
-			"name": "PDF download",
+			"name": "pdf/",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -123,55 +124,55 @@
 	],
 	"variable": [
 		{
-			"id": "557a34e8-3392-474f-9293-5c4a2ca2685a",
+			"id": "dd546a71-050c-44cc-a135-41283247c7eb",
 			"key": "api-domain",
 			"value": "http://localhost:3000",
 			"type": "string"
 		},
 		{
-			"id": "78bda9f5-39b3-4abd-abeb-9571ee268fe6",
+			"id": "63036600-1088-4891-aef2-bbe7aafa21ed",
 			"key": "pdf-endpoint",
 			"value": "api/pdf",
 			"type": "string"
 		},
 		{
-			"id": "e1cd0f04-e884-4756-9bcf-98a72dbf2140",
+			"id": "9bfa3509-5ab1-41a1-8369-f1c5c451a66d",
 			"key": "search-endpoint",
 			"value": "api/search",
 			"type": "string"
 		},
 		{
-			"id": "90735292-aadf-4b64-b979-4b3970ad5f99",
+			"id": "cdb83d26-ddc5-47af-abda-7e84e885882c",
 			"key": "init-endpoint",
 			"value": "api/init",
 			"type": "string"
 		},
 		{
-			"id": "2350788e-4143-40d1-8082-cdd4cdebc1c7",
+			"id": "acc76810-d503-4be6-867f-96db47a75cd6",
 			"key": "target-endpoint",
 			"value": "api/target",
 			"type": "string"
 		},
 		{
-			"id": "39571730-02f5-4059-88d6-bdaf074b135b",
+			"id": "f00c9303-b202-4358-9e2b-37ad7945018d",
 			"key": "subject",
 			"value": "Math",
 			"type": "string"
 		},
 		{
-			"id": "d27759c7-0b96-44f6-9428-8a2453ba338a",
+			"id": "cf65b87e-bd51-4d1a-afd4-7465a6fa1193",
 			"key": "grades",
 			"value": "11",
 			"type": "string"
 		},
 		{
-			"id": "9ca678ce-6e69-4879-a7af-2c54e2a2f53c",
+			"id": "555b655a-d207-4787-a688-320bbaa809fd",
 			"key": "claim",
 			"value": "C2",
 			"type": "string"
 		},
 		{
-			"id": "ff8096d9-86e6-4db6-b401-52e00d42b1f9",
+			"id": "5790398b-fe1b-433d-acfe-8e5543edc91d",
 			"key": "target",
 			"value": "M.GHS.C2.TD",
 			"type": "string"
