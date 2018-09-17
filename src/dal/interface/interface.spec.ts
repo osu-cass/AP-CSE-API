@@ -168,7 +168,7 @@ describe('MongoDb Database client', () => {
                     subject: 'Math',
                     grades: ['5', '6'],
                     claimNumber: 'C2',
-                    targetShortCode: 'MG.D.C2.TD'
+                    targetShortCode: '1234'
                 };
                 client = new DbClient(dbInitArgs);
             });
@@ -178,7 +178,7 @@ describe('MongoDb Database client', () => {
                 await client.connect();
                 const result = await client.getTarget(mockTargetParams);
                 expect.assertions(1);
-                expect(result).toEqual([{ test: 'passed' }]);
+                expect(result).toEqual({ shortCode: '1234', test: 'passed' });
             });
 
             it('throws error getting Target', async () => {

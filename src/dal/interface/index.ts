@@ -1,6 +1,7 @@
 import { MongoClient, Db, Collection, InsertWriteOpResult, Cursor } from 'mongodb';
-import { ITargetParams } from '../../routes/target/index';
-import { IClaim } from '../../models/claim/index';
+import { ITargetParams } from '../../routes/target';
+import { IClaim } from '../../models/claim';
+import { ITarget } from '../../models/target';
 
 export interface IDbClient {
     url: string;
@@ -55,17 +56,15 @@ export class DbClient {
         }
     }
 
-    public async getTarget(searchParams: ITargetParams): Promise<IClaim[]> {
+    public async getTarget(searchParams: ITargetParams): Promise<ITarget> {
         const { subject, grades, claimNumber, targetShortCode } = searchParams;
-        let result: IClaim[];
+        let result: ITarget | undefined;
         if (this.db) {
             try {
-                result = await this.db.collection('claims').find({
-                    subject,
-                    grades,
-                    claimNumber,
-                    'target.shortCode': targetShortCode
-                }).toArray();
+                const dbResult: IClaim = await this.db.collection('claims').findOne({
+                    subject, grades, claimNumber,
+                    'target.shortCode': targetShortCode }) as IClaim;
+                result = dbResult.target.find(t => t.shortCode === targetShortCode);
             } catch (error) {
                 throw error;
             }
@@ -73,7 +72,7 @@ export class DbClient {
             throw new Error('db is not defined');
         }
 
-        return result;
+        return <ITarget>result;
     }
 
     public getBySearchParam(param: string): void {
