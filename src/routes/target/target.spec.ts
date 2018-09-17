@@ -25,6 +25,7 @@ describe('target', () => {
         };
         res = {
             send: jest.fn(),
+            status: jest.fn(),
             locals: { dbClient }
         };
     });

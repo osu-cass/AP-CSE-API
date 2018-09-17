@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import { applyTracing } from '../../utils/tracer';
 import { DbClient } from '../../dal/interface';
-import { CSEResponse } from '../../server/index';
+import { CSEResponse } from '../../server';
 
 export interface ITargetParams {
     subject: string;
@@ -18,8 +18,10 @@ export const handler = async (req: Request, res: CSEResponse) => {
         await dbClient.connect();
         results = await dbClient.getTarget(targetParams);
     } catch (error) {
+        res.status(500);
         res.send(error);
     }
+    res.status(200);
     res.send(results);
 };
 
