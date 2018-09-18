@@ -1,4 +1,3 @@
-// tslint:disable
 export const mockData = {
     CFDocuments: [
         {
@@ -62,13 +61,13 @@ export const mockData = {
             identifier: 'b7bc9d8c-cb5f-4dc8-96da-13ce635053d1',
             lastChangeDateTime: '2018-03-01T21:01:43+00:00',
             CFPackageURI: {
-              title: "Norm Webb's Depth of Knowledge [DOK] Levels of Cognitive Dif",
+              title: 'Norm Webb\'s Depth of Knowledge [DOK] Levels of Cognitive Dif',
               identifier: 'b7bc9d8c-cb5f-4dc8-96da-13ce635053d1',
               uri: 'https://case.smarterbalanced.org/ims/case/v1p0/CFPackages/b7bc9d8c-cb5f-4dc8-96da-13ce635053d1'
             },
             creator: 'Norm Webb',
             publisher: 'Smarter Balanced Assessment Consortium',
-            title: "Norm Webb's Depth of Knowledge [DOK] Levels of Cognitive Difficulty"
+            title: 'Norm Webb\'s Depth of Knowledge [DOK] Levels of Cognitive Difficulty'
           },
           {
             uri: 'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/c60fa750-d5d2-11e7-8f78-23d147275a57',
@@ -97,30 +96,30 @@ export const mockData = {
             notes: 'ELA PT Item Spec G5 Info'
           },
           {
-            uri: "https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/1796d9a2-d5ee-11e7-b39f-71a145b86a18",
-            identifier: "1796d9a2-d5ee-11e7-b39f-71a145b86a18",
-            lastChangeDateTime: "2018-03-01T21:01:43+00:00",
+            uri: 'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/1796d9a2-d5ee-11e7-b39f-71a145b86a18',
+            identifier: '1796d9a2-d5ee-11e7-b39f-71a145b86a18',
+            lastChangeDateTime: '2018-03-01T21:01:43+00:00',
             CFPackageURI: {
-              title: "Grade 3 Mathematics Item Specification C1 TH",
-              identifier: "1796d9a2-d5ee-11e7-b39f-71a145b86a18",
-              uri: "https://case.smarterbalanced.org/ims/case/v1p0/CFPackages/1796d9a2-d5ee-11e7-b39f-71a145b86a18"
+              title: 'Grade 3 Mathematics Item Specification C1 TH',
+              identifier: '1796d9a2-d5ee-11e7-b39f-71a145b86a18',
+              uri: 'https://case.smarterbalanced.org/ims/case/v1p0/CFPackages/1796d9a2-d5ee-11e7-b39f-71a145b86a18'
             },
             subjectURI: [
               {
-                title: "Math",
-                identifier: "d41fb0f6-b390-11e7-9a98-233b080813ce",
-                uri: "https://case.smarterbalanced.org/ims/case/v1p0/CFSubjects/d41fb0f6-b390-11e7-9a98-233b080813ce"
+                title: 'Math',
+                identifier: 'd41fb0f6-b390-11e7-9a98-233b080813ce',
+                uri: 'https://case.smarterbalanced.org/ims/case/v1p0/CFSubjects/d41fb0f6-b390-11e7-9a98-233b080813ce'
               }
             ],
-            officialSourceURL: "https://case.smarterbalanced.org/content/Documents/Item%20Specs/Math_Item_Specs/Claim1_mathematics_Gr3_specs/G3_1H_MD_Spec_v3_phase3.docx",
-            creator: "Smarter Balanced_Math Claim 1 Item Specifications",
-            publisher: "Smarter Balanced Assessment Consortium",
-            title: "Grade 3 Mathematics Item Specification C1 TH",
+            officialSourceURL: 'https://case.smarterbalanced.org/content/Documents/Item%20Specs/Math_Item_Specs/Claim1_mathematics_Gr3_specs/G3_1H_MD_Spec_v3_phase3.docx',
+            creator: 'Smarter Balanced_Math Claim 1 Item Specifications',
+            publisher: 'Smarter Balanced Assessment Consortium',
+            title: 'Grade 3 Mathematics Item Specification C1 TH',
             subject: [
-              "Math"
+              'Math'
             ],
-            adoptionStatus: "Draft",
-            notes: "G3_1H_MD_Spec_v3_phase3"
+            adoptionStatus: 'Draft',
+            notes: 'G3_1H_MD_Spec_v3_phase3'
           }
     ]
     };

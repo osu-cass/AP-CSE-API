@@ -7,7 +7,7 @@ import { CSEResponse } from '../../server/index';
 
 
 export const handler = async (req: Request, res: CSEResponse): Promise<void> => {
-    const output: string = await importDbEntries();
+    const output: object[] = await importDbEntries();
     const dbArgs: IDbClient = {
         url: 'mongodb://mongo',
         port: 27017,
@@ -16,7 +16,7 @@ export const handler = async (req: Request, res: CSEResponse): Promise<void> => 
     const client: DbClient = new DbClient(dbArgs);
     await client.connect();
     // tslint:disable-next-line
-    const result: InsertWriteOpResult | undefined = await client.insert(JSON.parse(output));
+    const result: InsertWriteOpResult | undefined = await client.insert(output);
     res.header('Content-Type', 'application/json');
     res.send(result ? result.result : 'Nope');
 };

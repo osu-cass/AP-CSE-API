@@ -1,5 +1,4 @@
-// tslint:disable-next-line
-import fetch from 'jest-fetch-mock';
+import {default as fetch} from 'jest-fetch-mock';
 jest.setMock('node-fetch', fetch);
 import { importDbEntries, getClaimShortCode, getClaim, importDocs, fetchAllDocs } from './import';
 import { mockData } from './__mocks__/mockAllDocs';
@@ -12,8 +11,8 @@ import { mockDB } from './__mocks__/mockDBEntry';
 import { mockPT } from './__mocks__/mockPT';
 const subject = ['English Language Arts', 'Math'];
 const claim: string = 'C1';
-const grade: string = '3';
-const hs: string  = '10';
+const grade: string[] = ['3'];
+const hs: string[]  = ['10'];
 const gradeZero = ['0', '10'];
 const title = [
     'English Language Arts Specification: Grade 3 Claim 1 Target 1',
@@ -69,7 +68,7 @@ describe('Case API Scraper', () => {
             [JSON.stringify(mockMATHPackage)]);
         const result = await importDbEntries();
         expect(fetch.mock.calls.length).toBe(7);
-        expect(result).toEqual(JSON.stringify(mockDB, undefined, 4));
+        expect(JSON.stringify(result, undefined, 4)).toEqual(JSON.stringify(mockDB, undefined, 4));
     });
     it('makes shortcodes', () => {
         const ELAresult = getClaimShortCode(subject[0], claim, grade);
