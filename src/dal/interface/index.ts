@@ -46,8 +46,13 @@ export class DbClient {
                 }
                 this.db.createCollection('claims');
                 result = await this.db.collection('claims').insertMany(json);
-            } catch (error) {
-                throw error;
+                this.db.collection('claims').createIndex({
+                    'claimNumber': 'text',
+                    'subject': 'text',
+                    'target.shortCode': 'text'
+                });
+            } catch (err) {
+                throw err;
             }
 
             return result;

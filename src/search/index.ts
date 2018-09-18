@@ -12,5 +12,9 @@ export class SearchClient {
             log: 'trace'
         });
     }
+
+    // public docExists() {
+
+    // }
 }
 
