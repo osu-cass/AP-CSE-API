@@ -19,12 +19,20 @@ jest.mock('../../dal/interface', () => {
 describe('init', () => {
     let req: Partial<Request>;
     let res: Partial<Response>;
+    let mockSearchClient;
 
     beforeAll(() => {
+        mockSearchClient = {
+            insertDocuments: jest.fn()
+        };
         req = {};
         res = {
             header: jest.fn(),
-            send: jest.fn()
+            send: jest.fn(),
+            status: jest.fn(),
+            locals: {
+                searchClient: mockSearchClient
+            }
         };
     });
 
@@ -38,6 +46,6 @@ describe('init', () => {
     it('fails to init database', async () => {
         expect.assertions(1);
         await dbInit(<Request>req, <Response>res);
-        expect(res.send).toBeCalledWith('Nope');
+        expect(res.send).toBeCalledWith('insert failed');
     });
 });
