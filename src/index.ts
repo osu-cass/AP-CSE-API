@@ -4,6 +4,4 @@ import { SearchClient } from './dal/search';
 
 const server: Server = new Server();
 
-const client = new SearchClient();
-
 const app: http.Server = server.start();
