@@ -10,12 +10,13 @@ export interface IDbClient {
 }
 
 /**
- * This class encaspulates and handles communication with Elasticsearch and
+ * This class encapsulates and handles communication with Elasticsearch and
  * MongoDB.
  */
 export class DbClient {
     public uri: string;
     public dbName: string;
+    private client?: MongoClient;
     private db?: Db;
 
     constructor(args: IDbClient) {
@@ -23,30 +24,37 @@ export class DbClient {
         this.dbName = args.dbName;
     }
 
-    // tslint:disable:no-floating-promises
     public async connect(): Promise<void> {
-        let client: MongoClient;
         try {
-            client = await MongoClient.connect(this.uri, { auth: { user: 'root', password: 'example' } });
-            this.db = client.db(this.dbName);
+            this.client = await MongoClient.connect(this.uri, { auth: { user: 'root', password: 'example' } });
+            this.db = this.client.db(this.dbName);
         } catch (err) {
             throw err;
         }
     }
 
-    public async insert(json: object[]): Promise<InsertWriteOpResult> {
+    public async close(): Promise<void> {
+        if (this.client) {
+            try {
+                await this.client.close();
+            } catch (err) {
+                throw err;
+            }
+        }
+    }
+
+    public async insert(documents: IClaim[]): Promise<InsertWriteOpResult> {
         let result: InsertWriteOpResult;
-        // tslint:disable-next-line:no-any
-        let collections: Collection<any>[];
         if (this.db) {
             try {
-                collections = await this.db.collections();
-                if(collections && collections.find(collection => collection.collectionName === 'claims')) {
+                // tslint:disable-next-line:no-any
+                const collections: Collection<any>[] = await this.db.collections();
+                if (collections && collections.find(collection => collection.collectionName === 'claims')) {
                     await this.db.dropCollection('claims');
                 }
-                this.db.createCollection('claims');
-                result = await this.db.collection('claims').insertMany(json);
-                this.db.collection('claims').createIndex({
+                await this.db.createCollection('claims');
+                result = await this.db.collection('claims').insertMany(documents);
+                await this.db.collection('claims').createIndex({
                     'claimNumber': 'text',
                     'subject': 'text',
                     'target.shortCode': 'text'
@@ -61,6 +69,22 @@ export class DbClient {
         }
     }
 
+    public async getClaims(): Promise<IClaim[]> {
+        let result: IClaim[];
+        if (this.db) {
+            try {
+                const dbResult: Cursor<IClaim> = this.db.collection('claims').find({});
+                result = await dbResult.toArray();
+            } catch (error) {
+                throw error;
+            }
+        } else {
+            throw new Error('db is not defined');
+        }
+
+        return result;
+    }
+
     public async getTarget(searchParams: ITargetParams): Promise<ITarget> {
         const { subject, grades, claimNumber, targetShortCode } = searchParams;
         let result: ITarget | undefined;
@@ -68,7 +92,8 @@ export class DbClient {
             try {
                 const dbResult: IClaim = await this.db.collection('claims').findOne({
                     subject, grades, claimNumber,
-                    'target.shortCode': targetShortCode }) as IClaim;
+                    'target.shortCode': targetShortCode
+                }) as IClaim;
                 result = dbResult.target.find(t => t.shortCode === targetShortCode);
             } catch (error) {
                 throw error;
@@ -78,10 +103,6 @@ export class DbClient {
         }
 
         return <ITarget>result;
-    }
-
-    public getBySearchParam(param: string): void {
-        return;
     }
 
 }

@@ -1,7 +1,16 @@
-import { DbClient, IDbClient } from './index';
+import { DbClient, IDbClient } from '.';
 import { MongoClient } from 'mongodb';
 import { db, close, collection, collections, dropCollection, createCollection } from '../../__mocks__/mongodb';
-import { ITargetParams } from '../../routes/target/index';
+import { ITargetParams } from '../../routes/target';
+import { IClaim } from '../../models/claim';
+
+jest.mock('../search', () => {
+    return {
+        SearchClient: jest.fn().mockImplementation(() => ({
+            insertDocuments: jest.fn().mockResolvedValue({})
+        }))
+    };
+});
 
 describe('MongoDb Database client', () => {
 
@@ -75,7 +84,7 @@ describe('MongoDb Database client', () => {
     describe('data insertion', () => {
         let client: DbClient;
         let dbInitArgs: IDbClient;
-        let testData: object[];
+        let testData: Partial<IClaim>[];
 
         beforeAll(() => {
             dbInitArgs = {
@@ -84,7 +93,7 @@ describe('MongoDb Database client', () => {
                 dbName: 'test-db'
             };
             client = new DbClient(dbInitArgs);
-            testData = [{ value: 'text' }];
+            testData = [{ title: 'text' }];
         });
 
         afterEach(() => {
@@ -96,7 +105,7 @@ describe('MongoDb Database client', () => {
 
         it('successfully inserts data into mongodb', async () => {
             await client.connect();
-            const result = await client.insert(testData);
+            const result = await client.insert(<IClaim[]>testData);
             expect.assertions(5);
             expect(result).toEqual('success');
             expect(collections).toHaveBeenCalledTimes(1);
@@ -106,7 +115,7 @@ describe('MongoDb Database client', () => {
         });
 
         it('successfully replaces data in mongodb', async () => {
-            const result = await client.insert(testData);
+            const result = await client.insert(<IClaim[]>testData);
             expect.assertions(5);
             expect(result).toEqual('success');
             expect(collections).toHaveBeenCalledTimes(1);
@@ -119,7 +128,7 @@ describe('MongoDb Database client', () => {
             let result;
             expect.assertions(6);
             try {
-                result = await client.insert(testData);
+                result = await client.insert(<IClaim[]>testData);
             } catch (err) {
                 expect(err).toEqual(new Error('contrived error'));
                 expect(result).toBe(undefined);
@@ -139,7 +148,7 @@ describe('MongoDb Database client', () => {
             });
             expect.assertions(6);
             try {
-                result = await client.insert(testData);
+                result = await client.insert(<IClaim[]>testData);
             } catch (err) {
                 expect(err).toEqual(new Error('db is not defined'));
             }
@@ -202,25 +211,6 @@ describe('MongoDb Database client', () => {
                 }
             });
 
-        });
-
-        describe('search', () => {
-            let client: DbClient;
-            let dbInitArgs: IDbClient;
-
-            beforeAll(() => {
-                dbInitArgs = {
-                    url: 'http://mongodb',
-                    port: 27017,
-                    dbName: 'test-db'
-                };
-                client = new DbClient(dbInitArgs);
-            });
-
-            it('gets data by search parameter', () => {
-                client.getBySearchParam('');
-                expect.assertions(0);
-            });
         });
     });
 

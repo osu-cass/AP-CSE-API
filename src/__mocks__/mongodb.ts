@@ -6,7 +6,11 @@ const findOne = jest.fn().mockImplementationOnce(() => Promise.resolve({ target:
 
 
 const database = {
-    collection: jest.fn().mockImplementation(() => ({ findOne, insertMany: jest.fn().mockResolvedValue('success') })),
+    collection: jest.fn().mockImplementation(() => ({ 
+        findOne, 
+        insertMany: jest.fn().mockResolvedValue('success'), 
+        createIndex: jest.fn() 
+    })),
     collections: jest.fn().mockImplementationOnce(() => ([{ collectionName: 'not-claims' }]))
         .mockImplementationOnce(() => ([{ collectionName: 'claims' }]))
         .mockImplementationOnce(() => { throw new Error('contrived error'); }),
