@@ -17,6 +17,7 @@ export const handler = async (req: Request, res: CSEResponse) => {
     try {
         await dbClient.connect();
         results = await dbClient.getTarget(targetParams);
+        await dbClient.close();
     } catch (error) {
         res.status(500);
         res.send(error);
