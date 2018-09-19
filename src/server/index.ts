@@ -3,12 +3,14 @@ import http from 'http';
 import signale from 'signale';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
-import { router } from '../routes';
-import { DbClient } from '../dal/interface/index';
 import { Tracer, Span, Tags } from 'opentracing';
+import { Logger } from 'winston';
+import { router } from '../routes';
+import { DbClient } from '../dal/interface';
+import { SearchClient } from '../dal/search';
 import { createTracer } from '../utils/tracer';
 import { logger, LoggingStream } from '../utils/logger';
-import { Logger } from 'winston';
+
 
 /**
  * ServerContext defines a type for the tracer and db client
@@ -16,6 +18,7 @@ import { Logger } from 'winston';
  */
 export interface ServerContext {
     dbClient: DbClient;
+    searchClient: SearchClient;
     tracer: Tracer;
     logger: Logger;
 }
@@ -52,6 +55,7 @@ export class Server {
         this.context = {
             logger,
             tracer: createTracer(),
+            searchClient: new SearchClient(),
             dbClient: new DbClient({
                 url: 'mongodb://mongo',
                 port: 27017,
