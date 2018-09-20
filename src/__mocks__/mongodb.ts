@@ -25,7 +25,7 @@ MongoClient = {
         .mockImplementationOnce(() => { throw new Error('db init failed'); })
         .mockImplementationOnce(() => ({ ...database }))
         .mockImplementationOnce(() => ({ ...database })),
-    close: jest.fn()
+    close: jest.fn().mockResolvedValue({})
 };
 
 MongoClient.connect = jest.fn().mockResolvedValueOnce({ db: MongoClient.db, close: MongoClient.close })
