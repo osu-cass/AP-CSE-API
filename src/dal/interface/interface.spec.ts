@@ -79,6 +79,22 @@ describe('MongoDb Database client', () => {
             expect(db).toHaveBeenCalledTimes(0);
         });
 
+        it('closes the db client', async () => {
+            await client.close();
+            expect.assertions(1);
+            expect(close).toHaveBeenCalledTimes(1);
+        });
+
+        it('throws error closing connection that was already closed', async () => {
+            close.mockClear();
+            try {
+                await client.close();
+            } catch (err) {
+                expect.assertions(2);
+                expect(err).toEqual(new Error('client already closed'));
+                expect(close).toHaveBeenCalledTimes(1);
+            }
+        });
     });
 
     describe('data insertion', () => {
@@ -208,6 +224,48 @@ describe('MongoDb Database client', () => {
                 } catch (err) {
                     expect.assertions(1);
                     expect(err).toEqual(new Error('db is not defined'));
+                }
+            });
+
+        });
+
+        describe('getClaims', () => {
+            let client: DbClient;
+            let dbInitArgs: IDbClient;
+
+            beforeAll(async () => {
+                dbInitArgs = {
+                    url: 'http://mongodb',
+                    port: 27017,
+                    dbName: 'test-db'
+                };
+                client = new DbClient(dbInitArgs);
+            });
+
+
+            it('returns array of Claims', async () => {
+                await client.connect();
+                const result = await client.getClaims();
+                expect.assertions(1);
+                expect(collection).toHaveBeenCalledWith('claims');
+            });
+
+            it('throws error getting Claims', async () => {
+                try {
+                    const result = await client.getClaims();
+                } catch (error) {
+                    expect.assertions(1);
+                    expect(error).toEqual(new Error('no result'));
+                }
+            });
+
+            it('throws error when db is not connected', async () => {
+                try {
+                    await client.connect();
+                    const result = await client.getClaims();
+                } catch (error) {
+                    expect.assertions(1);
+                    expect(error).toEqual(new Error('db is not defined'));
                 }
             });
 

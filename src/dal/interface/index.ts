@@ -73,7 +73,7 @@ export class DbClient {
         let result: IClaim[];
         if (this.db) {
             try {
-                const dbResult: Cursor<IClaim> = this.db.collection('claims').find({});
+                const dbResult: Cursor<IClaim> = this.db.collection('claims').find({}, {projection:{ _id: 0 }});
                 result = await dbResult.toArray();
             } catch (error) {
                 throw error;

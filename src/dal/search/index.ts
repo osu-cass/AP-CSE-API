@@ -46,7 +46,6 @@ export class SearchClient {
     public async insertDocuments(claims: IClaim[]): Promise<void> {
         let id = 0;
         for(const claim of claims) {
-            delete claim._id;
             try {
                 if(await this.exists(`${id}`)) {
                     await this.delete(`${id}`);

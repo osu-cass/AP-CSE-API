@@ -14,7 +14,7 @@ export const handler = async (req: Request, res: CSEResponse): Promise<void> => 
         const client: DbClient = new DbClient(dbArgs);
         await client.connect();
         result = await client.insert(data);
-        await searchClient.insertDocuments(await client.getClaims());
+         await searchClient.insertDocuments(await client.getClaims());
         await client.close();
     } catch (err) {
         res.status(500);
