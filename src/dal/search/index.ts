@@ -1,16 +1,23 @@
 import { Client, SearchResponse } from 'elasticsearch';
 import { IClaim } from '../../models/claim';
 
+export interface ISearchClient {
+    host: string;
+    insertDocuments(claims: IClaim[]): Promise<void>;
+    search(q: string): Promise<void>;
+}
+
 /**
  * Wrapper class for the elastic search client
  */
-export class SearchClient {
+export class SearchClient implements ISearchClient {
     private client: Client;
+    public host: string;
 
     constructor() {
+        this.host = 'es-search:9200';
         this.client = new Client({
-            host: 'es-search:9200',
-            log: 'trace'
+            host: this.host,
         });
     }
 
@@ -63,7 +70,7 @@ export class SearchClient {
         }
     }
 
-    public async search(q: string) {
+    public async search(q: string): Promise<void> {
         let result: SearchResponse<{}>;
         try {
             result = await this.client.search({
