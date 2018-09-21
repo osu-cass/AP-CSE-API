@@ -7,10 +7,12 @@ jest.mock('../../dal/interface', () => {
     return {
         DbClient: jest.fn().mockImplementationOnce(() => ({
             connect: jest.fn().mockResolvedValue({}),
-            insert: jest.fn().mockResolvedValue({ result: 'good' })
+            insert: jest.fn().mockResolvedValue({ result: 'good' }),
+            close: jest.fn().mockResolvedValue({})
         })).mockImplementationOnce(() => ({
             connect: jest.fn().mockResolvedValue({}),
-            insert: jest.fn().mockResolvedValue(undefined)
+            insert: jest.fn().mockResolvedValue(undefined),
+            close: jest.fn().mockResolvedValue({})
         }))
     };
 });
