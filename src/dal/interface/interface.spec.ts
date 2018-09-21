@@ -12,9 +12,9 @@ jest.mock('../search', () => {
     };
 });
 
-describe('MongoDb Database client', () => {
+describe('MongoDb Database client interface', () => {
 
-    describe('DbClient initialization', () => {
+    describe('initialization', () => {
         let dbInitArgs: IDbClient;
         let uri: string;
         let client: DbClient;
@@ -85,14 +85,25 @@ describe('MongoDb Database client', () => {
             expect(close).toHaveBeenCalledTimes(1);
         });
 
-        it('throws error closing connection that was already closed', async () => {
-            close.mockRejectedValueOnce(new Error('client already closed'));
+        it('throws error when closing client', async () => {
+            close.mockRejectedValueOnce(new Error('error'));
             try {
                 await client.close();
             } catch (err) {
                 expect.assertions(2);
-                expect(err).toEqual(new Error('client already closed'));
+                expect(err).toEqual(new Error('error'));
                 expect(close).toHaveBeenCalledTimes(1);
+            }
+        });
+
+        it('throws error when client is undefined', async () => {
+            const mockClient = new DbClient(dbInitArgs);
+            try {
+                await mockClient.close();
+            } catch (err) {
+                expect.assertions(2);
+                expect(err).toEqual(new Error('client is already closed'));
+                expect(close).toHaveBeenCalledTimes(0);
             }
         });
     });

@@ -40,6 +40,8 @@ export class DbClient {
             } catch (err) {
                 throw err;
             }
+        } else {
+            throw new Error('client is already closed');
         }
     }
 
