@@ -1,4 +1,4 @@
-import { DbClient, IDbClient } from '.';
+import { DbClient, IDbClientOptions } from '.';
 import { MongoClient } from 'mongodb';
 import { db, close, collection, collections, dropCollection, createCollection } from '../../__mocks__/mongodb';
 import { ITargetParams } from '../../routes/target';
@@ -15,7 +15,7 @@ jest.mock('../search', () => {
 describe('MongoDb Database client interface', () => {
 
     describe('initialization', () => {
-        let dbInitArgs: IDbClient;
+        let dbInitArgs: IDbClientOptions;
         let uri: string;
         let client: DbClient;
         let authInfo: object;
@@ -110,7 +110,7 @@ describe('MongoDb Database client interface', () => {
 
     describe('data insertion', () => {
         let client: DbClient;
-        let dbInitArgs: IDbClient;
+        let dbInitArgs: IDbClientOptions;
         let testData: Partial<IClaim>[];
 
         beforeAll(() => {
@@ -191,7 +191,7 @@ describe('MongoDb Database client interface', () => {
     describe('data retrieval', () => {
         describe('getTarget', () => {
             let client: DbClient;
-            let dbInitArgs: IDbClient;
+            let dbInitArgs: IDbClientOptions;
             let mockTargetParams: ITargetParams;
 
             beforeAll(() => {
@@ -242,7 +242,7 @@ describe('MongoDb Database client interface', () => {
 
         describe('getClaims', () => {
             let client: DbClient;
-            let dbInitArgs: IDbClient;
+            let dbInitArgs: IDbClientOptions;
 
             beforeAll(async () => {
                 dbInitArgs = {

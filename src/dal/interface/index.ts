@@ -3,23 +3,33 @@ import { ITargetParams } from '../../routes/target';
 import { IClaim } from '../../models/claim';
 import { ITarget } from '../../models/target';
 
-export interface IDbClient {
+export interface IDbClientOptions {
     url: string;
     port: number;
     dbName: string;
+}
+
+export interface IDbClient {
+    uri: string;
+    dbName: string;
+    connect(): Promise<void>;
+    close(): Promise<void>;
+    insert(documents: IClaim[]): Promise<InsertWriteOpResult>;
+    getClaims(): Promise<IClaim[]>;
+    getTarget(searchParams: ITargetParams): Promise<ITarget>;
 }
 
 /**
  * This class encapsulates and handles communication with Elasticsearch and
  * MongoDB.
  */
-export class DbClient {
+export class DbClient implements IDbClient {
     public uri: string;
     public dbName: string;
     private client?: MongoClient;
     private db?: Db;
 
-    constructor(args: IDbClient) {
+    constructor(args: IDbClientOptions) {
         this.uri = `${args.url}:${args.port}`;
         this.dbName = args.dbName;
     }

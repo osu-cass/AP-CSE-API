@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { DbClient, IDbClient } from '../../dal/interface';
+import { DbClient, IDbClientOptions } from '../../dal/interface';
 import { InsertWriteOpResult } from 'mongodb';
 import { data } from './output';
 import { applyTracing } from '../../utils/tracer/index';
@@ -9,7 +9,7 @@ import { CSEResponse } from '../../server/index';
 export const handler = async (req: Request, res: CSEResponse): Promise<void> => {
     let result: InsertWriteOpResult | undefined;
     const { searchClient } = res.locals;
-    const dbArgs: IDbClient = { url: 'mongodb://mongo', port: 27017, dbName: 'cse' };
+    const dbArgs: IDbClientOptions = { url: 'mongodb://mongo', port: 27017, dbName: 'cse' };
     try {
         const client: DbClient = new DbClient(dbArgs);
         await client.connect();
