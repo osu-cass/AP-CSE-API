@@ -38,10 +38,17 @@ export interface CSEResponse extends Response {
     locals: ResponseContext;
 }
 
+export interface IServer {
+    registerMiddleware(): void;
+    routes(): void;
+    configure(): void;
+    start(): http.Server;
+}
+
 /**
  * Encapsulates the server configuration and routes logic.
  */
-export class Server {
+export class Server implements IServer {
     private app: Application;
     private port: string | number;
     private context: ServerContext;
