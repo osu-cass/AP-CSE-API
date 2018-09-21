@@ -1,11 +1,11 @@
 // tslint:disable
 let MongoClient = require.requireActual('mongodb').MongoClient;
 
-const findOne = jest.fn().mockImplementationOnce(() => Promise.resolve({ target: [{ shortCode: '1234', test: 'passed'}] }))
+const findOne = jest.fn().mockImplementationOnce(() => Promise.resolve({ target: [{ shortCode: '1234', test: 'passed' }] }))
     .mockImplementationOnce(() => Promise.reject(new Error('error')));
 
 const find = jest.fn().mockImplementationOnce(() => ({
-    toArray: jest.fn().mockResolvedValue({test: 'passed'})
+    toArray: jest.fn().mockResolvedValue({ test: 'passed' })
 })).mockImplementationOnce(() => ({
     toArray: jest.fn().mockRejectedValue(new Error('no result'))
 }));
@@ -13,9 +13,9 @@ const find = jest.fn().mockImplementationOnce(() => ({
 const database = {
     collection: jest.fn().mockImplementation(() => ({
         find,
-        findOne, 
-        insertMany: jest.fn().mockResolvedValue('success'), 
-        createIndex: jest.fn() 
+        findOne,
+        insertMany: jest.fn().mockResolvedValue('success'),
+        createIndex: jest.fn()
     })),
     collections: jest.fn().mockImplementationOnce(() => ([{ collectionName: 'not-claims' }]))
         .mockImplementationOnce(() => ([{ collectionName: 'claims' }]))
@@ -32,7 +32,9 @@ MongoClient = {
         .mockImplementationOnce(() => ({ ...database }))
         .mockImplementationOnce(() => ({ ...database }))
         .mockImplementationOnce(() => ({ ...database })),
-    close: jest.fn().mockResolvedValueOnce({}).mockRejectedValueOnce(new Error('client already closed'))
+    close: jest.fn()
+        .mockResolvedValueOnce({})
+        .mockRejectedValueOnce(new Error('client already closed'))
 };
 
 MongoClient.connect = jest.fn().mockResolvedValueOnce({ db: MongoClient.db, close: MongoClient.close })
