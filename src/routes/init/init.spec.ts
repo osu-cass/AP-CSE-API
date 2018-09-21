@@ -8,11 +8,12 @@ jest.mock('../../dal/interface', () => {
         DbClient: jest.fn().mockImplementationOnce(() => ({
             connect: jest.fn().mockResolvedValue({}),
             insert: jest.fn().mockResolvedValue({ result: 'good' }),
-            close: jest.fn().mockResolvedValue({})
+            close: jest.fn().mockResolvedValue({}),
+            getClaims: jest.fn().mockResolvedValue({})
         })).mockImplementationOnce(() => ({
             connect: jest.fn().mockResolvedValue({}),
-            insert: jest.fn().mockResolvedValue(undefined),
-            close: jest.fn().mockResolvedValue({})
+            insert: jest.fn().mockRejectedValue(undefined),
+            close: jest.fn().mockResolvedValue({}),
         }))
     };
 });
@@ -25,7 +26,7 @@ describe('init', () => {
 
     beforeAll(() => {
         mockSearchClient = {
-            insertDocuments: jest.fn()
+            insertDocuments: jest.fn().mockResolvedValue({})
         };
         req = {};
         res = {
@@ -40,14 +41,16 @@ describe('init', () => {
 
 
     it('initializes the database with data', async () => {
-        expect.assertions(1);
+        expect.assertions(2);
         await dbInit(<Request>req, <Response>res);
+        expect(res.status).toBeCalledWith(200);
         expect(res.send).toBeCalledWith('good');
     });
 
     it('fails to init database', async () => {
-        expect.assertions(1);
+        expect.assertions(2);
         await dbInit(<Request>req, <Response>res);
+        expect(res.status).toBeCalledWith(500);
         expect(res.send).toBeCalledWith('insert failed');
     });
 });

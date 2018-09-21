@@ -33,8 +33,7 @@ MongoClient = {
         .mockImplementationOnce(() => ({ ...database }))
         .mockImplementationOnce(() => ({ ...database })),
     close: jest.fn()
-        .mockResolvedValueOnce({})
-        .mockRejectedValueOnce(new Error('client already closed'))
+        .mockResolvedValue({})
 };
 
 MongoClient.connect = jest.fn().mockResolvedValueOnce({ db: MongoClient.db, close: MongoClient.close })

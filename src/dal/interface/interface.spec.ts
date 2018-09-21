@@ -86,6 +86,7 @@ describe('MongoDb Database client', () => {
         });
 
         it('throws error closing connection that was already closed', async () => {
+            close.mockRejectedValueOnce(new Error('client already closed'));
             try {
                 await client.close();
             } catch (err) {
