@@ -1,13 +1,14 @@
 import { Request } from 'express';
 import { DbClient, IDbClient } from '../../dal/interface';
 import { InsertWriteOpResult } from 'mongodb';
-import { importDbEntries } from '../dbInit/import';
+import { importDbEntries } from './import';
 import { applyTracing } from '../../utils/tracer/index';
 import { CSEResponse } from '../../server/index';
+import { IClaim } from '../../models/claim/index';
 
 
 export const handler = async (req: Request, res: CSEResponse): Promise<void> => {
-    const output: object[] = await importDbEntries();
+    const output: IClaim[] = await importDbEntries();
     const dbArgs: IDbClient = {
         url: 'mongodb://mongo',
         port: 27017,

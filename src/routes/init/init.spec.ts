@@ -2,11 +2,11 @@ import { handler as dbInit } from './index';
 import { Request, Response, Send } from 'express';
 import { DbClient } from '../../dal/interface';
 import { request } from 'http';
-import { importDbEntries } from '../dbInit/import';
+import { importDbEntries } from './import';
 
 
 jest.mock('express');
-jest.mock('../dbInit/import.ts', () => ({
+jest.mock('./import.ts', () => ({
     importDbEntries: jest.fn().mockResolvedValue('{}')
 }));
 

@@ -1,12 +1,16 @@
 import { ITarget } from '../target';
 
-export interface IClaim {
+
+
+export interface IClaim  {
     title: string;
     claimNumber: string;
-    grades: string[] | number;
+    grades: string[];
     subject: string;
     description?: string;
-    shortCode:string;
+    shortCode: string;
     domain?: string;
     target: ITarget[];
+
 }
+
