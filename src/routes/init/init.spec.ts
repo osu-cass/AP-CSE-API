@@ -1,9 +1,5 @@
 import { handler as dbInit } from './index';
-import { Request, Response, Send } from 'express';
-import { DbClient } from '../../dal/interface';
-import { request } from 'http';
-import { importDbEntries } from './import';
-
+import { Request, Response } from 'express';
 
 jest.mock('express');
 jest.mock('./import.ts', () => ({
