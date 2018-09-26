@@ -11,7 +11,7 @@ describe('Authorization verification function', () => {
 
     authorize(username, password, done);
 
-    expect(done).toBeCalledWith(undefined, {name: 'Thomas Noelcke'});
+    expect(done).toBeCalledWith(undefined, { name: 'Thomas Noelcke' });
   });
 
   it('does not return a user with incorrect credentials', () => {
