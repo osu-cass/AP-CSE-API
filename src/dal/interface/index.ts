@@ -26,8 +26,8 @@ export class DbClient {
         try {
             client = await MongoClient.connect(this.uri, { auth: { user: 'root', password: 'example' } });
             this.db = client.db(this.dbName);
-        } catch (err) {
-            throw err;
+        } catch (error) {
+            throw error;
         }
     }
 

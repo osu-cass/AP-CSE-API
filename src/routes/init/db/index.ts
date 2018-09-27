@@ -1,15 +1,29 @@
 import fetch from 'node-fetch';
 import { ISpecDocument } from './interfaces';
-import { IClaim } from '../../models/claim/index';
-import { IDOK } from '../../models/target/index';
+import { IClaim } from '../../../models/claim/index';
+import { IDOK } from '../../../models/target/index';
+
 // This is required for translating specDocuments to an IClaim type
 // tslint:disable:no-unsafe-any no-any
+
 enum Subject {
     ELA = 'English Language Arts',
     MATH = 'Math'
 }
-const docs = ['smarter_balanced_ela_content_specification', 'air_deprecated_ela_claims_and_targets', 'air_deprecated_math_claims_and_targets', 'ccss_imported_from_digital_library',
-    'common_core_state_standards_for_ela', 'common_core_state_standards_for_mathematics', 'item_type_response_type', 'major_vs__additional_supporting__math_', 'major_vs__additional_supporting__math_', 'smarter_balanced_math_content_specification', 'norm_webb_s_depth_of_knowledge__dok__levels_of_cognitive_difficulty'];
+const docs = [
+    'smarter_balanced_ela_content_specification',
+    'air_deprecated_ela_claims_and_targets',
+    'air_deprecated_math_claims_and_targets',
+    'ccss_imported_from_digital_library',
+    'common_core_state_standards_for_ela',
+    'common_core_state_standards_for_mathematics',
+    'item_type_response_type',
+    'major_vs__additional_supporting__math_',
+    'major_vs__additional_supporting__math_',
+    'smarter_balanced_math_content_specification',
+    'norm_webb_s_depth_of_knowledge__dok__levels_of_cognitive_difficulty'
+];
+
 const docArr: ISpecDocument[] = [];
 const docNames: string[] = [];
 

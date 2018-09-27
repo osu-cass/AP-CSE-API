@@ -64,7 +64,6 @@
   "dependencies": {
     "node-fetch": "^2.2.0",
     "body-parser": "^1.18.3",
-    "node-fetch": "^2.2.0",
     "elasticsearch": "^15.1.1",
     "express": "^4.16.3",
     "jaeger-client": "^3.12.0",
