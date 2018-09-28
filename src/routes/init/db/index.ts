@@ -6,10 +6,7 @@ import { IDOK } from '../../../models/target/index';
 // This is required for translating specDocuments to an IClaim type
 // tslint:disable:no-unsafe-any no-any
 
-enum Subject {
-  ELA = 'English Language Arts',
-  MATH = 'Math'
-}
+enum Subject { ELA = 'English Language Arts', MATH = 'Math' }
 const docs = [
   'smarter_balanced_ela_content_specification',
   'air_deprecated_ela_claims_and_targets',
