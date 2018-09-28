@@ -8,6 +8,7 @@ import {
   dropCollection,
   createCollection
 } from '../../__mocks__/mongodb';
+import { ITargetParams } from '../../routes/target/index';
 
 describe('MongoDb Database client', () => {
   describe('DbClient initialization', () => {
@@ -29,7 +30,6 @@ describe('MongoDb Database client', () => {
           password: 'example'
         }
       };
-      client = new DbClient(dbInitArgs);
     });
 
     beforeEach(() => {
@@ -39,6 +39,7 @@ describe('MongoDb Database client', () => {
 
     it('constructs DbClient', () => {
       const { dbName } = dbInitArgs;
+      client = new DbClient(dbInitArgs);
       expect.assertions(2);
       expect(client.uri).toEqual(uri);
       expect(client.dbName).toEqual(dbName);
@@ -155,26 +156,72 @@ describe('MongoDb Database client', () => {
   });
 
   describe('data retrieval', () => {
-    let client: DbClient;
-    let dbInitArgs: IDbClient;
+    describe('getTarget', () => {
+      let client: DbClient;
+      let dbInitArgs: IDbClient;
+      let mockTargetParams: ITargetParams;
 
-    beforeAll(() => {
-      dbInitArgs = {
-        url: 'http://mongodb',
-        port: 27017,
-        dbName: 'test-db'
-      };
-      client = new DbClient(dbInitArgs);
+      beforeAll(() => {
+        dbInitArgs = {
+          url: 'http://mongodb',
+          port: 27017,
+          dbName: 'test-db'
+        };
+        mockTargetParams = {
+          subject: 'Math',
+          grades: ['5', '6'],
+          claimNumber: 'C2',
+          targetShortCode: '1234'
+        };
+        client = new DbClient(dbInitArgs);
+      });
+
+      it('gets Target by ITargetParams', async () => {
+        await client.connect();
+        const result = await client.getTarget(mockTargetParams);
+        expect.assertions(1);
+        expect(result).toEqual({ shortCode: '1234', test: 'passed' });
+      });
+
+      it('throws error getting Target', async () => {
+        let result;
+        try {
+          result = await client.getTarget(mockTargetParams);
+        } catch (err) {
+          expect.assertions(1);
+          expect(err).toEqual(new Error('error'));
+        }
+      });
+
+      it('throws error when db is not defined', async () => {
+        let result;
+        try {
+          await client.connect();
+          result = await client.getTarget(mockTargetParams);
+        } catch (err) {
+          expect.assertions(1);
+          expect(err).toEqual(new Error('db is not defined'));
+        }
+      });
     });
 
-    it('gets data by search parameter/string', () => {
-      client.getByFilter('');
-      expect.assertions(0);
-    });
+    describe('search', () => {
+      let client: DbClient;
+      let dbInitArgs: IDbClient;
 
-    it('gets data by filter parameter', () => {
-      client.getBySearchParam('');
-      expect.assertions(0);
+      beforeAll(() => {
+        dbInitArgs = {
+          url: 'http://mongodb',
+          port: 27017,
+          dbName: 'test-db'
+        };
+        client = new DbClient(dbInitArgs);
+      });
+
+      it('gets data by search parameter', () => {
+        client.getBySearchParam('');
+        expect.assertions(0);
+      });
     });
   });
 });
