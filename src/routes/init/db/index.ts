@@ -170,10 +170,10 @@ export function getClaim(title: string, subject: string, grades: string[]) {
 
 export async function importDocs(arr: ISpecDocument[]) {
     const packages: string[] = await fetchAllDocs();
-    for (let i = 0; i < packages.length; i++) {
+    for (const pack of packages) {
         // tslint:disable-next-line
-        console.log(((i / packages.length) * 100).toPrecision(3) + '%');
-        const data = await fetch(`https://case.smarterbalanced.org/ims/case/v1p0/CFPackages/${packages[i]}`);
+        // console.log(((i / packages.length) * 100).toPrecision(3) + '%');
+        const data = await fetch(`https://case.smarterbalanced.org/ims/case/v1p0/CFPackages/${pack}`);
         const jsonData: ISpecDocument = await data.json();
         const title: string = jsonData.CFDocument.title;
         const filename: string = title.replace(/[^a-z0-9]/gi, '_').toLowerCase();
@@ -278,8 +278,6 @@ export function getTarget(claim: IClaim, jsonData: ISpecDocument) {
         iter++;
     }
     getGenReqs(claim, jsonData);
-
-
 }
 // This function extracts the target properties that are found under the "General Requirements" itemtypes in a given document
 export function getGenReqs(claim: IClaim, jsonData: ISpecDocument) {
