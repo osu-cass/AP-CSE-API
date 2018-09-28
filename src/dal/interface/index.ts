@@ -36,9 +36,12 @@ export class DbClient implements IDbClient {
 
   public async connect(): Promise<void> {
     try {
-      this.client = await MongoClient.connect(this.uri, {
-        auth: { user: 'root', password: 'example' }
-      });
+      this.client = await MongoClient.connect(
+        this.uri,
+        {
+          auth: { user: 'root', password: 'example' }
+        }
+      );
       this.db = this.client.db(this.dbName);
     } catch (err) {
       throw err;
@@ -106,12 +109,12 @@ export class DbClient implements IDbClient {
     let result: ITarget | undefined;
     if (this.db) {
       try {
-        const dbResult: IClaim = await this.db.collection('claims').findOne({
+        const dbResult: IClaim = (await this.db.collection('claims').findOne({
           subject,
           grades,
           claimNumber,
           'target.shortCode': targetShortCode
-        }) as IClaim;
+        })) as IClaim;
         result = dbResult.target.find(t => t.shortCode === targetShortCode);
       } catch (error) {
         throw error;
