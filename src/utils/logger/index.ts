@@ -3,19 +3,19 @@ const LogstashTransport = require('winston-logstash-transport').LogstashTranspor
 import { createLogger, Logger, transports } from 'winston';
 
 const consoleOpts = {
-    level: 'debug',
-    handleExceptions: true,
-    json: true,
-    colorize: true,
+  level: 'debug',
+  handleExceptions: true,
+  json: true,
+  colorize: true
 };
 
 const logger: Logger = createLogger({
-    level: 'info',
-    transports: [
-        new transports.Console(consoleOpts),
-        new LogstashTransport({ host: '0.0.0.0', port: 13337 })
-    ],
-    exitOnError: false
+  level: 'info',
+  transports: [
+    new transports.Console(consoleOpts),
+    new LogstashTransport({ host: '0.0.0.0', port: 13337 })
+  ],
+  exitOnError: false
 });
 
 /**
@@ -23,9 +23,9 @@ const logger: Logger = createLogger({
  * both transports in the logger
  */
 class LoggingStream {
-    write(message: string) {
-        logger.info(message);
-    }
+  write(message: string) {
+    logger.info(message);
+  }
 }
 
 export { logger, LoggingStream };

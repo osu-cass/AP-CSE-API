@@ -1,5 +1,4 @@
-
-export interface  IURI {
+export interface IURI {
   title: string;
   identifier: string;
   uri: string;
@@ -23,11 +22,9 @@ export interface ICFDocument {
   licenseURI: IURI;
   notes: string;
   CFPackageURI: string;
-
 }
 
 export interface ICFItem {
-
   identifier: string;
   CFDocumentURI: string;
   fullStatement: string;
@@ -47,7 +44,6 @@ export interface ICFItem {
   statusStartDate: Date;
   statusEndDate: Date;
   lastChangeDateTime: Date;
-
 }
 
 export interface ICFAssociation {
@@ -123,7 +119,6 @@ export interface ISpecDocument {
   CFDefinitions: ICFDefinitions;
 }
 
-
 export interface Claim {
   title: string;
   claimNumber: string;
@@ -137,28 +132,16 @@ export interface Claim {
       title: string;
       shortCode: string;
       description: string;
-      standards: [
-        string
-      ];
-      stdDesc: [
-        string
-      ];
-      DOK: [
-        string
-      ];
-      DOKDesc: [
-        string
-      ];
-      shortDOK: [
-        string
-      ];
+      standards: [string];
+      stdDesc: [string];
+      DOK: [string];
+      DOKDesc: [string];
+      shortDOK: [string];
       // tslint:disable-next-line
       type: string;
       clarification: string;
       heading: string;
-      evidence: [
-        string
-      ];
+      evidence: [string];
       vocab: string;
       tools: string;
       stimInfo: string;
@@ -166,28 +149,13 @@ export interface Claim {
       complexity: string;
       dualText: string;
       accessibility: string;
-      stem: [
-        string
-      ];
-      taskDescription: [
-        string
-      ];
-      taskModel: [
-        string
-      ];
-      examples: [
-        string
-      ];
-      rubrics: [
-        string
-      ];
-      stimulus: [
-        string
-      ];
-      shortStem: [
-        string
-      ];
-
+      stem: [string];
+      taskDescription: [string];
+      taskModel: [string];
+      examples: [string];
+      rubrics: [string];
+      stimulus: [string];
+      shortStem: [string];
     }
   ];
 }

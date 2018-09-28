@@ -2,44 +2,59 @@
 let MongoClient = require.requireActual('mongodb').MongoClient;
 
 const database = {
-    collection: jest.fn().mockImplementation(() => ({
-        insertMany: jest.fn().mockResolvedValue('success')
-    })),
-    collections: jest.fn().mockImplementationOnce(() => ([{
+  collection: jest.fn().mockImplementation(() => ({
+    insertMany: jest.fn().mockResolvedValue('success')
+  })),
+  collections: jest
+    .fn()
+    .mockImplementationOnce(() => [
+      {
         collectionName: 'not-claims'
-    }])).mockImplementationOnce(() => ([{
+      }
+    ])
+    .mockImplementationOnce(() => [
+      {
         collectionName: 'claims'
-    }])).mockImplementationOnce(() => {
-        throw new Error('contrived error');
+      }
+    ])
+    .mockImplementationOnce(() => {
+      throw new Error('contrived error');
     }),
-    dropCollection: jest.fn(),
-    createCollection: jest.fn()
-}
-
-MongoClient = {
-    ...MongoClient,
-    db: jest.fn()
-        .mockImplementationOnce(() => ({ ...database }))
-        .mockImplementationOnce(() => {
-            throw new Error('db init failed');
-        }).mockImplementationOnce(() => ({ ...database })),
-    close: jest.fn()
+  dropCollection: jest.fn(),
+  createCollection: jest.fn()
 };
 
-MongoClient.connect = jest.fn().mockResolvedValueOnce({
+MongoClient = {
+  ...MongoClient,
+  db: jest
+    .fn()
+    .mockImplementationOnce(() => ({ ...database }))
+    .mockImplementationOnce(() => {
+      throw new Error('db init failed');
+    })
+    .mockImplementationOnce(() => ({ ...database })),
+  close: jest.fn()
+};
+
+MongoClient.connect = jest
+  .fn()
+  .mockResolvedValueOnce({
     db: MongoClient.db,
     close: MongoClient.close
-}).mockResolvedValueOnce({
+  })
+  .mockResolvedValueOnce({
     db: MongoClient.db,
     close: MongoClient.close
-}).mockRejectedValueOnce({
+  })
+  .mockRejectedValueOnce({
     error: {
-        message: 'connect failed'
+      message: 'connect failed'
     }
-}).mockResolvedValueOnce({
+  })
+  .mockResolvedValueOnce({
     db: MongoClient.db,
     close: MongoClient.close
-});
+  });
 
 const db: jest.Mock = MongoClient.db;
 const close: jest.Mock = MongoClient.close;

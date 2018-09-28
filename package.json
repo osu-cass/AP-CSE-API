@@ -15,7 +15,8 @@
     "test-ci": "jest --coverage --ci --runInBand",
     "coverage": "jest --coverage",
     "report-coverage": "cat ./coverage/lcov.info | coveralls",
-    "lint": "tslint -c ./tslint.json -p ./tsconfig.json --fix"
+    "lint": "tslint -c ./tslint.json -p ./tsconfig.json --fix",
+    "format": "prettier --single-quote --print-width 100 --write src/**/*.ts"
   },
   "husky": {
     "hooks": {
