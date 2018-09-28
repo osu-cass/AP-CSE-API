@@ -1,10 +1,16 @@
 import { Client, SearchResponse } from 'elasticsearch';
 import { IClaim } from '../../models/claim';
+import { logger } from '../../utils/logger';
+import { Logger } from 'winston';
+
+// export interface ISearchClientOptions {
+//   logger: Logger;
+// }
 
 export interface ISearchClient {
   host: string;
   insertDocuments(claims: IClaim[]): Promise<void>;
-  search(q: string): Promise<void>;
+  search(q: string): Promise<SearchResponse<{}>>;
 }
 
 /**
@@ -17,7 +23,9 @@ export class SearchClient implements ISearchClient {
   constructor() {
     this.host = 'es-search:9200';
     this.client = new Client({
-      host: this.host
+      host: this.host,
+      log: 'trace',
+      apiVersion: '6.3'
     });
   }
 
@@ -70,7 +78,7 @@ export class SearchClient implements ISearchClient {
     }
   }
 
-  public async search(q: string): Promise<void> {
+  public async search(q: string): Promise<SearchResponse<{}>> {
     let result: SearchResponse<{}>;
     try {
       result = await this.client.search({
@@ -81,5 +89,7 @@ export class SearchClient implements ISearchClient {
     } catch (err) {
       throw err;
     }
+
+    return result;
   }
 }
