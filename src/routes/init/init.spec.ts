@@ -20,15 +20,27 @@ jest.mock('../../dal/interface', () => {
       }))
   };
 });
+jest.mock('./db/index', () => ({
+  importDbEntries: jest
+    .fn()
+    .mockResolvedValueOnce('{}')
+    .mockResolvedValueOnce('{}')
+    .mockRejectedValueOnce(new Error('I am Error.'))
+}));
 
 describe('init', () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
-  let mockSearchClient;
+  let dbClient;
+  let searchClient;
 
   beforeAll(() => {
-    mockSearchClient = {
+    searchClient = {
       insertDocuments: jest.fn().mockResolvedValue({})
+    };
+    dbClient = {
+      connect: jest.fn().mockResolvedValue({}),
+      insert: jest.fn().mockResolvedValueOnce({ result: 'good' }).mockResolvedValue(undefined)
     };
     req = {};
     res = {
@@ -36,7 +48,8 @@ describe('init', () => {
       send: jest.fn(),
       status: jest.fn(),
       locals: {
-        searchClient: mockSearchClient
+        searchClient,
+        dbClient
       }
     };
   });
@@ -53,5 +66,12 @@ describe('init', () => {
     await dbInit(<Request>req, <Response>res);
     expect(res.status).toBeCalledWith(500);
     expect(res.send).toBeCalledWith('insert failed');
+  });
+  it('throws an error', async () => {
+    try {
+      await dbInit(<Request>req, <Response>res);
+    } catch (err) {
+      expect(err).toEqual(new Error('I am Error.'));
+    }
   });
 });

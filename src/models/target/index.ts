@@ -42,5 +42,5 @@ export interface ITarget {
   accessibility: string;
   stem: IStem[];
   taskModels: ITaskModel[];
-  rubrics?: string[];
+  rubrics: string[];
 }
