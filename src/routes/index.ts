@@ -7,7 +7,7 @@ import { target } from './target';
 const router: Router = Router();
 
 router.get('/pdf', pdfDownload);
-router.get('/search', search);
+router.get('/search/:query', search);
 router.get('/target/:subject/:grades/:claimNumber/:targetShortCode', target);
 router.post('/init', dbInit);
 
