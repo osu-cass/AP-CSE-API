@@ -1,0 +1,3 @@
+{   
+    "ignore": ["dist/routes/import/docs/*.json"] 
+}

@@ -2,31 +2,30 @@ import { handler as dbInit } from './index';
 import { Request, Response } from 'express';
 
 jest.mock('express');
-
-jest.mock('../../dal/interface', () => {
-  return {
-    DbClient: jest
-      .fn()
-      .mockImplementationOnce(() => ({
-        connect: jest.fn().mockResolvedValue({}),
-        insert: jest.fn().mockResolvedValue({ result: 'good' })
-      }))
-      .mockImplementationOnce(() => ({
-        connect: jest.fn().mockResolvedValue({}),
-        insert: jest.fn().mockResolvedValue(undefined)
-      }))
-  };
-});
+jest.mock('./db/index', () => ({
+  importDbEntries: jest
+    .fn()
+    .mockResolvedValueOnce('{}')
+    .mockResolvedValueOnce('{}')
+    .mockRejectedValueOnce(new Error('I am Error.'))
+}));
 
 describe('init', () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
-
+  let dbClient;
   beforeAll(() => {
+    dbClient = {
+      connect: jest.fn().mockResolvedValue({}),
+      insert: jest.fn().mockResolvedValueOnce({ result: 'good' }).mockResolvedValue(undefined)
+    };
     req = {};
     res = {
       header: jest.fn(),
-      send: jest.fn()
+      send: jest.fn(),
+      locals: {
+        dbClient
+      }
     };
   });
 
@@ -40,5 +39,12 @@ describe('init', () => {
     expect.assertions(1);
     await dbInit(<Request>req, <Response>res);
     expect(res.send).toBeCalledWith('Nope');
+  });
+  it('throws an error', async () => {
+    try {
+      await dbInit(<Request>req, <Response>res);
+    } catch (err) {
+      expect(err).toEqual(new Error('I am Error.'));
+    }
   });
 });

@@ -7,7 +7,7 @@
     "start": "node dist/index.js",
     "build": "tsc",
     "build-maps": "tsc --sourceMap",
-    "debug": "nodemon --legacy-watch --watch ./dist --inspect=0.0.0.0:9222 --nolazy ./dist/index.js",
+    "debug": "nodemon --legacy-watch --watch ./dist --inspect=0.0.0.0:9222 --nolazy",
     "dev": "concurrently -n w: npm:watch-*",
     "watch-ts": "tsc -w -p ./tsconfig.json",
     "watch-server": "nodemon --watch dist",
@@ -63,6 +63,7 @@
     ]
   },
   "dependencies": {
+    "node-fetch": "^2.2.0",
     "body-parser": "^1.18.3",
     "elasticsearch": "^15.1.1",
     "express": "^4.16.3",
@@ -78,6 +79,7 @@
     "winston-logstash-transport": "^2.0.0"
   },
   "devDependencies": {
+    "@types/node-fetch": "^2.1.2",
     "@commitlint/cli": "^7.0.0",
     "@commitlint/config-conventional": "^7.0.1",
     "@osu-cass/tslint-config": "^2.0.0",
@@ -97,6 +99,7 @@
     "faker": "^4.1.0",
     "husky": "^1.0.0-rc.13",
     "jest": "^23.4.2",
+    "jest-fetch-mock": "^1.6.6",
     "jest-junit": "^5.1.0",
     "lint-staged": "^7.2.0",
     "nodemon": "^1.18.3",
