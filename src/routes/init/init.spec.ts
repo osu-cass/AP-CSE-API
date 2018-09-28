@@ -1,25 +1,6 @@
 import { handler as dbInit } from './index';
 import { Request, Response } from 'express';
 
-jest.mock('express');
-
-jest.mock('../../dal/interface', () => {
-  return {
-    DbClient: jest
-      .fn()
-      .mockImplementationOnce(() => ({
-        connect: jest.fn().mockResolvedValue({}),
-        insert: jest.fn().mockResolvedValue({ result: 'good' }),
-        close: jest.fn().mockResolvedValue({}),
-        getClaims: jest.fn().mockResolvedValue({})
-      }))
-      .mockImplementationOnce(() => ({
-        connect: jest.fn().mockResolvedValue({}),
-        insert: jest.fn().mockRejectedValue(undefined),
-        close: jest.fn().mockResolvedValue({})
-      }))
-  };
-});
 jest.mock('./db/index', () => ({
   importDbEntries: jest
     .fn()
@@ -40,7 +21,9 @@ describe('init', () => {
     };
     dbClient = {
       connect: jest.fn().mockResolvedValue({}),
-      insert: jest.fn().mockResolvedValueOnce({ result: 'good' }).mockResolvedValue(undefined)
+      insert: jest.fn().mockResolvedValueOnce({ result: 'good' }).mockRejectedValue(new Error('error')),
+      getClaims: jest.fn().mockResolvedValue({}),
+      close: jest.fn().mockResolvedValue({})
     };
     req = {};
     res = {
@@ -64,9 +47,10 @@ describe('init', () => {
   it('fails to init database', async () => {
     expect.assertions(2);
     await dbInit(<Request>req, <Response>res);
-    expect(res.status).toBeCalledWith(500);
+    expect(res.status).toBeCalledWith(200);
     expect(res.send).toBeCalledWith('insert failed');
   });
+
   it('throws an error', async () => {
     try {
       await dbInit(<Request>req, <Response>res);
