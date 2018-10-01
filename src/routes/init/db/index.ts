@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 import { ISpecDocument } from './interfaces';
 import { IClaim } from '../../../models/claim/index';
-import { IDOK } from '../../../models/target/index';
+import { IDOK, ITaskModel } from '../../../models/target/index';
 
 // This is required for translating specDocuments to an IClaim type
 // tslint:disable:no-unsafe-any no-any
@@ -254,19 +254,41 @@ export function getTarget(claim: IClaim, jsonData: ISpecDocument) {
     if (p.CFItemType === 'Evidence Required') {
       const splitStatement = fullStatement.split(' ');
       if (splitStatement.length > 2) {
-        claim.target[0].evidence.push(fullStatement);
+        claim.target[0].evidence.push({
+          evTitle: abbreviatedStatement,
+          evDesc: fullStatement
+        });
       }
+    }
+    // This block handles a bug in the CASE API where some CFItems are missing their CFItemType property
+    if (p.CFItemType === undefined && p.abbreviatedStatement.includes('Evidence Required ')) {
+      claim.target[0].evidence.push({
+        evTitle: abbreviatedStatement,
+        evDesc: fullStatement
+      });
     }
     if (p.CFItemType === 'Accessibility') {
       claim.target[0].accessibility = fullStatement;
     }
     if (p.CFItemType === 'Task Description') {
-      claim.target[0].taskModels.push({
-        taskDesc: fullStatement,
-        taskName: jsonData.CFItems[iter + 1].fullStatement,
-        stimulus: jsonData.CFItems[iter + 2].fullStatement,
-        examples: jsonData.CFItems[iter + 4].fullStatement
-      });
+      if (jsonData.CFItems[iter + 1].fullStatement.includes('Task Model ')) {
+        claim.target[0].taskModels.push({
+          taskDesc: fullStatement,
+          taskName: jsonData.CFItems[iter + 1].fullStatement,
+          stimulus: jsonData.CFItems[iter + 2].fullStatement,
+          examples: jsonData.CFItems[iter + 4].fullStatement,
+          relatedEvidence: ['']
+        });
+      }
+      else {
+        claim.target[0].taskModels.push({
+          taskDesc: fullStatement,
+          taskName: jsonData.CFItems[iter - 1].fullStatement,
+          stimulus: jsonData.CFItems[iter + 4].fullStatement,
+          examples: jsonData.CFItems[iter + 1].fullStatement,
+          relatedEvidence: ['']
+        });
+      }
     }
     if (p.CFItemType === 'Stem') {
       claim.target[0].stem.push({
@@ -281,8 +303,24 @@ export function getTarget(claim: IClaim, jsonData: ISpecDocument) {
     }
     iter++;
   }
+  getAssociatedEvidence(claim, jsonData);
   getGenReqs(claim, jsonData);
 }
+
+export function getAssociatedEvidence(claim: IClaim, jsonData: ISpecDocument) {
+  const taskAssociations = jsonData.CFAssociations.filter((assoc) =>
+    assoc.originNodeURI.title.includes('Task Model ') && assoc.destinationNodeURI.title.includes('Evidence Required '));
+
+  for (const tasks of claim.target[0].taskModels) {
+    tasks.relatedEvidence = [];
+    for (const ta of taskAssociations) {
+      if (ta.originNodeURI.title === tasks.taskName) {
+        tasks.relatedEvidence.push(ta.destinationNodeURI.title);
+      }
+    }
+  }
+}
+
 // This function extracts the target properties that are found under the "General Requirements" itemtypes in a given document
 export function getGenReqs(claim: IClaim, jsonData: ISpecDocument) {
   for (const p of jsonData.CFItems) {
@@ -324,7 +362,6 @@ function getClaimDomain(
 
   return undefined;
 }
-
 // This function returns the description for a given claim
 function getClaimDesc(
   subject: string,
