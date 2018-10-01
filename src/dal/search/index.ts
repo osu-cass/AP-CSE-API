@@ -1,7 +1,5 @@
 import { Client, SearchResponse } from 'elasticsearch';
 import { IClaim } from '../../models/claim';
-import { logger } from '../../utils/logger';
-import { Logger } from 'winston';
 
 // export interface ISearchClientOptions {
 //   logger: Logger;
