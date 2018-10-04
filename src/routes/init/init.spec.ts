@@ -17,7 +17,10 @@ describe('init', () => {
   beforeAll(() => {
     dbClient = {
       connect: jest.fn().mockResolvedValue({}),
-      insert: jest.fn().mockResolvedValueOnce({ result: 'good' }).mockResolvedValue(undefined)
+      insert: jest
+        .fn()
+        .mockResolvedValueOnce({ result: 'good' })
+        .mockResolvedValue(undefined)
     };
     req = {};
     res = {

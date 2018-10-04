@@ -6,7 +6,10 @@ import { IDOK, ITaskModel } from '../../../models/target/index';
 // This is required for translating specDocuments to an IClaim type
 // tslint:disable:no-unsafe-any no-any
 
-enum Subject { ELA = 'English Language Arts', MATH = 'Math' }
+enum Subject {
+  ELA = 'English Language Arts',
+  MATH = 'Math'
+}
 const docs = [
   'smarter_balanced_ela_content_specification',
   'air_deprecated_ela_claims_and_targets',
@@ -279,8 +282,7 @@ export function getTarget(claim: IClaim, jsonData: ISpecDocument) {
           examples: jsonData.CFItems[iter + 4].fullStatement,
           relatedEvidence: ['']
         });
-      }
-      else {
+      } else {
         claim.target[0].taskModels.push({
           taskDesc: fullStatement,
           taskName: jsonData.CFItems[iter - 1].fullStatement,
@@ -308,8 +310,11 @@ export function getTarget(claim: IClaim, jsonData: ISpecDocument) {
 }
 
 export function getAssociatedEvidence(claim: IClaim, jsonData: ISpecDocument) {
-  const taskAssociations = jsonData.CFAssociations.filter((assoc) =>
-    assoc.originNodeURI.title.includes('Task Model ') && assoc.destinationNodeURI.title.includes('Evidence Required '));
+  const taskAssociations = jsonData.CFAssociations.filter(
+    assoc =>
+      assoc.originNodeURI.title.includes('Task Model ') &&
+      assoc.destinationNodeURI.title.includes('Evidence Required ')
+  );
 
   for (const tasks of claim.target[0].taskModels) {
     tasks.relatedEvidence = [];

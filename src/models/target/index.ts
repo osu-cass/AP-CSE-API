@@ -1,10 +1,9 @@
-
 export interface ITaskModel {
-    taskName: string;
-    taskDesc?: string;
-    examples?: string;
-    stimulus?: string;
-    relatedEvidence?: string[];
+  taskName: string;
+  taskDesc?: string;
+  examples?: string;
+  stimulus?: string;
+  relatedEvidence?: string[];
 }
 
 export interface IStem {
@@ -24,28 +23,28 @@ export interface IStandards {
 }
 
 export interface IEvidence {
-    evTitle: string;
-    evDesc: string;
+  evTitle: string;
+  evDesc: string;
 }
 
 export interface ITarget {
-    title: string;
-    shortCode: string;
-    description: string;
-    standards: IStandards[];
-    DOK: IDOK[];
-    iType: string;
-    clarification: string;
-    heading: string;
-    evidence: IEvidence[];
-    vocab: string;
-    tools: string;
-    stimInfo: string;
-    devNotes: string;
-    complexity: string;
-    dualText: string;
-    accessibility: string;
-    stem: IStem[];
-    taskModels: ITaskModel[];
-    rubrics: string[];
+  title: string;
+  shortCode: string;
+  description: string;
+  standards: IStandards[];
+  DOK: IDOK[];
+  iType: string;
+  clarification: string;
+  heading: string;
+  evidence: IEvidence[];
+  vocab: string;
+  tools: string;
+  stimInfo: string;
+  devNotes: string;
+  complexity: string;
+  dualText: string;
+  accessibility: string;
+  stem: IStem[];
+  taskModels: ITaskModel[];
+  rubrics: string[];
 }
