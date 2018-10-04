@@ -66,7 +66,7 @@ export async function importDbEntries(): Promise<IClaim[]> {
         while (newClaim.claimNumber.charAt(0) === 'C') {
           newClaim.claimNumber = newClaim.claimNumber.substr(1);
         }
-        newClaim.target[0].type = 'PT';
+        newClaim.target[0].iType = 'PT';
       }
       newClaim.shortCode = getClaimShortCode(
         newClaim.subject,
@@ -90,7 +90,7 @@ export async function importDbEntries(): Promise<IClaim[]> {
       const catPT = claim.CFDocument.creator.split(' ');
       catPT
         .filter((p: string) => p.includes('CAT'))
-        .forEach((p: string) => (newClaim.target[0].type = p));
+        .forEach((p: string) => (newClaim.target[0].iType = p));
       if (newClaim.subject === Subject.ELA) {
         dokSpec = ELASpec;
       } else {
