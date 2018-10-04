@@ -33,7 +33,7 @@ export interface ITarget {
   description: string;
   standards: IStandards[];
   DOK: IDOK[];
-  iType: string;
+  interactionType: string;
   clarification: string;
   heading: string;
   evidence: IEvidence[];
