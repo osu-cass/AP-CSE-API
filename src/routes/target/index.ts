@@ -1,13 +1,7 @@
 import { Request } from 'express';
 import { applyTracing } from '../../utils/tracer';
 import { CSEResponse, ResponseContext } from '../../server';
-
-export interface ITargetParams {
-  subject: string;
-  grades: string[] | number;
-  claimNumber: string;
-  targetShortCode: string;
-}
+import { ITargetParams } from '../index';
 
 export const handler = async (req: Request, res: CSEResponse) => {
   const { dbClient }: ResponseContext = res.locals;

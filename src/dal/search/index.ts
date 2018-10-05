@@ -1,14 +1,13 @@
 import { Client, SearchResponse } from 'elasticsearch';
 import { IClaim } from '../../models/claim';
-
-// export interface ISearchClientOptions {
-//   logger: Logger;
-// }
+import { ITarget } from '../../models/target';
+import { ITargetParams } from '../../routes';
+import bodybuilder, { Bodybuilder } from 'bodybuilder';
 
 export interface ISearchClient {
   host: string;
   insertDocuments(claims: IClaim[]): Promise<void>;
-  search(q: string): Promise<SearchResponse<{}>>;
+  search(q: string, target?: ITargetParams): Promise<IClaim[]>;
 }
 
 /**
@@ -22,7 +21,7 @@ export class SearchClient implements ISearchClient {
     this.host = 'es-search:9200';
     this.client = new Client({
       host: this.host,
-      log: 'trace',
+      log: 'info',
       apiVersion: '6.3'
     });
   }
@@ -56,15 +55,78 @@ export class SearchClient implements ISearchClient {
     }
   }
 
+  private buildRequestBody(query?: string, target?: ITargetParams): object {
+    const body: Bodybuilder = bodybuilder();
+
+    if(target && target.subject) {
+      body.query('match', 'subject', target.subject);
+    }
+
+    if(target && target.grades) {
+      body.query('match', 'grades', target.grades);
+    }
+
+    if(target && target.claimNumber) {
+      body.query('match', 'claimNumber', target.claimNumber);
+    }
+
+    if(target && target.targetShortCode) {
+      body.query('match', 'target.shortCode', target.targetShortCode);
+    }
+
+    if(query) {
+      body.query('multi_match', {type: 'phrase_prefix'}, {query});
+    }
+
+    return body.build();
+  }
+
+  // remove this when elasticsearch can filter
+  private getTargets(response: SearchResponse<{}>, target?: ITargetParams): ITarget[] {
+    let result: ITarget[] = [];
+    if (target) {
+      // tslint:disable:no-any no-unsafe-any
+      if(target.subject) {
+        response.hits.hits = response.hits.hits.filter((hit: any) => {
+          return hit._source.subject === target.subject;
+        });
+      }
+
+      if(target.grades) {
+        response.hits.hits = response.hits.hits.filter((hit: any) => {
+          hit._source.grades.includes(target.grades);
+        });
+      }
+
+      if(target.claimNumber) {
+        response.hits.hits = response.hits.hits.filter((hit: any) =>
+          hit._source.claimNumber === target.claimNumber
+        );
+      }
+
+      if(target.targetShortCode) {
+        response.hits.hits = response.hits.hits.filter((hit: any) =>
+          hit._source.targetShortCode === target.targetShortCode
+        );
+      }
+    }
+
+    response.hits.hits.forEach((hit: any) => {
+      result = result.concat(<ITarget[]>hit._source.target);
+    });
+    // tslint:enable:no-any no-unsafe-any
+
+    return result;
+  }
+
   public async insertDocuments(claims: IClaim[]): Promise<void> {
-    let id = 0;
     for (const claim of claims) {
       try {
-        if (await this.exists(`${id}`)) {
-          await this.delete(`${id}`);
+        if (await this.exists(claim.claimNumber)) {
+          await this.delete(claim.claimNumber);
         }
         await this.client.create({
-          id: `${id}`,
+          id: claim.claimNumber,
           index: `cse`,
           type: `claim`,
           body: claim
@@ -72,22 +134,24 @@ export class SearchClient implements ISearchClient {
       } catch (err) {
         throw err;
       }
-      id++;
     }
   }
 
-  public async search(q: string): Promise<SearchResponse<{}>> {
-    let result: SearchResponse<{}>;
+  public async search(q: string, target?: ITargetParams): Promise<IClaim[]> {
+    let result: IClaim[] = [];
+    let response: SearchResponse<{}>;
     try {
-      result = await this.client.search({
-        q,
-        index: `cse`,
-        type: `claim`
+      response = await this.client.search({
+        type: 'claim',
+        index: 'cse',
+        body: this.buildRequestBody(q, target)
       });
+      result = response.hits.hits.map(hit => <IClaim>hit._source);
     } catch (err) {
       throw err;
     }
 
     return result;
   }
+
 }

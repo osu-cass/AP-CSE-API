@@ -1,8 +1,19 @@
 import { Router } from 'express';
 import { pdfDownload } from './pdf';
 import { dbInit } from './init';
-import { search } from './search';
 import { target } from './target';
+import { search } from './search';
+
+export interface ITargetParams {
+    subject?: string;
+    grades?: string[] | number;
+    claimNumber?: string;
+    targetShortCode?: string;
+}
+
+export interface IQueryParams extends ITargetParams {
+    q: string;
+}
 
 const router: Router = Router();
 
