@@ -1,5 +1,3 @@
-// tslint:disable:no-reserved-keywords
-
 export interface ITaskModel {
   taskName: string;
   taskDesc?: string;
@@ -34,8 +32,8 @@ export interface ITarget {
   description: string;
   standards: IStandards[];
   DOK: IDOK[];
-  type: string;
-  clarification: string | string[];
+  interactionType: string;
+  clarification: string;
   heading: string;
   evidence: IEvidence[];
   vocab: string;

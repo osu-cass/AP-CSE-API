@@ -1,4 +1,4 @@
-import { DbClient, IDbClient } from './index';
+import { DbClient, IDbClientOptions } from '.';
 import { MongoClient } from 'mongodb';
 import {
   db,
@@ -8,11 +8,20 @@ import {
   dropCollection,
   createCollection
 } from '../../__mocks__/mongodb';
-import { ITargetParams } from '../../routes/target/index';
+import { ITargetParams } from '../../routes/target';
+import { IClaim } from '../../models/claim';
 
-describe('MongoDb Database client', () => {
-  describe('DbClient initialization', () => {
-    let dbInitArgs: IDbClient;
+jest.mock('../search', () => {
+  return {
+    SearchClient: jest.fn().mockImplementation(() => ({
+      insertDocuments: jest.fn().mockResolvedValue({})
+    }))
+  };
+});
+
+describe('MongoDb Database client interface', () => {
+  describe('initialization', () => {
+    let dbInitArgs: IDbClientOptions;
     let uri: string;
     let client: DbClient;
     let authInfo: object;
@@ -74,12 +83,40 @@ describe('MongoDb Database client', () => {
       expect(MongoClient.connect).toHaveBeenCalledWith(uri, authInfo);
       expect(db).toHaveBeenCalledTimes(0);
     });
+
+    it('closes the db client', async () => {
+      await client.close();
+      expect.assertions(1);
+      expect(close).toHaveBeenCalledTimes(1);
+    });
+
+    it('throws error when closing client', async () => {
+      close.mockRejectedValueOnce(new Error('error'));
+      try {
+        await client.close();
+      } catch (err) {
+        expect.assertions(2);
+        expect(err).toEqual(new Error('error'));
+        expect(close).toHaveBeenCalledTimes(1);
+      }
+    });
+
+    it('throws error when client is undefined', async () => {
+      const mockClient = new DbClient(dbInitArgs);
+      try {
+        await mockClient.close();
+      } catch (err) {
+        expect.assertions(2);
+        expect(err).toEqual(new Error('client is already closed'));
+        expect(close).toHaveBeenCalledTimes(0);
+      }
+    });
   });
 
   describe('data insertion', () => {
     let client: DbClient;
-    let dbInitArgs: IDbClient;
-    let testData: object[];
+    let dbInitArgs: IDbClientOptions;
+    let testData: Partial<IClaim>[];
 
     beforeAll(() => {
       dbInitArgs = {
@@ -88,7 +125,7 @@ describe('MongoDb Database client', () => {
         dbName: 'test-db'
       };
       client = new DbClient(dbInitArgs);
-      testData = [{ value: 'text' }];
+      testData = [{ title: 'text' }];
     });
 
     afterEach(() => {
@@ -100,7 +137,7 @@ describe('MongoDb Database client', () => {
 
     it('successfully inserts data into mongodb', async () => {
       await client.connect();
-      const result = await client.insert(testData);
+      const result = await client.insert(<IClaim[]>testData);
       expect.assertions(5);
       expect(result).toEqual('success');
       expect(collections).toHaveBeenCalledTimes(1);
@@ -110,7 +147,7 @@ describe('MongoDb Database client', () => {
     });
 
     it('successfully replaces data in mongodb', async () => {
-      const result = await client.insert(testData);
+      const result = await client.insert(<IClaim[]>testData);
       expect.assertions(5);
       expect(result).toEqual('success');
       expect(collections).toHaveBeenCalledTimes(1);
@@ -123,7 +160,7 @@ describe('MongoDb Database client', () => {
       let result;
       expect.assertions(6);
       try {
-        result = await client.insert(testData);
+        result = await client.insert(<IClaim[]>testData);
       } catch (err) {
         expect(err).toEqual(new Error('contrived error'));
         expect(result).toBe(undefined);
@@ -143,7 +180,7 @@ describe('MongoDb Database client', () => {
       });
       expect.assertions(6);
       try {
-        result = await client.insert(testData);
+        result = await client.insert(<IClaim[]>testData);
       } catch (err) {
         expect(err).toEqual(new Error('db is not defined'));
       }
@@ -158,7 +195,7 @@ describe('MongoDb Database client', () => {
   describe('data retrieval', () => {
     describe('getTarget', () => {
       let client: DbClient;
-      let dbInitArgs: IDbClient;
+      let dbInitArgs: IDbClientOptions;
       let mockTargetParams: ITargetParams;
 
       beforeAll(() => {
@@ -205,11 +242,11 @@ describe('MongoDb Database client', () => {
       });
     });
 
-    describe('search', () => {
+    describe('getClaims', () => {
       let client: DbClient;
-      let dbInitArgs: IDbClient;
+      let dbInitArgs: IDbClientOptions;
 
-      beforeAll(() => {
+      beforeAll(async () => {
         dbInitArgs = {
           url: 'http://mongodb',
           port: 27017,
@@ -218,9 +255,30 @@ describe('MongoDb Database client', () => {
         client = new DbClient(dbInitArgs);
       });
 
-      it('gets data by search parameter', () => {
-        client.getBySearchParam('');
-        expect.assertions(0);
+      it('returns array of Claims', async () => {
+        await client.connect();
+        const result = await client.getClaims();
+        expect.assertions(1);
+        expect(collection).toHaveBeenCalledWith('claims');
+      });
+
+      it('throws error getting Claims', async () => {
+        try {
+          const result = await client.getClaims();
+        } catch (error) {
+          expect.assertions(1);
+          expect(error).toEqual(new Error('no result'));
+        }
+      });
+
+      it('throws error when db is not connected', async () => {
+        try {
+          await client.connect();
+          const result = await client.getClaims();
+        } catch (error) {
+          expect.assertions(1);
+          expect(error).toEqual(new Error('db is not defined'));
+        }
       });
     });
   });

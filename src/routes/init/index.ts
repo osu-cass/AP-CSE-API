@@ -1,4 +1,5 @@
 import { Request } from 'express';
+import { DbClient, IDbClientOptions } from '../../dal/interface';
 import { InsertWriteOpResult } from 'mongodb';
 import { importDbEntries } from './db/index';
 import { applyTracing } from '../../utils/tracer/index';
@@ -6,18 +7,22 @@ import { CSEResponse } from '../../server/index';
 import { IClaim } from '../../models/claim/index';
 
 export const handler = async (req: Request, res: CSEResponse): Promise<void> => {
-  const { dbClient } = res.locals;
   let result: InsertWriteOpResult | undefined;
+  const { searchClient } = res.locals;
+  const { dbClient } = res.locals;
   try {
     const output: IClaim[] = await importDbEntries();
     await dbClient.connect();
-    // tslint:disable-next-line
     result = await dbClient.insert(output);
+    await searchClient.insertDocuments(await dbClient.getClaims());
+    await dbClient.close();
   } catch (err) {
-    throw err;
+    res.status(500);
+    res.send(err);
   }
   res.header('Content-Type', 'application/json');
-  res.send(result ? result.result : 'Nope');
+  res.status(200);
+  res.send(result ? result.result : 'insert failed');
 };
 
 export const dbInit = applyTracing('/init', handler);

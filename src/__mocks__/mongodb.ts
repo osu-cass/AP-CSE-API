@@ -8,10 +8,22 @@ const findOne = jest
   )
   .mockImplementationOnce(() => Promise.reject(new Error('error')));
 
+const find = jest
+  .fn()
+  .mockImplementationOnce(() => ({
+    toArray: jest.fn().mockResolvedValue({ test: 'passed' })
+  }))
+  .mockImplementationOnce(() => ({
+    toArray: jest.fn().mockRejectedValue(new Error('no result'))
+  }));
+
 const database = {
-  collection: jest
-    .fn()
-    .mockImplementation(() => ({ findOne, insertMany: jest.fn().mockResolvedValue('success') })),
+  collection: jest.fn().mockImplementation(() => ({
+    find,
+    findOne,
+    insertMany: jest.fn().mockResolvedValue('success'),
+    createIndex: jest.fn()
+  })),
   collections: jest
     .fn()
     .mockImplementationOnce(() => [{ collectionName: 'not-claims' }])
@@ -32,8 +44,9 @@ MongoClient = {
       throw new Error('db init failed');
     })
     .mockImplementationOnce(() => ({ ...database }))
+    .mockImplementationOnce(() => ({ ...database }))
     .mockImplementationOnce(() => ({ ...database })),
-  close: jest.fn()
+  close: jest.fn().mockResolvedValue({})
 };
 
 MongoClient.connect = jest
@@ -42,6 +55,8 @@ MongoClient.connect = jest
   .mockResolvedValueOnce({ db: MongoClient.db, close: MongoClient.close })
   .mockRejectedValueOnce({ error: { message: 'connect failed' } })
   .mockResolvedValueOnce({ db: MongoClient.db, close: MongoClient.close })
+  .mockResolvedValueOnce({ db: MongoClient.db, close: MongoClient.close })
+  .mockResolvedValueOnce({ db: jest.fn(), close: MongoClient.close })
   .mockResolvedValueOnce({ db: MongoClient.db, close: MongoClient.close })
   .mockResolvedValueOnce({ db: jest.fn(), close: MongoClient.close });
 
