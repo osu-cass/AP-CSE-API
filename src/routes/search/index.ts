@@ -1,15 +1,14 @@
 import { Request } from 'express';
 import { applyTracing } from '../../utils/tracer';
 import { CSEResponse } from '../../server';
-import { IQueryParams, ITargetParams } from '../';
+import { IQueryParams } from '../';
 
 export const handler = async (req: Request, res: CSEResponse): Promise<void> => {
-  const { q }: IQueryParams = <IQueryParams>req.params;
-  const { ...target }: ITargetParams = <ITargetParams>req.query;
+  const { ...query }: IQueryParams = <IQueryParams>req.query;
   const { searchClient } = res.locals;
   let result;
   try {
-    result = await searchClient.search(q, target);
+    result = await searchClient.search(query);
   } catch (err) {
     res.status(500);
     res.send(err);

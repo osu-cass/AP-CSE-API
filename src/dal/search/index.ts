@@ -1,12 +1,12 @@
 import { Client, SearchResponse } from 'elasticsearch';
 import { IClaim } from '../../models/claim';
-import { ITargetParams } from '../../routes';
+import { IQueryParams } from '../../routes';
 import bodybuilder, { Bodybuilder } from 'bodybuilder';
 
 export interface ISearchClient {
   host: string;
   insertDocuments(claims: IClaim[]): Promise<void>;
-  search(q: string, target?: ITargetParams): Promise<IClaim[]>;
+  search(query: IQueryParams): Promise<IClaim[]>;
 }
 
 /**
@@ -54,40 +54,42 @@ export class SearchClient implements ISearchClient {
     }
   }
 
-  private buildRequestBody(query?: string, target?: ITargetParams): object {
+  public buildRequestBody(q: IQueryParams): object {
+    const { query, subject, grades, claimNumber, targetShortCode }: IQueryParams = q;
     const body: Bodybuilder = bodybuilder();
 
-    if (target && target.subject) {
-      body.query('match', 'subject', target.subject);
+    if (subject) {
+      body.query('match', 'subject', subject);
     }
 
-    if (target && target.grades) {
-      body.query('match', 'grades', target.grades);
+    if (grades) {
+      body.query('match', 'grades', grades);
     }
 
-    if (target && target.claimNumber) {
-      body.query('match', 'claimNumber', target.claimNumber);
+    if (claimNumber) {
+      body.query('match', 'claimNumber', claimNumber);
     }
 
-    if (target && target.targetShortCode) {
-      body.query('match', 'target.shortCode', target.targetShortCode);
+    if (targetShortCode) {
+      body.query('match', 'target.shortCode', targetShortCode);
     }
 
     if (query) {
-      body.query('multi_match', { type: 'phrase_prefix' }, { query });
+      body.query('multi_match', { query, type: 'phrase_prefix' });
     }
 
     return body.build();
   }
 
   public async insertDocuments(claims: IClaim[]): Promise<void> {
+    let id = 0;
     for (const claim of claims) {
       try {
-        if (await this.exists(claim.claimNumber)) {
-          await this.delete(claim.claimNumber);
+        if (await this.exists(`${id}`)) {
+          await this.delete(`${id}`);
         }
         await this.client.create({
-          id: claim.claimNumber,
+          id: `${id}`,
           index: `cse`,
           type: `claim`,
           body: claim
@@ -95,17 +97,18 @@ export class SearchClient implements ISearchClient {
       } catch (err) {
         throw err;
       }
+      id++;
     }
   }
 
-  public async search(q: string, target?: ITargetParams): Promise<IClaim[]> {
+  public async search(query: IQueryParams): Promise<IClaim[]> {
     let result: IClaim[] = [];
     let response: SearchResponse<{}>;
     try {
       response = await this.client.search({
         type: 'claim',
         index: 'cse',
-        body: this.buildRequestBody(q, target)
+        body: this.buildRequestBody(query)
       });
       result = response.hits.hits.map(hit => <IClaim>hit._source);
     } catch (err) {
