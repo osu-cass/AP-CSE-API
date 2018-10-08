@@ -99,6 +99,22 @@ export const mockPack = [
       },
       {
         uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/81bef0ac-cc76-11e7-943b-9b9ed3d69b53',
+        identifier: '81bef0ac-cc76-11e7-943b-9b9ed3d69b53',
+        lastChangeDateTime: '2017-11-18T17:31:09+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 3 Claim 1 Target ',
+          identifier: '6a3ccfc6-cc76-11e7-8974-cfcd479e782c',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/6a3ccfc6-cc76-11e7-8974-cfcd479e782c'
+        },
+        educationLevel: ['03'],
+        fullStatement:
+          'The student will identify text evidence (explicit details and/or implicit information) to support a GIVEN inference or conclusion based on the text.',
+        abbreviatedStatement: 'Evidence Required 2'
+      },
+      {
+        uri:
           'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/81bebc4a-cc76-11e7-999f-5550d020599b',
         identifier: '81bebc4a-cc76-11e7-999f-5550d020599b',
         lastChangeDateTime: '2017-11-18T17:31:39+00:00',
