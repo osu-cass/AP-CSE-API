@@ -109,12 +109,12 @@ export class DbClient implements IDbClient {
     let result: ITarget | undefined;
     if (this.db) {
       try {
-        const dbResult: IClaim = await this.db.collection('claims').findOne({
+        const dbResult: IClaim = (await this.db.collection('claims').findOne({
           subject,
           grades,
           claimNumber,
           'target.shortCode': targetShortCode
-        }) as IClaim;
+        })) as IClaim;
         result = dbResult.target.find(t => t.shortCode === targetShortCode);
       } catch (error) {
         throw error;

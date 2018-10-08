@@ -21,7 +21,10 @@ describe('init', () => {
     };
     dbClient = {
       connect: jest.fn().mockResolvedValue({}),
-      insert: jest.fn().mockResolvedValueOnce({ result: 'good' }).mockRejectedValue(new Error('error')),
+      insert: jest
+        .fn()
+        .mockResolvedValueOnce({ result: 'good' })
+        .mockRejectedValue(new Error('error')),
       getClaims: jest.fn().mockResolvedValue({}),
       close: jest.fn().mockResolvedValue({})
     };

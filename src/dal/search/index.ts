@@ -1,6 +1,5 @@
 import { Client, SearchResponse } from 'elasticsearch';
 import { IClaim } from '../../models/claim';
-import { ITarget } from '../../models/target';
 import { ITargetParams } from '../../routes';
 import bodybuilder, { Bodybuilder } from 'bodybuilder';
 
@@ -58,65 +57,27 @@ export class SearchClient implements ISearchClient {
   private buildRequestBody(query?: string, target?: ITargetParams): object {
     const body: Bodybuilder = bodybuilder();
 
-    if(target && target.subject) {
+    if (target && target.subject) {
       body.query('match', 'subject', target.subject);
     }
 
-    if(target && target.grades) {
+    if (target && target.grades) {
       body.query('match', 'grades', target.grades);
     }
 
-    if(target && target.claimNumber) {
+    if (target && target.claimNumber) {
       body.query('match', 'claimNumber', target.claimNumber);
     }
 
-    if(target && target.targetShortCode) {
+    if (target && target.targetShortCode) {
       body.query('match', 'target.shortCode', target.targetShortCode);
     }
 
-    if(query) {
-      body.query('multi_match', {type: 'phrase_prefix'}, {query});
+    if (query) {
+      body.query('multi_match', { type: 'phrase_prefix' }, { query });
     }
 
     return body.build();
-  }
-
-  // remove this when elasticsearch can filter
-  private getTargets(response: SearchResponse<{}>, target?: ITargetParams): ITarget[] {
-    let result: ITarget[] = [];
-    if (target) {
-      // tslint:disable:no-any no-unsafe-any
-      if(target.subject) {
-        response.hits.hits = response.hits.hits.filter((hit: any) => {
-          return hit._source.subject === target.subject;
-        });
-      }
-
-      if(target.grades) {
-        response.hits.hits = response.hits.hits.filter((hit: any) => {
-          hit._source.grades.includes(target.grades);
-        });
-      }
-
-      if(target.claimNumber) {
-        response.hits.hits = response.hits.hits.filter((hit: any) =>
-          hit._source.claimNumber === target.claimNumber
-        );
-      }
-
-      if(target.targetShortCode) {
-        response.hits.hits = response.hits.hits.filter((hit: any) =>
-          hit._source.targetShortCode === target.targetShortCode
-        );
-      }
-    }
-
-    response.hits.hits.forEach((hit: any) => {
-      result = result.concat(<ITarget[]>hit._source.target);
-    });
-    // tslint:enable:no-any no-unsafe-any
-
-    return result;
   }
 
   public async insertDocuments(claims: IClaim[]): Promise<void> {
@@ -153,5 +114,4 @@ export class SearchClient implements ISearchClient {
 
     return result;
   }
-
 }

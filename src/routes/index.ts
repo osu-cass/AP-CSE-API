@@ -5,14 +5,14 @@ import { target } from './target';
 import { search } from './search';
 
 export interface ITargetParams {
-    subject?: string;
-    grades?: string[] | number;
-    claimNumber?: string;
-    targetShortCode?: string;
+  subject?: string;
+  grades?: string[] | number;
+  claimNumber?: string;
+  targetShortCode?: string;
 }
 
 export interface IQueryParams extends ITargetParams {
-    q: string;
+  q: string;
 }
 
 const router: Router = Router();
