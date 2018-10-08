@@ -95,6 +95,15 @@ describe('search', () => {
         expect(esCreate).toHaveBeenCalledTimes(0);
       }
     });
+
+    it('fresh insert with no deletions', async () => {
+      esExists.mockImplementation(() => false);
+      expect.assertions(3);
+      await client.insertDocuments(<IClaim[]>claims);
+      expect(esExists).toHaveBeenCalledWith({ id: '0', index: 'cse', type: 'claim' });
+      expect(esDelete).toHaveBeenCalledTimes(0);
+      expect(esCreate).toHaveBeenCalledTimes(1);
+    });
   });
 
   describe('search functionality', () => {
@@ -104,6 +113,10 @@ describe('search', () => {
     let testBody: object;
 
     beforeAll(() => {
+      esCreate.mockClear();
+      esDelete.mockClear();
+      esExists.mockClear();
+      esSearch.mockClear();
       client = new SearchClient({ host: 'test-host:1234' });
       claims.push({
         title: 'test'
@@ -174,6 +187,10 @@ describe('search', () => {
     let testQuery: IQueryParams;
 
     beforeAll(() => {
+      esCreate.mockClear();
+      esDelete.mockClear();
+      esExists.mockClear();
+      esSearch.mockClear();
       client = new SearchClient({ host: 'test-host:1234' });
       testQuery = {
         query: 'test string',
