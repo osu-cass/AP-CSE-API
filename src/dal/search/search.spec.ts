@@ -8,8 +8,9 @@ describe('search', () => {
     const claims: Partial<IClaim>[] = [];
 
     beforeAll(() => {
-      client = new SearchClient();
+      client = new SearchClient({ host: 'test-host:1234' });
       claims.push({
+        claimNumber: '0',
         title: 'test'
       });
     });
@@ -101,7 +102,7 @@ describe('search', () => {
     let testString: string;
 
     beforeAll(() => {
-      client = new SearchClient();
+      client = new SearchClient({ host: 'test-host:1234' });
       testString = 'test';
       claims.push({
         title: testString

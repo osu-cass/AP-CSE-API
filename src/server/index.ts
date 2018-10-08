@@ -61,7 +61,9 @@ export class Server implements IServer {
     this.context = {
       logger,
       tracer: createTracer(),
-      searchClient: new SearchClient(),
+      searchClient: new SearchClient({
+        host: 'es-search:9200'
+      }),
       dbClient: new DbClient({
         url: 'mongodb://mongo',
         port: 27017,

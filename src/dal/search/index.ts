@@ -1,8 +1,10 @@
-import { Client, SearchResponse } from 'elasticsearch';
+import { Client, SearchResponse, ExistsParams } from 'elasticsearch';
 import { IClaim } from '../../models/claim';
 
-export interface ISearchClient {
+export interface ISearchClientOptions {
   host: string;
+}
+export interface ISearchClient {
   insertDocuments(claims: IClaim[]): Promise<void>;
   search(q: string): Promise<void>;
 }
@@ -12,24 +14,24 @@ export interface ISearchClient {
  */
 export class SearchClient implements ISearchClient {
   private client: Client;
-  public host: string;
 
-  constructor() {
-    this.host = 'es-search:9200';
+  constructor(opts: ISearchClientOptions) {
     this.client = new Client({
-      host: this.host
+      host: opts.host
     });
   }
 
-  private async exists(id: string): Promise<boolean> {
+  private async documentExists(id: string): Promise<boolean> {
     let exists: boolean;
+    const existsParams: ExistsParams = {
+      id,
+      index: `cse`,
+      type: `claim`
+    };
+
     try {
       // tslint:disable-next-line:no-unsafe-any
-      exists = await this.client.exists({
-        id,
-        index: `cse`,
-        type: `claim`
-      });
+      exists = await this.client.exists(existsParams);
     } catch (err) {
       throw err;
     }
@@ -37,8 +39,7 @@ export class SearchClient implements ISearchClient {
     return exists;
   }
 
-  // tslint:disable-next-line:no-reserved-keywords
-  private async delete(id: string) {
+  private async deleteDocument(id: string): Promise<void> {
     try {
       await this.client.delete({
         id,
@@ -51,14 +52,14 @@ export class SearchClient implements ISearchClient {
   }
 
   public async insertDocuments(claims: IClaim[]): Promise<void> {
-    let id = 0;
     for (const claim of claims) {
+      const { claimNumber } = claim;
       try {
-        if (await this.exists(`${id}`)) {
-          await this.delete(`${id}`);
+        if (await this.documentExists(claimNumber)) {
+          await this.deleteDocument(claimNumber);
         }
         await this.client.create({
-          id: `${id}`,
+          id: claimNumber,
           index: `cse`,
           type: `claim`,
           body: claim
@@ -66,7 +67,6 @@ export class SearchClient implements ISearchClient {
       } catch (err) {
         throw err;
       }
-      id++;
     }
   }
 

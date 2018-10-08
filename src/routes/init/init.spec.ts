@@ -21,7 +21,12 @@ describe('init', () => {
     };
     dbClient = {
       connect: jest.fn().mockResolvedValue({}),
-      insert: jest.fn().mockResolvedValueOnce({ result: 'good' }).mockResolvedValue(undefined)
+      getClaims: jest.fn().mockResolvedValue([]),
+      insert: jest
+        .fn()
+        .mockResolvedValueOnce({ result: 'good' })
+        .mockRejectedValue(new Error('insert failed')),
+      close: jest.fn().mockResolvedValue({})
     };
     req = {};
     res = {
@@ -48,6 +53,7 @@ describe('init', () => {
     expect(res.status).toBeCalledWith(500);
     expect(res.send).toBeCalledWith('insert failed');
   });
+
   it('throws an error', async () => {
     try {
       await dbInit(<Request>req, <Response>res);
