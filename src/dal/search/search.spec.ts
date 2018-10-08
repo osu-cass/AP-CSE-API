@@ -9,8 +9,9 @@ describe('search', () => {
     const claims: Partial<IClaim>[] = [];
 
     beforeAll(() => {
-      client = new SearchClient();
+      client = new SearchClient({ host: 'test-host:1234' });
       claims.push({
+        claimNumber: '0',
         title: 'test'
       });
     });
@@ -103,7 +104,7 @@ describe('search', () => {
     let testBody: object;
 
     beforeAll(() => {
-      client = new SearchClient();
+      client = new SearchClient({ host: 'test-host:1234' });
       claims.push({
         title: 'test'
       });
@@ -173,7 +174,7 @@ describe('search', () => {
     let testQuery: IQueryParams;
 
     beforeAll(() => {
-      client = new SearchClient();
+      client = new SearchClient({ host: 'test-host:1234' });
       testQuery = {
         query: 'test string',
         subject: 'math',

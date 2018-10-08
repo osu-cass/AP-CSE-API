@@ -12,7 +12,6 @@ export const handler = async (req: Request, res: CSEResponse): Promise<void> => 
   try {
     const output: IClaim[] = await importDbEntries();
     await dbClient.connect();
-    // tslint:disable-next-line
     result = await dbClient.insert(output);
     await searchClient.insertDocuments(await dbClient.getClaims());
     await dbClient.close();

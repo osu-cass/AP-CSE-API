@@ -21,11 +21,11 @@ describe('init', () => {
     };
     dbClient = {
       connect: jest.fn().mockResolvedValue({}),
+      getClaims: jest.fn().mockResolvedValue([]),
       insert: jest
         .fn()
         .mockResolvedValueOnce({ result: 'good' })
-        .mockRejectedValue(new Error('error')),
-      getClaims: jest.fn().mockResolvedValue({}),
+        .mockRejectedValue(new Error('insert failed')),
       close: jest.fn().mockResolvedValue({})
     };
     req = {};
