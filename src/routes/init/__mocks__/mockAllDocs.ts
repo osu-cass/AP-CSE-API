@@ -262,6 +262,62 @@ export const mockData = {
       publisher: 'Smarter Balanced Assessment Consortium',
       title: 'Item Type/Response Type',
       adoptionStatus: 'Draft'
+    },
+    {
+      uri:
+        'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/ddd1045a-d29f-11e7-8ec6-ebfef2b95d1c',
+      identifier: 'ddd1045a-d29f-11e7-8ec6-ebfef2b95d1c',
+      lastChangeDateTime: '2018-03-01T21:01:43+00:00',
+      CFPackageURI: {
+        title: 'Math Grades 3-5, Claim 2',
+        identifier: 'ddd1045a-d29f-11e7-8ec6-ebfef2b95d1c',
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFPackages/ddd1045a-d29f-11e7-8ec6-ebfef2b95d1c'
+      },
+      subjectURI: [
+        {
+          title: 'Math',
+          identifier: 'd41fb0f6-b390-11e7-9a98-233b080813ce',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFSubjects/d41fb0f6-b390-11e7-9a98-233b080813ce'
+        }
+      ],
+      officialSourceURL:
+        'https://images.smarterbalanced.org/content/Documents/Item%20Specs/Math_Item_Specs/Claim2_mathematics_Gr3-HS_specs/G3-5_Claim2_Spec_v3.docx',
+      creator: 'Smarter Balanced_Math Claim 2-4 Item Specifications',
+      publisher: 'Smarter Balanced Assessment Consortium',
+      title: 'Math Grades 3-5, Claim 2',
+      subject: ['Math'],
+      adoptionStatus: 'Draft',
+      notes: 'G3-5_Claim2_Spec_v3'
+    },
+    {
+      uri:
+        'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/ddd1045a-d29f-11e7-8ec6-ebfef2b95d1c',
+      identifier: 'ddd1045a-d29f-11e7-8ec6-ebfef2b95d1c',
+      lastChangeDateTime: '2018-03-01T21:01:43+00:00',
+      CFPackageURI: {
+        title: 'Math Grades 3-5, Claim 2',
+        identifier: 'ddd1045a-d29f-11e7-8ec6-ebfef2b95d1c',
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFPackages/ddd1045a-d29f-11e7-8ec6-ebfef2b95d1c'
+      },
+      subjectURI: [
+        {
+          title: 'Math',
+          identifier: 'd41fb0f6-b390-11e7-9a98-233b080813ce',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFSubjects/d41fb0f6-b390-11e7-9a98-233b080813ce'
+        }
+      ],
+      officialSourceURL:
+        'https://images.smarterbalanced.org/content/Documents/Item%20Specs/Math_Item_Specs/Claim2_mathematics_Gr3-HS_specs/G3-5_Claim2_Spec_v3.docx',
+      creator: 'Smarter Balanced_Math Claim 2-4 Item Specifications',
+      publisher: 'Smarter Balanced Assessment Consortium',
+      title: 'Math Grades 3-5, Claim 2',
+      subject: ['Math'],
+      adoptionStatus: 'Draft',
+      notes: 'G3-5_Claim2_Spec_v3'
     }
   ]
 };

@@ -27,7 +27,10 @@ export class DbClient {
   public async connect(): Promise<void> {
     let client: MongoClient;
     try {
-      client = await MongoClient.connect(this.uri, { auth: { user: 'root', password: 'example' } });
+      client = await MongoClient.connect(
+        this.uri,
+        { auth: { user: 'root', password: 'example' } }
+      );
       this.db = client.db(this.dbName);
     } catch (error) {
       throw error;
@@ -61,12 +64,12 @@ export class DbClient {
     let result: ITarget | undefined;
     if (this.db) {
       try {
-        const dbResult: IClaim = await this.db.collection('claims').findOne({
+        const dbResult: IClaim = (await this.db.collection('claims').findOne({
           subject,
           grades,
           claimNumber,
           'target.shortCode': targetShortCode
-        }) as IClaim;
+        })) as IClaim;
         result = dbResult.target.find(t => t.shortCode === targetShortCode);
       } catch (error) {
         throw error;
