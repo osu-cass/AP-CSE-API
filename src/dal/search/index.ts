@@ -76,7 +76,18 @@ export class SearchClient implements ISearchClient {
     }
 
     if (query) {
-      body.query('multi_match', { query, type: 'phrase_prefix' });
+      body.query('multi_match', {
+        query,
+        type: 'phrase_prefix',
+        fields: [
+          'description',
+          'target.description',
+          'target.evidence.evTitle',
+          'target.evidence.evDesc',
+          'target.stem.stemDesc',
+          'target.stem.shortStem'
+        ]
+      });
     }
 
     return body.build();

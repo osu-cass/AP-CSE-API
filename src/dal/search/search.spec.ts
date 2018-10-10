@@ -155,7 +155,15 @@ describe('search', () => {
               {
                 multi_match: {
                   query: testQuery.query,
-                  type: 'phrase_prefix'
+                  type: 'phrase_prefix',
+                  fields: [
+                    'description',
+                    'target.description',
+                    'target.evidence.evTitle',
+                    'target.evidence.evDesc',
+                    'target.stem.stemDesc',
+                    'target.stem.shortStem'
+                  ]
                 }
               }
             ]
@@ -208,7 +216,15 @@ describe('search', () => {
         query: {
           multi_match: {
             query: 'test string',
-            type: 'phrase_prefix'
+            type: 'phrase_prefix',
+            fields: [
+              'description',
+              'target.description',
+              'target.evidence.evTitle',
+              'target.evidence.evDesc',
+              'target.stem.stemDesc',
+              'target.stem.shortStem'
+            ]
           }
         }
       });
