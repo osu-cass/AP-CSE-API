@@ -3,15 +3,15 @@ let express = require.requireActual('express');
 const router = require.requireActual('express').Router;
 
 const application = {
-    use: jest.fn(),
-    get: jest.fn(),
-    post: jest.fn(),
-    listen: jest.fn().mockImplementation((num, func) => func()),
+  use: jest.fn(),
+  get: jest.fn(),
+  post: jest.fn(),
+  listen: jest.fn().mockImplementation((num, func) => func())
 };
 
 express = jest.fn().mockImplementation(() => ({
-    ...express,
-    ...application
+  ...express,
+  ...application
 }));
 
 export const use: jest.Mock = application.use;

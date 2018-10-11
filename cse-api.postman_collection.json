@@ -1,0 +1,181 @@
+{
+	"info": {
+		"_postman_id": "27b24276-6fa9-4967-bffa-185261a1b827",
+		"name": "cse-api/",
+		"description": "Collection of requests for testing the cse-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "target/",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3fb1fb27-9f1a-4417-b724-57371608fd82",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{api-domain}}/{{target-endpoint}}/{{subject}}/{{grades}}/{{claim}}/{{target}}",
+					"host": [
+						"{{api-domain}}"
+					],
+					"path": [
+						"{{target-endpoint}}",
+						"{{subject}}",
+						"{{grades}}",
+						"{{claim}}",
+						"{{target}}"
+					]
+				},
+				"description": "Returns an ITarget based on grade, subject, claimNumber, and target.shortCode. As of now, none of these arguments can be null."
+			},
+			"response": []
+		},
+		{
+			"name": "init/",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{api-domain}}/{{init-endpoint}}",
+					"host": [
+						"{{api-domain}}"
+					],
+					"path": [
+						"{{init-endpoint}}"
+					]
+				},
+				"description": "Clears the existing db instance and re-populates in"
+			},
+			"response": []
+		},
+		{
+			"name": "search/",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{api-domain}}/{{search}}",
+					"host": [
+						"{{api-domain}}"
+					],
+					"path": [
+						"{{search}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pdf/",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{api-domain}}/{{pdf}}",
+					"host": [
+						"{{api-domain}}"
+					],
+					"path": [
+						"{{pdf}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "59afedc0-12c2-4fac-897a-40c6b18a619d",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "dfb559ce-7f2f-403a-abe6-493f3763776e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "dd546a71-050c-44cc-a135-41283247c7eb",
+			"key": "api-domain",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"id": "63036600-1088-4891-aef2-bbe7aafa21ed",
+			"key": "pdf-endpoint",
+			"value": "api/pdf",
+			"type": "string"
+		},
+		{
+			"id": "9bfa3509-5ab1-41a1-8369-f1c5c451a66d",
+			"key": "search-endpoint",
+			"value": "api/search",
+			"type": "string"
+		},
+		{
+			"id": "cdb83d26-ddc5-47af-abda-7e84e885882c",
+			"key": "init-endpoint",
+			"value": "api/init",
+			"type": "string"
+		},
+		{
+			"id": "acc76810-d503-4be6-867f-96db47a75cd6",
+			"key": "target-endpoint",
+			"value": "api/target",
+			"type": "string"
+		},
+		{
+			"id": "f00c9303-b202-4358-9e2b-37ad7945018d",
+			"key": "subject",
+			"value": "Math",
+			"type": "string"
+		},
+		{
+			"id": "cf65b87e-bd51-4d1a-afd4-7465a6fa1193",
+			"key": "grades",
+			"value": "11",
+			"type": "string"
+		},
+		{
+			"id": "555b655a-d207-4787-a688-320bbaa809fd",
+			"key": "claim",
+			"value": "C2",
+			"type": "string"
+		},
+		{
+			"id": "5790398b-fe1b-433d-acfe-8e5543edc91d",
+			"key": "target",
+			"value": "M.GHS.C2.TD",
+			"type": "string"
+		}
+	]
+}
