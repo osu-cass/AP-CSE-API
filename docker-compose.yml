@@ -1,8 +1,10 @@
 version: '3.1'
 services:
   api:
+    env_file:
+      - ./.env
     build:
-      dockerfile: "./Dockerfile-dev"
+      dockerfile: './Dockerfile-dev'
       context: .
     container_name: express
     command: npm run debug
@@ -16,14 +18,14 @@ services:
       - 3000:3000
       - 9222:9222
   mongo:
-    image: "mongo:4"
+    image: 'mongo:4'
     container_name: mongo
     restart: always
-    networks: 
+    networks:
       - db
     volumes:
       - mongodata:/usr/share/mongo/data
-    environment: 
+    environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
   mongo-express:
@@ -34,7 +36,7 @@ services:
     restart: always
     ports:
       - 8081:8081
-    networks: 
+    networks:
       - db
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
@@ -55,58 +57,58 @@ services:
     container_name: es-search
     environment:
       - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - 'ES_JAVA_OPTS=-Xms512m -Xmx512m'
     ulimits:
       memlock:
         soft: -1
         hard: -1
     volumes:
       - searchdata:/usr/share/elasticsearch/data
-    networks: 
+    networks:
       - search
   kibana-search:
     image: docker.elastic.co/kibana/kibana:6.3.2
     container_name: kibana-search
-    depends_on: 
+    depends_on:
       - es-search
-    environment: 
+    environment:
       ELASTICSEARCH_URL: http://es-search:9200
-    networks: 
+    networks:
       - search
-    ports: 
-      - "5601:5601"
+    ports:
+      - '5601:5601'
   es-logs:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.3.2
     container_name: es-logs
     hostname: es-logs
     environment:
       - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - 'ES_JAVA_OPTS=-Xms512m -Xmx512m'
     ulimits:
       memlock:
         soft: -1
         hard: -1
     volumes:
       - logsdata:/usr/share/elasticsearch/data
-    networks: 
+    networks:
       - logs
   kibana-logs:
     image: docker.elastic.co/kibana/kibana:6.3.2
     container_name: kibana-logs
     depends_on:
       - es-logs
-    environment: 
+    environment:
       ELASTICSEARCH_URL: http://es-logs:9200
-    networks: 
+    networks:
       - logs
-    ports: 
-      - "5602:5601"
+    ports:
+      - '5602:5601'
   logstash:
     image: docker.elastic.co/logstash/logstash:6.3.2
     container_name: logstash
     environment:
-      XPACK_MONITORING_ENABLED: "false"
-    depends_on: 
+      XPACK_MONITORING_ENABLED: 'false'
+    depends_on:
       - es-logs
     secrets:
       - source: logstash.conf
@@ -118,32 +120,32 @@ services:
     environment:
       SPAN_STORAGE_TYPE: elasticsearch
     ports:
-      - "14267:14267"
-      - "14268:14268"
-      - "9411:9411"
+      - '14267:14267'
+      - '14268:14268'
+      - '9411:9411'
     depends_on:
-    - logstash
+      - logstash
     container_name: jaeger-collector
     hostname: jaeger-collector
     restart: on-failure
     networks:
-    - logs
-    command: ["--es.server-urls=http://es-logs:9200"]
+      - logs
+    command: ['--es.server-urls=http://es-logs:9200']
   jaeger-agent:
     image: jaegertracing/jaeger-agent:latest
     ports:
-      - "5775:5775/udp"
-      - "5778:5778"
-      - "6831:6831/udp"
-      - "6832:6832/udp"
+      - '5775:5775/udp'
+      - '5778:5778'
+      - '6831:6831/udp'
+      - '6832:6832/udp'
     depends_on:
-    - jaeger-collector
+      - jaeger-collector
     restart: on-failure
     container_name: jaeger-agent
     hostname: jaeger-agent
     networks:
-    - logs
-    command: ["--collector.host-port=jaeger-collector:14267"]
+      - logs
+    command: ['--collector.host-port=jaeger-collector:14267']
   jaeger-query:
     image: jaegertracing/jaeger-query:latest
     environment:
@@ -156,21 +158,19 @@ services:
     container_name: jaeger-query
     hostname: jaeger-query
     networks:
-    - logs
-    command: ["--es.server-urls=http://es-logs:9200", "--log-level=debug"]
-
-
+      - logs
+    command: ['--es.server-urls=http://es-logs:9200', '--log-level=debug']
 
 secrets:
   logstash.conf:
     file: ./config/logstash.conf
-volumes: 
-  miniodata:
-  searchdata:
-  logsdata:
-  mongodata:
+volumes:
+  ? miniodata
+  ? searchdata
+  ? logsdata
+  ? mongodata
 
-networks: 
-  db:
-  search:
-  logs:
+networks:
+  ? db
+  ? search
+  ? logs
