@@ -1,7 +1,6 @@
 import { MongoClient, Db, Collection, InsertWriteOpResult, Cursor } from 'mongodb';
 import { ITargetParams } from '../../routes';
 import { IClaim } from '../../models/claim';
-import { ITarget } from '../../models/target';
 
 export interface IDbClientOptions {
   url: string;
@@ -16,7 +15,7 @@ export interface IDbClient {
   close(): Promise<void>;
   insert(documents: IClaim[]): Promise<InsertWriteOpResult>;
   getClaims(): Promise<IClaim[]>;
-  getTarget(searchParams: ITargetParams): Promise<ITarget>;
+  getTarget(searchParams: ITargetParams): Promise<IClaim>;
 }
 
 /**
@@ -104,18 +103,18 @@ export class DbClient implements IDbClient {
     return result;
   }
 
-  public async getTarget(searchParams: ITargetParams): Promise<ITarget> {
+  public async getTarget(searchParams: ITargetParams): Promise<IClaim> {
     const { subject, grades, claimNumber, targetShortCode } = searchParams;
-    let result: ITarget | undefined;
+    let result: IClaim | undefined;
     if (this.db) {
       try {
-        const dbResult: IClaim = (await this.db.collection('claims').findOne({
+        result = (await this.db.collection('claims').findOne({
           subject,
           grades,
           claimNumber,
           'target.shortCode': targetShortCode
         })) as IClaim;
-        result = dbResult.target.find(t => t.shortCode === targetShortCode);
+        result.target = result.target.filter(t => t.shortCode === targetShortCode);
       } catch (error) {
         throw error;
       }
@@ -123,6 +122,6 @@ export class DbClient implements IDbClient {
       throw new Error('db is not defined');
     }
 
-    return <ITarget>result;
+    return result;
   }
 }
