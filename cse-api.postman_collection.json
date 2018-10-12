@@ -70,12 +70,38 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "{{api-domain}}/{{search}}",
+					"raw": "{{api-domain}}/{{search-endpoint}}/?query={{query}}&subject={{subject}}&grades={{grades}}&claimNumber={{claim}}&targetShortCode={{target}}",
 					"host": [
 						"{{api-domain}}"
 					],
 					"path": [
-						"{{search}}"
+						"{{search-endpoint}}",
+						""
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": "{{query}}",
+							"description": "A query string that elasticsearch will use to search across alll fields."
+						},
+						{
+							"key": "subject",
+							"value": "{{subject}}",
+							"description": "The subject, mainly Math or ELA."
+						},
+						{
+							"key": "grades",
+							"value": "{{grades}}",
+							"description": "A single number or array of numbers representing the grades."
+						},
+						{
+							"key": "claimNumber",
+							"value": "{{claim}}"
+						},
+						{
+							"key": "targetShortCode",
+							"value": "{{target}}"
+						}
 					]
 				}
 			},
@@ -124,57 +150,63 @@
 	],
 	"variable": [
 		{
-			"id": "dd546a71-050c-44cc-a135-41283247c7eb",
+			"id": "86de5a73-44c2-4097-921d-0a7df5325944",
 			"key": "api-domain",
 			"value": "http://localhost:3000",
 			"type": "string"
 		},
 		{
-			"id": "63036600-1088-4891-aef2-bbe7aafa21ed",
+			"id": "62016ea8-c79a-4930-83e8-a5ff6b02987a",
 			"key": "pdf-endpoint",
 			"value": "api/pdf",
 			"type": "string"
 		},
 		{
-			"id": "9bfa3509-5ab1-41a1-8369-f1c5c451a66d",
+			"id": "e3281120-ea4d-41e0-b7ef-49768ac13ede",
 			"key": "search-endpoint",
 			"value": "api/search",
 			"type": "string"
 		},
 		{
-			"id": "cdb83d26-ddc5-47af-abda-7e84e885882c",
+			"id": "492364bf-1773-45b9-9284-063a58054762",
 			"key": "init-endpoint",
 			"value": "api/init",
 			"type": "string"
 		},
 		{
-			"id": "acc76810-d503-4be6-867f-96db47a75cd6",
+			"id": "5cc8ac45-6a23-40dc-af5f-e09d9db8325d",
 			"key": "target-endpoint",
 			"value": "api/target",
 			"type": "string"
 		},
 		{
-			"id": "f00c9303-b202-4358-9e2b-37ad7945018d",
+			"id": "eb4d4ce3-0ef7-4828-82b1-38de5ebb8cd9",
 			"key": "subject",
 			"value": "Math",
 			"type": "string"
 		},
 		{
-			"id": "cf65b87e-bd51-4d1a-afd4-7465a6fa1193",
+			"id": "05d5698f-7c76-4ba9-a595-59fff0c85c18",
 			"key": "grades",
-			"value": "11",
+			"value": "3",
 			"type": "string"
 		},
 		{
-			"id": "555b655a-d207-4787-a688-320bbaa809fd",
+			"id": "264a6ce9-9fd4-4d02-86c0-d99c2fec3685",
 			"key": "claim",
 			"value": "C2",
 			"type": "string"
 		},
 		{
-			"id": "5790398b-fe1b-433d-acfe-8e5543edc91d",
+			"id": "5a22f576-0d16-426b-bd34-c4afaa5d032a",
 			"key": "target",
-			"value": "M.GHS.C2.TD",
+			"value": "M.G3.C1G.TK",
+			"type": "string"
+		},
+		{
+			"id": "cef39f4a-0695-418e-86ef-c80b8e71e6e1",
+			"key": "query",
+			"value": "simple procedure",
 			"type": "string"
 		}
 	]

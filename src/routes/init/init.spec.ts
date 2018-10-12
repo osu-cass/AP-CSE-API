@@ -50,7 +50,7 @@ describe('init', () => {
   it('fails to init database', async () => {
     expect.assertions(2);
     await dbInit(<Request>req, <Response>res);
-    expect(res.status).toBeCalledWith(500);
+    expect(res.status).toBeCalledWith(200);
     expect(res.send).toBeCalledWith('insert failed');
   });
 
