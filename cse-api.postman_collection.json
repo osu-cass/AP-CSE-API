@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "27b24276-6fa9-4967-bffa-185261a1b827",
+		"_postman_id": "cad382c7-ba13-4e5a-8502-1dc37e6c1cd0",
 		"name": "cse-api/",
 		"description": "Collection of requests for testing the cse-api",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -26,7 +26,10 @@
 				},
 				"method": "GET",
 				"header": [],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "{{api-domain}}/{{target-endpoint}}/{{subject}}/{{grades}}/{{claim}}/{{target}}",
 					"host": [
@@ -49,7 +52,10 @@
 			"request": {
 				"method": "POST",
 				"header": [],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "{{api-domain}}/{{init-endpoint}}",
 					"host": [
@@ -68,7 +74,10 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "{{api-domain}}/{{search}}",
 					"host": [
@@ -86,7 +95,10 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "{{api-domain}}/{{pdf}}",
 					"host": [
@@ -96,6 +108,28 @@
 						"{{pdf}}"
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "health/",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{api-domain}}/{{health-endpoint}}",
+					"host": [
+						"{{api-domain}}"
+					],
+					"path": [
+						"{{health-endpoint}}"
+					]
+				},
+				"description": "An API Route Health Check"
 			},
 			"response": []
 		}
@@ -124,57 +158,63 @@
 	],
 	"variable": [
 		{
-			"id": "dd546a71-050c-44cc-a135-41283247c7eb",
+			"id": "dd3bdbff-4ce0-4cc3-ae63-887542ca16c8",
 			"key": "api-domain",
 			"value": "http://localhost:3000",
 			"type": "string"
 		},
 		{
-			"id": "63036600-1088-4891-aef2-bbe7aafa21ed",
+			"id": "30658f71-5b21-4679-b8c1-89010e6db7ee",
 			"key": "pdf-endpoint",
 			"value": "api/pdf",
 			"type": "string"
 		},
 		{
-			"id": "9bfa3509-5ab1-41a1-8369-f1c5c451a66d",
+			"id": "05a6cf62-fe51-405e-a94e-869d5523c621",
 			"key": "search-endpoint",
 			"value": "api/search",
 			"type": "string"
 		},
 		{
-			"id": "cdb83d26-ddc5-47af-abda-7e84e885882c",
+			"id": "837b565e-fe8e-44be-b105-c626bc77e644",
 			"key": "init-endpoint",
 			"value": "api/init",
 			"type": "string"
 		},
 		{
-			"id": "acc76810-d503-4be6-867f-96db47a75cd6",
+			"id": "73fa3d4c-c149-4b8d-919d-4b94f3496896",
 			"key": "target-endpoint",
 			"value": "api/target",
 			"type": "string"
 		},
 		{
-			"id": "f00c9303-b202-4358-9e2b-37ad7945018d",
+			"id": "78e64bce-c8ed-4972-b660-8d0d407c195c",
 			"key": "subject",
 			"value": "Math",
 			"type": "string"
 		},
 		{
-			"id": "cf65b87e-bd51-4d1a-afd4-7465a6fa1193",
+			"id": "bbcb346a-9922-477b-8743-50c6c47a7259",
 			"key": "grades",
 			"value": "11",
 			"type": "string"
 		},
 		{
-			"id": "555b655a-d207-4787-a688-320bbaa809fd",
+			"id": "f99ff2c9-1463-4dec-9950-178c4d9f99e6",
 			"key": "claim",
 			"value": "C2",
 			"type": "string"
 		},
 		{
-			"id": "5790398b-fe1b-433d-acfe-8e5543edc91d",
+			"id": "6a0c287c-deb8-4bbf-82d2-990b20b89f25",
 			"key": "target",
 			"value": "M.GHS.C2.TD",
+			"type": "string"
+		},
+		{
+			"id": "7c68d494-5abd-4ae0-a45e-4332741a5531",
+			"key": "health-endpoint",
+			"value": "health",
 			"type": "string"
 		}
 	]
