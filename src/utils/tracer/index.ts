@@ -19,7 +19,7 @@ export const createTracer: () => Tracer = () => {
   const options: any = {
     logger,
     tags: {
-      'cse-api': '0.0.0'
+      'cse-api': process.env.API_VERSION || '0.0.0'
     }
   };
 
