@@ -58,7 +58,7 @@ export class Server implements IServer {
     const host: string = `${esHost}:${esPort}`;
 
     const mongoHost: string = process.env.MONGO_HOSTNAME || 'mongo';
-    const port: number = process.env.MONGO_PORT ? parseInt(process.env.MONGO_PORT, 10) : 21017;
+    const port: number = parseInt(process.env.MONGO_PORT || '21017', 10);
     const url: string = `mongodb://${mongoHost}`;
     const dbName: string = process.env.MONGO_DB_NAME || 'cse';
 

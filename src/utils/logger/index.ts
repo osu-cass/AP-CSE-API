@@ -10,7 +10,7 @@ const consoleOpts = {
 };
 
 const host: string = process.env.LOGSTASH_HOSTNAME || 'logstash';
-const port: number = process.env.LOGSTASH_PORT ? parseInt(process.env.LOGSTASH_PORT, 10) : 13337;
+const port: number = parseInt(process.env.LOGSTASH_PORT || '13337', 10);
 
 const logger: Logger = createLogger({
   level: 'info',
