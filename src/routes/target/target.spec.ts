@@ -1,6 +1,5 @@
 import { handler as target } from './index';
 import { Request, Response } from 'express';
-import { DbClient } from '../../dal/interface';
 
 describe('target', () => {
   let req: Partial<Request>;

@@ -7,9 +7,8 @@ import { CSEResponse } from '../../server/index';
 import { IClaim } from '../../models/claim/index';
 
 export const handler = async (req: Request, res: CSEResponse): Promise<void> => {
+  const { dbClient, searchClient } = res.locals;
   let result: InsertWriteOpResult | undefined;
-  const { searchClient } = res.locals;
-  const { dbClient } = res.locals;
   try {
     const output: IClaim[] = await importDbEntries();
     await dbClient.connect();
