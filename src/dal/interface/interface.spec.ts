@@ -217,7 +217,7 @@ describe('MongoDb Database client interface', () => {
         await client.connect();
         const result = await client.getTarget(mockTargetParams);
         expect.assertions(1);
-        expect(result).toEqual({ shortCode: '1234', test: 'passed' });
+        expect(result).toEqual({ target: [{ shortCode: '1234', test: 'passed' }] });
       });
 
       it('throws error getting Target', async () => {

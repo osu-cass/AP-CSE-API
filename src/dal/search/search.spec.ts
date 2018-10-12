@@ -11,7 +11,7 @@ describe('search', () => {
     beforeAll(() => {
       client = new SearchClient({ host: 'test-host:1234' });
       claims.push({
-        claimNumber: '0',
+        shortCode: '0',
         title: 'test'
       });
     });
