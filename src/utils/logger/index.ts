@@ -9,12 +9,12 @@ const consoleOpts = {
   colorize: true
 };
 
+const host: string = process.env.LOGSTASH_HOSTNAME || 'logstash';
+const port: number = process.env.LOGSTASH_PORT ? parseInt(process.env.LOGSTASH_PORT, 10) : 13337;
+
 const logger: Logger = createLogger({
   level: 'info',
-  transports: [
-    new transports.Console(consoleOpts),
-    new LogstashTransport({ host: '0.0.0.0', port: 13337 })
-  ],
+  transports: [new transports.Console(consoleOpts), new LogstashTransport({ host, port })],
   exitOnError: false
 });
 
