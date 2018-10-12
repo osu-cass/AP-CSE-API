@@ -5,11 +5,15 @@ import { Request, RequestHandler, NextFunction } from 'express';
 import { CSEResponse } from '../../server/index';
 const initTracer: (config: object, options: object) => Tracer = require('jaeger-client').initTracer;
 
+const host: string = process.env.JAEGER_COLLECTOR_HOSTNAME || 'jaeger-collector';
+const port: string = process.env.JAEGER_COLLECTOR_PORT || '14268';
+const collectorEndpoint: string = `http://${host}:${port}/api/traces`;
+
 export const createTracer: () => Tracer = () => {
   const config: any = {
     serviceName: 'cse-api',
     reporter: {
-      collectorEndpoint: 'http://jaeger-collector:14268/api/traces'
+      collectorEndpoint
     }
   };
   const options: any = {
