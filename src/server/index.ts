@@ -10,6 +10,7 @@ import { DbClient } from '../dal/interface';
 import { SearchClient } from '../dal/search';
 import { createTracer } from '../utils/tracer';
 import { logger, LoggingStream } from '../utils/logger';
+import { Health, healthCheck } from '../routes/health';
 
 /**
  * ServerContext defines a type for the tracer and db client
@@ -70,6 +71,11 @@ export class Server implements IServer {
         dbName: 'cse'
       })
     };
+    router.stack.forEach(endpoint => {
+      // The express router stack is of type any[]
+      // tslint:disable-next-line
+      endpoint.routeHealth = Health.good;
+    });
   }
 
   public registerMiddleware(): void {
@@ -85,6 +91,7 @@ export class Server implements IServer {
 
   public routes(): void {
     this.app.use('/api', router);
+    this.app.get('/health', healthCheck);
   }
 
   public configure(): void {

@@ -79,7 +79,6 @@
     "winston-logstash-transport": "^2.0.0"
   },
   "devDependencies": {
-    "@types/node-fetch": "^2.1.2",
     "@commitlint/cli": "^7.0.0",
     "@commitlint/config-conventional": "^7.0.1",
     "@osu-cass/tslint-config": "^2.0.0",
@@ -90,6 +89,7 @@
     "@types/jest": "^23.3.1",
     "@types/mongodb": "^3.1.4",
     "@types/morgan": "^1.7.35",
+    "@types/node-fetch": "^2.1.2",
     "@types/passport": "^0.4.6",
     "@types/passport-local": "^1.0.33",
     "@types/signale": "^1.2.0",
