@@ -53,6 +53,15 @@ export class Server implements IServer {
   private context: ServerContext;
 
   constructor() {
+    const esHost: string = process.env.ES_SEARCH_HOSTNAME || 'es-search';
+    const esPort: string = process.env.ES_SEARCH_PORT || '9200';
+    const host: string = `${esHost}:${esPort}`;
+
+    const mongoHost: string = process.env.MONGO_HOSTNAME || 'mongo';
+    const port: number = process.env.MONGO_PORT ? parseInt(process.env.MONGO_PORT, 10) : 21017;
+    const url: string = `mongodb://${mongoHost}`;
+    const dbName: string = process.env.MONGO_DB_NAME || 'cse';
+
     this.app = e();
     this.port = (process.env.PORT as string) || (3000 as number);
     this.configure();
@@ -62,12 +71,12 @@ export class Server implements IServer {
       logger,
       tracer: createTracer(),
       searchClient: new SearchClient({
-        host: 'es-search:9200'
+        host
       }),
       dbClient: new DbClient({
-        url: 'mongodb://mongo',
-        port: 27017,
-        dbName: 'cse'
+        url,
+        port,
+        dbName
       })
     };
   }
