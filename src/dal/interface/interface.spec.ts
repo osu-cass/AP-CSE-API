@@ -35,8 +35,8 @@ describe('MongoDb Database client interface', () => {
       uri = `${dbInitArgs.url}:${dbInitArgs.port}`;
       authInfo = {
         auth: {
-          user: 'root',
-          password: 'example'
+          user: process.env.MONGO_USERNAME || '',
+          password: process.env.MONGO_PASSWORD || ''
         }
       };
     });
