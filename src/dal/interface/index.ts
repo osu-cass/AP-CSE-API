@@ -35,8 +35,7 @@ export class DbClient implements IDbClient {
   }
 
   public async connect(): Promise<void> {
-    const user: string = process.env.MONGO_USERNAME || '';
-    const password: string = process.env.MONGO_PASSWORD || '';
+    const { MONGO_USERNAME: user = '', MONGO_PASSWORD: password = '' } = process.env;
 
     try {
       this.client = await MongoClient.connect(
