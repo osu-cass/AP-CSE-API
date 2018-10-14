@@ -1,5 +1,4 @@
 import { name } from 'faker';
-
 import { authorize } from './';
 
 describe('Authorization verification function', () => {

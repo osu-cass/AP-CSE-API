@@ -1,5 +1,5 @@
 import { MongoClient, Db, Collection, InsertWriteOpResult, Cursor } from 'mongodb';
-import { ITargetParams } from '../../routes/target';
+import { ITargetParams } from '../../routes';
 import { IClaim } from '../../models/claim';
 import { ITarget } from '../../models/target';
 
