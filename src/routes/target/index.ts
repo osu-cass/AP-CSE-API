@@ -1,24 +1,17 @@
 import { Request } from 'express';
 import { applyTracing } from '../../utils/tracer';
-import { DbClient } from '../../dal/interface';
-import { CSEResponse } from '../../server';
 import { setRouteHealth, Health } from '../health';
-
-export interface ITargetParams {
-  subject: string;
-  grades: string[] | number;
-  claimNumber: string;
-  targetShortCode: string;
-}
+import { CSEResponse, ResponseContext } from '../../server';
+import { ITargetParams } from '../index';
 
 export const handler = async (req: Request, res: CSEResponse) => {
-  const dbClient: DbClient = res.locals.dbClient;
-  const targetParams: ITargetParams = req.params as ITargetParams;
+  const { dbClient }: ResponseContext = res.locals;
+  const { ...params }: ITargetParams = <ITargetParams>req.params;
   let results;
   try {
     setRouteHealth(Health.busy, req);
     await dbClient.connect();
-    results = await dbClient.getTarget(targetParams);
+    results = await dbClient.getTarget(params);
     await dbClient.close();
   } catch (error) {
     res.status(500);

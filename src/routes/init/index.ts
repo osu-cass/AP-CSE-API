@@ -7,9 +7,8 @@ import { IClaim } from '../../models/claim/index';
 import { setRouteHealth, Health } from '../health';
 
 export const handler = async (req: Request, res: CSEResponse): Promise<void> => {
+  const { dbClient, searchClient } = res.locals;
   let result: InsertWriteOpResult | undefined;
-  const { searchClient } = res.locals;
-  const { dbClient } = res.locals;
   try {
     setRouteHealth(Health.busy, req);
     const output: IClaim[] = await importDbEntries();

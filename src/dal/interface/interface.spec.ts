@@ -8,7 +8,7 @@ import {
   dropCollection,
   createCollection
 } from '../../__mocks__/mongodb';
-import { ITargetParams } from '../../routes/target';
+import { ITargetParams } from '../../routes';
 import { IClaim } from '../../models/claim';
 
 jest.mock('../search', () => {

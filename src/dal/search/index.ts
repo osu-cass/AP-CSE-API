@@ -1,12 +1,14 @@
 import { Client, SearchResponse, ExistsParams } from 'elasticsearch';
 import { IClaim } from '../../models/claim';
+import { IQueryParams } from '../../routes';
+import bodybuilder, { Bodybuilder } from 'bodybuilder';
 
 export interface ISearchClientOptions {
   host: string;
 }
 export interface ISearchClient {
   insertDocuments(claims: IClaim[]): Promise<void>;
-  search(q: string): Promise<void>;
+  search(query: IQueryParams): Promise<IClaim[]>;
 }
 
 /**
@@ -17,7 +19,9 @@ export class SearchClient implements ISearchClient {
 
   constructor(opts: ISearchClientOptions) {
     this.client = new Client({
-      host: opts.host
+      host: opts.host,
+      log: 'info',
+      apiVersion: '6.3'
     });
   }
 
@@ -51,6 +55,44 @@ export class SearchClient implements ISearchClient {
     }
   }
 
+  public buildRequestBody(q: IQueryParams): object {
+    const { query, subject, grades, claimNumber, targetShortCode }: IQueryParams = q;
+    const body: Bodybuilder = bodybuilder();
+
+    if (subject) {
+      body.query('match', 'subject', subject);
+    }
+
+    if (grades) {
+      body.query('match', 'grades', grades);
+    }
+
+    if (claimNumber) {
+      body.query('match', 'claimNumber', claimNumber);
+    }
+
+    if (targetShortCode) {
+      body.query('match', 'target.shortCode', targetShortCode);
+    }
+
+    if (query) {
+      body.query('multi_match', {
+        query,
+        type: 'phrase_prefix',
+        fields: [
+          'description',
+          'target.description',
+          'target.evidence.evTitle',
+          'target.evidence.evDesc',
+          'target.stem.stemDesc',
+          'target.stem.shortStem'
+        ]
+      });
+    }
+
+    return body.build();
+  }
+
   public async insertDocuments(claims: IClaim[]): Promise<void> {
     for (const claim of claims) {
       const { claimNumber } = claim;
@@ -70,16 +112,20 @@ export class SearchClient implements ISearchClient {
     }
   }
 
-  public async search(q: string): Promise<void> {
-    let result: SearchResponse<{}>;
+  public async search(query: IQueryParams): Promise<IClaim[]> {
+    let result: IClaim[] = [];
+    let response: SearchResponse<{}>;
     try {
-      result = await this.client.search({
-        q,
-        index: `cse`,
-        type: `claim`
+      response = await this.client.search({
+        type: 'claim',
+        index: 'cse',
+        body: this.buildRequestBody(query)
       });
+      result = response.hits.hits.map(hit => <IClaim>hit._source);
     } catch (err) {
       throw err;
     }
+
+    return result;
   }
 }

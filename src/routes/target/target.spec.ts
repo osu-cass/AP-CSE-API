@@ -1,6 +1,5 @@
 import { handler as target } from './index';
 import { Request, Response } from 'express';
-import { DbClient } from '../../dal/interface';
 
 jest.mock('../health', () => ({
   setRouteHealth: jest.fn().mockResolvedValue('{}'),

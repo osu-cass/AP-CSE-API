@@ -1,10 +1,10 @@
 let elasticsearch = require.requireActual('elasticsearch');
 
 const client = {
-  exists: jest.fn(),
-  delete: jest.fn(),
-  create: jest.fn(),
-  search: jest.fn()
+  exists: jest.fn().mockResolvedValue(true),
+  delete: jest.fn().mockResolvedValue({}),
+  create: jest.fn().mockResolvedValue({}),
+  search: jest.fn().mockResolvedValue({ hits: { hits: [] } })
 };
 
 const Client = jest.fn().mockImplementation(() => client);
