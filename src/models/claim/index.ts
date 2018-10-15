@@ -7,7 +7,7 @@ export interface IClaim {
   subject: string;
   description?: string;
   shortCode: string;
-  domain?: string | IDomain[];
+  domain?: IDomain[];
   target: ITarget[];
 }
 
