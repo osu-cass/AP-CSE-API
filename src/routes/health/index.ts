@@ -1,4 +1,4 @@
-import { Request, NextFunction } from 'express';
+import { Request } from 'express';
 import { router } from '../index';
 import { CSEResponse } from '../../server/index';
 import { applyTracing } from '../../utils/tracer/index';
@@ -27,7 +27,7 @@ export function handler(req: Request, res: CSEResponse) {
       status: `${endpoints.routeHealth}`
     });
   }
-
+  res.status(200);
   res.send({ Health: status });
 }
 export const healthCheck = applyTracing('/health', handler);
