@@ -2,7 +2,7 @@ import { handler as healthCheck, Health, setRouteHealth } from '.';
 import { Request, Response } from 'express';
 
 describe('API Routing Health Check', () => {
-  let req: Partial<Request> ;
+  let req: Partial<Request>;
   let res: Partial<Response>;
   let status: Health;
 
