@@ -2,6 +2,7 @@ import { MongoClient, Db, Collection, InsertWriteOpResult, Cursor } from 'mongod
 import { ITargetParams } from '../../routes';
 import { IClaim } from '../../models/claim';
 import { ITarget } from '../../models/target';
+import { Health } from '../../routes/health/index';
 
 export interface IDbClientOptions {
   url: string;
@@ -32,6 +33,26 @@ export class DbClient implements IDbClient {
   constructor(args: IDbClientOptions) {
     this.uri = `${args.url}:${args.port}`;
     this.dbName = args.dbName;
+  }
+  public async ping(): Promise<Health> {
+    setTimeout(() => Health.bad, 5000);
+    try {
+      await this.connect();
+    } catch (err) {
+      if (err) {
+        return Health.bad;
+      }
+    }
+    if (this.db === undefined) {
+      return Health.bad;
+    }
+    const result = await this.db.command({ ping: 1 });
+    // tslint:disable-next-line: no-any no-unsafe-any
+    if (result.ok === 1) {
+      return Health.good;
+    }
+
+    return Health.busy;
   }
 
   public async connect(): Promise<void> {

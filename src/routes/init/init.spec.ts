@@ -9,7 +9,6 @@ jest.mock('./db/index', () => ({
     .mockRejectedValueOnce(new Error('I am Error.'))
 }));
 
-
 describe('init', () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
