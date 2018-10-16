@@ -72,8 +72,7 @@ export class Server implements IServer {
       })
     };
     router.stack.forEach(endpoint => {
-      // The express router stack is of type any[]
-      // tslint:disable-next-line
+      // tslint:disable-next-line: no-any no-unsafe-any
       endpoint.routeHealth = Health.good;
     });
   }
