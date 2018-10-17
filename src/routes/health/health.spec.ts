@@ -2,6 +2,8 @@ import { handler as healthCheck, Health, setRouteHealth } from '.';
 import { Request, Response } from 'express';
 import { router } from '../index';
 
+jest.unmock('./');
+
 describe('API Routing Health Check', () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
@@ -10,7 +12,15 @@ describe('API Routing Health Check', () => {
   beforeAll(() => {
     res = {
       send: jest.fn(),
-      status: jest.fn()
+      status: jest.fn(),
+      locals: {
+        searchClient: {
+          ping: jest.fn()
+        },
+        dbClient: {
+          ping: jest.fn()
+        }
+      }
     };
     req = {};
   });
@@ -30,10 +40,11 @@ describe('API Routing Health Check', () => {
     expect(result).toBe(Health.busy);
   });
 
-  it('returns a response', () => {
-    healthCheck(<Request>req, <Response>res);
+  it('returns a response', async () => {
+    expect.assertions(2);
+    await healthCheck(<Request>req, <Response>res);
     expect(res.send).toBeCalledTimes(1);
     expect(res.status).toHaveBeenCalledWith(200);
-    expect.assertions(2);
   });
+
 });
