@@ -1,10 +1,9 @@
 import { Request } from 'express';
-import { DbClient, IDbClientOptions } from '../../dal/interface';
 import { InsertWriteOpResult } from 'mongodb';
-import { importDbEntries } from './db/index';
-import { applyTracing } from '../../utils/tracer/index';
-import { CSEResponse } from '../../server/index';
-import { IClaim } from '../../models/claim/index';
+import { importDbEntries } from './db';
+import { applyTracing } from '../../utils/tracer';
+import { CSEResponse } from '../../server';
+import { IClaim } from '../../models/claim';
 
 export const handler = async (req: Request, res: CSEResponse): Promise<void> => {
   const { dbClient, searchClient } = res.locals;

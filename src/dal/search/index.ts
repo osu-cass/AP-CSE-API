@@ -95,13 +95,13 @@ export class SearchClient implements ISearchClient {
 
   public async insertDocuments(claims: IClaim[]): Promise<void> {
     for (const claim of claims) {
-      const { claimNumber } = claim;
+      const { shortCode } = claim;
       try {
-        if (await this.documentExists(claimNumber)) {
-          await this.deleteDocument(claimNumber);
+        if (await this.documentExists(shortCode)) {
+          await this.deleteDocument(shortCode);
         }
         await this.client.create({
-          id: claimNumber,
+          id: shortCode,
           index: `cse`,
           type: `claim`,
           body: claim

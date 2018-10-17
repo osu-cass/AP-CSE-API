@@ -26,7 +26,7 @@ export interface ICFDocument {
 
 export interface ICFItem {
   identifier: string;
-  CFDocumentURI: string;
+  CFDocumentURI: IURI;
   fullStatement: string;
   alternativeLabel: string;
   CFItemType: string;
