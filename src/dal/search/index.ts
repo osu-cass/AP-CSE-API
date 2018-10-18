@@ -57,15 +57,16 @@ export class SearchClient implements ISearchClient {
   }
 
   public async ping(): Promise<Health> {
+    let result: Health = Health.bad;
     try {
-      return (await this.client.ping({})) === true ? Health.good : Health.bad;
+      result = await this.client.ping({}) === true ? Health.good : Health.bad;
     } catch (err) {
       if (err) {
-        return Health.bad;
+        result = Health.bad;
       }
     }
 
-    return Health.bad;
+    return result;
   }
 
   public buildRequestBody(q: IQueryParams): object {

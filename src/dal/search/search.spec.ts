@@ -2,6 +2,7 @@ import { SearchClient } from '.';
 import { esCreate, esDelete, esExists, esSearch } from '../../__mocks__/elasticsearch';
 import { IClaim } from '../../models/claim/index';
 import { IQueryParams } from '../../routes/index';
+import { Health } from '../../routes/Health';
 
 describe('search', () => {
   describe('data insertion', () => {
@@ -34,6 +35,12 @@ describe('search', () => {
         type: 'claim',
         body: claims[0]
       });
+    });
+
+    it('pings elasticsearch as bad', async () =>  {
+      expect(await client.ping()).toBe(Health.bad);
+      expect(await client.ping()).toBe(Health.good);
+      expect(await client.ping()).toBe(Health.bad);
     });
 
     it('fails to insert claims into es', async () => {
