@@ -10,7 +10,7 @@ import {
 } from '../../__mocks__/mongodb';
 import { ITargetParams } from '../../routes';
 import { IClaim } from '../../models/claim';
-import { Health } from '../../routes/Health';
+import { Health } from '../../routes/health';
 
 jest.mock('../search', () => {
   return {

@@ -2,7 +2,7 @@ import { SearchClient } from '.';
 import { esCreate, esDelete, esExists, esSearch } from '../../__mocks__/elasticsearch';
 import { IClaim } from '../../models/claim/index';
 import { IQueryParams } from '../../routes/index';
-import { Health } from '../../routes/Health';
+import { Health } from '../../routes/health';
 
 describe('search', () => {
   describe('data insertion', () => {
