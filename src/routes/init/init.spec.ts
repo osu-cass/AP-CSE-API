@@ -1,6 +1,6 @@
 import { handler as dbInit } from './index';
 import { Request, Response } from 'express';
-
+jest.mock('../health');
 jest.mock('./db/index', () => ({
   importDbEntries: jest
     .fn()

@@ -1,5 +1,6 @@
 import { handler as pdfDownload } from '.';
 import { Request, Response } from 'express';
+jest.mock('../health');
 
 describe('PDF generation middleware function', () => {
   it('returns a response', () => {

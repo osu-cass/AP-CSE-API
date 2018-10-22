@@ -1,5 +1,6 @@
 import { handler as target } from './index';
 import { Request, Response } from 'express';
+jest.mock('../health');
 
 describe('target', () => {
   let req: Partial<Request>;

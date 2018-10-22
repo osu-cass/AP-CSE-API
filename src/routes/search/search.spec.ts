@@ -1,5 +1,6 @@
 import { handler as search } from './';
 import { Request, Response } from 'express';
+jest.mock('../health');
 
 describe('search', () => {
   let req: Partial<Request>;
