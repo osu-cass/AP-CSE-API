@@ -5,7 +5,7 @@ const client = {
   delete: jest.fn().mockResolvedValue({}),
   create: jest.fn().mockResolvedValue({}),
   search: jest.fn().mockResolvedValue({ hits: { hits: [] } }),
-  ping: jest.fn().mockResolvedValueOnce(false).mockResolvedValueOnce(true).mockRejectedValueOnce(new Error)
+  ping: jest.fn().mockResolvedValueOnce(false).mockResolvedValueOnce(true).mockRejectedValueOnce(new Error('error'))
 };
 
 const Client = jest.fn().mockImplementation(() => client);
@@ -21,4 +21,4 @@ const esCreate: jest.Mock = client.create;
 const esSearch: jest.Mock = client.search;
 const esPing: jest.Mock = client.ping;
 
-export { elasticsearch, Client, esExists, esDelete, esCreate, esSearch };
+export { elasticsearch, Client, esExists, esDelete, esCreate, esSearch, esPing };

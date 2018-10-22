@@ -61,9 +61,7 @@ export class SearchClient implements ISearchClient {
     try {
       result = await this.client.ping({}) === true ? Health.good : Health.bad;
     } catch (err) {
-      if (err) {
         result = Health.bad;
-      }
     }
 
     return result;

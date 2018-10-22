@@ -38,9 +38,7 @@ export class DbClient implements IDbClient {
     try {
       await this.connect();
     } catch (err) {
-      if (err) {
         return Health.bad;
-      }
     }
     if (this.db === undefined) {
       return Health.bad;
