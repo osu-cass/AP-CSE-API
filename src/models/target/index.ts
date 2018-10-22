@@ -1,7 +1,7 @@
 export interface ITaskModel {
   taskName: string;
   taskDesc?: string;
-  examples?: string;
+  examples?: string | string[];
   stimulus?: string;
   relatedEvidence?: string[];
 }
@@ -26,7 +26,6 @@ export interface IEvidence {
   evTitle: string;
   evDesc: string;
 }
-
 export interface ITarget {
   title: string;
   shortCode: string;

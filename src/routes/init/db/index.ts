@@ -39,56 +39,66 @@ export async function importDbEntries(): Promise<IClaim[]> {
   const MATHSpec: ISpecDocument = specs[1];
   const DOKDOC: ISpecDocument = specs[2];
 
-  // TO DO: Implement multi-grade-and-claim document handling
-  // This filters out multi-grade-and-claim documents
-  arr
-    .filter(
-      claim => claim.CFDocument.creator !== 'Smarter Balanced_Math Claim 2-4 Item Specifications'
-    )
-    .forEach((claim, idx) => {
-      newClaim = {};
-      // this line is necessary for one bug in the CASE API
-      if (claim.CFDocument.subject === undefined) {
-        newClaim.subject = Subject.ELA;
-      } else {
-        newClaim.subject = claim.CFDocument.subject[0];
-      }
-      newClaim.title = claim.CFDocument.title;
-      newClaim.grades = [];
-      // this handles high-school multi-grades (e.g: 09, 10, 11, 12)
-      if (claim.CFItems[0].educationLevel.length > 1) {
-        claim.CFItems[0].educationLevel.forEach((edu: string) =>
-          newClaim.grades.push(`${parseInt(edu, 10)}`)
-        );
-      } else {
-        newClaim.grades[0] = `${parseInt(claim.CFItems[0].educationLevel[0], 10)}`;
-      }
-      newClaim.claimNumber = getClaim(newClaim.title, newClaim.subject, newClaim.grades);
-      newClaim.target = [{}];
-      if (newClaim.title.includes('Performance')) {
-        while (newClaim.claimNumber.charAt(0) === 'C') {
-          newClaim.claimNumber = newClaim.claimNumber.substr(1);
-        }
-        newClaim.target[0].interactionType = 'PT';
-      }
-      newClaim.shortCode = getClaimShortCode(
-        newClaim.subject,
-        newClaim.claimNumber,
-        newClaim.grades
+  arr.forEach(claim => {
+    newClaim = {};
+    // this line is necessary for one bug in the CASE API
+    if (claim.CFDocument.subject === undefined) {
+      newClaim.subject = Subject.ELA;
+    } else {
+      newClaim.subject = claim.CFDocument.subject[0];
+    }
+    newClaim.title = claim.CFDocument.title;
+    newClaim.grades = [];
+    // this handles high-school multi-grades (e.g: 09, 10, 11, 12)
+    if (claim.CFItems[0].educationLevel.length > 1) {
+      claim.CFItems[0].educationLevel.forEach((edu: string) =>
+        newClaim.grades.push(`${parseInt(edu, 10)}`)
       );
-      if (!newClaim.title.includes('Performance')) {
-        newClaim.description = getClaimDesc(
-          newClaim.subject,
-          newClaim.shortCode,
-          ELASpec,
-          MATHSpec
-        );
+    } else {
+      newClaim.grades[0] = `${parseInt(claim.CFItems[0].educationLevel[0], 10)}`;
+    }
+    newClaim.claimNumber = getClaim(newClaim.title, newClaim.subject, newClaim.grades);
+    newClaim.target = [{}];
+    if (newClaim.title.includes('Performance')) {
+      while (newClaim.claimNumber.charAt(0) === 'C') {
+        newClaim.claimNumber = newClaim.claimNumber.substr(1);
       }
-      if (newClaim.subject !== Subject.MATH) {
-        newClaim.domain = getClaimDomain(newClaim.subject, newClaim.shortCode, ELASpec);
+      newClaim.target[0].interactionType = 'PT';
+    }
+    newClaim.shortCode = getClaimShortCode(newClaim.subject, newClaim.claimNumber, newClaim.grades);
+    if (!newClaim.title.includes('Performance')) {
+      newClaim.description = getClaimDesc(newClaim.subject, newClaim.shortCode, ELASpec, MATHSpec);
+    if (newClaim.subject !== Subject.MATH && !newClaim.title.includes('Performace')) {
+      newClaim.domain  = [];
+      newClaim.domain.push({
+        title: getClaimDomain(newClaim.subject, newClaim.shortCode, ELASpec),
+      });
+    }
+  }
+    if (newClaim.shortCode.includes('-')) {
+      newClaim.domain  = [];
+      for (const item of claim.CFItems) {
+        if (
+          item.CFItemType === 'Domain' ||
+          item.abbreviatedStatement === 'Primary Content Domain' ||
+          item.abbreviatedStatement === 'Secondary Content Domain'
+        ) {
+          if (item.abbreviatedStatement === undefined) {
+            newClaim.domain.push({
+              title: item.fullStatement
+            });
+          } else {
+            newClaim.domain.push({
+              title: item.abbreviatedStatement,
+              desc: item.fullStatement
+            });
+          }
+        }
       }
+      getMultiTarget(claim, newClaim, DOKDOC);
+    } else {
       newClaim.target[0].title = claim.CFDocument.title;
-      newClaim.target[0].shortCode = claim.CFDocument.notes;
+      newClaim.target[0].shortCode = getTargetShortCode(claim);
       getTarget(newClaim, claim);
       const catPT = claim.CFDocument.creator.split(' ');
       catPT
@@ -124,10 +134,95 @@ export async function importDbEntries(): Promise<IClaim[]> {
           }
         }
       });
-      claimArray.push(<IClaim>newClaim);
-    });
+    }
+    claimArray.push(<IClaim>newClaim);
+  });
 
   return consolidate(claimArray);
+}
+
+// This function handles target information for multi-grade-and-claim documents
+export function getMultiTarget(claim: ISpecDocument, newClaim: any, DOKDOC: ISpecDocument) {
+  const tModels: ITaskModel[] = [];
+  const titleArr: string[] = [];
+  for (const i of claim.CFItems) {
+    if (i.CFItemType === 'Target' && i.abbreviatedStatement.includes('Target ')) {
+      titleArr.push(i.abbreviatedStatement);
+      newClaim.target.push({
+        title: `${i.CFDocumentURI.title}, ${i.abbreviatedStatement}`,
+        shortCode: i.humanCodingScheme,
+        description: i.fullStatement,
+        taskModels: [],
+        DOK: []
+      });
+    }
+  }
+
+  for (let i = 0; i < claim.CFItems.length; i++) {
+    const exampleArr = [];
+    if (
+      claim.CFItems[i].CFItemType === 'Task Model' &&
+      claim.CFItems[i].abbreviatedStatement === undefined
+    ) {
+      for (let j = i + 1; j < claim.CFItems.length; j++) {
+        if (claim.CFItems[j].CFItemType === 'Example') {
+          exampleArr.push(claim.CFItems[j].fullStatement);
+        } else if (claim.CFItems[j].CFItemType === 'Task Model') {
+          break;
+        }
+      }
+      tModels.push({
+        taskName: claim.CFItems[i].fullStatement,
+        taskDesc: claim.CFItems[i + 1].fullStatement,
+        examples: exampleArr
+      });
+    }
+  }
+
+  for (const targ of newClaim.target) {
+    let iter = 0;
+    for (const task of tModels) {
+      if (targ.title !== undefined) {
+        const tSplit = targ.title.split(', ')[2];
+        const code = `${newClaim.claimNumber.slice(1)}${tSplit.replace('Target ', '')}`;
+        if (task.taskName.split('.')[0].includes(code)) {
+          targ.taskModels[iter] = {
+            taskName: task.taskName,
+            taskDesc: task.taskDesc,
+            examples: task.examples
+          };
+          iter++;
+        }
+      }
+    }
+  }
+  for (const targ of newClaim.target) {
+    let i = 0;
+    for (const association of claim.CFAssociations) {
+      if (association.originNodeURI.title === targ.shortCode) {
+        for (const items of DOKDOC.CFItems) {
+          if (association.destinationNodeURI.identifier === items.identifier) {
+            targ.DOK[i] = {
+              dokCode: items.humanCodingScheme,
+              dokDesc: items.fullStatement,
+              dokShort: items.abbreviatedStatement
+            };
+            i++;
+          }
+        }
+      }
+    }
+  }
+  newClaim.target.shift();
+}
+
+// This function extracts the target-specific shortcode from one of a documents items
+export function getTargetShortCode(claim: ISpecDocument): string | undefined {
+  for (const p of claim.CFItems) {
+    if (p.CFItemType === 'Target' && p.humanCodingScheme !== undefined) {
+      return p.humanCodingScheme;
+    }
+  }
 }
 // This function extracts the claim shortcode in Subject.Grade.Claim format from a document's title
 export function getClaimShortCode(subject: string, claim: string, grade: string[]) {
@@ -179,8 +274,6 @@ export function getClaim(title: string, subject: string, grades: string[]) {
 export async function importDocs(arr: ISpecDocument[]) {
   const packages: string[] = await fetchAllDocs();
   for (const pack of packages) {
-    // tslint:disable-next-line
-    // console.log(((i / packages.length) * 100).toPrecision(3) + '%');
     const data = await fetch(`https://case.smarterbalanced.org/ims/case/v1p0/CFPackages/${pack}`);
     const jsonData: ISpecDocument = await data.json();
     const title: string = jsonData.CFDocument.title;
@@ -228,85 +321,72 @@ export function specDocs() {
 }
 // This function extracts target-specific data for a given document
 export function getTarget(claim: IClaim, jsonData: ISpecDocument) {
-  let iter = 0;
-  claim.target[0].taskModels = [];
-  claim.target[0].stem = [];
-  claim.target[0].standards = [];
-  claim.target[0].evidence = [];
-  claim.target[0].rubrics = [];
-  for (const p of jsonData.CFItems) {
-    const { fullStatement, humanCodingScheme, abbreviatedStatement } = p;
-    if (p.CFItemType === 'Target') {
-      claim.target[0].description = fullStatement;
-      claim.target[0].shortCode = humanCodingScheme;
-    }
-    if (p.CFItemType === 'Measured Skill') {
-      if (!claim.target[0].standards.find(s => s.stdCode === humanCodingScheme)) {
-        claim.target[0].standards.push({
-          stdCode: humanCodingScheme,
-          stdDesc: fullStatement
+  for (const target of claim.target) {
+    let iter = 0;
+    target.taskModels = [];
+    target.stem = [];
+    target.standards = [];
+    target.evidence = [];
+    target.rubrics = [];
+    for (const p of jsonData.CFItems) {
+      const { fullStatement, humanCodingScheme, abbreviatedStatement } = p;
+      if (p.CFItemType === 'Measured Skill') {
+        if (!target.standards.find(s => s.stdCode === humanCodingScheme)) {
+          target.standards.push({
+            stdCode: humanCodingScheme,
+            stdDesc: fullStatement
+          });
+        }
+      }
+      if (p.CFItemType === 'Clarification') {
+        target.clarification = fullStatement;
+      }
+      if (p.CFItemType === 'Section Heading') {
+        target.heading = fullStatement;
+      }
+      if (p.CFItemType === 'Evidence Required') {
+        const splitStatement = fullStatement.split(' ');
+        if (splitStatement.length > 2) {
+          target.evidence.push({
+            evTitle: abbreviatedStatement,
+            evDesc: fullStatement
+          });
+        }
+      }
+      // This block handles a bug in the CASE API where some CFItems are missing their CFItemType property
+      if (p.abbreviatedStatement !== undefined) {
+        if (p.CFItemType === undefined && p.abbreviatedStatement.includes('Evidence Required ')) {
+          target.evidence.push({
+            evTitle: abbreviatedStatement,
+            evDesc: fullStatement
+          });
+        }
+      }
+      if (p.CFItemType === 'Accessibility') {
+        target.accessibility = fullStatement;
+      }
+      if (p.CFItemType === 'Task Description') {
+        if (jsonData.CFItems[iter + 1].fullStatement.includes('Task Model ')) {
+          target.taskModels.push({
+            taskDesc: fullStatement,
+            taskName: jsonData.CFItems[iter + 1].fullStatement,
+            stimulus: jsonData.CFItems[iter + 2].fullStatement,
+            examples: jsonData.CFItems[iter + 4].fullStatement,
+            relatedEvidence: ['']
+          });
+        }
+      }
+      if (p.CFItemType === 'Stem') {
+        target.stem.push({
+          stemDesc: fullStatement,
+          shortStem: abbreviatedStatement
         });
       }
+      iter++;
     }
-    if (p.CFItemType === 'Clarification') {
-      claim.target[0].clarification = fullStatement;
-    }
-    if (p.CFItemType === 'Section Heading') {
-      claim.target[0].heading = fullStatement;
-    }
-    if (p.CFItemType === 'Evidence Required') {
-      const splitStatement = fullStatement.split(' ');
-      if (splitStatement.length > 2) {
-        claim.target[0].evidence.push({
-          evTitle: abbreviatedStatement,
-          evDesc: fullStatement
-        });
-      }
-    }
-    // This block handles a bug in the CASE API where some CFItems are missing their CFItemType property
-    if (p.CFItemType === undefined && p.abbreviatedStatement.includes('Evidence Required ')) {
-      claim.target[0].evidence.push({
-        evTitle: abbreviatedStatement,
-        evDesc: fullStatement
-      });
-    }
-    if (p.CFItemType === 'Accessibility') {
-      claim.target[0].accessibility = fullStatement;
-    }
-    if (p.CFItemType === 'Task Description') {
-      if (jsonData.CFItems[iter + 1].fullStatement.includes('Task Model ')) {
-        claim.target[0].taskModels.push({
-          taskDesc: fullStatement,
-          taskName: jsonData.CFItems[iter + 1].fullStatement,
-          stimulus: jsonData.CFItems[iter + 2].fullStatement,
-          examples: jsonData.CFItems[iter + 4].fullStatement,
-          relatedEvidence: ['']
-        });
-      } else {
-        claim.target[0].taskModels.push({
-          taskDesc: fullStatement,
-          taskName: jsonData.CFItems[iter - 1].fullStatement,
-          stimulus: jsonData.CFItems[iter + 4].fullStatement,
-          examples: jsonData.CFItems[iter + 1].fullStatement,
-          relatedEvidence: ['']
-        });
-      }
-    }
-    if (p.CFItemType === 'Stem') {
-      claim.target[0].stem.push({
-        stemDesc: fullStatement,
-        shortStem: abbreviatedStatement
-      });
-    }
-    if (p.CFItemType === 'Rubric') {
-      if (fullStatement !== 'NA') {
-        claim.target[0].rubrics.push(fullStatement);
-      }
-    }
-    iter++;
+    getAssociatedEvidence(claim, jsonData);
+    getGenReqs(claim, jsonData);
   }
-  getAssociatedEvidence(claim, jsonData);
-  getGenReqs(claim, jsonData);
 }
 
 export function getAssociatedEvidence(claim: IClaim, jsonData: ISpecDocument) {
@@ -375,17 +455,32 @@ function getClaimDesc(
   MATHSpec: ISpecDocument
 ): string | undefined {
   const jsData: ISpecDocument = subject === Subject.ELA ? ELASpec : MATHSpec;
+  let code: string | string[] = shortCode;
+  let gradeChars;
+  if (shortCode.includes('-')) {
+    gradeChars = shortCode.split('.')[1].split('')[1];
+    code = shortCode.split('.');
+    code = `${code[0]}.G${gradeChars}.${code[2]}`;
+  }
   for (const i of jsData.CFItems) {
-    if (i.humanCodingScheme === shortCode) {
+    if (i.humanCodingScheme === code) {
       return i.fullStatement;
     }
   }
 }
 // This function consolidates all targets that share the same claim number into a singular claim object with an array of targets.
 export function consolidate(claimArray: IClaim[]): IClaim[] {
+  let myArray = [];
+  let unique: string[];
+ for(const claims of claimArray) {
+  myArray.push(claims.shortCode);
+  }
+  unique = myArray.filter((v, i, a) => a.indexOf(v) !== i);
+
+  while(unique.length !== 0) {
   for (const p of claimArray) {
     for (const q of claimArray) {
-      if (q.shortCode === p.shortCode && q !== p && q.grades.length === 1) {
+      if (q.shortCode === p.shortCode && q !== p) {
         p.target.push(q.target[0]);
         claimArray.splice(claimArray.indexOf(q), 1);
       }
@@ -406,6 +501,12 @@ export function consolidate(claimArray: IClaim[]): IClaim[] {
       }
     }
   }
+  myArray = [];
+  for(const claims of claimArray) {
+  myArray.push(claims.shortCode);
+  }
+  unique = myArray.filter((v, i, a) => a.indexOf(v) !== i);
+}
 
   return claimArray;
 }

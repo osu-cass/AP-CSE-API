@@ -37,7 +37,9 @@ const packages = [
   'f5fcd780-0539-11e8-b5aa-2b654ff8ee27',
   'cba081b2-b59d-11e7-a02a-eb18540295b7',
   '080b6490-f08c-11e7-a604-654871858e0d',
-  'db93d530-b997-11e7-8abc-3327a9111ac8'
+  'db93d530-b997-11e7-8abc-3327a9111ac8',
+  'ddd1045a-d29f-11e7-8ec6-ebfef2b95d1c',
+  'ddd1045a-d29f-11e7-8ec6-ebfef2b95d1c'
 ];
 const arr: ISpecDocument[] = [];
 
@@ -66,11 +68,13 @@ describe('Case API Scraper', () => {
         [JSON.stringify(mockHSMATH)],
         [JSON.stringify(mockTMATH)],
         [JSON.stringify(mockPack[1])],
-        [JSON.stringify(mockIT)]
+        [JSON.stringify(mockIT)],
+        [JSON.stringify(mockPack[2])],
+        [JSON.stringify(mockPack[3])]
       );
     const result = await importDocs(arr);
-    expect(fetch.mock.calls.length).toBe(12);
-    expect(result).toBe(11);
+    expect(fetch.mock.calls.length).toBe(14);
+    expect(result).toBe(13);
   });
   it('returns valid data for db', async () => {
     fetch
@@ -86,10 +90,12 @@ describe('Case API Scraper', () => {
         [JSON.stringify(mockHSMATH)],
         [JSON.stringify(mockTMATH)],
         [JSON.stringify(mockPack[1])],
-        [JSON.stringify(mockIT)]
+        [JSON.stringify(mockIT)],
+        [JSON.stringify(mockPack[2])],
+        [JSON.stringify(mockPack[3])]
       );
     const result = await importDbEntries();
-    expect(fetch.mock.calls.length).toBe(12);
+    expect(fetch.mock.calls.length).toBe(14);
   });
   it('makes shortcodes', () => {
     const ELAresult = getClaimShortCode(subject[0], claim, grade);
