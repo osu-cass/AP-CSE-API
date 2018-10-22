@@ -10,6 +10,7 @@ import {
 } from '../../__mocks__/mongodb';
 import { ITargetParams } from '../../routes';
 import { IClaim } from '../../models/claim';
+import { Health } from '../../routes/health';
 
 jest.mock('../search', () => {
   return {
@@ -282,4 +283,28 @@ describe('MongoDb Database client interface', () => {
       });
     });
   });
+});
+
+describe('ping test', () => {
+  let client: DbClient;
+  let dbInitArgs: IDbClientOptions;
+  let testData: Partial<IClaim>[];
+
+  beforeAll(() => {
+    dbInitArgs = {
+      url: 'http://mongodb',
+      port: 27017,
+      dbName: 'test-db'
+    };
+    client = new DbClient(dbInitArgs);
+    testData = [{ title: 'text' }];
+  });
+
+  it('pings the database', async () => {
+    expect(await client.ping()).toBe(Health.bad);
+    expect(await client.ping()).toBe(Health.bad);
+    expect(await client.ping()).toBe(Health.good);
+    expect(await client.ping()).toBe(Health.busy);
+  });
+
 });

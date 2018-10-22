@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "27b24276-6fa9-4967-bffa-185261a1b827",
+		"_postman_id": "cad382c7-ba13-4e5a-8502-1dc37e6c1cd0",
 		"name": "cse-api/",
 		"description": "Collection of requests for testing the cse-api",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -26,7 +26,10 @@
 				},
 				"method": "GET",
 				"header": [],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "{{api-domain}}/{{target-endpoint}}/{{subject}}/{{grades}}/{{claim}}/{{target}}",
 					"host": [
@@ -49,7 +52,10 @@
 			"request": {
 				"method": "POST",
 				"header": [],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "{{api-domain}}/{{init-endpoint}}",
 					"host": [
@@ -68,7 +74,10 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "{{api-domain}}/{{search-endpoint}}/?query={{query}}&subject={{subject}}&grades={{grades}}&claimNumber={{claim}}&targetShortCode={{target}}",
 					"host": [
@@ -112,7 +121,10 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "{{api-domain}}/{{pdf}}",
 					"host": [
@@ -122,6 +134,28 @@
 						"{{pdf}}"
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "health/",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{api-domain}}/{{health-endpoint}}",
+					"host": [
+						"{{api-domain}}"
+					],
+					"path": [
+						"{{health-endpoint}}"
+					]
+				},
+				"description": "An API Route Health Check"
 			},
 			"response": []
 		}
@@ -207,6 +241,12 @@
 			"id": "cef39f4a-0695-418e-86ef-c80b8e71e6e1",
 			"key": "query",
 			"value": "simple procedure",
+			"type": "string"
+		},
+		{
+			"id": "7c68d494-5abd-4ae0-a45e-4332741a5531",
+			"key": "health-endpoint",
+			"value": "health",
 			"type": "string"
 		}
 	]

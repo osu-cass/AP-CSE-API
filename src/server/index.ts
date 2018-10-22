@@ -10,6 +10,7 @@ import { DbClient } from '../dal/interface';
 import { SearchClient } from '../dal/search';
 import { createTracer } from '../utils/tracer';
 import { logger, LoggingStream } from '../utils/logger';
+import { Health, healthCheck } from '../routes/health';
 
 /**
  * ServerContext defines a type for the tracer and db client
@@ -79,6 +80,10 @@ export class Server implements IServer {
         port: parseInt(mongoPort, 10)
       })
     };
+    router.stack.forEach(endpoint => {
+      // tslint:disable-next-line: no-any no-unsafe-any
+      endpoint.routeHealth = Health.good;
+    });
   }
 
   public registerMiddleware(): void {
@@ -94,6 +99,7 @@ export class Server implements IServer {
 
   public routes(): void {
     this.app.use('/api', router);
+    this.app.get('/health', healthCheck);
   }
 
   public configure(): void {
