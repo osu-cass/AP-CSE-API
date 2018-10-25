@@ -1,4 +1,3 @@
-
 jest.mock('../', () => ({
   setRouteHealth: jest.fn().mockResolvedValue('{}'),
   Health: jest.fn().mockImplementation(() => {

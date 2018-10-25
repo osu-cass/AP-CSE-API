@@ -59,9 +59,9 @@ export class SearchClient implements ISearchClient {
   public async ping(): Promise<Health> {
     let result: Health = Health.bad;
     try {
-      result = await this.client.ping({}) === true ? Health.good : Health.bad;
+      result = (await this.client.ping({})) === true ? Health.good : Health.bad;
     } catch (err) {
-        result = Health.bad;
+      result = Health.bad;
     }
 
     return result;

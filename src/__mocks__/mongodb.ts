@@ -35,7 +35,6 @@ const database = {
   createCollection: jest.fn()
 };
 
-
 MongoClient = {
   ...MongoClient,
   db: jest
@@ -60,10 +59,20 @@ MongoClient.connect = jest
   .mockResolvedValueOnce({ db: jest.fn(), close: MongoClient.close })
   .mockResolvedValueOnce({ db: MongoClient.db, close: MongoClient.close })
   .mockResolvedValueOnce({ db: jest.fn(), close: MongoClient.close })
-  .mockRejectedValueOnce(new Error)
+  .mockRejectedValueOnce(new Error())
   .mockResolvedValueOnce({ db: jest.fn(), close: MongoClient.close })
-  .mockResolvedValueOnce({ db: jest.fn().mockImplementationOnce(() => ({ command: jest.fn().mockResolvedValue({ok: 1})})), close: MongoClient.close })
-  .mockResolvedValueOnce({ db: jest.fn().mockImplementationOnce(() => ({ command: jest.fn().mockResolvedValue({ok: 666})})), close: MongoClient.close });
+  .mockResolvedValueOnce({
+    db: jest
+      .fn()
+      .mockImplementationOnce(() => ({ command: jest.fn().mockResolvedValue({ ok: 1 }) })),
+    close: MongoClient.close
+  })
+  .mockResolvedValueOnce({
+    db: jest
+      .fn()
+      .mockImplementationOnce(() => ({ command: jest.fn().mockResolvedValue({ ok: 666 }) })),
+    close: MongoClient.close
+  });
 
 const db: jest.Mock = MongoClient.db;
 const close: jest.Mock = MongoClient.close;

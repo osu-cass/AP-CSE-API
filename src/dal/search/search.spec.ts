@@ -37,7 +37,7 @@ describe('search', () => {
       });
     });
 
-    it('pings elasticsearch as bad', async () =>  {
+    it('pings elasticsearch as bad', async () => {
       expect(await client.ping()).toBe(Health.bad);
       expect(await client.ping()).toBe(Health.good);
       expect(await client.ping()).toBe(Health.bad);

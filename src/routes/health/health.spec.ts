@@ -46,5 +46,4 @@ describe('API Routing Health Check', () => {
     expect(res.send).toBeCalledTimes(1);
     expect(res.status).toHaveBeenCalledWith(200);
   });
-
 });

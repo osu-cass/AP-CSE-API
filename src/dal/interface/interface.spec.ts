@@ -306,5 +306,4 @@ describe('ping test', () => {
     expect(await client.ping()).toBe(Health.good);
     expect(await client.ping()).toBe(Health.busy);
   });
-
 });
