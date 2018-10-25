@@ -56,8 +56,8 @@ export class Server implements IServer {
   constructor() {
     const {
       PORT: port = 3000,
-      ES_SEARCH_HOSTNAME: esHost = 'es-search',
-      ES_SEARCH_PORT: esPort = '9200',
+      ELASTICSEARCH_HOSTNAME: esHost = 'es-search',
+      ELASTICSEARCH_PORT: esPort = '9200',
       MONGO_HOSTNAME: mongoHost = 'mongo',
       MONGO_PORT: mongoPort = '21017',
       MONGO_DB_NAME: dbName = 'cse'
