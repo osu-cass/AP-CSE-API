@@ -53,11 +53,13 @@ export class DbClient implements IDbClient {
   }
 
   public async connect(): Promise<void> {
+    const { MONGO_USERNAME: user = '', MONGO_PASSWORD: password = '' } = process.env;
+
     try {
       this.client = await MongoClient.connect(
         this.uri,
         {
-          auth: { user: 'root', password: 'example' }
+          auth: { user, password }
         }
       );
       this.db = this.client.db(this.dbName);
