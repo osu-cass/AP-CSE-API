@@ -29,7 +29,11 @@ export interface IDbClient {
   insert(documents: IClaim[]): Promise<InsertWriteOpResult>;
   getSubjectsAndGrades(): Promise<IFilterOptions | undefined>;
   getClaimNumbers(grade: string, subject: string): Promise<IFilterOptions | undefined>;
-  getTargetShortCodes(grade: string, subject: string, claimNumber: string): Promise<IFilterOptions | undefined>;
+  getTargetShortCodes(
+    grade: string,
+    subject: string,
+    claimNumber: string
+  ): Promise<IFilterOptions | undefined>;
   getClaims(): Promise<IClaim[]>;
   getTarget(searchParams: ITargetParams): Promise<IClaim>;
 }
@@ -211,7 +215,12 @@ export class DbClient implements IDbClient {
         .toArray();
       result = {
         targetShortCodes: dbResult[0].target
-          .filter(({ shortCode }: IShortCodeResult) => grades.match(/^[9]|1[0-2]$/) !== null ? shortCode.includes('HS') : shortCode.includes(`G${grades}`))
+          .filter(
+            ({ shortCode }: IShortCodeResult) =>
+              grades.match(/^[9]|1[0-2]$/)
+                ? shortCode.includes('HS')
+                : shortCode.includes(`G${grades}`)
+          )
           .map(({ shortCode }: IShortCodeResult) => ({ code: shortCode, label: shortCode }))
       };
     } else {

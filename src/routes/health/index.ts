@@ -32,6 +32,11 @@ export async function handler(req: Request, res: CSEResponse) {
         route: '/target/',
         status: await res.locals.dbClient.ping()
       });
+    } else if (endpoints.route.path.includes('/filter/')) {
+      status.push({
+        route: '/target/',
+        status: await res.locals.dbClient.ping()
+      });
     } else {
       status.push({
         route: endpoints.route.path,

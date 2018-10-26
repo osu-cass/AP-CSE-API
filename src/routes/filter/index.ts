@@ -10,7 +10,6 @@ export const handler = async (req: Request, res: CSEResponse) => {
   const { grades, subject, claimNumber }: IFilterParams = <IFilterParams>req.query;
   let result: IFilterOptions | undefined;
   try {
-    setRouteHealth(Health.busy, req);
     await dbClient.connect();
     if (grades && subject && claimNumber) {
       result = await dbClient.getTargetShortCodes(grades, subject, claimNumber);
@@ -20,15 +19,12 @@ export const handler = async (req: Request, res: CSEResponse) => {
       result = await dbClient.getSubjectsAndGrades();
     }
     await dbClient.close();
-    setRouteHealth(Health.good, req);
   } catch (error) {
     res.status(500);
     res.send(error);
-    setRouteHealth(Health.good, req);
   }
   res.status(200);
   res.send(result);
-  setRouteHealth(Health.good, req);
 };
 
 export const filter = applyTracing('/filter', handler);
