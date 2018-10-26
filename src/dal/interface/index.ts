@@ -27,6 +27,7 @@ export interface IDbClient {
   connect(): Promise<void>;
   close(): Promise<void>;
   insert(documents: IClaim[]): Promise<InsertWriteOpResult>;
+  buildSubjectsAndGrades(res: IGradeAndSubjectResult): IFilterOptions;
   getSubjectsAndGrades(): Promise<IFilterOptions | undefined>;
   getClaimNumbers(grade: string, subject: string): Promise<IFilterOptions | undefined>;
   getTargetShortCodes(
@@ -45,8 +46,8 @@ export interface IDbClient {
 export class DbClient implements IDbClient {
   public uri: string;
   public dbName: string;
-  private client?: MongoClient;
-  private db?: Db;
+  public client?: MongoClient;
+  public db?: Db;
 
   constructor(args: IDbClientOptions) {
     this.uri = `${args.url}:${args.port}`;
@@ -124,7 +125,7 @@ export class DbClient implements IDbClient {
     }
   }
 
-  public buildSubjectsAndGrades(res: IGradeAndSubjectResult) {
+  public buildSubjectsAndGrades(res: IGradeAndSubjectResult): IFilterOptions {
     const gradeHash: Hash = {};
     let gradeArr: string[] = [];
     let grades: IFilterItem[] = [];
@@ -158,20 +159,24 @@ export class DbClient implements IDbClient {
   public async getSubjectsAndGrades(): Promise<IFilterOptions | undefined> {
     let result: IFilterOptions | undefined;
     if (this.db) {
-      const dbResult: IGradeAndSubjectResult[] = await this.db
-        .collection('claims')
-        .aggregate([
-          {
-            $group: {
-              // tslint:disable-next-line:no-null-keyword
-              _id: null,
-              subject: { $addToSet: '$subject' },
-              grades: { $addToSet: '$grades' }
+      try {
+        const dbResult: IGradeAndSubjectResult[] = await this.db
+          .collection('claims')
+          .aggregate([
+            {
+              $group: {
+                // tslint:disable-next-line:no-null-keyword
+                _id: null,
+                subject: { $addToSet: '$subject' },
+                grades: { $addToSet: '$grades' }
+              }
             }
-          }
-        ])
-        .toArray();
-      result = this.buildSubjectsAndGrades(dbResult[0]);
+          ])
+          .toArray();
+        result = this.buildSubjectsAndGrades(dbResult[0]);
+      } catch (error) {
+        throw new Error('failed to get subject and grades');
+      }
     } else {
       throw new Error('db is not defined');
     }
@@ -185,16 +190,20 @@ export class DbClient implements IDbClient {
   ): Promise<IFilterOptions | undefined> {
     let result: IFilterOptions | undefined;
     if (this.db) {
-      const dbResult: IClaimNumberResult[] = await this.db
-        .collection('claims')
-        .find({ grades, subject }, { projection: { _id: 0, claimNumber: 1 } })
-        .toArray();
-      result = {
-        claimNumbers: dbResult.map(({ claimNumber }: IClaimNumberResult) => ({
-          code: claimNumber,
-          label: claimNumber
-        }))
-      };
+      try {
+        const dbResult: IClaimNumberResult[] = await this.db
+          .collection('claims')
+          .find({ grades, subject }, { projection: { _id: 0, claimNumber: 1 } })
+          .toArray();
+        result = {
+          claimNumbers: dbResult.map(({ claimNumber }: IClaimNumberResult) => ({
+            code: claimNumber,
+            label: claimNumber
+          }))
+        };
+      } catch (error) {
+        throw new Error('failed to get claim numbers');
+      }
     } else {
       throw new Error('db is not defined');
     }
@@ -209,20 +218,24 @@ export class DbClient implements IDbClient {
   ): Promise<IFilterOptions | undefined> {
     let result: IFilterOptions | undefined;
     if (this.db) {
-      const dbResult: ITargetShortCodeResult[] = await this.db
-        .collection('claims')
-        .find({ grades, subject, claimNumber }, { projection: { _id: 0, 'target.shortCode': 1 } })
-        .toArray();
-      result = {
-        targetShortCodes: dbResult[0].target
-          .filter(
-            ({ shortCode }: IShortCodeResult) =>
-              grades.match(/^[9]|1[0-2]$/)
-                ? shortCode.includes('HS')
-                : shortCode.includes(`G${grades}`)
-          )
-          .map(({ shortCode }: IShortCodeResult) => ({ code: shortCode, label: shortCode }))
-      };
+      try {
+        const dbResult: ITargetShortCodeResult[] = await this.db
+          .collection('claims')
+          .find({ grades, subject, claimNumber }, { projection: { _id: 0, 'target.shortCode': 1 } })
+          .toArray();
+        result = {
+          targetShortCodes: dbResult[0].target
+            .filter(
+              ({ shortCode }: IShortCodeResult) =>
+                grades.match(/^[9]|1[0-2]$/)
+                  ? shortCode.includes('HS')
+                  : shortCode.includes(`G${grades}`)
+            )
+            .map(({ shortCode }: IShortCodeResult) => ({ code: shortCode, label: shortCode }))
+        };
+      } catch (err) {
+        throw new Error('failed get target short codes');
+      }
     } else {
       throw new Error('db is not defined');
     }
