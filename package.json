@@ -63,7 +63,7 @@
     ]
   },
   "release": {
-    "branch": "ci/CSE-309-continuous-deployment",
+    "branch": "dev",
     "repositoryUrl": "https://github.com/osu-cass/AP-CSE-API.git",
     "plugins": [
       "@semantic-release/commit-analyzer",

@@ -4,7 +4,7 @@ node_defaults: &node
 
 dev_filter: &devOnly
   branches:
-    only: ci/CSE-309-continuous-deployment
+    only: dev
 
 get_latest_version: &getVersion
   name: Set TAG_VERSION and update PATH
