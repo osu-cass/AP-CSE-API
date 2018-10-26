@@ -80,7 +80,7 @@ jobs:
           command: docker login -u $DOCKER_USER -p $DOCKER_PASS
       - run:
           name: Build image
-          command: 'docker build -t osucass/content-specificication-explorer-api:$TAG_VERSION .'
+          command: 'docker build -t osucass/content-specification-explorer-api:$TAG_VERSION .'
       - run:
           name: Push image to Docker Hub
           command: 'docker push osucass/content-specification-explorer-api:$TAG_VERSION'
