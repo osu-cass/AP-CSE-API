@@ -63,7 +63,7 @@
     ]
   },
   "release": {
-    "branch": "feat/CSE-309-continuous-deployment",
+    "branch": "ci/CSE-309-continuous-deployment",
     "verifyConditions": "@semantic-release/github",
     "prepare": "",
     "publish": "@semantic-release/github"
