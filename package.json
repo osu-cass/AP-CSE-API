@@ -62,6 +62,12 @@
       "**/*.spec.+(ts)"
     ]
   },
+  "release": {
+    "branch": "feat/CSE-309-continuous-deployment",
+    "verifyConditions": "@semantic-release/github",
+    "prepare": "",
+    "publish": "@semantic-release/github"
+  },
   "dependencies": {
     "body-parser": "^1.18.3",
     "bodybuilder": "^2.2.15",
