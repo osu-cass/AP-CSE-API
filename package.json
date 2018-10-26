@@ -118,12 +118,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/osu-cass/AP-CSE-PDF.git"
+    "url": "git+https://github.com/osu-cass/AP-CSE-API.git"
   },
   "author": "",
   "license": "MPL-2.0",
   "bugs": {
-    "url": "https://github.com/osu-cass/AP-CSE-PDF/issues"
+    "url": "https://github.com/osu-cass/AP-CSE-API/issues"
   },
-  "homepage": "https://github.com/osu-cass/AP-CSE-PDF#readme"
+  "homepage": "https://github.com/osu-cass/AP-CSE-API#readme"
 }
