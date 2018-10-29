@@ -189,14 +189,30 @@ export class DbClient implements IDbClient {
     subject: string
   ): Promise<IFilterOptions | undefined> {
     let result: IFilterOptions | undefined;
+    const claimHash: Hash = {};
     if (this.db) {
       try {
+        const g =  grades.split(',');
         const dbResult: IClaimNumberResult[] = await this.db
           .collection('claims')
-          .find({ grades, subject }, { projection: { _id: 0, claimNumber: 1 } })
+          .find({
+            subject,
+            $or: g.map(grade => ({ grades: grade })),
+          }, { projection: { _id: 0, claimNumber: 1 } })
           .toArray();
+
         result = {
-          claimNumbers: dbResult.map(({ claimNumber }: IClaimNumberResult) => ({
+          claimNumbers: dbResult
+          .filter(({ claimNumber }: IClaimNumberResult) => {
+            if(!claimHash[claimNumber]) {
+              claimHash[claimNumber] = claimNumber;
+
+              return true;
+            }
+
+            return false;
+          })
+          .map(({ claimNumber }: IClaimNumberResult) => ({
             code: claimNumber,
             label: claimNumber
           }))
@@ -219,18 +235,33 @@ export class DbClient implements IDbClient {
     let result: IFilterOptions | undefined;
     if (this.db) {
       try {
+        const g: string[] =  grades.split(',');
         const dbResult: ITargetShortCodeResult[] = await this.db
           .collection('claims')
-          .find({ grades, subject, claimNumber }, { projection: { _id: 0, 'target.shortCode': 1 } })
+          .find({
+            subject,
+            claimNumber,
+            $or: g.map(grade => ({ grades: grade })),
+          }, { projection: { _id: 0, 'target.shortCode': 1 } })
           .toArray();
+        const flatResult: IShortCodeResult[] = [];
+        dbResult.forEach((res: ITargetShortCodeResult) => flatResult.push(...res.target));
         result = {
-          targetShortCodes: dbResult[0].target
+          targetShortCodes: flatResult
             .filter(
-              ({ shortCode }: IShortCodeResult) =>
-                grades.match(/^[9]|1[0-2]$/)
+              ({ shortCode }: IShortCodeResult) => {
+                let included = false;
+                for(const grade of g) {
+                  included = grade.match(/^[9]|1[0-2]$/)
                   ? shortCode.includes('HS')
-                  : shortCode.includes(`G${grades}`)
-            )
+                  : shortCode.includes(`G${grade}`);
+                  if(included) {
+                    return included;
+                  }
+                }
+
+                return false;
+            })
             .map(({ shortCode }: IShortCodeResult) => ({ code: shortCode, label: shortCode }))
         };
       } catch (err) {
