@@ -85,6 +85,8 @@ export class Server implements IServer {
       res.locals = { span, ...this.context };
       next();
       span.finish();
+      res.header('Access-Control-Allow-Origin', '*');
+      res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     });
   }
 
