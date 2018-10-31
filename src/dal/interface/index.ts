@@ -192,30 +192,33 @@ export class DbClient implements IDbClient {
     const claimHash: Hash = {};
     if (this.db) {
       try {
-        const g =  grades.split(',');
+        const g = grades.split(',');
         const dbResult: IClaimNumberResult[] = await this.db
           .collection('claims')
-          .find({
-            subject,
-            $or: g.map(grade => ({ grades: grade })),
-          }, { projection: { _id: 0, claimNumber: 1 } })
+          .find(
+            {
+              subject,
+              $or: g.map(grade => ({ grades: grade }))
+            },
+            { projection: { _id: 0, claimNumber: 1 } }
+          )
           .toArray();
 
         result = {
           claimNumbers: dbResult
-          .filter(({ claimNumber }: IClaimNumberResult) => {
-            if(!claimHash[claimNumber]) {
-              claimHash[claimNumber] = claimNumber;
+            .filter(({ claimNumber }: IClaimNumberResult) => {
+              if (!claimHash[claimNumber]) {
+                claimHash[claimNumber] = claimNumber;
 
-              return true;
-            }
+                return true;
+              }
 
-            return false;
-          })
-          .map(({ claimNumber }: IClaimNumberResult) => ({
-            code: claimNumber,
-            label: claimNumber
-          }))
+              return false;
+            })
+            .map(({ claimNumber }: IClaimNumberResult) => ({
+              code: claimNumber,
+              label: claimNumber
+            }))
         };
       } catch (error) {
         throw new Error('failed to get claim numbers');
@@ -235,32 +238,34 @@ export class DbClient implements IDbClient {
     let result: IFilterOptions | undefined;
     if (this.db) {
       try {
-        const g: string[] =  grades.split(',');
+        const g: string[] = grades.split(',');
         const dbResult: ITargetShortCodeResult[] = await this.db
           .collection('claims')
-          .find({
-            subject,
-            claimNumber,
-            $or: g.map(grade => ({ grades: grade })),
-          }, { projection: { _id: 0, 'target.shortCode': 1 } })
+          .find(
+            {
+              subject,
+              claimNumber,
+              $or: g.map(grade => ({ grades: grade }))
+            },
+            { projection: { _id: 0, 'target.shortCode': 1 } }
+          )
           .toArray();
         const flatResult: IShortCodeResult[] = [];
         dbResult.forEach((res: ITargetShortCodeResult) => flatResult.push(...res.target));
         result = {
           targetShortCodes: flatResult
-            .filter(
-              ({ shortCode }: IShortCodeResult) => {
-                let included = false;
-                for(const grade of g) {
-                  included = grade.match(/^[9]|1[0-2]$/)
+            .filter(({ shortCode }: IShortCodeResult) => {
+              let included = false;
+              for (const grade of g) {
+                included = grade.match(/^[9]|1[0-2]$/)
                   ? shortCode.includes('HS')
                   : shortCode.includes(`G${grade}`);
-                  if(included) {
-                    return included;
-                  }
+                if (included) {
+                  return included;
                 }
+              }
 
-                return false;
+              return false;
             })
             .map(({ shortCode }: IShortCodeResult) => ({ code: shortCode, label: shortCode }))
         };
