@@ -22,16 +22,18 @@ describe('MongoDb client interface', () => {
     close = jest.fn();
 
     connect = jest
-          .fn()
-          .mockResolvedValueOnce({
-            db,
-            close
-          })
-          .mockRejectedValueOnce(new Error('connect failed'));
+      .fn()
+      .mockResolvedValueOnce({
+        db,
+        close
+      })
+      .mockRejectedValueOnce(new Error('connect failed'));
 
     jest.mock('mongodb', () => ({
       MongoClient: {
-        db, connect, close
+        db,
+        connect,
+        close
       }
     }));
 

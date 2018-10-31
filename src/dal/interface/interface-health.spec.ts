@@ -19,26 +19,26 @@ describe('MongoDb client interface', () => {
 
   beforeAll(() => {
     command = jest
-    .fn()
-    .mockResolvedValueOnce({ ok: 1 })
-    .mockResolvedValueOnce({ ok: 666 });
+      .fn()
+      .mockResolvedValueOnce({ ok: 1 })
+      .mockResolvedValueOnce({ ok: 666 });
 
-    db = jest
-    .fn()
-    .mockImplementation(() => ({ command }));
+    db = jest.fn().mockImplementation(() => ({ command }));
 
     close = jest.fn();
 
     connect = jest
-    .fn()
-    .mockRejectedValueOnce(new Error())
-    .mockResolvedValueOnce({ close, db: jest.fn() })
-    .mockResolvedValueOnce({ db, close })
-    .mockResolvedValueOnce({ db, close });
+      .fn()
+      .mockRejectedValueOnce(new Error())
+      .mockResolvedValueOnce({ close, db: jest.fn() })
+      .mockResolvedValueOnce({ db, close })
+      .mockResolvedValueOnce({ db, close });
 
     jest.mock('mongodb', () => ({
       MongoClient: {
-        db, connect, close
+        db,
+        connect,
+        close
       }
     }));
 
