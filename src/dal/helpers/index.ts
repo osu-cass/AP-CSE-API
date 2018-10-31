@@ -60,6 +60,20 @@ function buildClaimNumbers(dbResult: IClaimNumberResult[]): IFilterOptions {
   };
 }
 
+function filterShortCodeByGrade(grades: string[], shortCode: string): boolean {
+  let included = false;
+  for (const grade of grades) {
+    included = grade.match(/^[9]|1[0-2]$/)
+      ? shortCode.includes('HS')
+      : shortCode.includes(`G${grade}`);
+    if (included) {
+      return included;
+    }
+  }
+
+  return false;
+}
+
 function buildTargetShortCodes(
   grades: string[],
   dbResult: ITargetShortCodeResult[]
@@ -69,19 +83,7 @@ function buildTargetShortCodes(
 
   return {
     targetShortCodes: flatResult
-      .filter(({ shortCode }: IShortCodeResult) => {
-        let included = false;
-        for (const grade of grades) {
-          included = grade.match(/^[9]|1[0-2]$/)
-            ? shortCode.includes('HS')
-            : shortCode.includes(`G${grade}`);
-          if (included) {
-            return included;
-          }
-        }
-
-        return false;
-      })
+      .filter(({ shortCode }: IShortCodeResult) => filterShortCodeByGrade(grades, shortCode))
       .map(({ shortCode }: IShortCodeResult) => ({ code: shortCode, label: shortCode }))
   };
 }
