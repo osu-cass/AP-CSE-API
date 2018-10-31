@@ -92,7 +92,7 @@ export class DbClient implements IDbClient {
       try {
         await this.client.close();
       } catch (err) {
-        throw err;
+        throw new Error('error occured closing client');
       }
     } else {
       throw new Error('client is already closed');
@@ -175,7 +175,7 @@ export class DbClient implements IDbClient {
           .toArray();
         result = this.buildSubjectsAndGrades(dbResult[0]);
       } catch (error) {
-        throw new Error('failed to get subject and grades');
+        throw new Error('failed to get subjects and grades');
       }
     } else {
       throw new Error('db is not defined');
@@ -270,7 +270,7 @@ export class DbClient implements IDbClient {
             .map(({ shortCode }: IShortCodeResult) => ({ code: shortCode, label: shortCode }))
         };
       } catch (err) {
-        throw new Error('failed get target short codes');
+        throw new Error('failed to get target short codes');
       }
     } else {
       throw new Error('db is not defined');

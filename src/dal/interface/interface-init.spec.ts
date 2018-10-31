@@ -116,12 +116,11 @@ describe('MongoDb client', () => {
     });
 
     it('throws error when closing client', async () => {
-      close.mockImplementationOnce(() => new Error('error'));
       try {
         await client.close();
       } catch (err) {
         expect.assertions(2);
-        expect(err).toEqual(new Error('error'));
+        expect(err).toEqual(new Error('error occured closing client'));
         expect(close).toHaveBeenCalledTimes(1);
       }
     });

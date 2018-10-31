@@ -3,19 +3,52 @@ import { IGradeAndSubjectResult, IFilterOptions } from '../../models/filter';
 import { MongoClient } from 'mongodb';
 
 describe('MongoDb client interface', () => {
-  let dbReturnValues: IGradeAndSubjectResult;
+  // tslint:disable:no-any
+  let dbReturnValues0: any[];
+  let dbReturnValues1: any[];
+  let dbReturnValues2: any[];
+  // tslint:enable:no-any
+  let filterOptions: IFilterOptions;
   let collection: jest.Mock;
   let db: jest.Mock;
   let close: jest.Mock;
   let connect: jest.Mock;
+  let find: jest.Mock;
+  let toArray: jest.Mock;
+  let aggregate: jest.Mock;
 
   beforeAll(() => {
-    collection = jest.fn().mockImplementation(() => ({
-      toArray: jest
-        .fn()
-        .mockResolvedValueOnce(dbReturnValues)
-        .mockRejectedValueOnce(new Error('db error'))
-    }));
+    dbReturnValues0 = [{
+      subject: ['math'],
+      grades: [['3'], ['3'], ['5']]
+    }];
+
+    dbReturnValues1 = [
+      {claimNumber: 'C1'},
+      {claimNumber: 'C2'},
+      {claimNumber: 'C2'},
+    ];
+
+    dbReturnValues2 = [
+      { target: [{ shortCode: 'MF.G3.C2.GG' }] },
+      { target: [{ shortCode: 'FM.G3.C2.FG' }, { shortCode: 'MF.G4.C2.GG' }] }
+    ];
+
+
+    toArray = jest
+    .fn()
+    .mockResolvedValueOnce(dbReturnValues0)
+    .mockRejectedValueOnce(new Error('db error'))
+    .mockResolvedValueOnce(dbReturnValues1)
+    .mockRejectedValueOnce(new Error('db error'))
+    .mockResolvedValueOnce(dbReturnValues2)
+    .mockRejectedValueOnce(new Error('db error'));
+
+    find = jest.fn().mockImplementation(() => ({ toArray }));
+
+    aggregate = jest.fn().mockImplementation(() => ({ toArray }));
+
+    collection = jest.fn().mockImplementation(() => ({ find, aggregate, toArray }));
 
     db = jest.fn().mockImplementation(() => ({ collection }));
 
@@ -27,7 +60,26 @@ describe('MongoDb client interface', () => {
         db,
         close
       })
-      .mockRejectedValueOnce(new Error('connect failed'));
+      .mockResolvedValueOnce({
+        close,
+        db: jest.fn()
+      })
+      .mockResolvedValueOnce({
+        db,
+        close
+      })
+      .mockResolvedValueOnce({
+        close,
+        db: jest.fn()
+      })
+      .mockResolvedValueOnce({
+        db,
+        close
+      })
+      .mockResolvedValueOnce({
+        close,
+        db: jest.fn()
+      });
 
     jest.mock('mongodb', () => ({
       MongoClient: {
@@ -41,16 +93,12 @@ describe('MongoDb client interface', () => {
   });
 
   describe('generate values for filter', () => {
+
     describe('get all unique subjects and grades', () => {
       let client: DbClient;
       let dbInitArgs: IDbClientOptions;
-      let filterOptions: IFilterOptions;
 
       beforeAll(() => {
-        dbReturnValues = {
-          subject: ['math'],
-          grades: [['3']]
-        };
         filterOptions = {
           subject: [
             {
@@ -62,6 +110,10 @@ describe('MongoDb client interface', () => {
             {
               code: '3',
               label: '3'
+            },
+            {
+              code: '5',
+              label: '5'
             }
           ]
         };
@@ -71,78 +123,165 @@ describe('MongoDb client interface', () => {
           port: 27017,
           dbName: 'test-db'
         };
+
         client = new DbClient(dbInitArgs);
       });
 
-      it('getClaimNumbers succeeds', async () => {
+      afterEach(() => {
+        db.mockClear();
+        close.mockClear();
+        connect.mockClear();
+      });
+
+      it('getSubjectsAndGrades() succeeds', async () => {
         expect.assertions(1);
         await client.connect();
         expect(await client.getSubjectsAndGrades()).toEqual(filterOptions);
       });
 
-      it('getClaimNumbers fails', async () => {
+      it('getSubjectsAndGrades() fails', async () => {
+        expect.assertions(1);
+        try {
+          await client.getSubjectsAndGrades();
+        } catch (error) {
+          expect(error).toEqual(new Error('failed to get subjects and grades'));
+        }
+      });
+
+      it('getSubjectsAndGrades() fails with undefined db', async () => {
         expect.assertions(1);
         try {
           await client.connect();
           await client.getSubjectsAndGrades();
         } catch (error) {
-          expect(error).toEqual(new Error('db error'));
+          expect(error).toEqual(new Error('db is not defined'));
         }
-      });
-
-      it('getClaimNumbers fails with undefined db', async () => {
-        expect.assertions(0);
       });
     });
 
-    describe('get claimNumber by subject and grade', () => {
+    describe('get claimNumbers by subject and grade', () => {
       let client: DbClient;
       let dbInitArgs: IDbClientOptions;
+      let subject: string;
+      let grades: string;
 
       beforeAll(() => {
+
+        filterOptions = {
+          claimNumbers: [
+            {
+              code: 'C1',
+              label: 'C1'
+            },
+            {
+              code: 'C2',
+              label: 'C2'
+            }
+          ],
+        };
+
         dbInitArgs = {
           url: 'http://mongodb',
           port: 27017,
           dbName: 'test-db'
         };
+
         client = new DbClient(dbInitArgs);
+
+        subject = 'Math';
+        grades = '3';
       });
 
-      it('getClaimNumbers succeeds', async () => {
-        expect.assertions(0);
+      afterEach(() => {
+        db.mockClear();
+        close.mockClear();
+        connect.mockClear();
       });
 
-      it('getClaimNumbers fails', async () => {
-        expect.assertions(0);
+      it('getClaimNumbers() succeeds', async () => {
+        expect.assertions(1);
+        await client.connect();
+        expect(await client.getClaimNumbers(grades, subject)).toEqual(filterOptions);
       });
 
-      it('getClaimNumbers fails with undefined db', async () => {
-        expect.assertions(0);
+      it('getClaimNumbers() fails', async () => {
+        expect.assertions(1);
+        try {
+          await client.getClaimNumbers(grades, subject);
+        } catch (error) {
+          expect(error).toEqual(new Error('failed to get claim numbers'));
+        }
+      });
+
+      it('getClaimNumbers() fails with undefined db', async () => {
+        expect.assertions(1);
+        try {
+          await client.connect();
+          await client.getClaimNumbers(grades, subject);
+        } catch (error) {
+          expect(error).toEqual(new Error('db is not defined'));
+        }
       });
     });
 
     describe('get targetShortCode subject, grade and claimNumber', () => {
       let client: DbClient;
       let dbInitArgs: IDbClientOptions;
+      let subjects: string;
+      let grades: string;
+      let claimNumber: string;
+
       beforeAll(() => {
+
+        filterOptions = {
+          targetShortCodes: [
+            {
+              code: 'MF.G3.C2.GG',
+              label: 'MF.G3.C2.GG'
+            },
+            {
+              code: 'FM.G3.C2.FG',
+              label: 'FM.G3.C2.FG'
+            }
+          ],
+        };
+
         dbInitArgs = {
           url: 'http://mongodb',
           port: 27017,
           dbName: 'test-db'
         };
+
         client = new DbClient(dbInitArgs);
+
+        subjects = 'Math';
+        grades = '3';
+        claimNumber = 'C2';
       });
 
-      it('getClaimNumbers succeeds', async () => {
-        expect.assertions(0);
+      it('getTargetShortCodes() succeeds', async () => {
+        expect.assertions(1);
+        await client.connect();
+        expect(await client.getTargetShortCodes(grades, subjects, claimNumber)).toEqual(filterOptions);
       });
 
-      it('getClaimNumbers fails', async () => {
-        expect.assertions(0);
+      it('getTargetShortCodes() fails', async () => {
+        expect.assertions(1);
+        try {
+          await client.getTargetShortCodes(grades, subjects, claimNumber);
+        } catch (error) {
+          expect(error).toEqual(new Error('failed to get target short codes'));
+        }
       });
 
-      it('getClaimNumbers fails with undefined db', async () => {
-        expect.assertions(0);
+      it('getTargetShortCodes() fails with undefined db', async () => {
+        expect.assertions(1);
+        try {
+          await client.connect();
+          await client.getTargetShortCodes(grades, subjects, claimNumber);
+        } catch (error) {
+          expect(error).toEqual(new Error('db is not defined'));
+        }
       });
     });
   });

@@ -11,6 +11,11 @@ jest.mock('../search', () => {
   };
 });
 
+/*
+  This suite tests the healthcheck routinefor the db client and makes
+  sure that it sets that health of the database as expected.
+*/
+
 describe('MongoDb client interface', () => {
   let db: jest.Mock;
   let command: jest.Mock;
@@ -48,7 +53,6 @@ describe('MongoDb client interface', () => {
   describe('ping test', () => {
     let client: DbClient;
     let dbInitArgs: IDbClientOptions;
-    let testData: Partial<IClaim>[];
 
     beforeAll(() => {
       dbInitArgs = {
@@ -57,7 +61,6 @@ describe('MongoDb client interface', () => {
         dbName: 'test-db'
       };
       client = new DbClient(dbInitArgs);
-      testData = [{ title: 'text' }];
     });
 
     it('pings the database', async () => {
