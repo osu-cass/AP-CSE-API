@@ -3,3 +3,4 @@ dist
 coverage
 reports
 .vscode/settings.json
+.env

@@ -26,6 +26,9 @@ cd AP-CSE-API
 
 # Install NPM dependencies
 npm i
+
+# Create a .env file for docker-compose to use
+cp .env.example .env
 ```
 
 With that, you should be able to start contributing.
@@ -72,18 +75,18 @@ We also run a few helpful applications to make development less painful:
 
 Use the following table to figure out how to use each of these services in both the API and for debugging:
 
-| Service               |         Exposed Port          | Container Hostname | Container Port |
-| --------------------- | :---------------------------: | ------------------ | :------------: |
-| AP-CSE-API            | [3000](http://localhost:3000) |                    |      3000      |
-| MongoDB               |                               | `http://mongo`     |     27017      |
-| mongo-express         | [8081](http://localhost:8081) |                    |                |
-| minio                 | [9000](http://localhost:9000) | `http://minio`     |      9000      |
-| Elasticearch (search) |                               | `http://es-search` |      9200      |
-| Kibana (search)       | [5601](http://localhost:5601) |                    |                |
-| Elasticsearch (logs)  |                               | `http://es-logs`   |      9200      |
-| Kibana (logs)         | [5602](http://localhost:5602) |                    |                |
-| Logstash              |                               | `http://logstash`  |     13337      |
-| Jaeger UI             | [16686](http://localhost:16686) | `http://jaeger-query`  |     16686      |
+| Service               |          Exposed Port           | Container Hostname    | Container Port |
+| --------------------- | :-----------------------------: | --------------------- | :------------: |
+| AP-CSE-API            |  [3000](http://localhost:3000)  |                       |      3000      |
+| MongoDB               |                                 | `http://mongo`        |     27017      |
+| mongo-express         |  [8081](http://localhost:8081)  |                       |                |
+| minio                 |  [9000](http://localhost:9000)  | `http://minio`        |      9000      |
+| Elasticearch (search) |                                 | `http://es-search`    |      9200      |
+| Kibana (search)       |  [5601](http://localhost:5601)  |                       |                |
+| Elasticsearch (logs)  |                                 | `http://es-logs`      |      9200      |
+| Kibana (logs)         |  [5602](http://localhost:5602)  |                       |                |
+| Logstash              |                                 | `http://logstash`     |     13337      |
+| Jaeger UI             | [16686](http://localhost:16686) | `http://jaeger-query` |     16686      |
 
 #### Running the services
 
@@ -96,6 +99,12 @@ docker-compose
 If you get an error about being added to the docker user group, consult [this issue](https://github.com/docker/for-win/issues/868) on how to resolve it.
 
 Then, you need to allocate more memory to Docker than the default amount. To do this, open your Docker preferences, open the Advanced tab, and move the Memory slider to somewhere around 3.5GB. Follow the steps that Docker requests once you save these changes.
+
+Then, verify that you have a `.env` file in the root of the project. If you didn't make one during the project setup, do so now:
+
+```sh
+cp .env.example .env
+```
 
 The next steps are pretty simple. Run the following command in the root of the project to instanciate the services:
 

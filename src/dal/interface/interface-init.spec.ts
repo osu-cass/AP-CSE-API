@@ -59,8 +59,8 @@ describe('MongoDb client', () => {
 
       authInfo = {
         auth: {
-          user: 'root',
-          password: 'example'
+          user: process.env.MONGO_USERNAME || '',
+          password: process.env.MONGO_PASSWORD || ''
         }
       };
     });

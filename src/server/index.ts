@@ -54,8 +54,17 @@ export class Server implements IServer {
   private context: ServerContext;
 
   constructor() {
+    const {
+      PORT: port = 3000,
+      ELASTICSEARCH_HOSTNAME: esHost = 'es-search',
+      ELASTICSEARCH_PORT: esPort = '9200',
+      MONGO_HOSTNAME: mongoHost = 'mongo',
+      MONGO_PORT: mongoPort = '21017',
+      MONGO_DB_NAME: dbName = 'cse'
+    } = process.env;
+
     this.app = e();
-    this.port = (process.env.PORT as string) || (3000 as number);
+    this.port = port;
     this.configure();
     this.registerMiddleware();
     this.routes();
@@ -63,12 +72,12 @@ export class Server implements IServer {
       logger,
       tracer: createTracer(),
       searchClient: new SearchClient({
-        host: 'es-search:9200'
+        host: `${esHost}:${esPort}`
       }),
       dbClient: new DbClient({
-        url: 'mongodb://mongo',
-        port: 27017,
-        dbName: 'cse'
+        dbName,
+        url: `mongodb://${mongoHost}`,
+        port: parseInt(mongoPort, 10)
       })
     };
     router.stack.forEach(endpoint => {
