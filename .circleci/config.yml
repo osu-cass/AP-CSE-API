@@ -2,6 +2,18 @@ node_defaults: &node
   docker:
     - image: circleci/node
 
+dev_filter: &devOnly
+  branches:
+    only: dev
+
+get_latest_version: &getVersion
+  name: Set TAG_VERSION and update PATH
+  command: >
+    echo 'export TAG_VERSION=$((git describe --tags $(git rev-list
+    --tags --max-count=1)) | cut -c 2-)' >> $BASH_ENV
+
+    source $BASH_ENV
+
 version: 2
 jobs:
   build:
@@ -39,6 +51,7 @@ jobs:
           path: reports
       - store_artifacts:
           path: reports/jest
+
   lint:
     <<: *node
     steps:
@@ -49,9 +62,55 @@ jobs:
           name: Run TSLint
           command: npm run lint
 
+  increment_version:
+    <<: *node
+    steps:
+      - checkout
+      - run:
+          name: Run semantic-release
+          command: npx semantic-release
+
+  push_image:
+    machine: true
+    steps:
+      - checkout
+      - run: *getVersion
+      - run:
+          name: Log in to Docker Hub
+          command: docker login -u $DOCKER_USER -p $DOCKER_PASS
+      - run:
+          name: Build image
+          command: 'docker build -t osucass/content-specification-explorer-api:$TAG_VERSION .'
+      - run:
+          name: Push image to Docker Hub
+          command: 'docker push osucass/content-specification-explorer-api:$TAG_VERSION'
+
+  deploy:
+    docker:
+      - image: dtzar/helm-kubectl
+    steps:
+      - checkout
+      - run: *getVersion
+      - run:
+          name: Create .kube directory
+          command: mkdir ~/.kube
+      - run:
+          name: Decode kubeconfig
+          command: echo $CSE_KUBE_CONFIG | base64 -d > ~/.kube/config
+      - run:
+          name: Initialize Helm
+          command: helm init --client-only
+      - run:
+          name: Upgrade cluster deployment
+          environment:
+            CHART_VERSION: 0.1.0
+          command: >-
+            helm upgrade --namespace=cse --set-string image.tag=$TAG_VERSION cse
+            https://osu-cass.github.io/AP-CSE-Chart/charts/content-specification-explorer-${CHART_VERSION}.tgz
+
 workflows:
   version: 2
-  build_and_test:
+  build_test_deploy:
     jobs:
       - build
       - unit_tests:
@@ -60,3 +119,15 @@ workflows:
       - lint:
           requires:
             - build
+      - increment_version:
+          filters: *devOnly
+          requires:
+            - unit_tests
+      - push_image:
+          filters: *devOnly
+          requires:
+            - increment_version
+      - deploy:
+          filters: *devOnly
+          requires:
+            - push_image
