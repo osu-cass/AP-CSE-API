@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { CSEResponse } from '../../server/index';
+import { CSEResponse } from '../../server';
 import { applyTracing } from '../../utils/tracer';
 import { setRouteHealth, Health } from '../health';
 

@@ -2,7 +2,7 @@
 import { logger } from '../logger';
 import { Tracer } from 'opentracing';
 import { Request, RequestHandler, NextFunction } from 'express';
-import { CSEResponse } from '../../server/index';
+import { CSEResponse } from '../../server';
 const initTracer: (config: object, options: object) => Tracer = require('jaeger-client').initTracer;
 
 export const createTracer: () => Tracer = () => {

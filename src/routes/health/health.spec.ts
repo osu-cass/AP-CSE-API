@@ -1,6 +1,6 @@
 import { handler as healthCheck, Health, setRouteHealth } from '.';
 import { Request, Response } from 'express';
-import { router } from '../index';
+import { router } from '..';
 
 jest.unmock('./');
 

@@ -2,7 +2,7 @@ import { Client, SearchResponse, ExistsParams } from 'elasticsearch';
 import { IClaim } from '../../models/claim';
 import { IQueryParams } from '../../routes';
 import bodybuilder, { Bodybuilder } from 'bodybuilder';
-import { Health } from '../../routes/health/index';
+import { Health } from '../../routes/health';
 
 export interface ISearchClientOptions {
   host: string;

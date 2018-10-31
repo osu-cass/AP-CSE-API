@@ -1,6 +1,6 @@
 import { default as fetch } from 'jest-fetch-mock';
 jest.setMock('node-fetch', fetch);
-import { importDbEntries, getClaimShortCode, getClaim, importDocs, fetchAllDocs } from './index';
+import { importDbEntries, getClaimShortCode, getClaim, importDocs, fetchAllDocs } from '.';
 import { mockData } from '../__mocks__/mockAllDocs';
 import { mockPack } from '../__mocks__/mockELAPackage';
 import { mockMATHPackage } from '../__mocks__/mockMATHPackage';

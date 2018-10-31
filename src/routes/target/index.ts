@@ -2,7 +2,7 @@ import { Request } from 'express';
 import { applyTracing } from '../../utils/tracer';
 import { setRouteHealth, Health } from '../health';
 import { CSEResponse, ResponseContext } from '../../server';
-import { ITargetParams } from '../index';
+import { ITargetParams } from '..';
 
 export const handler = async (req: Request, res: CSEResponse) => {
   const { dbClient }: ResponseContext = res.locals;

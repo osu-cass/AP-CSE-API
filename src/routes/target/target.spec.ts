@@ -1,4 +1,4 @@
-import { handler as target } from './index';
+import { handler as target } from '.';
 import { Request, Response } from 'express';
 jest.mock('../health');
 

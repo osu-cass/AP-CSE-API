@@ -1,7 +1,7 @@
 import { SearchClient } from '.';
 import { esCreate, esDelete, esExists, esSearch } from '../../__mocks__/elasticsearch';
-import { IClaim } from '../../models/claim/index';
-import { IQueryParams } from '../../routes/index';
+import { IClaim } from '../../models/claim';
+import { IQueryParams } from '../../routes';
 import { Health } from '../../routes/health';
 
 describe('search', () => {

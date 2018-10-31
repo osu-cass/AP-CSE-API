@@ -1,7 +1,7 @@
 import { Request } from 'express';
-import { router } from '../index';
-import { CSEResponse } from '../../server/index';
-import { applyTracing } from '../../utils/tracer/index';
+import { router } from '..';
+import { CSEResponse } from '../../server';
+import { applyTracing } from '../../utils/tracer';
 
 export enum Health {
   good = 'OK',
