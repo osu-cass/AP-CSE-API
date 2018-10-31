@@ -2,19 +2,19 @@ import { MongoClient, Db, Collection, InsertWriteOpResult } from 'mongodb';
 import { ITargetParams } from '../../routes';
 import { IClaim } from '../../models/claim';
 import { Health } from '../../routes/health';
+import * as DbClientHelper from '../helpers';
 import {
   IFilterOptions,
-  IFilterItem,
   IClaimNumberResult,
   IGradeAndSubjectResult,
-  ITargetShortCodeResult,
-  IShortCodeResult
+  ITargetShortCodeResult
 } from '../../models/filter';
 
 export interface Hash {
   [key: string]: string | undefined;
   data?: string;
 }
+
 export interface IDbClientOptions {
   url: string;
   port: number;
@@ -27,7 +27,6 @@ export interface IDbClient {
   connect(): Promise<void>;
   close(): Promise<void>;
   insert(documents: IClaim[]): Promise<InsertWriteOpResult>;
-  buildSubjectsAndGrades(res: IGradeAndSubjectResult): IFilterOptions;
   getSubjectsAndGrades(): Promise<IFilterOptions | undefined>;
   getClaimNumbers(grade: string, subject: string): Promise<IFilterOptions | undefined>;
   getTargetShortCodes(
@@ -127,37 +126,6 @@ export class DbClient implements IDbClient {
     }
   }
 
-  public buildSubjectsAndGrades(res: IGradeAndSubjectResult): IFilterOptions {
-    const gradeHash: Hash = {};
-    let gradeArr: string[] = [];
-    let grades: IFilterItem[] = [];
-    let subject: IFilterItem[] = [];
-
-    if (res.grades) {
-      // flatten
-      res.grades.forEach(g => (gradeArr = gradeArr.concat(g)));
-      // reduce to distinct members
-      grades = gradeArr
-        .filter((grade: string) => {
-          if (!gradeHash[grade]) {
-            gradeHash[grade] = grade;
-
-            return true;
-          }
-
-          return false;
-        })
-        .sort((lhs: string, rhs: string) => parseInt(lhs, 10) - parseInt(rhs, 10))
-        .map(g => ({ code: g, label: g }));
-    }
-
-    if (res.subject) {
-      subject = res.subject.map(s => ({ code: s, label: s }));
-    }
-
-    return { subject, grades };
-  }
-
   public async getSubjectsAndGrades(): Promise<IFilterOptions | undefined> {
     let result: IFilterOptions | undefined;
     if (this.db) {
@@ -175,7 +143,7 @@ export class DbClient implements IDbClient {
             }
           ])
           .toArray();
-        result = this.buildSubjectsAndGrades(dbResult[0]);
+        result = DbClientHelper.buildSubjectsAndGrades(dbResult[0]);
       } catch (error) {
         throw new Error('failed to get subjects and grades');
       }
@@ -191,7 +159,6 @@ export class DbClient implements IDbClient {
     subject: string
   ): Promise<IFilterOptions | undefined> {
     let result: IFilterOptions | undefined;
-    const claimHash: Hash = {};
     if (this.db) {
       try {
         const g = grades.split(',');
@@ -206,22 +173,7 @@ export class DbClient implements IDbClient {
           )
           .toArray();
 
-        result = {
-          claimNumbers: dbResult
-            .filter(({ claimNumber }: IClaimNumberResult) => {
-              if (!claimHash[claimNumber]) {
-                claimHash[claimNumber] = claimNumber;
-
-                return true;
-              }
-
-              return false;
-            })
-            .map(({ claimNumber }: IClaimNumberResult) => ({
-              code: claimNumber,
-              label: claimNumber
-            }))
-        };
+        result = DbClientHelper.buildClaimNumbers(dbResult);
       } catch (error) {
         throw new Error('failed to get claim numbers');
       }
@@ -252,25 +204,7 @@ export class DbClient implements IDbClient {
             { projection: { _id: 0, 'target.shortCode': 1 } }
           )
           .toArray();
-        const flatResult: IShortCodeResult[] = [];
-        dbResult.forEach((res: ITargetShortCodeResult) => flatResult.push(...res.target));
-        result = {
-          targetShortCodes: flatResult
-            .filter(({ shortCode }: IShortCodeResult) => {
-              let included = false;
-              for (const grade of g) {
-                included = grade.match(/^[9]|1[0-2]$/)
-                  ? shortCode.includes('HS')
-                  : shortCode.includes(`G${grade}`);
-                if (included) {
-                  return included;
-                }
-              }
-
-              return false;
-            })
-            .map(({ shortCode }: IShortCodeResult) => ({ code: shortCode, label: shortCode }))
-        };
+        result = DbClientHelper.buildTargetShortCodes(g, dbResult);
       } catch (err) {
         throw new Error('failed to get target short codes');
       }

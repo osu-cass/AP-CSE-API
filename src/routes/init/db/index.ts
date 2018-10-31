@@ -338,7 +338,7 @@ export function getTarget(claim: IClaim, jsonData: ISpecDocument) {
           });
         }
       }
-      if(p.CFItemType === 'Target') {
+      if (p.CFItemType === 'Target') {
         target.description = fullStatement;
       }
       if (p.CFItemType === 'Clarification') {

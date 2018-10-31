@@ -18,31 +18,28 @@ describe('MongoDb client interface', () => {
   let aggregate: jest.Mock;
 
   beforeAll(() => {
-    dbReturnValues0 = [{
-      subject: ['math'],
-      grades: [['3'], ['3'], ['5']]
-    }];
-
-    dbReturnValues1 = [
-      {claimNumber: 'C1'},
-      {claimNumber: 'C2'},
-      {claimNumber: 'C2'},
+    dbReturnValues0 = [
+      {
+        subject: ['math'],
+        grades: [['3'], ['3'], ['5']]
+      }
     ];
+
+    dbReturnValues1 = [{ claimNumber: 'C1' }, { claimNumber: 'C2' }, { claimNumber: 'C2' }];
 
     dbReturnValues2 = [
       { target: [{ shortCode: 'MF.G3.C2.GG' }] },
       { target: [{ shortCode: 'FM.G3.C2.FG' }, { shortCode: 'MF.G4.C2.GG' }] }
     ];
 
-
     toArray = jest
-    .fn()
-    .mockResolvedValueOnce(dbReturnValues0)
-    .mockRejectedValueOnce(new Error('db error'))
-    .mockResolvedValueOnce(dbReturnValues1)
-    .mockRejectedValueOnce(new Error('db error'))
-    .mockResolvedValueOnce(dbReturnValues2)
-    .mockRejectedValueOnce(new Error('db error'));
+      .fn()
+      .mockResolvedValueOnce(dbReturnValues0)
+      .mockRejectedValueOnce(new Error('db error'))
+      .mockResolvedValueOnce(dbReturnValues1)
+      .mockRejectedValueOnce(new Error('db error'))
+      .mockResolvedValueOnce(dbReturnValues2)
+      .mockRejectedValueOnce(new Error('db error'));
 
     find = jest.fn().mockImplementation(() => ({ toArray }));
 
@@ -93,7 +90,6 @@ describe('MongoDb client interface', () => {
   });
 
   describe('generate values for filter', () => {
-
     describe('get all unique subjects and grades', () => {
       let client: DbClient;
       let dbInitArgs: IDbClientOptions;
@@ -166,7 +162,6 @@ describe('MongoDb client interface', () => {
       let grades: string;
 
       beforeAll(() => {
-
         filterOptions = {
           claimNumbers: [
             {
@@ -177,7 +172,7 @@ describe('MongoDb client interface', () => {
               code: 'C2',
               label: 'C2'
             }
-          ],
+          ]
         };
 
         dbInitArgs = {
@@ -232,7 +227,6 @@ describe('MongoDb client interface', () => {
       let claimNumber: string;
 
       beforeAll(() => {
-
         filterOptions = {
           targetShortCodes: [
             {
@@ -243,7 +237,7 @@ describe('MongoDb client interface', () => {
               code: 'FM.G3.C2.FG',
               label: 'FM.G3.C2.FG'
             }
-          ],
+          ]
         };
 
         dbInitArgs = {
@@ -262,7 +256,9 @@ describe('MongoDb client interface', () => {
       it('getTargetShortCodes() succeeds', async () => {
         expect.assertions(1);
         await client.connect();
-        expect(await client.getTargetShortCodes(grades, subjects, claimNumber)).toEqual(filterOptions);
+        expect(await client.getTargetShortCodes(grades, subjects, claimNumber)).toEqual(
+          filterOptions
+        );
       });
 
       it('getTargetShortCodes() fails', async () => {
