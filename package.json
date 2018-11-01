@@ -113,6 +113,7 @@
     "jest-junit": "^5.1.0",
     "lint-staged": "^7.2.0",
     "nodemon": "^1.18.3",
+    "merge": ">=1.2.1",
     "prettier": "^1.4.0-beta",
     "ts-jest": "^23.0.1",
     "tslint": "^5.11.0",
