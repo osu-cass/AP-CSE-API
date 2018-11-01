@@ -1,6 +1,5 @@
-import { DbClient, IDbClientOptions } from './index';
-import { IClaim } from '../../models/claim/index';
-import { Health } from '../../routes/health/index';
+import { DbClient, IDbClientOptions } from '.';
+import { Health } from '../../routes/health';
 import { MongoClient } from 'mongodb';
 
 jest.mock('../search', () => {
