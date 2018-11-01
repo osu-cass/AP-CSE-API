@@ -7,19 +7,20 @@ import { ITargetParams } from '..';
 export const handler = async (req: Request, res: CSEResponse) => {
   const { dbClient }: ResponseContext = res.locals;
   const { ...params }: ITargetParams = <ITargetParams>req.params;
-  let results;
+  let result: object | undefined;
   try {
     setRouteHealth(Health.busy, req);
     await dbClient.connect();
-    results = await dbClient.getTarget(params);
+    result = await dbClient.getTarget(params);
     await dbClient.close();
+    res.status(200);
   } catch (error) {
     res.status(500);
-    res.send(error);
+    // tslint:disable-next-line:no-any no-unsafe-any
+    result = error;
     setRouteHealth(Health.good, req);
   }
-  res.status(200);
-  res.send(results);
+  res.send(result);
   setRouteHealth(Health.good, req);
 };
 

@@ -11,12 +11,13 @@ export const handler = async (req: Request, res: CSEResponse): Promise<void> => 
   try {
     setRouteHealth(Health.busy, req);
     result = await searchClient.search(query);
-  } catch (err) {
+    res.status(200);
+  } catch (error) {
     setRouteHealth(Health.good, req);
     res.status(500);
-    res.send(err);
+    // tslint:disable-next-line:no-any no-unsafe-any
+    result = error;
   }
-  res.status(200);
   setRouteHealth(Health.good, req);
   res.send(result);
 };

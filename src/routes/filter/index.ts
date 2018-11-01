@@ -1,9 +1,8 @@
 import { Request } from 'express';
-import { Health, setRouteHealth } from '../health';
-import { CSEResponse } from '../../server';
 import { IFilterParams } from '../';
 import { applyTracing } from '../../utils/tracer';
 import { IFilterOptions } from '../../models/filter';
+import { CSEResponse } from '../../server';
 
 export const handler = async (req: Request, res: CSEResponse) => {
   const { dbClient } = res.locals;
@@ -19,11 +18,12 @@ export const handler = async (req: Request, res: CSEResponse) => {
       result = await dbClient.getSubjectsAndGrades();
     }
     await dbClient.close();
+    res.status(200);
   } catch (error) {
+    // tslint:disable-next-line:no-any no-unsafe-any
+    result = error;
     res.status(500);
-    res.send(error);
   }
-  res.status(200);
   res.send(result);
 };
 

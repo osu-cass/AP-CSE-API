@@ -16,13 +16,12 @@ export const handler = async (req: Request, res: CSEResponse): Promise<void> => 
     result = await dbClient.insert(output);
     await searchClient.insertDocuments(await dbClient.getClaims());
     await dbClient.close();
+    res.status(200);
   } catch (err) {
     res.status(500);
-    res.send(err);
     setRouteHealth(Health.good, req);
   }
   res.header('Content-Type', 'application/json');
-  res.status(200);
   res.send(result ? result.result : 'insert failed');
   setRouteHealth(Health.good, req);
 };

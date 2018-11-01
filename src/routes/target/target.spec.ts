@@ -20,6 +20,7 @@ describe('target', () => {
     };
     dbClient = {
       connect: jest.fn().mockResolvedValue({}),
+      close: jest.fn(),
       getTarget: jest
         .fn()
         .mockResolvedValueOnce(result)
