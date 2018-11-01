@@ -1,5 +1,5 @@
 import { MongoClient, Db, Collection, InsertWriteOpResult } from 'mongodb';
-import { ITargetParams } from '../../routes';
+import { ITargetParams, ITargetShortCode } from '../../routes';
 import { IClaim } from '../../models/claim';
 import { Health } from '../../routes/health';
 import * as DbClientHelper from '../helpers';
@@ -35,7 +35,7 @@ export interface IDbClient {
     claimNumber: string
   ): Promise<IFilterOptions | undefined>;
   getClaims(): Promise<IClaim[]>;
-  getTarget(searchParams: ITargetParams): Promise<IClaim>;
+  getTarget(targetShortCode: string): Promise<IClaim>;
 }
 
 /**
@@ -233,18 +233,14 @@ export class DbClient implements IDbClient {
     return result;
   }
 
-  public async getTarget(searchParams: ITargetParams): Promise<IClaim> {
-    const { subject, grades, claimNumber, targetShortCode } = searchParams;
+  public async getTarget(targetShortCode: string): Promise<IClaim> {
     let result: IClaim | undefined;
     if (this.db) {
       try {
         result = (await this.db.collection('claims').findOne({
-          subject,
-          grades,
-          claimNumber,
           'target.shortCode': targetShortCode
         })) as IClaim;
-        result.target = result.target.filter(t => t.shortCode === targetShortCode);
+        // result.target = result.target.filter(t => t.shortCode === targetShortCode);
       } catch (error) {
         throw error;
       }

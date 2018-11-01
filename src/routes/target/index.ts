@@ -2,16 +2,16 @@ import { Request } from 'express';
 import { applyTracing } from '../../utils/tracer';
 import { setRouteHealth, Health } from '../health';
 import { CSEResponse, ResponseContext } from '../../server';
-import { ITargetParams } from '..';
+import { ITargetShortCode } from '..';
 
 export const handler = async (req: Request, res: CSEResponse) => {
   const { dbClient }: ResponseContext = res.locals;
-  const { ...params }: ITargetParams = <ITargetParams>req.params;
+  const { targetShortCode }: ITargetShortCode = <ITargetShortCode>req.params;
   let result: object | undefined;
   try {
     setRouteHealth(Health.busy, req);
     await dbClient.connect();
-    result = await dbClient.getTarget(params);
+    result = await dbClient.getTarget(targetShortCode);
     await dbClient.close();
     res.status(200);
   } catch (error) {

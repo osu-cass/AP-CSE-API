@@ -1,6 +1,6 @@
 import { DbClient, IDbClientOptions } from '.';
 import { IClaim } from '../../models/claim';
-import { ITargetParams } from '../../routes';
+import { ITargetParams, ITargetShortCode } from '../../routes';
 import { MongoClient } from 'mongodb';
 
 /*
@@ -162,7 +162,7 @@ describe('MongoDb client interface', () => {
     describe('getTarget', () => {
       let client: DbClient;
       let dbInitArgs: IDbClientOptions;
-      let mockTargetParams: ITargetParams;
+      let mockTargetParams: ITargetShortCode;
 
       beforeAll(() => {
         dbInitArgs = {
@@ -171,9 +171,6 @@ describe('MongoDb client interface', () => {
           dbName: 'test-db'
         };
         mockTargetParams = {
-          subject: 'Math',
-          grades: ['5', '6'],
-          claimNumber: 'C2',
           targetShortCode: '1234'
         };
         client = new DbClient(dbInitArgs);
@@ -181,7 +178,7 @@ describe('MongoDb client interface', () => {
 
       it('gets Target by ITargetParams', async () => {
         await client.connect();
-        const result = await client.getTarget(mockTargetParams);
+        const result = await client.getTarget(mockTargetParams.targetShortCode);
         expect.assertions(1);
         expect(result).toEqual({ target: [{ shortCode: '1234', test: 'passed' }] });
       });
@@ -189,7 +186,7 @@ describe('MongoDb client interface', () => {
       it('throws error getting Target', async () => {
         let result;
         try {
-          result = await client.getTarget(mockTargetParams);
+          result = await client.getTarget(mockTargetParams.targetShortCode);
         } catch (err) {
           expect.assertions(1);
           expect(err).toEqual(new Error('error'));
@@ -200,7 +197,7 @@ describe('MongoDb client interface', () => {
         let result;
         try {
           await client.connect();
-          result = await client.getTarget(mockTargetParams);
+          result = await client.getTarget(mockTargetParams.targetShortCode);
         } catch (err) {
           expect.assertions(1);
           expect(err).toEqual(new Error('db is not defined'));
