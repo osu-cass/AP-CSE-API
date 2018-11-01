@@ -37,7 +37,8 @@ describe('Server', () => {
     next = jest.fn();
     req = {};
     res = {
-      locals: {}
+      locals: {},
+      header: jest.fn()
     };
   });
 

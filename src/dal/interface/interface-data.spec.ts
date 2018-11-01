@@ -1,124 +1,89 @@
 import { DbClient, IDbClientOptions } from '.';
-import { MongoClient } from 'mongodb';
-import {
-  db,
-  close,
-  collection,
-  collections,
-  dropCollection,
-  createCollection
-} from '../../__mocks__/mongodb';
-import { ITargetParams } from '../../routes';
 import { IClaim } from '../../models/claim';
-import { Health } from '../../routes/health';
+import { ITargetParams } from '../../routes';
+import { MongoClient } from 'mongodb';
 
-jest.mock('../search', () => {
-  return {
-    SearchClient: jest.fn().mockImplementation(() => ({
-      insertDocuments: jest.fn().mockResolvedValue({})
-    }))
-  };
-});
+/*
+  This test suite is responsible for testing the methods in the DbClient class that
+  inserts and retrieves data from the mongo db instance.
+*/
 
-describe('MongoDb Database client interface', () => {
-  describe('initialization', () => {
-    let dbInitArgs: IDbClientOptions;
-    let uri: string;
-    let client: DbClient;
-    let authInfo: object;
+describe('MongoDb client interface', () => {
+  let client: DbClient;
+  let dbInitArgs: IDbClientOptions;
+  let testData: Partial<IClaim>[];
+  let dropCollection: jest.Mock;
+  let createCollection: jest.Mock;
+  let findOne: jest.Mock;
+  let find: jest.Mock;
+  let collections: jest.Mock;
+  let collection: jest.Mock;
+  let db: jest.Mock;
+  let close: jest.Mock;
+  let connect: jest.Mock;
 
-    beforeAll(() => {
-      dbInitArgs = {
-        url: 'http://mongodb',
-        port: 27017,
-        dbName: 'test-db'
-      };
-      uri = `${dbInitArgs.url}:${dbInitArgs.port}`;
-      authInfo = {
-        auth: {
-          user: process.env.MONGO_USERNAME || '',
-          password: process.env.MONGO_PASSWORD || ''
-        }
-      };
-    });
+  beforeAll(() => {
+    dropCollection = jest.fn();
+    createCollection = jest.fn();
 
-    beforeEach(() => {
-      db.mockClear();
-      close.mockClear();
-    });
+    findOne = jest
+      .fn()
+      .mockResolvedValueOnce({ target: [{ shortCode: '1234', test: 'passed' }] })
+      .mockRejectedValueOnce(new Error('error'));
 
-    it('constructs DbClient', () => {
-      const { dbName } = dbInitArgs;
-      client = new DbClient(dbInitArgs);
-      expect.assertions(2);
-      expect(client.uri).toEqual(uri);
-      expect(client.dbName).toEqual(dbName);
-    });
+    find = jest
+      .fn()
+      .mockImplementationOnce(() => ({
+        toArray: jest.fn().mockResolvedValue({ test: 'passed' })
+      }))
+      .mockImplementationOnce(() => ({
+        toArray: jest.fn().mockRejectedValue(new Error('no result'))
+      }));
 
-    it('connects to db succesfully', async () => {
-      const { dbName } = dbInitArgs;
-      await client.connect();
-      expect.assertions(2);
-      expect(MongoClient.connect).toHaveBeenCalledWith(uri, authInfo);
-      expect(db).toHaveBeenCalledWith(dbName);
-    });
+    collections = jest
+      .fn()
+      .mockImplementationOnce(() => [{ collectionName: 'not-claims' }])
+      .mockImplementationOnce(() => [{ collectionName: 'claims' }])
+      .mockImplementationOnce(() => {
+        throw new Error('contrived error');
+      });
 
-    it('throws error on connection to database by name', async () => {
-      expect.assertions(3);
-      try {
-        await client.connect();
-      } catch (err) {
-        expect(err).toEqual(new Error('db init failed'));
+    collection = jest.fn().mockImplementation(() => ({
+      find,
+      findOne,
+      insertMany: jest.fn().mockResolvedValue('success'),
+      createIndex: jest.fn()
+    }));
+
+    db = jest.fn().mockImplementation(() => ({
+      collection,
+      collections,
+      dropCollection,
+      createCollection
+    }));
+
+    close = jest.fn().mockImplementation(() => ({ test: 'hi' }));
+
+    connect = jest
+      .fn()
+      .mockResolvedValueOnce({ db, close })
+      .mockResolvedValueOnce({ db, close })
+      .mockResolvedValueOnce({ close, db: jest.fn() })
+      .mockResolvedValueOnce({ db, close })
+      .mockResolvedValueOnce({ close, db: jest.fn() });
+
+    jest.mock('mongodb', () => ({
+      MongoClient: {
+        db,
+        connect,
+        close
       }
-      expect(MongoClient.connect).toHaveBeenCalledWith(uri, authInfo);
-      expect(db).toHaveBeenCalledTimes(1);
-    });
+    }));
 
-    it('throws error on connection', async () => {
-      expect.assertions(3);
-      try {
-        await client.connect();
-      } catch (err) {
-        expect(err).toEqual({ error: { message: 'connect failed' } });
-      }
-      expect(MongoClient.connect).toHaveBeenCalledWith(uri, authInfo);
-      expect(db).toHaveBeenCalledTimes(0);
-    });
-
-    it('closes the db client', async () => {
-      await client.close();
-      expect.assertions(1);
-      expect(close).toHaveBeenCalledTimes(1);
-    });
-
-    it('throws error when closing client', async () => {
-      close.mockRejectedValueOnce(new Error('error'));
-      try {
-        await client.close();
-      } catch (err) {
-        expect.assertions(2);
-        expect(err).toEqual(new Error('error'));
-        expect(close).toHaveBeenCalledTimes(1);
-      }
-    });
-
-    it('throws error when client is undefined', async () => {
-      const mockClient = new DbClient(dbInitArgs);
-      try {
-        await mockClient.close();
-      } catch (err) {
-        expect.assertions(2);
-        expect(err).toEqual(new Error('client is already closed'));
-        expect(close).toHaveBeenCalledTimes(0);
-      }
-    });
+    MongoClient.connect = connect;
   });
 
   describe('data insertion', () => {
-    let client: DbClient;
-    let dbInitArgs: IDbClientOptions;
-    let testData: Partial<IClaim>[];
-
     beforeAll(() => {
       dbInitArgs = {
         url: 'http://mongodb',
@@ -283,28 +248,4 @@ describe('MongoDb Database client interface', () => {
       });
     });
   });
-});
-
-describe('ping test', () => {
-  let client: DbClient;
-  let dbInitArgs: IDbClientOptions;
-  let testData: Partial<IClaim>[];
-
-  beforeAll(() => {
-    dbInitArgs = {
-      url: 'http://mongodb',
-      port: 27017,
-      dbName: 'test-db'
-    };
-    client = new DbClient(dbInitArgs);
-    testData = [{ title: 'text' }];
-  });
-
-  it('pings the database', async () => {
-    expect(await client.ping()).toBe(Health.bad);
-    expect(await client.ping()).toBe(Health.bad);
-    expect(await client.ping()).toBe(Health.good);
-    expect(await client.ping()).toBe(Health.busy);
-  });
-
 });

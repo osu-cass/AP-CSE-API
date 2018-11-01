@@ -1,4 +1,4 @@
-import { handler as target } from './index';
+import { handler as target } from '.';
 import { Request, Response } from 'express';
 jest.mock('../health');
 
@@ -20,6 +20,7 @@ describe('target', () => {
     };
     dbClient = {
       connect: jest.fn().mockResolvedValue({}),
+      close: jest.fn(),
       getTarget: jest
         .fn()
         .mockResolvedValueOnce(result)

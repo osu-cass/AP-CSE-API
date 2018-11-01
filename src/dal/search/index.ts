@@ -2,7 +2,7 @@ import { Client, SearchResponse, ExistsParams } from 'elasticsearch';
 import { IClaim } from '../../models/claim';
 import { IQueryParams } from '../../routes';
 import bodybuilder, { Bodybuilder } from 'bodybuilder';
-import { Health } from '../../routes/health/index';
+import { Health } from '../../routes/health';
 
 export interface ISearchClientOptions {
   host: string;
@@ -59,9 +59,9 @@ export class SearchClient implements ISearchClient {
   public async ping(): Promise<Health> {
     let result: Health = Health.bad;
     try {
-      result = await this.client.ping({}) === true ? Health.good : Health.bad;
+      result = (await this.client.ping({})) === true ? Health.good : Health.bad;
     } catch (err) {
-        result = Health.bad;
+      result = Health.bad;
     }
 
     return result;

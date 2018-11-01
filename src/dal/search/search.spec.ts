@@ -1,7 +1,7 @@
 import { SearchClient } from '.';
 import { esCreate, esDelete, esExists, esSearch } from '../../__mocks__/elasticsearch';
-import { IClaim } from '../../models/claim/index';
-import { IQueryParams } from '../../routes/index';
+import { IClaim } from '../../models/claim';
+import { IQueryParams } from '../../routes';
 import { Health } from '../../routes/health';
 
 describe('search', () => {
@@ -37,7 +37,7 @@ describe('search', () => {
       });
     });
 
-    it('pings elasticsearch as bad', async () =>  {
+    it('pings elasticsearch as bad', async () => {
       expect(await client.ping()).toBe(Health.bad);
       expect(await client.ping()).toBe(Health.good);
       expect(await client.ping()).toBe(Health.bad);

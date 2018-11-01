@@ -5,7 +5,11 @@ const client = {
   delete: jest.fn().mockResolvedValue({}),
   create: jest.fn().mockResolvedValue({}),
   search: jest.fn().mockResolvedValue({ hits: { hits: [] } }),
-  ping: jest.fn().mockResolvedValueOnce(false).mockResolvedValueOnce(true).mockRejectedValueOnce(new Error('error'))
+  ping: jest
+    .fn()
+    .mockResolvedValueOnce(false)
+    .mockResolvedValueOnce(true)
+    .mockRejectedValueOnce(new Error('error'))
 };
 
 const Client = jest.fn().mockImplementation(() => client);

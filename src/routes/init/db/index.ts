@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 import { ISpecDocument } from './interfaces';
-import { IClaim } from '../../../models/claim/index';
-import { IDOK, ITaskModel } from '../../../models/target/index';
+import { IClaim } from '../../../models/claim';
+import { IDOK, ITaskModel } from '../../../models/target';
 
 // This is required for translating specDocuments to an IClaim type
 // tslint:disable:no-unsafe-any no-any
@@ -68,15 +68,15 @@ export async function importDbEntries(): Promise<IClaim[]> {
     newClaim.shortCode = getClaimShortCode(newClaim.subject, newClaim.claimNumber, newClaim.grades);
     if (!newClaim.title.includes('Performance')) {
       newClaim.description = getClaimDesc(newClaim.subject, newClaim.shortCode, ELASpec, MATHSpec);
-    if (newClaim.subject !== Subject.MATH && !newClaim.title.includes('Performace')) {
-      newClaim.domain  = [];
-      newClaim.domain.push({
-        title: getClaimDomain(newClaim.subject, newClaim.shortCode, ELASpec),
-      });
+      if (newClaim.subject !== Subject.MATH && !newClaim.title.includes('Performance')) {
+        newClaim.domain = [];
+        newClaim.domain.push({
+          title: getClaimDomain(newClaim.subject, newClaim.shortCode, ELASpec)
+        });
+      }
     }
-  }
     if (newClaim.shortCode.includes('-')) {
-      newClaim.domain  = [];
+      newClaim.domain = [];
       for (const item of claim.CFItems) {
         if (
           item.CFItemType === 'Domain' ||
@@ -338,7 +338,7 @@ export function getTarget(claim: IClaim, jsonData: ISpecDocument) {
           });
         }
       }
-      if(p.CFItemType === 'Target') {
+      if (p.CFItemType === 'Target') {
         target.description = fullStatement;
       }
       if (p.CFItemType === 'Clarification') {
@@ -475,41 +475,41 @@ function getClaimDesc(
 export function consolidate(claimArray: IClaim[]): IClaim[] {
   let myArray = [];
   let unique: string[];
- for(const claims of claimArray) {
-  myArray.push(claims.shortCode);
+  for (const claims of claimArray) {
+    myArray.push(claims.shortCode);
   }
   unique = myArray.filter((v, i, a) => a.indexOf(v) !== i);
 
-  while(unique.length !== 0) {
-  for (const p of claimArray) {
-    for (const q of claimArray) {
-      if (q.shortCode === p.shortCode && q !== p) {
-        p.target.push(q.target[0]);
-        claimArray.splice(claimArray.indexOf(q), 1);
+  while (unique.length !== 0) {
+    for (const p of claimArray) {
+      for (const q of claimArray) {
+        if (q.shortCode === p.shortCode && q !== p) {
+          p.target.push(q.target[0]);
+          claimArray.splice(claimArray.indexOf(q), 1);
+        }
       }
     }
-  }
-  for (const p of claimArray) {
-    if (p.subject === Subject.ELA) {
-      if (!p.title.includes('Performance')) {
+    for (const p of claimArray) {
+      if (p.subject === Subject.ELA) {
+        if (!p.title.includes('Performance')) {
+          const titlecopy = p.title.split(' ');
+          p.title = titlecopy.slice(0, 8).join(' ');
+        }
+      } else {
         const titlecopy = p.title.split(' ');
-        p.title = titlecopy.slice(0, 8).join(' ');
-      }
-    } else {
-      const titlecopy = p.title.split(' ');
-      if (titlecopy.includes('Grade')) {
-        p.title = titlecopy.slice(0, 6).join(' ');
-      } else if (titlecopy[0] === 'HS') {
-        p.title = titlecopy.slice(0, 5).join(' ');
+        if (titlecopy.includes('Grade')) {
+          p.title = titlecopy.slice(0, 6).join(' ');
+        } else if (titlecopy[0] === 'HS') {
+          p.title = titlecopy.slice(0, 5).join(' ');
+        }
       }
     }
+    myArray = [];
+    for (const claims of claimArray) {
+      myArray.push(claims.shortCode);
+    }
+    unique = myArray.filter((v, i, a) => a.indexOf(v) !== i);
   }
-  myArray = [];
-  for(const claims of claimArray) {
-  myArray.push(claims.shortCode);
-  }
-  unique = myArray.filter((v, i, a) => a.indexOf(v) !== i);
-}
 
   return claimArray;
 }

@@ -1,7 +1,7 @@
 import { Request } from 'express';
-import { router } from '../index';
-import { CSEResponse } from '../../server/index';
-import { applyTracing } from '../../utils/tracer/index';
+import { router } from '..';
+import { CSEResponse } from '../../server';
+import { applyTracing } from '../../utils/tracer';
 
 export enum Health {
   good = 'OK',
@@ -28,6 +28,11 @@ export async function handler(req: Request, res: CSEResponse) {
         status: await res.locals.searchClient.ping()
       });
     } else if (endpoints.route.path.includes('/target/')) {
+      status.push({
+        route: '/target/',
+        status: await res.locals.dbClient.ping()
+      });
+    } else if (endpoints.route.path.includes('/filter/')) {
       status.push({
         route: '/target/',
         status: await res.locals.dbClient.ping()

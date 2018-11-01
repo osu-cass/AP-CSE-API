@@ -1,9 +1,9 @@
 import { Request } from 'express';
 import { InsertWriteOpResult } from 'mongodb';
-import { importDbEntries } from './db/index';
-import { applyTracing } from '../../utils/tracer/index';
-import { CSEResponse } from '../../server/index';
-import { IClaim } from '../../models/claim/index';
+import { importDbEntries } from './db';
+import { applyTracing } from '../../utils/tracer';
+import { CSEResponse } from '../../server';
+import { IClaim } from '../../models/claim';
 import { setRouteHealth, Health } from '../health';
 
 export const handler = async (req: Request, res: CSEResponse): Promise<void> => {
@@ -16,13 +16,12 @@ export const handler = async (req: Request, res: CSEResponse): Promise<void> => 
     result = await dbClient.insert(output);
     await searchClient.insertDocuments(await dbClient.getClaims());
     await dbClient.close();
+    res.status(200);
   } catch (err) {
     res.status(500);
-    res.send(err);
     setRouteHealth(Health.good, req);
   }
   res.header('Content-Type', 'application/json');
-  res.status(200);
   res.send(result ? result.result : 'insert failed');
   setRouteHealth(Health.good, req);
 };

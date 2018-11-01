@@ -1,7 +1,19 @@
-import { MongoClient, Db, Collection, InsertWriteOpResult, Cursor } from 'mongodb';
+import { MongoClient, Db, Collection, InsertWriteOpResult } from 'mongodb';
 import { ITargetParams } from '../../routes';
 import { IClaim } from '../../models/claim';
-import { Health } from '../../routes/health/index';
+import { Health } from '../../routes/health';
+import * as DbClientHelper from '../helpers';
+import {
+  IFilterOptions,
+  IClaimNumberResult,
+  IGradeAndSubjectResult,
+  ITargetShortCodeResult
+} from '../../models/filter';
+
+export interface Hash {
+  [key: string]: string | undefined;
+  data?: string;
+}
 
 export interface IDbClientOptions {
   url: string;
@@ -15,6 +27,13 @@ export interface IDbClient {
   connect(): Promise<void>;
   close(): Promise<void>;
   insert(documents: IClaim[]): Promise<InsertWriteOpResult>;
+  getSubjectsAndGrades(): Promise<IFilterOptions | undefined>;
+  getClaimNumbers(grade: string, subject: string): Promise<IFilterOptions | undefined>;
+  getTargetShortCodes(
+    grade: string,
+    subject: string,
+    claimNumber: string
+  ): Promise<IFilterOptions | undefined>;
   getClaims(): Promise<IClaim[]>;
   getTarget(searchParams: ITargetParams): Promise<IClaim>;
 }
@@ -26,19 +45,20 @@ export interface IDbClient {
 export class DbClient implements IDbClient {
   public uri: string;
   public dbName: string;
-  private client?: MongoClient;
-  private db?: Db;
+  public client?: MongoClient;
+  public db?: Db;
 
   constructor(args: IDbClientOptions) {
     this.uri = `${args.url}:${args.port}`;
     this.dbName = args.dbName;
   }
+
   public async ping(): Promise<Health> {
     setTimeout(() => Health.bad, 5000);
     try {
       await this.connect();
     } catch (err) {
-        return Health.bad;
+      return Health.bad;
     }
     if (this.db === undefined) {
       return Health.bad;
@@ -73,7 +93,7 @@ export class DbClient implements IDbClient {
       try {
         await this.client.close();
       } catch (err) {
-        throw err;
+        throw new Error('error occured closing client');
       }
     } else {
       throw new Error('client is already closed');
@@ -106,14 +126,103 @@ export class DbClient implements IDbClient {
     }
   }
 
+  public async getSubjectsAndGrades(): Promise<IFilterOptions | undefined> {
+    let result: IFilterOptions | undefined;
+    if (this.db) {
+      try {
+        const dbResult: IGradeAndSubjectResult[] = await this.db
+          .collection('claims')
+          .aggregate([
+            {
+              $group: {
+                // tslint:disable-next-line:no-null-keyword
+                _id: null,
+                subject: { $addToSet: '$subject' },
+                grades: { $addToSet: '$grades' }
+              }
+            }
+          ])
+          .toArray();
+        result = DbClientHelper.buildSubjectsAndGrades(dbResult[0]);
+      } catch (error) {
+        throw new Error('failed to get subjects and grades');
+      }
+    } else {
+      throw new Error('db is not defined');
+    }
+
+    return result;
+  }
+
+  public async getClaimNumbers(
+    grades: string,
+    subject: string
+  ): Promise<IFilterOptions | undefined> {
+    let result: IFilterOptions | undefined;
+    if (this.db) {
+      try {
+        const g = grades.split(',');
+        const dbResult: IClaimNumberResult[] = await this.db
+          .collection('claims')
+          .find(
+            {
+              subject,
+              $or: g.map(grade => ({ grades: grade }))
+            },
+            { projection: { _id: 0, claimNumber: 1 } }
+          )
+          .toArray();
+
+        result = DbClientHelper.buildClaimNumbers(dbResult);
+      } catch (error) {
+        throw new Error('failed to get claim numbers');
+      }
+    } else {
+      throw new Error('db is not defined');
+    }
+
+    return result;
+  }
+
+  public async getTargetShortCodes(
+    grades: string,
+    subject: string,
+    claimNumber: string
+  ): Promise<IFilterOptions | undefined> {
+    let result: IFilterOptions | undefined;
+    if (this.db) {
+      try {
+        const g: string[] = grades.split(',');
+        const dbResult: ITargetShortCodeResult[] = await this.db
+          .collection('claims')
+          .find(
+            {
+              subject,
+              claimNumber,
+              $or: g.map(grade => ({ grades: grade }))
+            },
+            { projection: { _id: 0, 'target.shortCode': 1 } }
+          )
+          .toArray();
+        result = DbClientHelper.buildTargetShortCodes(g, dbResult);
+      } catch (err) {
+        throw new Error('failed to get target short codes');
+      }
+    } else {
+      throw new Error('db is not defined');
+    }
+
+    return result;
+  }
+
   public async getClaims(): Promise<IClaim[]> {
     let result: IClaim[];
     if (this.db) {
       try {
-        const dbResult: Cursor<IClaim> = this.db
+        result = await this.db
           .collection('claims')
-          .find({}, { projection: { _id: 0 } });
-        result = await dbResult.toArray();
+          .find({}, { projection: { _id: 0 } })
+          .toArray();
       } catch (error) {
         throw error;
       }
