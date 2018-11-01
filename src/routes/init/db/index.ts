@@ -68,7 +68,7 @@ export async function importDbEntries(): Promise<IClaim[]> {
     newClaim.shortCode = getClaimShortCode(newClaim.subject, newClaim.claimNumber, newClaim.grades);
     if (!newClaim.title.includes('Performance')) {
       newClaim.description = getClaimDesc(newClaim.subject, newClaim.shortCode, ELASpec, MATHSpec);
-      if (newClaim.subject !== Subject.MATH && !newClaim.title.includes('Performace')) {
+      if (newClaim.subject !== Subject.MATH && !newClaim.title.includes('Performance')) {
         newClaim.domain = [];
         newClaim.domain.push({
           title: getClaimDomain(newClaim.subject, newClaim.shortCode, ELASpec)
