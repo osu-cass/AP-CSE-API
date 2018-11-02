@@ -8,9 +8,9 @@ import {
 } from '../../models/filter';
 import { Hash } from '../interface';
 
-function filterSubjects(grades: Hash, grade: string): boolean {
-  if (!grades[grade]) {
-    grades[grade] = grade;
+function filterValue(hash: Hash, idx: string): boolean {
+  if (!hash[idx]) {
+    hash[idx] = idx;
 
     return true;
   }
@@ -27,7 +27,7 @@ export function buildSubjectsAndGrades(res: IGradeAndSubjectResult): IFilterOpti
   if (res.grades) {
     res.grades.forEach(g => (gradeArr = gradeArr.concat(g)));
     grades = gradeArr
-      .filter((grade: string) => filterSubjects(gradeHash, grade))
+      .filter((grade: string) => filterValue(gradeHash, grade))
       .sort((lhs: string, rhs: string) => parseInt(lhs, 10) - parseInt(rhs, 10))
       .map(g => ({ code: g, label: g }));
   }
@@ -39,22 +39,12 @@ export function buildSubjectsAndGrades(res: IGradeAndSubjectResult): IFilterOpti
   return { subject, grades };
 }
 
-function filterClaimNumbers(claimNumbers: Hash, claimNumber: string): boolean {
-  if (!claimNumbers[claimNumber]) {
-    claimNumbers[claimNumber] = claimNumber;
-
-    return true;
-  }
-
-  return false;
-}
-
 export function buildClaimNumbers(dbResult: IClaimNumberResult[]): IFilterOptions {
   const claimNumbers: Hash = {};
 
   return {
     claimNumbers: dbResult
-      .filter(({ claimNumber }: IClaimNumberResult) => filterClaimNumbers(claimNumbers, claimNumber))
+      .filter(({ claimNumber }: IClaimNumberResult) => filterValue(claimNumbers, claimNumber))
       .map(({ claimNumber }: IClaimNumberResult) => ({code: claimNumber, label: claimNumber}))
   };
 }
