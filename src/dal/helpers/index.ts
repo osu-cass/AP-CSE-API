@@ -8,26 +8,26 @@ import {
 } from '../../models/filter';
 import { Hash } from '../interface';
 
-function buildSubjectsAndGrades(res: IGradeAndSubjectResult): IFilterOptions {
+function filterValue(hash: Hash, idx: string): boolean {
+  if (!hash[idx]) {
+    hash[idx] = idx;
+
+    return true;
+  }
+
+  return false;
+}
+
+export function buildSubjectsAndGrades(res: IGradeAndSubjectResult): IFilterOptions {
   const gradeHash: Hash = {};
   let gradeArr: string[] = [];
   let grades: IFilterItem[] = [];
   let subject: IFilterItem[] = [];
 
   if (res.grades) {
-    // flatten
     res.grades.forEach(g => (gradeArr = gradeArr.concat(g)));
-    // reduce to distinct members
     grades = gradeArr
-      .filter((grade: string) => {
-        if (!gradeHash[grade]) {
-          gradeHash[grade] = grade;
-
-          return true;
-        }
-
-        return false;
-      })
+      .filter((grade: string) => filterValue(gradeHash, grade))
       .sort((lhs: string, rhs: string) => parseInt(lhs, 10) - parseInt(rhs, 10))
       .map(g => ({ code: g, label: g }));
   }
@@ -39,24 +39,13 @@ function buildSubjectsAndGrades(res: IGradeAndSubjectResult): IFilterOptions {
   return { subject, grades };
 }
 
-function buildClaimNumbers(dbResult: IClaimNumberResult[]): IFilterOptions {
-  const claimHash: Hash = {};
+export function buildClaimNumbers(dbResult: IClaimNumberResult[]): IFilterOptions {
+  const claimNumbers: Hash = {};
 
   return {
     claimNumbers: dbResult
-      .filter(({ claimNumber }: IClaimNumberResult) => {
-        if (!claimHash[claimNumber]) {
-          claimHash[claimNumber] = claimNumber;
-
-          return true;
-        }
-
-        return false;
-      })
-      .map(({ claimNumber }: IClaimNumberResult) => ({
-        code: claimNumber,
-        label: claimNumber
-      }))
+      .filter(({ claimNumber }: IClaimNumberResult) => filterValue(claimNumbers, claimNumber))
+      .map(({ claimNumber }: IClaimNumberResult) => ({code: claimNumber, label: claimNumber}))
   };
 }
 
@@ -67,14 +56,14 @@ function filterShortCodeByGrade(grades: string[], shortCode: string): boolean {
       ? shortCode.includes('HS')
       : shortCode.includes(`G${grade}`);
     if (included) {
-      return included;
+      return true;
     }
   }
 
   return false;
 }
 
-function buildTargetShortCodes(
+export function buildTargetShortCodes(
   grades: string[],
   dbResult: ITargetShortCodeResult[]
 ): IFilterOptions {
@@ -88,4 +77,3 @@ function buildTargetShortCodes(
   };
 }
 
-export { buildSubjectsAndGrades, buildClaimNumbers, buildTargetShortCodes };

@@ -13,10 +13,10 @@
 					"listen": "test",
 					"script": {
 						"id": "3fb1fb27-9f1a-4417-b724-57371608fd82",
-						"type": "text/javascript",
 						"exec": [
 							""
-						]
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -31,15 +31,12 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{api-domain}}/{{target-endpoint}}/{{subject}}/{{grades}}/{{claim}}/{{target}}",
+					"raw": "{{api-domain}}/{{target-endpoint}}/{{target}}",
 					"host": [
 						"{{api-domain}}"
 					],
 					"path": [
 						"{{target-endpoint}}",
-						"{{subject}}",
-						"{{grades}}",
-						"{{claim}}",
 						"{{target}}"
 					]
 				},
@@ -254,73 +251,73 @@
 	],
 	"variable": [
 		{
-			"id": "7262c459-b8cb-4882-9076-72af04d2e6be",
+			"id": "d304a655-4332-4ab4-9c17-428d6f10cd2f",
 			"key": "api-domain",
 			"value": "http://localhost:3000",
 			"type": "string"
 		},
 		{
-			"id": "bc6b779b-776b-4ff7-8209-fae255db7e49",
+			"id": "13996315-0abf-4e97-b9b4-efdd8a64856d",
 			"key": "pdf-endpoint",
 			"value": "api/pdf",
 			"type": "string"
 		},
 		{
-			"id": "223dd0ff-4274-4eb2-8706-af214340d8aa",
+			"id": "2f18b5d5-9d65-457f-9f33-f3147bd9b95e",
 			"key": "search-endpoint",
 			"value": "api/search",
 			"type": "string"
 		},
 		{
-			"id": "2b2626a2-4d31-4607-8e59-ef0e8dba3595",
+			"id": "d1c29361-0f83-46e3-9882-766e197fea68",
 			"key": "init-endpoint",
 			"value": "api/init",
 			"type": "string"
 		},
 		{
-			"id": "fd7e64ef-4863-42b3-b435-83e3d8317dcb",
+			"id": "2c040783-72ba-4c88-b6f8-41aeafa43e75",
 			"key": "target-endpoint",
 			"value": "api/target",
 			"type": "string"
 		},
 		{
-			"id": "0d9d168c-3ec7-4b75-8e71-09f8df746e70",
+			"id": "151653e7-c368-4996-bff5-d97f34f0525e",
 			"key": "health-endpoint",
 			"value": "health",
 			"type": "string"
 		},
 		{
-			"id": "cb0e115a-e7ac-4f24-a64c-ac86b1a3ee93",
+			"id": "61ea6150-3dc1-485f-b976-a88a4e87d538",
 			"key": "filter-endpoint",
 			"value": "api/filter",
 			"type": "string"
 		},
 		{
-			"id": "251e5c7b-e533-4585-9150-58881910a601",
+			"id": "d74553a7-2919-41c7-9815-87efc7347a04",
 			"key": "subject",
 			"value": "English Language Arts",
 			"type": "string"
 		},
 		{
-			"id": "135011dc-825e-43b8-8cb9-cc53e0d899a3",
+			"id": "6de8fcad-9c7e-4a81-9e07-b91aa5e82ae0",
 			"key": "grades",
 			"value": "3",
 			"type": "string"
 		},
 		{
-			"id": "1124616d-795d-4508-904e-2d41283d94c2",
+			"id": "8e9b0a0c-b704-48e3-a026-6b733ae79cb0",
 			"key": "claim",
-			"value": "C1",
+			"value": "C2",
 			"type": "string"
 		},
 		{
-			"id": "d90dd6c7-f912-47f3-bdfe-37237ca0d16c",
+			"id": "880b06bb-aa20-4907-91de-a23d24cc9202",
 			"key": "target",
 			"value": "E.G3.C2WI.T4",
 			"type": "string"
 		},
 		{
-			"id": "e98879d8-bfbb-4eb3-94ff-e1740195591e",
+			"id": "30374cea-807f-43d2-aece-b7ac7a02fa9f",
 			"key": "query",
 			"value": "simple procedure",
 			"type": "string"
