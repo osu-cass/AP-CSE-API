@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 import { ISpecDocument } from './interfaces';
-import { IClaim } from '../../../models/claim';
-import { IDOK, ITaskModel } from '../../../models/target';
+import { IClaim } from '../../models/claim';
+import { IDOK, ITaskModel } from '../../models/target';
 
 // This is required for translating specDocuments to an IClaim type
 // tslint:disable:no-unsafe-any no-any

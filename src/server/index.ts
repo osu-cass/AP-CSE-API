@@ -1,4 +1,4 @@
-import e, { Request, Response, NextFunction, Application, RequestHandler } from 'express';
+import e, { Request, Response, NextFunction, Application } from 'express';
 import http from 'http';
 import signale from 'signale';
 import bodyParser from 'body-parser';
@@ -11,6 +11,8 @@ import { SearchClient } from '../dal/search';
 import { createTracer } from '../utils/tracer';
 import { logger, LoggingStream } from '../utils/logger';
 import { Health, healthCheck } from '../routes/health';
+import { importDbEntries } from '../dal/import/index';
+import { IClaim } from '../models/claim/index';
 
 /**
  * ServerContext defines a type for the tracer and db client
@@ -42,7 +44,7 @@ export interface IServer {
   registerMiddleware(): void;
   routes(): void;
   configure(): void;
-  start(): http.Server;
+  start(): Promise<http.Server>;
 }
 
 /**
@@ -109,10 +111,29 @@ export class Server implements IServer {
     this.app.use(morgan('combined', { stream: new LoggingStream() }));
   }
 
-  public start(): http.Server {
+  public async start(): Promise<http.Server> {
     signale.pending('Starting server...');
+    const { dbClient, searchClient, logger } = this.context;
+    const { SERVERINIT: serverInit = 'no' } = process.env;
 
-    return this.app.listen(this.port, () => {
+    try {
+      if (serverInit === 'yes') {
+        logger.info('initializing data store');
+        const claims: IClaim[] = await importDbEntries();
+        await dbClient.connect();
+        await searchClient.insertDocuments(claims);
+        await dbClient.insert(claims);
+        await dbClient.close();
+        logger.info('data store init succeeded');
+      }
+    } catch (err) {
+      // tslint:disable-next-line: no-unsafe-any
+      logger.error(err);
+      logger.error('data store init failed');
+      throw new Error('data store init failed');
+    }
+
+    return this.app.listen(this.port, async () => {
       signale.success(`Server ready!`);
       signale.info(`Listening at http://localhost:${this.port}`);
     });

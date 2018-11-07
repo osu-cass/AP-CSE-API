@@ -44,7 +44,7 @@ export function buildClaimNumbers(dbResult: IClaimNumberResult[]): IFilterOption
 
   const claimNumbers: IFilterItem[] = dbResult
     .filter(({ claimNumber }: IClaimNumberResult) => filterValue(claimNums, claimNumber))
-    .map(({ claimNumber }: IClaimNumberResult) => ({code: claimNumber, label: claimNumber}));
+    .map(({ claimNumber }: IClaimNumberResult) => ({ code: claimNumber, label: claimNumber }));
 
   return claimNumbers.length !== 0 ? { claimNumbers } : undefined;
 }
@@ -76,4 +76,3 @@ export function buildTargetShortCodes(
 
   return targetShortCodes.length !== 0 ? { targetShortCodes } : undefined;
 }
-

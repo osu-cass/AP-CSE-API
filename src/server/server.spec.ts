@@ -54,9 +54,9 @@ describe('Server', () => {
     expect(use).toHaveBeenCalledTimes(4);
   });
 
-  it('returns an http.Server instance', () => {
+  it('returns an http.Server instance', async () => {
     expect.assertions(2);
-    server.start();
+    await server.start();
     expect(e).toHaveBeenCalledTimes(1);
     expect(listen).toHaveBeenCalledTimes(1);
   });

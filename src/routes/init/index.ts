@@ -1,6 +1,6 @@
 import { Request } from 'express';
 import { InsertWriteOpResult } from 'mongodb';
-import { importDbEntries } from './db';
+import { importDbEntries } from '../../dal/import';
 import { applyTracing } from '../../utils/tracer';
 import { CSEResponse } from '../../server';
 import { IClaim } from '../../models/claim';
