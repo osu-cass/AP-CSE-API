@@ -1,5 +1,4 @@
 import { MongoClient, Db, Collection, InsertWriteOpResult } from 'mongodb';
-import { ITargetParams, ITargetShortCode } from '../../routes';
 import { IClaim } from '../../models/claim';
 import { Health } from '../../routes/health';
 import * as DbClientHelper from '../helpers';
