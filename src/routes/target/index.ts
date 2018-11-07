@@ -12,12 +12,10 @@ export const handler = async (req: Request, res: CSEResponse) => {
     setRouteHealth(Health.busy, req);
     await dbClient.connect();
     result = await dbClient.getTarget(targetShortCode);
+    result ? res.status(200) : res.sendStatus(500);
     await dbClient.close();
-    res.status(200);
   } catch (error) {
-    res.status(500);
-    // tslint:disable-next-line:no-any no-unsafe-any
-    result = error;
+    res.sendStatus(500);
     setRouteHealth(Health.good, req);
   }
   res.send(result);

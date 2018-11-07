@@ -18,7 +18,7 @@ function filterValue(hash: Hash, idx: string): boolean {
   return false;
 }
 
-export function buildSubjectsAndGrades(res: IGradeAndSubjectResult): IFilterOptions {
+export function buildSubjectsAndGrades(res: IGradeAndSubjectResult): IFilterOptions | undefined {
   const gradeHash: Hash = {};
   let gradeArr: string[] = [];
   let grades: IFilterItem[] = [];
@@ -36,17 +36,17 @@ export function buildSubjectsAndGrades(res: IGradeAndSubjectResult): IFilterOpti
     subject = res.subject.map(s => ({ code: s, label: s }));
   }
 
-  return { subject, grades };
+  return subject.length !== 0 && grades.length !== 0 ? { subject, grades } : undefined;
 }
 
-export function buildClaimNumbers(dbResult: IClaimNumberResult[]): IFilterOptions {
-  const claimNumbers: Hash = {};
+export function buildClaimNumbers(dbResult: IClaimNumberResult[]): IFilterOptions | undefined {
+  const claimNums: Hash = {};
 
-  return {
-    claimNumbers: dbResult
-      .filter(({ claimNumber }: IClaimNumberResult) => filterValue(claimNumbers, claimNumber))
-      .map(({ claimNumber }: IClaimNumberResult) => ({code: claimNumber, label: claimNumber}))
-  };
+  const claimNumbers: IFilterItem[] = dbResult
+    .filter(({ claimNumber }: IClaimNumberResult) => filterValue(claimNums, claimNumber))
+    .map(({ claimNumber }: IClaimNumberResult) => ({code: claimNumber, label: claimNumber}));
+
+  return claimNumbers.length !== 0 ? { claimNumbers } : undefined;
 }
 
 function filterShortCodeByGrade(grades: string[], shortCode: string): boolean {
@@ -66,14 +66,14 @@ function filterShortCodeByGrade(grades: string[], shortCode: string): boolean {
 export function buildTargetShortCodes(
   grades: string[],
   dbResult: ITargetShortCodeResult[]
-): IFilterOptions {
+): IFilterOptions | undefined {
   const flatResult: IShortCodeResult[] = [];
   dbResult.forEach((res: ITargetShortCodeResult) => flatResult.push(...res.target));
 
-  return {
-    targetShortCodes: flatResult
-      .filter(({ shortCode }: IShortCodeResult) => filterShortCodeByGrade(grades, shortCode))
-      .map(({ shortCode }: IShortCodeResult) => ({ code: shortCode, label: shortCode }))
-  };
+  const targetShortCodes: IFilterItem[] = flatResult
+    .filter(({ shortCode }: IShortCodeResult) => filterShortCodeByGrade(grades, shortCode))
+    .map(({ shortCode }: IShortCodeResult) => ({ code: shortCode, label: shortCode }));
+
+  return targetShortCodes.length !== 0 ? { targetShortCodes } : undefined;
 }
 
