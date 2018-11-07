@@ -103,9 +103,9 @@ jobs:
       - run:
           name: Upgrade cluster deployment
           environment:
-            CHART_VERSION: 0.1.0
+            CHART_VERSION: 0.2.0
           command: >-
-            helm upgrade --namespace=cse --set-string image.tag=$TAG_VERSION cse
+            helm upgrade --set-string api.image.tag=$TAG_VERSION cse --reuse-values
             https://osu-cass.github.io/AP-CSE-Chart/charts/content-specification-explorer-${CHART_VERSION}.tgz
 
 workflows:
