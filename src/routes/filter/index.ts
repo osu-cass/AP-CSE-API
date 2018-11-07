@@ -17,7 +17,7 @@ export const handler = async (req: Request, res: CSEResponse) => {
     } else {
       result = await dbClient.getSubjectsAndGrades();
     }
-    result ? res.status(200) : res.sendStatus(500);
+    result ? res.status(200) : res.sendStatus(400);
     await dbClient.close();
   } catch (error) {
     res.sendStatus(500);
