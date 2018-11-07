@@ -1,6 +1,7 @@
 import { handler as filter } from './';
 import { Request, Response } from 'express';
 import { IFilterOptions } from '../../models/filter';
+import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from 'constants';
 
 describe('API Filter endpoint', () => {
   let req: Partial<Request>;
@@ -34,14 +35,17 @@ describe('API Filter endpoint', () => {
         getSubjectsAndGrades: jest
           .fn()
           .mockResolvedValueOnce(filterOptions)
+          .mockResolvedValueOnce(undefined)
           .mockRejectedValueOnce(new Error('err')),
         getClaimNumbers: jest
           .fn()
           .mockResolvedValueOnce(filterOptions)
+          .mockResolvedValueOnce(undefined)
           .mockRejectedValueOnce(new Error('err')),
         getTargetShortCodes: jest
           .fn()
           .mockResolvedValueOnce(filterOptions)
+          .mockResolvedValueOnce(undefined)
           .mockRejectedValueOnce(new Error('err'))
       };
 
@@ -72,6 +76,13 @@ describe('API Filter endpoint', () => {
       expect(send).toHaveBeenCalledWith(filterOptions);
     });
 
+    it('returns request error on bad request', async () => {
+      expect.assertions(2);
+      await filter(<Request>req, <Response>res);
+      expect(sendStatus).toHaveBeenCalledWith(400);
+      expect(send).toHaveBeenCalledWith(undefined);
+    });
+
     it('error with no params', async () => {
       expect.assertions(2);
       await filter(<Request>req, <Response>res);
@@ -96,6 +107,7 @@ describe('API Filter endpoint', () => {
         getClaimNumbers: jest
           .fn()
           .mockResolvedValueOnce(filterOptions)
+          .mockResolvedValueOnce(undefined)
           .mockRejectedValueOnce(new Error('err'))
       };
 
@@ -129,6 +141,13 @@ describe('API Filter endpoint', () => {
       expect(send).toHaveBeenCalledWith(filterOptions);
     });
 
+    it('returns request error on bad request', async () => {
+      expect.assertions(2);
+      await filter(<Request>req, <Response>res);
+      expect(sendStatus).toHaveBeenCalledWith(400);
+      expect(send).toHaveBeenCalledWith(undefined);
+    });
+
     it('error with grade and subject', async () => {
       expect.assertions(2);
       await filter(<Request>req, <Response>res);
@@ -153,6 +172,7 @@ describe('API Filter endpoint', () => {
         getTargetShortCodes: jest
           .fn()
           .mockResolvedValueOnce(filterOptions)
+          .mockResolvedValueOnce(undefined)
           .mockRejectedValueOnce(new Error('err'))
       };
 
@@ -185,6 +205,13 @@ describe('API Filter endpoint', () => {
       await filter(<Request>req, <Response>res);
       expect(status).toHaveBeenCalledWith(200);
       expect(send).toHaveBeenCalledWith(filterOptions);
+    });
+
+    it('returns request error on bad request', async () => {
+      expect.assertions(2);
+      await filter(<Request>req, <Response>res);
+      expect(sendStatus).toHaveBeenCalledWith(400);
+      expect(send).toHaveBeenCalledWith(undefined);
     });
 
     it('error with grade, subject, claimNumber', async () => {
