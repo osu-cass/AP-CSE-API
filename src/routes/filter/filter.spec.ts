@@ -1,7 +1,6 @@
 import { handler as filter } from './';
 import { Request, Response } from 'express';
 import { IFilterOptions } from '../../models/filter';
-import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from 'constants';
 
 describe('API Filter endpoint', () => {
   let req: Partial<Request>;
