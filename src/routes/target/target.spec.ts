@@ -25,6 +25,7 @@ describe('target', () => {
         .fn()
         .mockResolvedValueOnce(result)
         .mockResolvedValueOnce(undefined)
+        .mockRejectedValueOnce(new Error('err'))
     };
     res = {
       send: jest.fn(),
@@ -41,9 +42,15 @@ describe('target', () => {
     expect(res.send).toHaveBeenCalledWith(result);
   });
 
-  it('handles error during a request', async () => {
+  it('handles a bad request', async () => {
     await target(<Request>req, <Response>res);
     expect.assertions(1);
     expect(res.sendStatus).toHaveBeenCalledWith(400);
+  });
+
+  it('handles error during a request', async () => {
+    await target(<Request>req, <Response>res);
+    expect.assertions(1);
+    expect(res.sendStatus).toHaveBeenCalledWith(500);
   });
 });
