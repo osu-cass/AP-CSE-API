@@ -17,12 +17,10 @@ export const handler = async (req: Request, res: CSEResponse) => {
     } else {
       result = await dbClient.getSubjectsAndGrades();
     }
+    result ? res.status(200) : res.sendStatus(400);
     await dbClient.close();
-    res.status(200);
   } catch (error) {
-    // tslint:disable-next-line:no-any no-unsafe-any
-    result = error;
-    res.status(500);
+    res.sendStatus(500);
   }
   res.send(result);
 };

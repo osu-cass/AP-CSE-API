@@ -1,49 +1,46 @@
-import { handler as healthCheck, Health, setRouteHealth } from '.';
+import { handler as healthCheck, Health } from '.';
 import { Request, Response } from 'express';
-import { router } from '..';
-
-jest.unmock('./');
 
 describe('API Routing Health Check', () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
-  let status: Health;
 
   beforeAll(() => {
     res = {
-      send: jest.fn(),
-      status: jest.fn(),
+      sendStatus: jest.fn(),
       locals: {
         searchClient: {
           ping: jest.fn()
+          .mockResolvedValueOnce(Health.good)
+          .mockResolvedValueOnce(Health.good)
+          .mockRejectedValueOnce(Health.good)
         },
         dbClient: {
           ping: jest.fn()
+          .mockResolvedValueOnce(Health.good)
+          .mockResolvedValueOnce(Health.busy)
+          .mockRejectedValueOnce(Health.good)
         }
       }
     };
     req = {};
   });
 
-  it('sets route health', () => {
-    status = Health.busy;
-    req.path = '/init';
-    setRouteHealth(status, <Request>req);
-    let result;
-    // tslint:disable: no-any no-unsafe-any
-    router.stack.forEach(endpoint => {
-      if (endpoint.route.path === req.path) {
-        result = endpoint.routeHealth;
-        // tslint:enable: no-any no-unsafe-any
-      }
-    });
-    expect(result).toBe(Health.busy);
+  it('returns ready', async () => {
+    expect.assertions(1);
+    await healthCheck(<Request>req, <Response>res);
+    expect(res.sendStatus).toHaveBeenCalledWith(200);
   });
 
-  it('returns a response', async () => {
-    expect.assertions(2);
+  it('returns accepted (202) but not ready', async () => {
+    expect.assertions(1);
     await healthCheck(<Request>req, <Response>res);
-    expect(res.send).toBeCalledTimes(1);
-    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.sendStatus).toHaveBeenCalledWith(202);
+  });
+
+  it('returns error', async () => {
+    expect.assertions(1);
+    await healthCheck(<Request>req, <Response>res);
+    expect(res.sendStatus).toHaveBeenCalledWith(500);
   });
 });

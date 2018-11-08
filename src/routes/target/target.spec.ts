@@ -24,24 +24,33 @@ describe('target', () => {
       getTarget: jest
         .fn()
         .mockResolvedValueOnce(result)
-        .mockRejectedValueOnce(new Error('error'))
+        .mockResolvedValueOnce(undefined)
+        .mockRejectedValueOnce(new Error('err'))
     };
     res = {
       send: jest.fn(),
       status: jest.fn(),
+      sendStatus: jest.fn(),
       locals: { dbClient }
     };
   });
 
   it('handles request for target', async () => {
     await target(<Request>req, <Response>res);
-    expect.assertions(1);
+    expect.assertions(2);
+    expect(res.status).toHaveBeenCalledWith(200);
     expect(res.send).toHaveBeenCalledWith(result);
+  });
+
+  it('handles a bad request', async () => {
+    await target(<Request>req, <Response>res);
+    expect.assertions(1);
+    expect(res.sendStatus).toHaveBeenCalledWith(400);
   });
 
   it('handles error during a request', async () => {
     await target(<Request>req, <Response>res);
     expect.assertions(1);
-    expect(res.send).toHaveBeenCalledWith(new Error('error'));
+    expect(res.sendStatus).toHaveBeenCalledWith(500);
   });
 });

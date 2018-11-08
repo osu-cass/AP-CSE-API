@@ -8,6 +8,7 @@ describe('API Filter endpoint', () => {
   let filterOptions: IFilterOptions;
   let dbClient;
   let status: jest.Mock;
+  let sendStatus: jest.Mock;
   let send: jest.Mock;
 
   describe('initial request', () => {
@@ -33,19 +34,23 @@ describe('API Filter endpoint', () => {
         getSubjectsAndGrades: jest
           .fn()
           .mockResolvedValueOnce(filterOptions)
+          .mockResolvedValueOnce(undefined)
           .mockRejectedValueOnce(new Error('err')),
         getClaimNumbers: jest
           .fn()
           .mockResolvedValueOnce(filterOptions)
+          .mockResolvedValueOnce(undefined)
           .mockRejectedValueOnce(new Error('err')),
         getTargetShortCodes: jest
           .fn()
           .mockResolvedValueOnce(filterOptions)
+          .mockResolvedValueOnce(undefined)
           .mockRejectedValueOnce(new Error('err'))
       };
 
       status = jest.fn();
       send = jest.fn();
+      sendStatus = jest.fn();
 
       req = {
         query: {}
@@ -53,6 +58,7 @@ describe('API Filter endpoint', () => {
       res = {
         status,
         send,
+        sendStatus,
         locals: { dbClient }
       };
     });
@@ -69,11 +75,18 @@ describe('API Filter endpoint', () => {
       expect(send).toHaveBeenCalledWith(filterOptions);
     });
 
+    it('returns request error on bad request', async () => {
+      expect.assertions(2);
+      await filter(<Request>req, <Response>res);
+      expect(sendStatus).toHaveBeenCalledWith(400);
+      expect(send).toHaveBeenCalledWith(undefined);
+    });
+
     it('error with no params', async () => {
       expect.assertions(2);
       await filter(<Request>req, <Response>res);
-      expect(status).toHaveBeenCalledWith(500);
-      expect(send).toHaveBeenCalledWith(new Error('err'));
+      expect(sendStatus).toHaveBeenCalledWith(500);
+      expect(send).toHaveBeenCalledWith(undefined);
     });
   });
 
@@ -93,11 +106,13 @@ describe('API Filter endpoint', () => {
         getClaimNumbers: jest
           .fn()
           .mockResolvedValueOnce(filterOptions)
+          .mockResolvedValueOnce(undefined)
           .mockRejectedValueOnce(new Error('err'))
       };
 
       status = jest.fn();
       send = jest.fn();
+      sendStatus = jest.fn();
 
       req = {
         query: {
@@ -108,6 +123,7 @@ describe('API Filter endpoint', () => {
       res = {
         status,
         send,
+        sendStatus,
         locals: { dbClient }
       };
     });
@@ -124,11 +140,18 @@ describe('API Filter endpoint', () => {
       expect(send).toHaveBeenCalledWith(filterOptions);
     });
 
+    it('returns request error on bad request', async () => {
+      expect.assertions(2);
+      await filter(<Request>req, <Response>res);
+      expect(sendStatus).toHaveBeenCalledWith(400);
+      expect(send).toHaveBeenCalledWith(undefined);
+    });
+
     it('error with grade and subject', async () => {
       expect.assertions(2);
       await filter(<Request>req, <Response>res);
-      expect(status).toHaveBeenCalledWith(500);
-      expect(send).toHaveBeenCalledWith(new Error('err'));
+      expect(sendStatus).toHaveBeenCalledWith(500);
+      expect(send).toHaveBeenCalledWith(undefined);
     });
   });
 
@@ -148,11 +171,13 @@ describe('API Filter endpoint', () => {
         getTargetShortCodes: jest
           .fn()
           .mockResolvedValueOnce(filterOptions)
+          .mockResolvedValueOnce(undefined)
           .mockRejectedValueOnce(new Error('err'))
       };
 
       status = jest.fn();
       send = jest.fn();
+      sendStatus = jest.fn();
 
       req = {
         query: {
@@ -164,6 +189,7 @@ describe('API Filter endpoint', () => {
       res = {
         status,
         send,
+        sendStatus,
         locals: { dbClient }
       };
     });
@@ -180,11 +206,18 @@ describe('API Filter endpoint', () => {
       expect(send).toHaveBeenCalledWith(filterOptions);
     });
 
+    it('returns request error on bad request', async () => {
+      expect.assertions(2);
+      await filter(<Request>req, <Response>res);
+      expect(sendStatus).toHaveBeenCalledWith(400);
+      expect(send).toHaveBeenCalledWith(undefined);
+    });
+
     it('error with grade, subject, claimNumber', async () => {
       expect.assertions(2);
       await filter(<Request>req, <Response>res);
-      expect(status).toHaveBeenCalledWith(500);
-      expect(send).toHaveBeenCalledWith(new Error('err'));
+      expect(sendStatus).toHaveBeenCalledWith(500);
+      expect(send).toHaveBeenCalledWith(undefined);
     });
   });
 });

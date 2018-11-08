@@ -1,7 +1,7 @@
 import { handler as dbInit } from '.';
 import { Request, Response } from 'express';
 jest.mock('../health');
-jest.mock('./db', () => ({
+jest.mock('../../dal/import', () => ({
   importDbEntries: jest
     .fn()
     .mockResolvedValueOnce('{}')
