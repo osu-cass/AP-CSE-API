@@ -1,5 +1,6 @@
 import { Server } from './server';
 import http from 'http';
+import signale from 'signale';
 
 const server: Server = new Server();
 
@@ -11,6 +12,5 @@ server
     app = application;
   })
   .catch(err => {
-    // tslint:disable-next-line:no-console
-    console.error(err);
+    signale.fatal(err);
   });
