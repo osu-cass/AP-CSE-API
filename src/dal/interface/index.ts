@@ -239,6 +239,7 @@ export class DbClient implements IDbClient {
         result = (await this.db.collection('claims').findOne({
           'target.shortCode': targetShortCode
         })) as IClaim;
+        result.target = result.target.filter(t => t.shortCode === targetShortCode);
       } catch (error) {
         throw error;
       }
