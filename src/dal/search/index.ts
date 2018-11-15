@@ -3,6 +3,7 @@ import { IClaim } from '../../models/claim';
 import { IQueryParams } from '../../routes';
 import bodybuilder, { Bodybuilder } from 'bodybuilder';
 import { Health } from '../../routes/health';
+import { ITarget } from '../../models/target/index';
 
 export interface ISearchClientOptions {
   host: string;
@@ -133,7 +134,12 @@ export class SearchClient implements ISearchClient {
         index: 'cse',
         body: this.buildRequestBody(query)
       });
-      result = response.hits.hits.map(hit => <IClaim>hit._source);
+      result = response.hits.hits.map(hit => {
+        const claim: IClaim = <IClaim>hit._source;
+        claim.target = claim.target.filter((t: ITarget) => t.shortCode === query.targetShortCode);
+
+        return claim;
+      });
     } catch (err) {
       throw err;
     }
