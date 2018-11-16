@@ -7,6 +7,28 @@
 	},
 	"item": [
 		{
+			"name": "init/",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{api-domain}}/{{init-endpoint}}",
+					"host": [
+						"{{api-domain}}"
+					],
+					"path": [
+						"{{init-endpoint}}"
+					]
+				},
+				"description": "Clears the existing db instance and re-populates in"
+			},
+			"response": []
+		},
+		{
 			"name": "target/",
 			"event": [
 				{
@@ -45,29 +67,115 @@
 			"response": []
 		},
 		{
-			"name": "init/",
+			"name": "search/ with query only",
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [],
 				"body": {
 					"mode": "raw",
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{api-domain}}/{{init-endpoint}}",
+					"raw": "{{api-domain}}/{{search-endpoint}}/?query={{query}}",
 					"host": [
 						"{{api-domain}}"
 					],
 					"path": [
-						"{{init-endpoint}}"
+						"{{search-endpoint}}",
+						""
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": "{{query}}"
+						}
 					]
 				},
-				"description": "Clears the existing db instance and re-populates in"
+				"description": "requests a search result from the api with only the 'query' parameter"
 			},
 			"response": []
 		},
 		{
-			"name": "search/",
+			"name": "search/ with query, subject, and grades",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{api-domain}}/{{search-endpoint}}/?query={{query}}&subject={{subject}}&grades={{grades}}",
+					"host": [
+						"{{api-domain}}"
+					],
+					"path": [
+						"{{search-endpoint}}",
+						""
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": "{{query}}"
+						},
+						{
+							"key": "subject",
+							"value": "{{subject}}"
+						},
+						{
+							"key": "grades",
+							"value": "{{grades}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search/ with query, subject, grades, and claim",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{api-domain}}/{{search-endpoint}}/?query={{query}}&subject={{subject}}&grades={{grades}}&claimNumber={{claim}}",
+					"host": [
+						"{{api-domain}}"
+					],
+					"path": [
+						"{{search-endpoint}}",
+						""
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": "{{query}}"
+						},
+						{
+							"key": "subject",
+							"value": "{{subject}}"
+						},
+						{
+							"key": "grades",
+							"value": "{{grades}}"
+						},
+						{
+							"key": "claimNumber",
+							"value": "{{claim}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search/ with query, subject, grades, claim, and shortcode",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -87,18 +195,123 @@
 					"query": [
 						{
 							"key": "query",
-							"value": "{{query}}",
-							"description": "A query string that elasticsearch will use to search across alll fields."
+							"value": "{{query}}"
 						},
 						{
 							"key": "subject",
-							"value": "{{subject}}",
-							"description": "The subject, mainly Math or ELA."
+							"value": "{{subject}}"
 						},
 						{
 							"key": "grades",
-							"value": "{{grades}}",
-							"description": "A single number or array of numbers representing the grades."
+							"value": "{{grades}}"
+						},
+						{
+							"key": "claimNumber",
+							"value": "{{claim}}"
+						},
+						{
+							"key": "targetShortCode",
+							"value": "{{target}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search/ with subject and grades",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{api-domain}}/{{search-endpoint}}/?subject={{subject}}&grades={{grades}}",
+					"host": [
+						"{{api-domain}}"
+					],
+					"path": [
+						"{{search-endpoint}}",
+						""
+					],
+					"query": [
+						{
+							"key": "subject",
+							"value": "{{subject}}"
+						},
+						{
+							"key": "grades",
+							"value": "{{grades}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search/ with subject, grades, and claim",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{api-domain}}/{{search-endpoint}}/?subject={{subject}}&grades={{grades}}&claimNumber={{claim}}",
+					"host": [
+						"{{api-domain}}"
+					],
+					"path": [
+						"{{search-endpoint}}",
+						""
+					],
+					"query": [
+						{
+							"key": "subject",
+							"value": "{{subject}}"
+						},
+						{
+							"key": "grades",
+							"value": "{{grades}}"
+						},
+						{
+							"key": "claimNumber",
+							"value": "{{claim}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search/ with subject, grades, claim, and shortcode",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{api-domain}}/{{search-endpoint}}/?subject={{subject}}&grades={{grades}}&claimNumber={{claim}}&targetShortCode={{target}}",
+					"host": [
+						"{{api-domain}}"
+					],
+					"path": [
+						"{{search-endpoint}}",
+						""
+					],
+					"query": [
+						{
+							"key": "subject",
+							"value": "{{subject}}"
+						},
+						{
+							"key": "grades",
+							"value": "{{grades}}"
 						},
 						{
 							"key": "claimNumber",
@@ -251,73 +464,73 @@
 	],
 	"variable": [
 		{
-			"id": "d304a655-4332-4ab4-9c17-428d6f10cd2f",
+			"id": "cb8254db-33ce-4556-9609-d6147ee10435",
 			"key": "api-domain",
 			"value": "http://localhost:3000",
 			"type": "string"
 		},
 		{
-			"id": "13996315-0abf-4e97-b9b4-efdd8a64856d",
+			"id": "76352c2d-e8e0-41b6-90ba-da1d5a575472",
 			"key": "pdf-endpoint",
 			"value": "api/pdf",
 			"type": "string"
 		},
 		{
-			"id": "2f18b5d5-9d65-457f-9f33-f3147bd9b95e",
+			"id": "a9575c4f-ae0e-4321-9e7f-cfa400e42d41",
 			"key": "search-endpoint",
 			"value": "api/search",
 			"type": "string"
 		},
 		{
-			"id": "d1c29361-0f83-46e3-9882-766e197fea68",
+			"id": "c39ea227-bb62-4ea4-ab72-1f89a40b0798",
 			"key": "init-endpoint",
 			"value": "api/init",
 			"type": "string"
 		},
 		{
-			"id": "2c040783-72ba-4c88-b6f8-41aeafa43e75",
+			"id": "16c268a8-56d2-4261-866f-95a0cb7c3d94",
 			"key": "target-endpoint",
 			"value": "api/target",
 			"type": "string"
 		},
 		{
-			"id": "151653e7-c368-4996-bff5-d97f34f0525e",
+			"id": "8affd010-caa3-49b1-aa42-3024e00d9282",
 			"key": "health-endpoint",
 			"value": "health",
 			"type": "string"
 		},
 		{
-			"id": "61ea6150-3dc1-485f-b976-a88a4e87d538",
+			"id": "da8f067b-bf9d-4182-becb-ad7252d0d161",
 			"key": "filter-endpoint",
 			"value": "api/filter",
 			"type": "string"
 		},
 		{
-			"id": "d74553a7-2919-41c7-9815-87efc7347a04",
+			"id": "3495fffe-af6f-42fa-b840-be33145096a2",
 			"key": "subject",
 			"value": "English Language Arts",
 			"type": "string"
 		},
 		{
-			"id": "6de8fcad-9c7e-4a81-9e07-b91aa5e82ae0",
+			"id": "50150118-fb2e-45d7-bd33-64b726150e47",
 			"key": "grades",
 			"value": "3",
 			"type": "string"
 		},
 		{
-			"id": "8e9b0a0c-b704-48e3-a026-6b733ae79cb0",
+			"id": "1791de4a-401b-41a3-b334-8acf3876a27a",
 			"key": "claim",
 			"value": "C2",
 			"type": "string"
 		},
 		{
-			"id": "880b06bb-aa20-4907-91de-a23d24cc9202",
+			"id": "f159eedf-8dda-4350-b875-8ca15e0bbb7c",
 			"key": "target",
 			"value": "E.G3.C2WI.T4",
 			"type": "string"
 		},
 		{
-			"id": "30374cea-807f-43d2-aece-b7ac7a02fa9f",
+			"id": "f35f719c-4325-4b4c-9798-a693cbe6cd57",
 			"key": "query",
 			"value": "simple procedure",
 			"type": "string"
