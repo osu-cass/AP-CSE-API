@@ -7,437 +7,447 @@
 	},
 	"item": [
 		{
-			"name": "init/",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "{{api-domain}}/{{init-endpoint}}",
-					"host": [
-						"{{api-domain}}"
-					],
-					"path": [
-						"{{init-endpoint}}"
-					]
-				},
-				"description": "Clears the existing db instance and re-populates in"
-			},
-			"response": []
-		},
-		{
-			"name": "target/",
-			"event": [
+			"name": "initilization",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"id": "3fb1fb27-9f1a-4417-b724-57371608fd82",
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
+					"name": "init/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{api-domain}}/{{init-endpoint}}",
+							"host": [
+								"{{api-domain}}"
+							],
+							"path": [
+								"{{init-endpoint}}"
+							]
+						},
+						"description": "Clears the existing db instance and re-populates in"
+					},
+					"response": []
+				},
+				{
+					"name": "health/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{api-domain}}/{{health-endpoint}}",
+							"host": [
+								"{{api-domain}}"
+							],
+							"path": [
+								"{{health-endpoint}}"
+							]
+						},
+						"description": "An API Route Health Check"
+					},
+					"response": []
 				}
-			],
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "{{api-domain}}/{{target-endpoint}}/{{target}}",
-					"host": [
-						"{{api-domain}}"
-					],
-					"path": [
-						"{{target-endpoint}}",
-						"{{target}}"
-					]
-				},
-				"description": "Returns an ITarget based on grade, subject, claimNumber, and target.shortCode. As of now, none of these arguments can be null."
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "search/ with query only",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "{{api-domain}}/{{search-endpoint}}/?query={{query}}",
-					"host": [
-						"{{api-domain}}"
-					],
-					"path": [
-						"{{search-endpoint}}",
-						""
-					],
-					"query": [
+			"name": "requests",
+			"item": [
+				{
+					"name": "target/",
+					"event": [
 						{
-							"key": "query",
-							"value": "{{query}}"
+							"listen": "test",
+							"script": {
+								"id": "3fb1fb27-9f1a-4417-b724-57371608fd82",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
 						}
-					]
-				},
-				"description": "requests a search result from the api with only the 'query' parameter"
-			},
-			"response": []
-		},
-		{
-			"name": "search/ with query, subject, and grades",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "{{api-domain}}/{{search-endpoint}}/?query={{query}}&subject={{subject}}&grades={{grades}}",
-					"host": [
-						"{{api-domain}}"
 					],
-					"path": [
-						"{{search-endpoint}}",
-						""
-					],
-					"query": [
-						{
-							"key": "query",
-							"value": "{{query}}"
+					"request": {
+						"auth": {
+							"type": "noauth"
 						},
-						{
-							"key": "subject",
-							"value": "{{subject}}"
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
 						},
-						{
-							"key": "grades",
-							"value": "{{grades}}"
+						"url": {
+							"raw": "{{api-domain}}/{{target-endpoint}}/{{target}}",
+							"host": [
+								"{{api-domain}}"
+							],
+							"path": [
+								"{{target-endpoint}}",
+								"{{target}}"
+							]
+						},
+						"description": "Returns an ITarget based on grade, subject, claimNumber, and target.shortCode. As of now, none of these arguments can be null."
+					},
+					"response": []
+				},
+				{
+					"name": "search/ with query only",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{api-domain}}/{{search-endpoint}}/?query={{query}}",
+							"host": [
+								"{{api-domain}}"
+							],
+							"path": [
+								"{{search-endpoint}}",
+								""
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "{{query}}"
+								}
+							]
+						},
+						"description": "requests a search result from the api with only the 'query' parameter"
+					},
+					"response": []
+				},
+				{
+					"name": "search/ with query, subject, and grades",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{api-domain}}/{{search-endpoint}}/?query={{query}}&subject={{subject}}&grades={{grades}}",
+							"host": [
+								"{{api-domain}}"
+							],
+							"path": [
+								"{{search-endpoint}}",
+								""
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "{{query}}"
+								},
+								{
+									"key": "subject",
+									"value": "{{subject}}"
+								},
+								{
+									"key": "grades",
+									"value": "{{grades}}"
+								}
+							]
 						}
-					]
+					},
+					"response": []
+				},
+				{
+					"name": "search/ with query, subject, grades, and claim",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{api-domain}}/{{search-endpoint}}/?query={{query}}&subject={{subject}}&grades={{grades}}&claimNumber={{claim}}",
+							"host": [
+								"{{api-domain}}"
+							],
+							"path": [
+								"{{search-endpoint}}",
+								""
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "{{query}}"
+								},
+								{
+									"key": "subject",
+									"value": "{{subject}}"
+								},
+								{
+									"key": "grades",
+									"value": "{{grades}}"
+								},
+								{
+									"key": "claimNumber",
+									"value": "{{claim}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search/ with query, subject, grades, claim, and shortcode",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{api-domain}}/{{search-endpoint}}/?query={{query}}&subject={{subject}}&grades={{grades}}&claimNumber={{claim}}&targetShortCode={{target}}",
+							"host": [
+								"{{api-domain}}"
+							],
+							"path": [
+								"{{search-endpoint}}",
+								""
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "{{query}}"
+								},
+								{
+									"key": "subject",
+									"value": "{{subject}}"
+								},
+								{
+									"key": "grades",
+									"value": "{{grades}}"
+								},
+								{
+									"key": "claimNumber",
+									"value": "{{claim}}"
+								},
+								{
+									"key": "targetShortCode",
+									"value": "{{target}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search/ with subject and grades",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{api-domain}}/{{search-endpoint}}/?subject={{subject}}&grades={{grades}}",
+							"host": [
+								"{{api-domain}}"
+							],
+							"path": [
+								"{{search-endpoint}}",
+								""
+							],
+							"query": [
+								{
+									"key": "subject",
+									"value": "{{subject}}"
+								},
+								{
+									"key": "grades",
+									"value": "{{grades}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search/ with subject, grades, and claim",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{api-domain}}/{{search-endpoint}}/?subject={{subject}}&grades={{grades}}&claimNumber={{claim}}",
+							"host": [
+								"{{api-domain}}"
+							],
+							"path": [
+								"{{search-endpoint}}",
+								""
+							],
+							"query": [
+								{
+									"key": "subject",
+									"value": "{{subject}}"
+								},
+								{
+									"key": "grades",
+									"value": "{{grades}}"
+								},
+								{
+									"key": "claimNumber",
+									"value": "{{claim}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search/ with subject, grades, claim, and shortcode",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{api-domain}}/{{search-endpoint}}/?subject={{subject}}&grades={{grades}}&claimNumber={{claim}}&targetShortCode={{target}}",
+							"host": [
+								"{{api-domain}}"
+							],
+							"path": [
+								"{{search-endpoint}}",
+								""
+							],
+							"query": [
+								{
+									"key": "subject",
+									"value": "{{subject}}"
+								},
+								{
+									"key": "grades",
+									"value": "{{grades}}"
+								},
+								{
+									"key": "claimNumber",
+									"value": "{{claim}}"
+								},
+								{
+									"key": "targetShortCode",
+									"value": "{{target}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "filter/ with no url params",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{api-domain}}/{{filter-endpoint}}/",
+							"host": [
+								"{{api-domain}}"
+							],
+							"path": [
+								"{{filter-endpoint}}",
+								""
+							]
+						},
+						"description": "Return all possible grades and subjects if there are no url parameters\n"
+					},
+					"response": []
+				},
+				{
+					"name": "filter/ with subject, grades url params",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{api-domain}}/{{filter-endpoint}}?subject={{subject}}&grades={{grades}}",
+							"host": [
+								"{{api-domain}}"
+							],
+							"path": [
+								"{{filter-endpoint}}"
+							],
+							"query": [
+								{
+									"key": "subject",
+									"value": "{{subject}}"
+								},
+								{
+									"key": "grades",
+									"value": "{{grades}}"
+								}
+							]
+						},
+						"description": "Return all possible claim numbers if grade and subject url parameters are defined"
+					},
+					"response": []
+				},
+				{
+					"name": "filter/ with subject, grades, claimNumber url params",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{api-domain}}/{{filter-endpoint}}?subject={{subject}}&grades={{grades}}&claimNumber={{claim}}",
+							"host": [
+								"{{api-domain}}"
+							],
+							"path": [
+								"{{filter-endpoint}}"
+							],
+							"query": [
+								{
+									"key": "subject",
+									"value": "{{subject}}"
+								},
+								{
+									"key": "grades",
+									"value": "{{grades}}"
+								},
+								{
+									"key": "claimNumber",
+									"value": "{{claim}}"
+								}
+							]
+						},
+						"description": "Return all possible claim numbers is grade, subject, and claimNumber url parameters are defined"
+					},
+					"response": []
 				}
-			},
-			"response": []
-		},
-		{
-			"name": "search/ with query, subject, grades, and claim",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "{{api-domain}}/{{search-endpoint}}/?query={{query}}&subject={{subject}}&grades={{grades}}&claimNumber={{claim}}",
-					"host": [
-						"{{api-domain}}"
-					],
-					"path": [
-						"{{search-endpoint}}",
-						""
-					],
-					"query": [
-						{
-							"key": "query",
-							"value": "{{query}}"
-						},
-						{
-							"key": "subject",
-							"value": "{{subject}}"
-						},
-						{
-							"key": "grades",
-							"value": "{{grades}}"
-						},
-						{
-							"key": "claimNumber",
-							"value": "{{claim}}"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "search/ with query, subject, grades, claim, and shortcode",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "{{api-domain}}/{{search-endpoint}}/?query={{query}}&subject={{subject}}&grades={{grades}}&claimNumber={{claim}}&targetShortCode={{target}}",
-					"host": [
-						"{{api-domain}}"
-					],
-					"path": [
-						"{{search-endpoint}}",
-						""
-					],
-					"query": [
-						{
-							"key": "query",
-							"value": "{{query}}"
-						},
-						{
-							"key": "subject",
-							"value": "{{subject}}"
-						},
-						{
-							"key": "grades",
-							"value": "{{grades}}"
-						},
-						{
-							"key": "claimNumber",
-							"value": "{{claim}}"
-						},
-						{
-							"key": "targetShortCode",
-							"value": "{{target}}"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "search/ with subject and grades",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "{{api-domain}}/{{search-endpoint}}/?subject={{subject}}&grades={{grades}}",
-					"host": [
-						"{{api-domain}}"
-					],
-					"path": [
-						"{{search-endpoint}}",
-						""
-					],
-					"query": [
-						{
-							"key": "subject",
-							"value": "{{subject}}"
-						},
-						{
-							"key": "grades",
-							"value": "{{grades}}"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "search/ with subject, grades, and claim",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "{{api-domain}}/{{search-endpoint}}/?subject={{subject}}&grades={{grades}}&claimNumber={{claim}}",
-					"host": [
-						"{{api-domain}}"
-					],
-					"path": [
-						"{{search-endpoint}}",
-						""
-					],
-					"query": [
-						{
-							"key": "subject",
-							"value": "{{subject}}"
-						},
-						{
-							"key": "grades",
-							"value": "{{grades}}"
-						},
-						{
-							"key": "claimNumber",
-							"value": "{{claim}}"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "search/ with subject, grades, claim, and shortcode",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "{{api-domain}}/{{search-endpoint}}/?subject={{subject}}&grades={{grades}}&claimNumber={{claim}}&targetShortCode={{target}}",
-					"host": [
-						"{{api-domain}}"
-					],
-					"path": [
-						"{{search-endpoint}}",
-						""
-					],
-					"query": [
-						{
-							"key": "subject",
-							"value": "{{subject}}"
-						},
-						{
-							"key": "grades",
-							"value": "{{grades}}"
-						},
-						{
-							"key": "claimNumber",
-							"value": "{{claim}}"
-						},
-						{
-							"key": "targetShortCode",
-							"value": "{{target}}"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "health/",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "{{api-domain}}/{{health-endpoint}}",
-					"host": [
-						"{{api-domain}}"
-					],
-					"path": [
-						"{{health-endpoint}}"
-					]
-				},
-				"description": "An API Route Health Check"
-			},
-			"response": []
-		},
-		{
-			"name": "filter/ with no url params",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "{{api-domain}}/{{filter-endpoint}}/",
-					"host": [
-						"{{api-domain}}"
-					],
-					"path": [
-						"{{filter-endpoint}}",
-						""
-					]
-				},
-				"description": "Return all possible grades and subjects if there are no url parameters\n"
-			},
-			"response": []
-		},
-		{
-			"name": "filter/ with subject, grades url params",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "{{api-domain}}/{{filter-endpoint}}?subject={{subject}}&grades={{grades}}",
-					"host": [
-						"{{api-domain}}"
-					],
-					"path": [
-						"{{filter-endpoint}}"
-					],
-					"query": [
-						{
-							"key": "subject",
-							"value": "{{subject}}"
-						},
-						{
-							"key": "grades",
-							"value": "{{grades}}"
-						}
-					]
-				},
-				"description": "Return all possible claim numbers if grade and subject url parameters are defined"
-			},
-			"response": []
-		},
-		{
-			"name": "filter/ with subject, grades, claimNumber url params",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "{{api-domain}}/{{filter-endpoint}}?subject={{subject}}&grades={{grades}}&claimNumber={{claim}}",
-					"host": [
-						"{{api-domain}}"
-					],
-					"path": [
-						"{{filter-endpoint}}"
-					],
-					"query": [
-						{
-							"key": "subject",
-							"value": "{{subject}}"
-						},
-						{
-							"key": "grades",
-							"value": "{{grades}}"
-						},
-						{
-							"key": "claimNumber",
-							"value": "{{claim}}"
-						}
-					]
-				},
-				"description": "Return all possible claim numbers is grade, subject, and claimNumber url parameters are defined"
-			},
-			"response": []
+			]
 		}
 	],
 	"event": [
@@ -464,73 +474,73 @@
 	],
 	"variable": [
 		{
-			"id": "cb8254db-33ce-4556-9609-d6147ee10435",
+			"id": "32a86f6a-4cec-437c-bf4a-04ed708447e9",
 			"key": "api-domain",
 			"value": "http://localhost:3000",
 			"type": "string"
 		},
 		{
-			"id": "76352c2d-e8e0-41b6-90ba-da1d5a575472",
+			"id": "1cef84c3-0e87-404a-aa89-2ed0da687dda",
 			"key": "pdf-endpoint",
 			"value": "api/pdf",
 			"type": "string"
 		},
 		{
-			"id": "a9575c4f-ae0e-4321-9e7f-cfa400e42d41",
+			"id": "d4bc93d9-b9b4-49c5-9112-bc8658c8c6a7",
 			"key": "search-endpoint",
 			"value": "api/search",
 			"type": "string"
 		},
 		{
-			"id": "c39ea227-bb62-4ea4-ab72-1f89a40b0798",
+			"id": "c1553eb1-2993-42b3-b6ac-c9b715b24ba1",
 			"key": "init-endpoint",
 			"value": "api/init",
 			"type": "string"
 		},
 		{
-			"id": "16c268a8-56d2-4261-866f-95a0cb7c3d94",
+			"id": "ec6bd619-e57e-4a6e-be0a-4436430a340b",
 			"key": "target-endpoint",
 			"value": "api/target",
 			"type": "string"
 		},
 		{
-			"id": "8affd010-caa3-49b1-aa42-3024e00d9282",
+			"id": "8b8333f0-7ed5-4a52-a292-b157523a0c37",
 			"key": "health-endpoint",
 			"value": "health",
 			"type": "string"
 		},
 		{
-			"id": "da8f067b-bf9d-4182-becb-ad7252d0d161",
+			"id": "70884969-9eab-45a1-9f7b-73d0eeb73a66",
 			"key": "filter-endpoint",
 			"value": "api/filter",
 			"type": "string"
 		},
 		{
-			"id": "3495fffe-af6f-42fa-b840-be33145096a2",
+			"id": "47b70d1a-b73f-437e-9830-9d3ab6e5a5e7",
 			"key": "subject",
 			"value": "English Language Arts",
 			"type": "string"
 		},
 		{
-			"id": "50150118-fb2e-45d7-bd33-64b726150e47",
+			"id": "fb98ca29-91be-4a98-afd3-54b5653e2ab8",
 			"key": "grades",
 			"value": "3",
 			"type": "string"
 		},
 		{
-			"id": "1791de4a-401b-41a3-b334-8acf3876a27a",
+			"id": "6c288d4c-4716-4970-b16d-ea2bb4068a53",
 			"key": "claim",
 			"value": "C2",
 			"type": "string"
 		},
 		{
-			"id": "f159eedf-8dda-4350-b875-8ca15e0bbb7c",
+			"id": "4b7272d2-4c72-4abe-94a5-0a362e405441",
 			"key": "target",
 			"value": "E.G3.C2WI.T4",
 			"type": "string"
 		},
 		{
-			"id": "f35f719c-4325-4b4c-9798-a693cbe6cd57",
+			"id": "c8554659-48c0-4edd-9cf7-9805b1c318ed",
 			"key": "query",
 			"value": "simple procedure",
 			"type": "string"
