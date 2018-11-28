@@ -131,7 +131,7 @@ describe('search', () => {
       testQuery = {
         query: 'test string',
         subject: 'math',
-        grades: ['5', '6'],
+        grades: '5,6',
         claimNumber: 'C2',
         targetShortCode: 'M.G3.C1G.TK'
       };
@@ -145,8 +145,12 @@ describe('search', () => {
                 }
               },
               {
-                match: {
-                  grades: testQuery.grades
+                bool: {
+                  should: ['5', '6']. map((grade: string) => ({
+                    match: {
+                      grades: grade
+                    }
+                  }))
                 }
               },
               {
@@ -210,7 +214,7 @@ describe('search', () => {
       testQuery = {
         query: 'test string',
         subject: 'math',
-        grades: ['5', '6'],
+        grades: '5,6',
         claimNumber: 'C2',
         targetShortCode: 'M.G3.C1G.TK'
       };
@@ -250,8 +254,11 @@ describe('search', () => {
                 }
               },
               {
-                match: {
-                  grades: ['5', '6']
+                bool: {
+                  should : [
+                    {match: {grades: '5'}},
+                    {match: {grades: '6'}}
+                  ]
                 }
               },
               {

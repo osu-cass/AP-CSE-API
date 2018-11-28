@@ -29,7 +29,7 @@ export function buildSubjectsAndGrades(res: IGradeAndSubjectResult): IFilterOpti
     grades = gradeArr
       .filter((grade: string) => filterValue(gradeHash, grade))
       .sort((lhs: string, rhs: string) => parseInt(lhs, 10) - parseInt(rhs, 10))
-      .map(g => ({ code: g, label: g }));
+      .map(g => ({ code: g, label: `Grade ${g}` }));
   }
 
   if (res.subject) {
