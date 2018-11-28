@@ -110,6 +110,10 @@ describe('MongoDb client interface', () => {
             {
               code: '5',
               label: 'Grade 5'
+            },
+            {
+              code: '9,10,11,12',
+              label: 'High School'
             }
           ]
         };

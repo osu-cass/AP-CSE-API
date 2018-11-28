@@ -146,7 +146,7 @@ describe('search', () => {
               },
               {
                 bool: {
-                  should: ['5', '6']. map((grade: string) => ({
+                  should: ['5', '6'].map((grade: string) => ({
                     match: {
                       grades: grade
                     }
@@ -255,10 +255,7 @@ describe('search', () => {
               },
               {
                 bool: {
-                  should : [
-                    {match: {grades: '5'}},
-                    {match: {grades: '6'}}
-                  ]
+                  should: [{ match: { grades: '5' } }, { match: { grades: '6' } }]
                 }
               },
               {

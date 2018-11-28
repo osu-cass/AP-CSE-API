@@ -8,8 +8,14 @@ import {
 } from '../../models/filter';
 import { Hash } from '../interface';
 
+/**
+ * Helper function to filter out high school grades(9, 10, 11, 12)
+ * and confirm that all other grades are included only once.
+ * @param hash
+ * @param idx
+ */
 function filterValue(hash: Hash, idx: string): boolean {
-  if (!hash[idx]) {
+  if (!hash[idx] && !idx.match(/^[9]|1[0-2]$/)) {
     hash[idx] = idx;
 
     return true;
@@ -30,6 +36,7 @@ export function buildSubjectsAndGrades(res: IGradeAndSubjectResult): IFilterOpti
       .filter((grade: string) => filterValue(gradeHash, grade))
       .sort((lhs: string, rhs: string) => parseInt(lhs, 10) - parseInt(rhs, 10))
       .map(g => ({ code: g, label: `Grade ${g}` }));
+    grades.push({ code: '9,10,11,12', label: 'High School' });
   }
 
   if (res.subject) {

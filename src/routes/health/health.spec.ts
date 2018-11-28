@@ -10,16 +10,18 @@ describe('API Routing Health Check', () => {
       sendStatus: jest.fn(),
       locals: {
         searchClient: {
-          ping: jest.fn()
-          .mockResolvedValueOnce(Health.good)
-          .mockResolvedValueOnce(Health.good)
-          .mockRejectedValueOnce(Health.good)
+          ping: jest
+            .fn()
+            .mockResolvedValueOnce(Health.good)
+            .mockResolvedValueOnce(Health.good)
+            .mockRejectedValueOnce(Health.good)
         },
         dbClient: {
-          ping: jest.fn()
-          .mockResolvedValueOnce(Health.good)
-          .mockResolvedValueOnce(Health.busy)
-          .mockRejectedValueOnce(Health.good)
+          ping: jest
+            .fn()
+            .mockResolvedValueOnce(Health.good)
+            .mockResolvedValueOnce(Health.busy)
+            .mockRejectedValueOnce(Health.good)
         }
       }
     };
