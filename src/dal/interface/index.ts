@@ -9,11 +9,6 @@ import {
   ITargetShortCodeResult
 } from '../../models/filter';
 
-export interface Hash {
-  [key: string]: string | undefined;
-  data?: string;
-}
-
 export interface IDbClientOptions {
   url: string;
   port: number;

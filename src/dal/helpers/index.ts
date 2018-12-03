@@ -6,7 +6,7 @@ import {
   ITargetShortCodeResult,
   IShortCodeResult
 } from '../../models/filter';
-import { Hash } from '../interface';
+import { Hash } from '../../utils/static';
 
 /**
  * Helper function to filter out high school grades(9, 10, 11, 12)
@@ -70,6 +70,25 @@ function filterShortCodeByGrade(grades: string[], shortCode: string): boolean {
   return false;
 }
 
+function translateTargetShortCode(code: string): string {
+  let display: string;
+  // get the target number/letter
+  const target: string = code[code.length - 1];
+  // split the target short code over '.'
+  const codeSegment: string[] = code.split('.');
+  // get the domain/sub-claim for special case (Math 3, C1)
+  const domain: string = codeSegment[2].substring(2);
+
+  // Only include the domain string if the subject is math
+  if(codeSegment[0] === 'M') {
+    display = domain === '' ? `Target ${target}` : `Target ${target} (${domain})`;
+  } else {
+    display = `Target ${target}`;
+  }
+
+  return display;
+}
+
 export function buildTargetShortCodes(
   grades: string[],
   dbResult: ITargetShortCodeResult[]
@@ -79,7 +98,7 @@ export function buildTargetShortCodes(
 
   const targetShortCodes: IFilterItem[] = flatResult
     .filter(({ shortCode }: IShortCodeResult) => filterShortCodeByGrade(grades, shortCode))
-    .map(({ shortCode }: IShortCodeResult) => ({ code: shortCode, label: shortCode }));
+    .map(({ shortCode }: IShortCodeResult) => ({ code: shortCode, label: translateTargetShortCode(shortCode) }));
 
   return targetShortCodes.length !== 0 ? { targetShortCodes } : undefined;
 }
