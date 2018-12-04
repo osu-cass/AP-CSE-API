@@ -9,7 +9,7 @@ export interface ITargetShortCode {
 }
 export interface ITargetParams {
   subject?: string;
-  grades?: string[] | number;
+  grades?: string;
   claimNumber?: string;
   targetShortCode?: string;
 }

@@ -77,7 +77,9 @@ export class SearchClient implements ISearchClient {
     }
 
     if (grades) {
-      body.query('match', 'grades', grades);
+      body.query('bool', {
+        should: grades.split(',').map((grade: string) => ({ match: { grades: grade } }))
+      });
     }
 
     if (claimNumber) {
@@ -130,9 +132,9 @@ export class SearchClient implements ISearchClient {
     let response: SearchResponse<{}>;
     try {
       response = await this.client.search({
+        body: this.buildRequestBody(query),
         type: 'claim',
-        index: 'cse',
-        body: this.buildRequestBody(query)
+        index: 'cse'
       });
       result = response.hits.hits.map(hit => {
         const claim: IClaim = <IClaim>hit._source;
