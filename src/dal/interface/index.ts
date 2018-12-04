@@ -167,7 +167,7 @@ export class DbClient implements IDbClient {
           )
           .toArray();
 
-        result = DbClientHelper.buildClaimNumbers(dbResult);
+        result = DbClientHelper.buildClaimNumbers(grades, dbResult);
       } catch (error) {
         throw new Error('failed to get claim numbers');
       }

@@ -6,7 +6,7 @@ import {
   ITargetShortCodeResult,
   IShortCodeResult
 } from '../../models/filter';
-import { Hash } from '../../utils/static';
+import { Hash, mathShortCodes, elaShortCodes, mathClaims, elaClaims } from '../../utils/static';
 
 /**
  * Helper function to filter out high school grades(9, 10, 11, 12)
@@ -46,7 +46,16 @@ export function buildSubjectsAndGrades(res: IGradeAndSubjectResult): IFilterOpti
   return subject.length !== 0 && grades.length !== 0 ? { subject, grades } : undefined;
 }
 
-export function buildClaimNumbers(dbResult: IClaimNumberResult[]): IFilterOptions | undefined {
+// function translateClaimNumber(subject: string, claimNumber: string): string {
+//   const claimNum: string = claimNumber[1];
+
+//   return subject === 'Math' ?  `${claimNum}: mathClaims[claimNumber]` : `${claimNum}: elaClaims[claimNumber]`;
+// }
+
+export function buildClaimNumbers(
+  subject: string,
+  dbResult: IClaimNumberResult[]
+): IFilterOptions | undefined {
   const claimNums: Hash = {};
 
   const claimNumbers: IFilterItem[] = dbResult
@@ -78,12 +87,17 @@ function translateTargetShortCode(code: string): string {
   const codeSegment: string[] = code.split('.');
   // get the domain/sub-claim for special case (Math 3, C1)
   const domain: string = codeSegment[2].substring(2);
+  const subject: string = codeSegment[0];
+  const claim: string = codeSegment[2].substring(0, 2);
 
   // Only include the domain string if the subject is math
-  if(codeSegment[0] === 'M') {
-    display = domain === '' ? `Target ${target}` : `Target ${target} (${domain})`;
+  if (subject === 'M') {
+    display =
+      claim !== 'C1'
+        ? `Target ${target}: ${mathShortCodes[`${claim}.T${target}`]}`
+        : `Target ${target}: ${mathShortCodes[code]} (${domain})`;
   } else {
-    display = `Target ${target}`;
+    display = `Target ${target}: ${elaShortCodes[code]}`;
   }
 
   return display;
@@ -98,7 +112,10 @@ export function buildTargetShortCodes(
 
   const targetShortCodes: IFilterItem[] = flatResult
     .filter(({ shortCode }: IShortCodeResult) => filterShortCodeByGrade(grades, shortCode))
-    .map(({ shortCode }: IShortCodeResult) => ({ code: shortCode, label: translateTargetShortCode(shortCode) }));
+    .map(({ shortCode }: IShortCodeResult) => ({
+      code: shortCode,
+      label: translateTargetShortCode(shortCode)
+    }));
 
   return targetShortCodes.length !== 0 ? { targetShortCodes } : undefined;
 }
