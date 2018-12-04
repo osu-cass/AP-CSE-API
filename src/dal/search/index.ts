@@ -136,7 +136,7 @@ export class SearchClient implements ISearchClient {
       });
       result = response.hits.hits.map(hit => {
         const claim: IClaim = <IClaim>hit._source;
-        if(query.targetShortCode) {
+        if (query.targetShortCode) {
           claim.target = claim.target.filter((t: ITarget) => t.shortCode === query.targetShortCode);
         }
 

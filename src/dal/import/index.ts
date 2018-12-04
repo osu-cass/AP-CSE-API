@@ -473,43 +473,44 @@ function getClaimDesc(
 }
 // This function consolidates all targets that share the same claim number into a singular claim object with an array of targets.
 export function consolidate(claimArray: IClaim[]): IClaim[] {
-  let myArray = [];
-  let unique: string[];
+  let tempArray = [];
+  let claimHolder;
+  const finalArray: IClaim[] = [];
+  const myArray = [];
+  let unique: string[] = [];
   for (const claims of claimArray) {
     myArray.push(claims.shortCode);
   }
-  unique = myArray.filter((v, i, a) => a.indexOf(v) !== i);
-
-  while (unique.length !== 0) {
-    for (const p of claimArray) {
-      for (const q of claimArray) {
-        if (q.shortCode === p.shortCode && q !== p) {
-          p.target.push(q.target[0]);
-          claimArray.splice(claimArray.indexOf(q), 1);
-        }
-      }
-    }
-    for (const p of claimArray) {
-      if (p.subject === Subject.ELA) {
-        if (!p.title.includes('Performance')) {
-          const titlecopy = p.title.split(' ');
-          p.title = titlecopy.slice(0, 8).join(' ');
-        }
+  unique = myArray.filter((v, i, a) => a.indexOf(v) === i);
+  for (const claimCode of unique) {
+    tempArray = claimArray.filter(claim => claim.shortCode === claimCode);
+    claimHolder = tempArray[0];
+    for (const temp of tempArray) {
+      if (tempArray.indexOf(temp) === 0) {
+        continue;
       } else {
-        const titlecopy = p.title.split(' ');
-        if (titlecopy.includes('Grade')) {
-          p.title = titlecopy.slice(0, 6).join(' ');
-        } else if (titlecopy[0] === 'HS') {
-          p.title = titlecopy.slice(0, 5).join(' ');
-        }
+        claimHolder.target.push(temp.target[0]);
       }
     }
-    myArray = [];
-    for (const claims of claimArray) {
-      myArray.push(claims.shortCode);
+    finalArray.push(claimHolder);
+    claimHolder = {};
+    tempArray = [];
+  }
+  for (const p of finalArray) {
+    if (p.subject === Subject.ELA) {
+      if (!p.title.includes('Performance')) {
+        const titlecopy = p.title.split(' ');
+        p.title = titlecopy.slice(0, 8).join(' ');
+      }
+    } else {
+      const titlecopy = p.title.split(' ');
+      if (titlecopy.includes('Grade')) {
+        p.title = titlecopy.slice(0, 6).join(' ');
+      } else if (titlecopy[0] === 'HS') {
+        p.title = titlecopy.slice(0, 5).join(' ');
+      }
     }
-    unique = myArray.filter((v, i, a) => a.indexOf(v) !== i);
   }
 
-  return claimArray;
+  return finalArray;
 }
