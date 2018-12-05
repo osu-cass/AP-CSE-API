@@ -95,7 +95,6 @@
     "@osu-cass/tslint-config": "^2.0.0",
     "@types/body-parser": "^1.17.0",
     "@types/elasticsearch": "^5.0.26",
-    "@types/event-stream": "^3.3.34",
     "@types/express": "^4.16.0",
     "@types/faker": "^4.1.2",
     "@types/jest": "^23.3.1",
