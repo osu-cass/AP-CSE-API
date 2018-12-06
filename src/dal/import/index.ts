@@ -524,8 +524,9 @@ export function consolidate(claimArray: IClaim[]): IClaim[] {
       }
     }
   }
+  handlePT(finalArray);
 
-  return handlePT(finalArray);
+  return finalArray;
 }
 
 export function handlePT(finalArray: IClaim[]) {
@@ -533,8 +534,7 @@ export function handlePT(finalArray: IClaim[]) {
   let tempIdx;
 
   PTArr = finalArray.filter(claim => claim.title.includes('Performance'));
-
-  for (const PT of PTArr) {
+    PTArr.forEach((PT) => {
     for (const targ of PT.target) {
       if (parseInt(PT.grades[0], 10) < 8) {
         tempIdx = finalArray.findIndex(claim => {
@@ -543,7 +543,6 @@ export function handlePT(finalArray: IClaim[]) {
         finalArray[tempIdx].target.push(targ);
       }
     }
-  }
+  });
 
-  return finalArray;
 }
