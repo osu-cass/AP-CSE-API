@@ -529,5 +529,29 @@ export function consolidate(claimArray: IClaim[]): IClaim[] {
     }
   }
 
+  return handlePT(finalArray);
+}
+
+export function handlePT(finalArray: IClaim[]) {
+  const PTArr: IClaim [] = [];
+  let temp: string;
+  let tempIdx;
+  for(const claim of finalArray) {
+    if(claim.title.includes('Performance')) {
+      PTArr.push(claim);
+    }
+  }
+  for(const  PT of PTArr) {
+    for(const targ of PT.target) {
+      if(parseInt(PT.grades[0],10) < 8) {
+      temp = targ.shortCode.slice(0,7);
+      tempIdx = finalArray.findIndex((claim) => {
+        return claim.shortCode === temp;
+      });
+      finalArray[tempIdx].target.push(targ);
+    }
+  }
+  }
+
   return finalArray;
 }
