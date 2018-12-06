@@ -99,7 +99,8 @@ export async function importDbEntries(): Promise<IClaim[]> {
     } else {
       newClaim.target[0].title = claim.CFDocument.title;
       newClaim.target[0].shortCode = getTargetShortCode(claim);
-      getTarget(newClaim, claim);
+
+      getTarget(newClaim, claim, DOKDOC);
       const catPT = claim.CFDocument.creator.split(' ');
       catPT
         .filter((p: string) => p.includes('CAT'))
@@ -181,32 +182,42 @@ export function getMultiTarget(claim: ISpecDocument, newClaim: any, DOKDOC: ISpe
 
   for (const targ of newClaim.target) {
     let iter = 0;
+    targ.taskModels = [];
+    let tSplit;
     for (const task of tModels) {
       if (targ.title !== undefined) {
-        const tSplit = targ.title.split(', ')[2];
+        if (!targ.shortCode.includes('M.GHS')) {
+          tSplit = targ.title.split(', ')[2];
         const code = `${newClaim.claimNumber.slice(1)}${tSplit.replace('Target ', '')}`;
         if (task.taskName.split('.')[0].includes(code)) {
-          targ.taskModels[iter] = {
+          targ.taskModels.push({
             taskName: task.taskName,
             taskDesc: task.taskDesc,
             examples: task.examples
-          };
+          });
           iter++;
         }
       }
+        else {
+          targ.taskModels.push(task);
+        }
+
+      }
     }
   }
+
   for (const targ of newClaim.target) {
     let i = 0;
     for (const association of claim.CFAssociations) {
       if (association.originNodeURI.title === targ.shortCode) {
         for (const items of DOKDOC.CFItems) {
           if (association.destinationNodeURI.identifier === items.identifier) {
-            targ.DOK[i] = {
+            targ.DOK = [];
+            targ.DOK.push({
               dokCode: items.humanCodingScheme,
               dokDesc: items.fullStatement,
               dokShort: items.abbreviatedStatement
-            };
+            });
             i++;
           }
         }
@@ -320,76 +331,82 @@ export function specDocs() {
   return specs;
 }
 // This function extracts target-specific data for a given document
-export function getTarget(claim: IClaim, jsonData: ISpecDocument) {
-  for (const target of claim.target) {
-    let iter = 0;
-    target.taskModels = [];
-    target.stem = [];
-    target.standards = [];
-    target.evidence = [];
-    target.rubrics = [];
-    for (const p of jsonData.CFItems) {
-      const { fullStatement, humanCodingScheme, abbreviatedStatement } = p;
-      if (p.CFItemType === 'Measured Skill') {
-        if (!target.standards.find(s => s.stdCode === humanCodingScheme)) {
-          target.standards.push({
-            stdCode: humanCodingScheme,
-            stdDesc: fullStatement
-          });
-        }
-      }
-      if (p.CFItemType === 'Target') {
-        target.description = fullStatement;
-      }
-      if (p.CFItemType === 'Clarification') {
-        target.clarification = fullStatement;
-      }
-      if (p.CFItemType === 'Section Heading') {
-        target.heading = fullStatement;
-      }
-      if (p.CFItemType === 'Evidence Required') {
-        const splitStatement = fullStatement.split(' ');
-        if (splitStatement.length > 2) {
-          target.evidence.push({
-            evTitle: abbreviatedStatement,
-            evDesc: fullStatement
-          });
-        }
-      }
-      // This block handles a bug in the CASE API where some CFItems are missing their CFItemType property
-      if (p.abbreviatedStatement !== undefined) {
-        if (p.CFItemType === undefined && p.abbreviatedStatement.includes('Evidence Required ')) {
-          target.evidence.push({
-            evTitle: abbreviatedStatement,
-            evDesc: fullStatement
-          });
-        }
-      }
-      if (p.CFItemType === 'Accessibility') {
-        target.accessibility = fullStatement;
-      }
-      if (p.CFItemType === 'Task Description') {
-        if (jsonData.CFItems[iter + 1].fullStatement.includes('Task Model ')) {
-          target.taskModels.push({
-            taskDesc: fullStatement,
-            taskName: jsonData.CFItems[iter + 1].fullStatement,
-            stimulus: jsonData.CFItems[iter + 2].fullStatement,
-            examples: jsonData.CFItems[iter + 4].fullStatement,
-            relatedEvidence: ['']
-          });
-        }
-      }
-      if (p.CFItemType === 'Stem') {
-        target.stem.push({
-          stemDesc: fullStatement,
-          shortStem: abbreviatedStatement
-        });
-      }
-      iter++;
-    }
-    getAssociatedEvidence(claim, jsonData);
-    getGenReqs(claim, jsonData);
+export function getTarget(claim: IClaim, jsonData: ISpecDocument, DOKDOC: ISpecDocument) {
+  if (claim.shortCode.includes('M.GHS.C') && !claim.shortCode.includes('C1')) {
+    getMultiTarget(jsonData, claim, DOKDOC);
   }
+  else {
+    for (const target of claim.target) {
+      let iter = 0;
+      target.taskModels = [];
+      target.stem = [];
+      target.standards = [];
+      target.evidence = [];
+      target.rubrics = [];
+      for (const p of jsonData.CFItems) {
+        const { fullStatement, humanCodingScheme, abbreviatedStatement } = p;
+        if (p.CFItemType === 'Measured Skill') {
+          if (!target.standards.find(s => s.stdCode === humanCodingScheme)) {
+            target.standards.push({
+              stdCode: humanCodingScheme,
+              stdDesc: fullStatement
+            });
+          }
+        }
+        if (p.CFItemType === 'Target') {
+          target.description = fullStatement;
+        }
+        if (p.CFItemType === 'Clarification') {
+          target.clarification = fullStatement;
+        }
+        if (p.CFItemType === 'Section Heading') {
+          target.heading = fullStatement;
+        }
+        if (p.CFItemType === 'Evidence Required') {
+          const splitStatement = fullStatement.split(' ');
+          if (splitStatement.length > 2) {
+            target.evidence.push({
+              evTitle: abbreviatedStatement,
+              evDesc: fullStatement
+            });
+          }
+        }
+        // This block handles a bug in the CASE API where some CFItems are missing their CFItemType property
+        if (p.abbreviatedStatement !== undefined) {
+          if (p.CFItemType === undefined && p.abbreviatedStatement.includes('Evidence Required ')) {
+            target.evidence.push({
+              evTitle: abbreviatedStatement,
+              evDesc: fullStatement
+            });
+          }
+        }
+        if (p.CFItemType === 'Accessibility') {
+          target.accessibility = fullStatement;
+        }
+        if (p.CFItemType === 'Task Description') {
+          if (jsonData.CFItems[iter + 1].fullStatement.includes('Task Model ')) {
+            target.taskModels.push({
+              taskDesc: fullStatement,
+              taskName: jsonData.CFItems[iter + 1].fullStatement,
+              stimulus: jsonData.CFItems[iter + 2].fullStatement,
+              examples: jsonData.CFItems[iter + 4].fullStatement,
+              relatedEvidence: ['']
+            });
+          }
+        }
+        if (p.CFItemType === 'Stem') {
+          target.stem.push({
+            stemDesc: fullStatement,
+            shortStem: abbreviatedStatement
+          });
+        }
+        iter++;
+      }
+    }
+  }
+  getAssociatedEvidence(claim, jsonData);
+  getGenReqs(claim, jsonData);
+
 }
 
 export function getAssociatedEvidence(claim: IClaim, jsonData: ISpecDocument) {
