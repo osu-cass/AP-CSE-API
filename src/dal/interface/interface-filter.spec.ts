@@ -235,11 +235,11 @@ describe('MongoDb client interface', () => {
           targetShortCodes: [
             {
               code: 'E.G3.C2.GG',
-              label: 'Target G'
+              label: 'Target G: undefined'
             },
             {
               code: 'M.G3.C2.FG',
-              label: 'Target G'
+              label: 'Target G: undefined'
             }
           ]
         };
