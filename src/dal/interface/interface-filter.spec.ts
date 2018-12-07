@@ -28,8 +28,8 @@ describe('MongoDb client interface', () => {
     dbReturnValues1 = [{ claimNumber: 'C1' }, { claimNumber: 'C2' }, { claimNumber: 'C2' }];
 
     dbReturnValues2 = [
-      { target: [{ shortCode: 'MF.G3.C2.GG' }] },
-      { target: [{ shortCode: 'FM.G3.C2.FG' }, { shortCode: 'MF.G4.C2.GG' }] }
+      { target: [{ shortCode: 'E.G3.C2.GG' }] },
+      { target: [{ shortCode: 'M.G3.C2.FG' }, { shortCode: 'E.G4.C2.GG' }] }
     ];
 
     toArray = jest
@@ -234,12 +234,12 @@ describe('MongoDb client interface', () => {
         filterOptions = {
           targetShortCodes: [
             {
-              code: 'MF.G3.C2.GG',
-              label: 'MF.G3.C2.GG'
+              code: 'E.G3.C2.GG',
+              label: 'Target G: undefined'
             },
             {
-              code: 'FM.G3.C2.FG',
-              label: 'FM.G3.C2.FG'
+              code: 'M.G3.C2.FG',
+              label: 'Target G: undefined'
             }
           ]
         };
