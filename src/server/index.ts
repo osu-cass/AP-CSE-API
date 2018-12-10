@@ -111,10 +111,30 @@ export class Server implements IServer {
     this.app.use(morgan('combined', { stream: new LoggingStream() }));
   }
 
+  public async gracefulStart(): Promise<void> {
+    const { searchClient, dbClient, logger } = this.context;
+
+    let mongoRunning: Health = Health.bad;
+    let esRunning: Health = Health.bad;
+
+    while(esRunning !== Health.good && mongoRunning !== Health.good) {
+      try {
+        logger.info('Checking server runtime dependecies...');
+        mongoRunning = await dbClient.ping();
+        esRunning = await searchClient.ping();
+      } catch (err) {
+        logger.error('Server runtime dependency health-check failed', err);
+      }
+    }
+  }
+
   public async start(): Promise<http.Server> {
-    signale.pending('Starting server...');
     const { dbClient, searchClient, logger } = this.context;
     const { SERVERINIT: serverInit = 'no' } = process.env;
+
+    await this.gracefulStart();
+
+    signale.pending('Starting server...');
 
     try {
       if (serverInit === 'yes') {
