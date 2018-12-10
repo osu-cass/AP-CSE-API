@@ -11,8 +11,8 @@ import { SearchClient } from '../dal/search';
 import { createTracer } from '../utils/tracer';
 import { logger, LoggingStream } from '../utils/logger';
 import { Health, healthCheck } from '../routes/health';
-import { importDbEntries } from '../dal/import/index';
-import { IClaim } from '../models/claim/index';
+import { importDbEntries } from '../dal/import';
+import { IClaim } from '../models/claim';
 
 /**
  * ServerContext defines a type for the tracer and db client
@@ -117,13 +117,15 @@ export class Server implements IServer {
     let mongoRunning: Health = Health.bad;
     let esRunning: Health = Health.bad;
 
-    while(esRunning !== Health.good && mongoRunning !== Health.good) {
+    while (esRunning !== Health.good && mongoRunning !== Health.good) {
       try {
         logger.info('Checking server runtime dependecies...');
+        signale.pending('Checking server runtime dependecies...');
         mongoRunning = await dbClient.ping();
         esRunning = await searchClient.ping();
       } catch (err) {
         logger.error('Server runtime dependency health-check failed', err);
+        signale.error('Server runtime dependency health-check failed', err);
       }
     }
   }
@@ -148,8 +150,7 @@ export class Server implements IServer {
       }
     } catch (err) {
       // tslint:disable-next-line: no-unsafe-any
-      logger.error(err);
-      logger.error('data store init failed');
+      logger.error('data store init failed', err);
       throw new Error('data store init failed');
     }
 

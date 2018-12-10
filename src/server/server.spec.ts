@@ -1,6 +1,8 @@
 import e, { NextFunction, Request, Response } from 'express';
 import { use, listen } from '../__mocks__/express';
 import { Server, CSEResponse } from './';
+import { Health } from '../routes/health/index';
+import { InsertWriteOpResult } from 'mongodb';
 
 jest.mock('../utils/tracer', () => ({
   createTracer: jest.fn().mockImplementation(() => ({
@@ -20,7 +22,33 @@ jest.mock('../utils/tracer', () => ({
     )
 }));
 
+jest.mock('../dal/import');
+
+jest.mock('../dal/search', () => ({
+  SearchClient: jest.fn().mockImplementation(() => ({
+    ping: jest.fn().mockResolvedValue(Health.good),
+    insertDocuments: jest.fn().mockResolvedValue({})
+  }))
+}));
+
+jest.mock('../dal/interface', () => ({
+  DbClient: jest.fn().mockImplementationOnce(() => ({
+    ping: jest.fn().mockResolvedValueOnce(Health.good),
+    connect: jest.fn().mockResolvedValueOnce({})
+  })).mockImplementationOnce(() => ({
+    ping: jest.fn()
+    .mockRejectedValueOnce(new Error('error'))
+    .mockResolvedValueOnce(Health.good),
+    connect: jest.fn().mockResolvedValueOnce({})
+  }))
+  .mockImplementationOnce(() => ({
+    ping: jest.fn().mockResolvedValueOnce(Health.good),
+    connect: jest.fn().mockRejectedValueOnce(new Error('error'))
+  }))
+}));
+
 describe('Server', () => {
+  const OLD_ENV = process.env;
   let server: Server;
   let req: Partial<Request>;
   let res: Partial<Response>;
@@ -31,6 +59,7 @@ describe('Server', () => {
     Server.prototype,
     'registerMiddleware'
   );
+  const gracefulStartSpy: jest.SpyInstance = jest.spyOn(Server.prototype, 'gracefulStart');
 
   beforeAll(() => {
     server = new Server();
@@ -40,10 +69,15 @@ describe('Server', () => {
       locals: {},
       header: jest.fn()
     };
+    process.env = { ...OLD_ENV };
+    delete process.env.SERVERINIT;
   });
 
   afterEach(() => {
     use.mockClear();
+    listen.mockClear();
+    gracefulStartSpy.mockClear();
+    process.env = OLD_ENV;
   });
 
   it('initializes correctly', () => {
@@ -54,11 +88,33 @@ describe('Server', () => {
     expect(use).toHaveBeenCalledTimes(4);
   });
 
-  it('returns an http.Server instance', async () => {
-    expect.assertions(2);
+  it('gracefully starts server successfully', async () => {
+    expect.assertions(3);
     await server.start();
+    expect(gracefulStartSpy).toHaveBeenCalledTimes(1);
     expect(e).toHaveBeenCalledTimes(1);
     expect(listen).toHaveBeenCalledTimes(1);
+  });
+
+  it('gracefully starts server successfully on successive attempts', async () => {
+    expect.assertions(3);
+    await server.start();
+    expect(gracefulStartSpy).toHaveBeenCalledTimes(1);
+    expect(e).toHaveBeenCalledTimes(1);
+    expect(listen).toHaveBeenCalledTimes(1);
+  });
+
+  it('fails to init db on start up', async () => {
+    expect.assertions(4);
+    process.env.SERVERINIT = 'yes';
+    try {
+      await server.start();
+    } catch (err) {
+      expect(err).toEqual(new Error('data store init failed'));
+      expect(gracefulStartSpy).toHaveBeenCalledTimes(1);
+      expect(e).toHaveBeenCalledTimes(1);
+      expect(listen).toHaveBeenCalledTimes(0);
+    }
   });
 
   it('it configures the server', () => {
