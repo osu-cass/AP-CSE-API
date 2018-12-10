@@ -32,19 +32,23 @@ jest.mock('../dal/search', () => ({
 }));
 
 jest.mock('../dal/interface', () => ({
-  DbClient: jest.fn().mockImplementationOnce(() => ({
-    ping: jest.fn().mockResolvedValueOnce(Health.good),
-    connect: jest.fn().mockResolvedValueOnce({})
-  })).mockImplementationOnce(() => ({
-    ping: jest.fn()
-    .mockRejectedValueOnce(new Error('error'))
-    .mockResolvedValueOnce(Health.good),
-    connect: jest.fn().mockResolvedValueOnce({})
-  }))
-  .mockImplementationOnce(() => ({
-    ping: jest.fn().mockResolvedValueOnce(Health.good),
-    connect: jest.fn().mockRejectedValueOnce(new Error('error'))
-  }))
+  DbClient: jest
+    .fn()
+    .mockImplementationOnce(() => ({
+      ping: jest.fn().mockResolvedValueOnce(Health.good),
+      connect: jest.fn().mockResolvedValueOnce({})
+    }))
+    .mockImplementationOnce(() => ({
+      ping: jest
+        .fn()
+        .mockRejectedValueOnce(new Error('error'))
+        .mockResolvedValueOnce(Health.good),
+      connect: jest.fn().mockResolvedValueOnce({})
+    }))
+    .mockImplementationOnce(() => ({
+      ping: jest.fn().mockResolvedValueOnce(Health.good),
+      connect: jest.fn().mockRejectedValueOnce(new Error('error'))
+    }))
 }));
 
 describe('Server', () => {
