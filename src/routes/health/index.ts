@@ -3,8 +3,8 @@ import { CSEResponse } from '../../server';
 import { applyTracing } from '../../utils/tracer';
 
 export enum Health {
-  good,
   bad,
+  good,
   busy
 }
 

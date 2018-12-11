@@ -20,6 +20,7 @@ export interface IDbClient {
   dbName: string;
   connect(): Promise<void>;
   close(): Promise<void>;
+  exists(): Promise<boolean>;
   insert(documents: IClaim[]): Promise<InsertWriteOpResult>;
   getSubjectsAndGrades(): Promise<IFilterOptions | undefined>;
   getClaimNumbers(grade: string, subject: string): Promise<IFilterOptions | undefined>;
@@ -64,6 +65,29 @@ export class DbClient implements IDbClient {
     }
 
     return Health.busy;
+  }
+
+  public async exists(): Promise<boolean> {
+    let exists: boolean = false;
+    let collections: Collection<IClaim>[] = [];
+    try {
+      await this.connect();
+      if (this.db) {
+        // tslint:disable-next-line:no-any
+        collections = await this.db.collections();
+        const claims: Collection<IClaim> | undefined = collections.find(
+          collection => collection.collectionName === 'claims'
+        );
+        exists = claims && (await claims.countDocuments()) > 0 ? true : false;
+      }
+    } catch (err) {
+      // tslint:disable-next-line:no-unsafe-any
+      throw new Error(err);
+    }
+
+
+
+    return exists;
   }
 
   public async connect(): Promise<void> {

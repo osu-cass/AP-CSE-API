@@ -11,8 +11,9 @@ import { SearchClient } from '../dal/search';
 import { createTracer } from '../utils/tracer';
 import { logger, LoggingStream } from '../utils/logger';
 import { Health, healthCheck } from '../routes/health';
-import { importDbEntries } from '../dal/import/index';
-import { IClaim } from '../models/claim/index';
+import { importDbEntries } from '../dal/import';
+import { IClaim } from '../models/claim';
+import { InsertWriteOpResult } from 'mongodb';
 
 /**
  * ServerContext defines a type for the tracer and db client
@@ -111,26 +112,66 @@ export class Server implements IServer {
     this.app.use(morgan('combined', { stream: new LoggingStream() }));
   }
 
-  public async start(): Promise<http.Server> {
-    signale.pending('Starting server...');
+  public async gracefulStart(): Promise<void> {
+    const { searchClient, dbClient, logger } = this.context;
+
+    let mongoRunning: Health = Health.bad;
+    let esRunning: Health = Health.bad;
+
+    while (
+      esRunning !== Health.good &&
+      esRunning !== Health.busy &&
+      mongoRunning !== Health.good &&
+      mongoRunning !== Health.busy
+    ) {
+      try {
+        logger.info('Checking server runtime dependecies...');
+        signale.pending('Checking server runtime dependecies...');
+        mongoRunning = await dbClient.ping();
+        esRunning = await searchClient.ping();
+      } catch (err) {
+        // tslint:disable:no-unsafe-any
+        logger.error('Server runtime dependency health-check failed', err);
+        signale.error('Server runtime dependency health-check failed', err);
+        throw new Error(err);
+        // tslint:enable:no-unsafe-any
+      }
+    }
+  }
+
+  public async initializeDataStore() {
     const { dbClient, searchClient, logger } = this.context;
     const { SERVERINIT: serverInit = 'no' } = process.env;
 
     try {
-      if (serverInit === 'yes') {
+      if (serverInit === 'yes' && !(await dbClient.exists())) {
         logger.info('initializing data store');
         const claims: IClaim[] = await importDbEntries();
         await dbClient.connect();
         await searchClient.insertDocuments(claims);
         await dbClient.insert(claims);
-        await dbClient.close();
         logger.info('data store init succeeded');
       }
     } catch (err) {
-      // tslint:disable-next-line: no-unsafe-any
+      // tslint:disable:no-unsafe-any
       logger.error(err);
-      logger.error('data store init failed');
-      throw new Error('data store init failed');
+      throw new Error(err);
+      // tslint:enable:no-unsafe-any
+    } finally {
+      await dbClient.close();
+    }
+  }
+
+  public async start(): Promise<http.Server> {
+    try {
+      signale.pending('Starting server...');
+      await this.gracefulStart();
+      await this.initializeDataStore();
+    } catch (err) {
+      // tslint:disable:no-unsafe-any
+      logger.error(err);
+      throw new Error(err);
+      // tslint:enable:no-unsafe-any
     }
 
     return this.app.listen(this.port, async () => {

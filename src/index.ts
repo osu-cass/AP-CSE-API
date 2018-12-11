@@ -2,15 +2,9 @@ import { Server } from './server';
 import http from 'http';
 import signale from 'signale';
 
-const server: Server = new Server();
-
-let app: http.Server;
-
-server
+const server = new Server()
   .start()
-  .then((application: http.Server) => {
-    app = application;
-  })
+  .then((application: http.Server) => application)
   .catch(err => {
     signale.fatal(err);
   });
