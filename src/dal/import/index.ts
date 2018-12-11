@@ -549,4 +549,5 @@ export function handlePT(finalArray: IClaim[]) {
 
 export function removePT(finalArray: IClaim[]) {
   return finalArray.filter(claim => !claim.title.includes('Performance'));
+
 }
