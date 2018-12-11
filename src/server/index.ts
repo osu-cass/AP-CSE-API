@@ -117,7 +117,7 @@ export class Server implements IServer {
     const { SERVERINIT: serverInit = 'no' } = process.env;
 
     try {
-      if (serverInit === 'yes') {
+      if (serverInit === 'yes' && !await dbClient.exists()) {
         logger.info('initializing data store');
         const claims: IClaim[] = await importDbEntries();
         await dbClient.connect();
