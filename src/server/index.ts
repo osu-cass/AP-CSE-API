@@ -130,8 +130,11 @@ export class Server implements IServer {
         mongoRunning = await dbClient.ping();
         esRunning = await searchClient.ping();
       } catch (err) {
+        // tslint:disable:no-unsafe-any
         logger.error('Server runtime dependency health-check failed', err);
         signale.error('Server runtime dependency health-check failed', err);
+        throw new Error(err);
+        // tslint:enable:no-unsafe-any
       }
     }
   }
@@ -141,7 +144,7 @@ export class Server implements IServer {
     const { SERVERINIT: serverInit = 'no' } = process.env;
 
     try {
-      if (serverInit === 'yes' && !await dbClient.exists()) {
+      if (serverInit === 'yes' && !(await dbClient.exists())) {
         logger.info('initializing data store');
         const claims: IClaim[] = await importDbEntries();
         await dbClient.connect();

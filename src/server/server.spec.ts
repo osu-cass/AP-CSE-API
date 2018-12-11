@@ -36,18 +36,24 @@ jest.mock('../dal/interface', () => ({
     .fn()
     .mockImplementationOnce(() => ({
       ping: jest.fn().mockResolvedValueOnce(Health.good),
-      connect: jest.fn().mockResolvedValueOnce({})
+      connect: jest.fn().mockResolvedValueOnce({}),
+      close: jest.fn().mockResolvedValueOnce({}),
+      exists: jest.fn().mockResolvedValueOnce({})
     }))
     .mockImplementationOnce(() => ({
       ping: jest
         .fn()
         .mockRejectedValueOnce(new Error('error'))
         .mockResolvedValueOnce(Health.good),
-      connect: jest.fn().mockResolvedValueOnce({})
+      connect: jest.fn().mockResolvedValueOnce({}),
+      close: jest.fn().mockResolvedValueOnce({}),
+      exists: jest.fn().mockResolvedValueOnce({})
     }))
     .mockImplementationOnce(() => ({
       ping: jest.fn().mockResolvedValueOnce(Health.good),
-      connect: jest.fn().mockRejectedValueOnce(new Error('error'))
+      connect: jest.fn().mockRejectedValueOnce(new Error('error')),
+      close: jest.fn().mockResolvedValueOnce({}),
+      exists: jest.fn().mockResolvedValueOnce({})
     }))
 }));
 
@@ -64,6 +70,7 @@ describe('Server', () => {
     'registerMiddleware'
   );
   const gracefulStartSpy: jest.SpyInstance = jest.spyOn(Server.prototype, 'gracefulStart');
+  const initDataStoreSpy: jest.SpyInstance = jest.spyOn(Server.prototype, 'initializeDataStore');
 
   beforeAll(() => {
     server = new Server();
@@ -81,6 +88,7 @@ describe('Server', () => {
     use.mockClear();
     listen.mockClear();
     gracefulStartSpy.mockClear();
+    initDataStoreSpy.mockClear();
     process.env = OLD_ENV;
   });
 
@@ -101,24 +109,12 @@ describe('Server', () => {
   });
 
   it('gracefully starts server successfully on successive attempts', async () => {
-    expect.assertions(3);
+    expect.assertions(4);
     await server.start();
     expect(gracefulStartSpy).toHaveBeenCalledTimes(1);
+    expect(initDataStoreSpy).toHaveBeenCalledTimes(1);
     expect(e).toHaveBeenCalledTimes(1);
     expect(listen).toHaveBeenCalledTimes(1);
-  });
-
-  it('fails to init db on start up', async () => {
-    expect.assertions(4);
-    process.env.SERVERINIT = 'yes';
-    try {
-      await server.start();
-    } catch (err) {
-      expect(err).toEqual(new Error('data store init failed'));
-      expect(gracefulStartSpy).toHaveBeenCalledTimes(1);
-      expect(e).toHaveBeenCalledTimes(1);
-      expect(listen).toHaveBeenCalledTimes(0);
-    }
   });
 
   it('it configures the server', () => {

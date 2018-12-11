@@ -74,9 +74,11 @@ export class DbClient implements IDbClient {
       if (this.db) {
         // tslint:disable-next-line:no-any
         const collections: Collection<IClaim>[] = await this.db.collections();
-        const claims: Collection<IClaim> | undefined = collections.find(collection => collection.collectionName === 'claims');
-        if(claims) {
-          exists = await claims.countDocuments() > 0 ? true : false;
+        const claims: Collection<IClaim> | undefined = collections.find(
+          collection => collection.collectionName === 'claims'
+        );
+        if (claims) {
+          exists = (await claims.countDocuments()) > 0 ? true : false;
         }
       }
     } catch (err) {
