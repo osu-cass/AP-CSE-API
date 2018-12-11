@@ -488,7 +488,7 @@ function getClaimDesc(
 export function consolidate(claimArray: IClaim[]): IClaim[] {
   let tempArray = [];
   let claimHolder;
-  const finalArray: IClaim[] = [];
+  let finalArray: IClaim[] = [];
   const myArray = [];
   let unique: string[] = [];
   for (const claims of claimArray) {
@@ -525,6 +525,7 @@ export function consolidate(claimArray: IClaim[]): IClaim[] {
     }
   }
   handlePT(finalArray);
+  finalArray = removePT(finalArray);
 
   return finalArray;
 }
@@ -544,4 +545,9 @@ export function handlePT(finalArray: IClaim[]) {
       }
     }
   });
+}
+
+export function removePT(finalArray: IClaim[]) {
+  return finalArray.filter(claim => !claim.title.includes('Performance'));
+
 }

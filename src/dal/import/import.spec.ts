@@ -7,12 +7,13 @@ import { mockMATHPackage } from './mocks/mockMATHPackage';
 import { mockELA } from './mocks/mockELA';
 import { mockMATH } from './mocks/mockMATH';
 import { mockDOK } from './mocks/mockDOK';
-import { mockPT } from './mocks/mockPT';
 import { ISpecDocument } from './interfaces';
 import { mockMATHClone } from './mocks/mockMATHClone';
 import { mockHSMATH } from './mocks/mockHSMATH';
 import { mockTMATH } from './mocks/mockTargetlessMATH';
 import { mockIT } from './mocks/mockIT';
+import { singleGradePT } from './mocks/mockSingleGradePT';
+
 const subject = ['English Language Arts', 'Math'];
 const claim: string = 'C1';
 const grade: string[] = ['3'];
@@ -28,10 +29,10 @@ const title = [
 const shortCode = ['E.G3.C1', 'M.G3.C1', 'M.GHS.C1'];
 const packages = [
   '6a3ccfc6-cc76-11e7-8974-cfcd479e782c',
+  '5ee431c8-e4f4-11e7-b616-33d3a2d9d38d',
   'cbbb8d01-63fc-4adf-9803-a3781839b6b6',
   '255adad7-2854-47d7-9aa4-c5e1750eb8ca',
   'b7bc9d8c-cb5f-4dc8-96da-13ce635053d1',
-  'c60fa750-d5d2-11e7-8f78-23d147275a57',
   '1796d9a2-d5ee-11e7-b39f-71a145b86a18',
   '29152488-d04c-11e7-beeb-69048cb024ee',
   'f5fcd780-0539-11e8-b5aa-2b654ff8ee27',
@@ -62,7 +63,6 @@ describe('Case API Scraper', () => {
         [JSON.stringify(mockELA)],
         [JSON.stringify(mockMATH)],
         [JSON.stringify(mockDOK)],
-        [JSON.stringify(mockPT)],
         [JSON.stringify(mockMATHPackage)],
         [JSON.stringify(mockMATHClone)],
         [JSON.stringify(mockHSMATH)],
@@ -70,7 +70,8 @@ describe('Case API Scraper', () => {
         [JSON.stringify(mockPack[1])],
         [JSON.stringify(mockIT)],
         [JSON.stringify(mockPack[2])],
-        [JSON.stringify(mockPack[3])]
+        [JSON.stringify(mockPack[3])],
+        [JSON.stringify(singleGradePT)]
       );
     const result = await importDocs(arr);
     expect(fetch.mock.calls.length).toBe(14);
@@ -84,7 +85,6 @@ describe('Case API Scraper', () => {
         [JSON.stringify(mockELA)],
         [JSON.stringify(mockMATH)],
         [JSON.stringify(mockDOK)],
-        [JSON.stringify(mockPT)],
         [JSON.stringify(mockMATHPackage)],
         [JSON.stringify(mockMATHClone)],
         [JSON.stringify(mockHSMATH)],
@@ -92,7 +92,8 @@ describe('Case API Scraper', () => {
         [JSON.stringify(mockPack[1])],
         [JSON.stringify(mockIT)],
         [JSON.stringify(mockPack[2])],
-        [JSON.stringify(mockPack[3])]
+        [JSON.stringify(mockPack[3])],
+        [JSON.stringify(singleGradePT)]
       );
     const result = await importDbEntries();
     expect(fetch.mock.calls.length).toBe(14);

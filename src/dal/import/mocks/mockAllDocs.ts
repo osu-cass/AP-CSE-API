@@ -1,3 +1,4 @@
+// tslint:disable
 export const mockData = {
   CFDocuments: [
     {
@@ -24,9 +25,37 @@ export const mockData = {
       creator: 'Smarter Balanced_ELA CAT Item Specifications',
       publisher: 'Smarter Balanced Assessment Consortium',
       title: 'English Language Arts Specification: Grade 3 Claim 1 Target 1',
-      subject: ['English Language Arts'],
+
       adoptionStatus: 'Draft',
       notes: 'ELA_Spec_G03_C1_T1'
+    },
+    {
+      uri:
+        'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/5ee431c8-e4f4-11e7-b616-33d3a2d9d38d',
+      identifier: '5ee431c8-e4f4-11e7-b616-33d3a2d9d38d',
+      lastChangeDateTime: '2018-03-01T21:01:43+00:00',
+      CFPackageURI: {
+        title: 'English Language Arts Performance Task Specification: Grade ',
+        identifier: '5ee431c8-e4f4-11e7-b616-33d3a2d9d38d',
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFPackages/5ee431c8-e4f4-11e7-b616-33d3a2d9d38d'
+      },
+      subjectURI: [
+        {
+          title: 'English Language Arts',
+          identifier: 'cf91e60e-6674-5a4a-81ef-2bd88981154e',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFSubjects/cf91e60e-6674-5a4a-81ef-2bd88981154e'
+        }
+      ],
+      officialSourceURL:
+        'https://images.smarterbalanced.org/content/Documents/Item%20Specs/ELA%20Item%20Specs/PT/Narrative_3-5_Word/ELA%20PT%20Item%20Spec%20G5%20Narr.docx',
+      creator: 'Smarter Balanced_ELA PT Item Specifications',
+      publisher: 'Smarter Balanced Assessment Consortium',
+      title: 'English Language Arts Performance Task Specification: Grade 5 Narrative Writing',
+      subject: ['English Language Arts'],
+      adoptionStatus: 'Draft',
+      notes: 'ELA PT Item Spec G5 Narr'
     },
     {
       uri:
@@ -78,34 +107,6 @@ export const mockData = {
       creator: 'Norm Webb',
       publisher: 'Smarter Balanced Assessment Consortium',
       title: "Norm Webb's Depth of Knowledge [DOK] Levels of Cognitive Difficulty"
-    },
-    {
-      uri:
-        'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/c60fa750-d5d2-11e7-8f78-23d147275a57',
-      identifier: 'c60fa750-d5d2-11e7-8f78-23d147275a57',
-      lastChangeDateTime: '2018-03-01T21:01:43+00:00',
-      CFPackageURI: {
-        title: 'English Language Arts Performance Task Specification: Grade ',
-        identifier: 'c60fa750-d5d2-11e7-8f78-23d147275a57',
-        uri:
-          'https://case.smarterbalanced.org/ims/case/v1p0/CFPackages/c60fa750-d5d2-11e7-8f78-23d147275a57'
-      },
-      subjectURI: [
-        {
-          title: 'English Language Arts',
-          identifier: 'cf91e60e-6674-5a4a-81ef-2bd88981154e',
-          uri:
-            'https://case.smarterbalanced.org/ims/case/v1p0/CFSubjects/cf91e60e-6674-5a4a-81ef-2bd88981154e'
-        }
-      ],
-      officialSourceURL:
-        'https://case.smarterbalanced.org/content/Documents/Item%20Specs/ELA%20Item%20Specs/PT/Informational_3-5_Word/ELA%20PT%20Item%20Spec%20G5%20Info.docx',
-      creator: 'Smarter Balanced_ELA PT Item Specifications',
-      publisher: 'Smarter Balanced Assessment Consortium',
-      title: 'English Language Arts Performance Task Specification: Grade 5 Informational Writing',
-      subject: ['English Language Arts'],
-      adoptionStatus: 'Draft',
-      notes: 'ELA PT Item Spec G5 Info'
     },
     {
       uri:
