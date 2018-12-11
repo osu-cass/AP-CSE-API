@@ -359,10 +359,10 @@ export function getTarget(claim: IClaim, jsonData: ISpecDocument, DOKDOC: ISpecD
         }
         const splitStatement = fullStatement.split(' ');
         if (p.CFItemType === 'Evidence Required' && splitStatement.length > 2) {
-            target.evidence.push({
-              evTitle: abbreviatedStatement,
-              evDesc: fullStatement
-            });
+          target.evidence.push({
+            evTitle: abbreviatedStatement,
+            evDesc: fullStatement
+          });
         }
         // This block handles a bug in the CASE API where some CFItems are missing their CFItemType property
         if (
@@ -534,7 +534,7 @@ export function handlePT(finalArray: IClaim[]) {
   let tempIdx;
 
   PTArr = finalArray.filter(claim => claim.title.includes('Performance'));
-    PTArr.forEach((PT) => {
+  PTArr.forEach(PT => {
     for (const targ of PT.target) {
       if (parseInt(PT.grades[0], 10) < 8) {
         tempIdx = finalArray.findIndex(claim => {
@@ -544,5 +544,4 @@ export function handlePT(finalArray: IClaim[]) {
       }
     }
   });
-
 }

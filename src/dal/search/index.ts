@@ -23,6 +23,7 @@ export class SearchClient implements ISearchClient {
     this.client = new Client({
       host: opts.host,
       log: 'info',
+      requestTimeout: 120000,
       apiVersion: '6.3'
     });
   }
