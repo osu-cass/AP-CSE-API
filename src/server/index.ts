@@ -13,6 +13,7 @@ import { logger, LoggingStream } from '../utils/logger';
 import { Health, healthCheck } from '../routes/health';
 import { importDbEntries } from '../dal/import';
 import { IClaim } from '../models/claim';
+import { InsertWriteOpResult } from 'mongodb';
 
 /**
  * ServerContext defines a type for the tracer and db client
@@ -117,7 +118,12 @@ export class Server implements IServer {
     let mongoRunning: Health = Health.bad;
     let esRunning: Health = Health.bad;
 
-    while (esRunning !== Health.good && mongoRunning !== Health.good) {
+    while (
+      esRunning !== Health.good &&
+      esRunning !== Health.busy &&
+      mongoRunning !== Health.good &&
+      mongoRunning !== Health.busy
+    ) {
       try {
         logger.info('Checking server runtime dependecies...');
         signale.pending('Checking server runtime dependecies...');
@@ -130,28 +136,39 @@ export class Server implements IServer {
     }
   }
 
-  public async start(): Promise<http.Server> {
+  public async initializeDataStore() {
     const { dbClient, searchClient, logger } = this.context;
     const { SERVERINIT: serverInit = 'no' } = process.env;
 
-    await this.gracefulStart();
-
-    signale.pending('Starting server...');
-
     try {
-      if (serverInit === 'yes') {
+      if (serverInit === 'yes' && !await dbClient.exists()) {
         logger.info('initializing data store');
         const claims: IClaim[] = await importDbEntries();
         await dbClient.connect();
         await searchClient.insertDocuments(claims);
         await dbClient.insert(claims);
-        await dbClient.close();
         logger.info('data store init succeeded');
       }
     } catch (err) {
-      // tslint:disable-next-line: no-unsafe-any
-      logger.error('data store init failed', err);
-      throw new Error('data store init failed');
+      // tslint:disable:no-unsafe-any
+      logger.error(err);
+      throw new Error(err);
+      // tslint:enable:no-unsafe-any
+    } finally {
+      await dbClient.close();
+    }
+  }
+
+  public async start(): Promise<http.Server> {
+    try {
+      signale.pending('Starting server...');
+      await this.gracefulStart();
+      await this.initializeDataStore();
+    } catch (err) {
+      // tslint:disable:no-unsafe-any
+      logger.error(err);
+      throw new Error(err);
+      // tslint:enable:no-unsafe-any
     }
 
     return this.app.listen(this.port, async () => {
