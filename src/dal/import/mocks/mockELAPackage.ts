@@ -25,7 +25,6 @@ export const mockPack = [
       creator: 'Smarter Balanced_ELA CAT Item Specifications',
       publisher: 'Smarter Balanced Assessment Consortium',
       title: 'English Language Arts Specification: Grade 3 Claim 1 Target 1',
-      subject: ['English Language Arts'],
       adoptionStatus: 'Draft',
       notes: 'ELA_Spec_G03_C1_T1'
     },
