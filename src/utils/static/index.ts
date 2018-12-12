@@ -4,7 +4,8 @@ export interface Hash {
 }
 
 export const elaClaims: Hash = {
-  C1: 'Literary Reading/Informational Reading',
+  C1a: 'Literary Reading',
+  C1b: 'Informational Reading',
   C2: 'Writing',
   C3: 'Listening',
   C4: 'Research'
@@ -44,10 +45,10 @@ export const elaShortCodes: Hash = {
 };
 
 export const mathClaims: Hash = {
-  C1: '1. Content and Procedures',
-  C2: '2. Problem Solving',
-  C3: '3. Communication Reasoning',
-  C4: '4. Modeling and Data Analysis'
+  C1: 'Content and Procedures',
+  C2: 'Problem Solving',
+  C3: 'Communication Reasoning',
+  C4: 'Modeling and Data Analysis'
 };
 
 export const mathShortCodes: Hash = {
