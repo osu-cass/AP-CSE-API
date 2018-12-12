@@ -57,47 +57,13 @@ describe('Case API Scraper', () => {
     expect(result).toEqual(packages);
   });
   it('imports claim documents', async () => {
-    fetch
-      .once(JSON.stringify(mockData))
-      .mockResponses(
-        [JSON.stringify(mockPack[0])],
-        [JSON.stringify(mockELA)],
-        [JSON.stringify(mockMATH)],
-        [JSON.stringify(mockDOK)],
-        [JSON.stringify(mockMATHPackage)],
-        [JSON.stringify(mockMATHClone)],
-        [JSON.stringify(mockHSMATH)],
-        [JSON.stringify(mockTMATH)],
-        [JSON.stringify(mockPack[1])],
-        [JSON.stringify(mockIT)],
-        [JSON.stringify(mockPack[2])],
-        [JSON.stringify(mockPack[3])],
-        [JSON.stringify(singleGradePT)],
-        [JSON.stringify(mockPack[4])]
-      );
+    mockFetch();
     const result = await importDocs(arr);
     expect(fetch.mock.calls.length).toBe(15);
     expect(result).toBe(14);
   });
   it('returns valid data for db', async () => {
-    fetch
-      .once(JSON.stringify(mockData))
-      .mockResponses(
-        [JSON.stringify(mockPack[0])],
-        [JSON.stringify(mockELA)],
-        [JSON.stringify(mockMATH)],
-        [JSON.stringify(mockDOK)],
-        [JSON.stringify(mockMATHPackage)],
-        [JSON.stringify(mockMATHClone)],
-        [JSON.stringify(mockHSMATH)],
-        [JSON.stringify(mockTMATH)],
-        [JSON.stringify(mockPack[1])],
-        [JSON.stringify(mockIT)],
-        [JSON.stringify(mockPack[2])],
-        [JSON.stringify(mockPack[3])],
-        [JSON.stringify(singleGradePT)],
-        [JSON.stringify(mockPack[4])]
-      );
+    mockFetch();
     const result = await importDbEntries();
     expect(fetch.mock.calls.length).toBe(15);
   });
@@ -122,3 +88,9 @@ describe('Case API Scraper', () => {
     expect(ELAresult).toEqual(claim);
   });
 });
+function mockFetch() {
+  fetch
+    .once(JSON.stringify(mockData))
+    .mockResponses([JSON.stringify(mockPack[0])], [JSON.stringify(mockELA)], [JSON.stringify(mockMATH)], [JSON.stringify(mockDOK)], [JSON.stringify(mockMATHPackage)], [JSON.stringify(mockMATHClone)], [JSON.stringify(mockHSMATH)], [JSON.stringify(mockTMATH)], [JSON.stringify(mockPack[1])], [JSON.stringify(mockIT)], [JSON.stringify(mockPack[2])], [JSON.stringify(mockPack[3])], [JSON.stringify(singleGradePT)], [JSON.stringify(mockPack[4])]);
+}
+

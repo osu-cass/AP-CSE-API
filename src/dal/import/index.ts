@@ -551,12 +551,6 @@ export function expandFirstClaim(finalArray: IClaim[]) {
       });
     }
   });
-
-  targArr.sort(
-    (a, b) =>
-      parseInt(a.Target.shortCode.split('.')[3].split('T')[1], 10) -
-      parseInt(b.Target.shortCode.split('.')[3].split('T')[1], 10)
-  );
   targArr.forEach(t => {
     const tNum = parseInt(t.Target.shortCode.split('.')[3].split('T')[1], 10);
     const tempClaim = JSON.parse(JSON.stringify(t.Claim));
