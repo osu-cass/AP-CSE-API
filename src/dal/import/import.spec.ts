@@ -91,6 +91,20 @@ describe('Case API Scraper', () => {
 function mockFetch() {
   fetch
     .once(JSON.stringify(mockData))
-    .mockResponses([JSON.stringify(mockPack[0])], [JSON.stringify(mockELA)], [JSON.stringify(mockMATH)], [JSON.stringify(mockDOK)], [JSON.stringify(mockMATHPackage)], [JSON.stringify(mockMATHClone)], [JSON.stringify(mockHSMATH)], [JSON.stringify(mockTMATH)], [JSON.stringify(mockPack[1])], [JSON.stringify(mockIT)], [JSON.stringify(mockPack[2])], [JSON.stringify(mockPack[3])], [JSON.stringify(singleGradePT)], [JSON.stringify(mockPack[4])]);
+    .mockResponses(
+      [JSON.stringify(mockPack[0])],
+      [JSON.stringify(mockELA)],
+      [JSON.stringify(mockMATH)],
+      [JSON.stringify(mockDOK)],
+      [JSON.stringify(mockMATHPackage)],
+      [JSON.stringify(mockMATHClone)],
+      [JSON.stringify(mockHSMATH)],
+      [JSON.stringify(mockTMATH)],
+      [JSON.stringify(mockPack[1])],
+      [JSON.stringify(mockIT)],
+      [JSON.stringify(mockPack[2])],
+      [JSON.stringify(mockPack[3])],
+      [JSON.stringify(singleGradePT)],
+      [JSON.stringify(mockPack[4])]
+    );
 }
-
