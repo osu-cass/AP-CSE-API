@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 import { ISpecDocument } from './interfaces';
-import { IClaim } from '../../models/claim';
-import { IDOK, ITaskModel } from '../../models/target';
+import { IClaim, ClaimExpansion } from '../../models/claim';
+import { IDOK, ITaskModel, ITarget } from '../../models/target';
 
 // This is required for translating specDocuments to an IClaim type
 // tslint:disable:no-unsafe-any no-any
@@ -526,10 +526,48 @@ export function consolidate(claimArray: IClaim[]): IClaim[] {
   }
   handlePT(finalArray);
   finalArray = removePT(finalArray);
+  expandFirstClaim(finalArray);
+  // This forEach fixes an error in the CASE API for E.G5.C1.T6 having an incorrect target shortcode
+  finalArray.forEach(c => {
+    if (c.shortCode === 'E.G5.C1e' && c.target[0].title.includes('Target 6')) {
+      c.shortCode = 'E.G5.C1f';
+      c.claimNumber = 'C1f';
+      c.target[0].shortCode = 'E.G5.C1RL.T6';
+    }
+  });
 
-  return finalArray;
+  return finalArray.filter(c => c.claimNumber !== 'C1' || c.subject === Subject.MATH);
 }
+export function expandFirstClaim(finalArray: IClaim[]) {
+  const newClaims: IClaim[] = [];
+  const targArr: ClaimExpansion[] = [];
+  finalArray.forEach(claim => {
+    if (claim.claimNumber === 'C1' && claim.subject === Subject.ELA) {
+      claim.target.forEach(targ => {
+        targArr.push({
+          Target: targ,
+          Claim: claim
+        });
+      });
+    }
+  });
 
+  targArr.sort(
+    (a, b) =>
+      parseInt(a.Target.shortCode.split('.')[3].split('T')[1], 10) -
+      parseInt(b.Target.shortCode.split('.')[3].split('T')[1], 10)
+  );
+  targArr.forEach(t => {
+    const tNum = parseInt(t.Target.shortCode.split('.')[3].split('T')[1], 10);
+    const tempClaim = JSON.parse(JSON.stringify(t.Claim));
+    tempClaim.claimNumber = `${t.Claim.claimNumber}${String.fromCharCode(tNum + 96)}`;
+    tempClaim.target = [];
+    tempClaim.target.push(t.Target);
+    tempClaim.shortCode = t.Claim.shortCode.replace(t.Claim.claimNumber, tempClaim.claimNumber);
+    newClaims.push(tempClaim);
+  });
+  newClaims.forEach(c => finalArray.push(c));
+}
 export function handlePT(finalArray: IClaim[]) {
   let PTArr: IClaim[] = [];
   let tempIdx;
@@ -549,5 +587,4 @@ export function handlePT(finalArray: IClaim[]) {
 
 export function removePT(finalArray: IClaim[]) {
   return finalArray.filter(claim => !claim.title.includes('Performance'));
-
 }

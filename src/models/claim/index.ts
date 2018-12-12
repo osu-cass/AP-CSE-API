@@ -15,3 +15,7 @@ export interface IDomain {
   title: string;
   desc?: string;
 }
+export interface ClaimExpansion {
+  Target: ITarget;
+  Claim: IClaim;
+}

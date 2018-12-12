@@ -40025,5 +40025,2117 @@ export const mockPack = [
       ],
       CFAssociationGroupings: []
     }
+  },
+  {
+    CFDocument: {
+      uri:
+        'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+      identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+      lastChangeDateTime: '2018-03-01T21:01:43+00:00',
+      CFPackageURI: {
+        title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+        identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFPackages/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+      },
+      subjectURI: [
+        {
+          title: 'English Language Arts',
+          identifier: 'cf91e60e-6674-5a4a-81ef-2bd88981154e',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFSubjects/cf91e60e-6674-5a4a-81ef-2bd88981154e'
+        }
+      ],
+      officialSourceURL:
+        'https://images.smarterbalanced.org/content/Documents/Item%20Specs/ELA%20Item%20Specs/CAT/ELA%20Grade%203-5_Word/ELA%20Grade%203-5%20Claim%201/ELA%20Grade%203-5%20Claim%201%20Target%206/ELA_Spec_G05_C1_T6.docx',
+      creator: 'Smarter Balanced_ELA CAT Item Specifications',
+      publisher: 'Smarter Balanced Assessment Consortium',
+      title: 'English Language Arts Specification: Grade 5 Claim 1 Target 6',
+      subject: ['English Language Arts'],
+      adoptionStatus: 'Draft',
+      notes: 'ELA_Spec_G05_C1_T6'
+    },
+    CFItems: [
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c508f3fe-cf0e-11e7-9827-7d83d076e4e6',
+        identifier: 'c508f3fe-cf0e-11e7-9827-7d83d076e4e6',
+        lastChangeDateTime: '2017-11-21T22:58:21+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        CFItemType: 'Clarification',
+        CFItemTypeURI: {
+          title: 'Clarification',
+          identifier: 'f6e54927-6d0a-4ed6-94f7-3ee1f5ca4fcf',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/f6e54927-6d0a-4ed6-94f7-3ee1f5ca4fcf'
+        },
+        educationLevel: ['05'],
+        fullStatement:
+          'Item require **students** to analyze the structure or features of a passage. This could refer to an author’s decisions about the structure of the passage (for example, a series of flashbacks or the use of chronological order). This could also refer to the author’s decision about structures (for example, dialogue, opening, closure, or setting). Students must consider how these **impact** structure, meaning, or presentation. Students may also be required to apply reasoning to justify that analysis by identifying supporting evidence within the passage. Items should **go beyond** asking students to identify the way in which a passage is structured.\r\n\r\nAll items should require students to cite specific textual evidence to support conclusions drawn from the text(s).',
+        abbreviatedStatement: 'Clarifications'
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c8919a94-cf0e-11e7-bf18-b94251b8e2a7',
+        identifier: 'c8919a94-cf0e-11e7-bf18-b94251b8e2a7',
+        lastChangeDateTime: '2017-11-21T22:58:12+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        CFItemType: 'Section Heading',
+        CFItemTypeURI: {
+          title: 'Section Heading',
+          identifier: 'ab8e8fdc-baaa-400f-9dc8-7b737f8b86ff',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/ab8e8fdc-baaa-400f-9dc8-7b737f8b86ff'
+        },
+        educationLevel: ['05'],
+        fullStatement: 'Item Writing and Scoring Guidelines'
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c891fc6e-cf0e-11e7-951f-2d0792fb2beb',
+        identifier: 'c891fc6e-cf0e-11e7-951f-2d0792fb2beb',
+        lastChangeDateTime: '2017-11-21T22:58:44+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        CFItemType: 'Evidence Required',
+        CFItemTypeURI: {
+          title: 'Evidence Required',
+          identifier: '62ae8acf-e478-4213-a2d2-aebec5b898df',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/62ae8acf-e478-4213-a2d2-aebec5b898df'
+        },
+        educationLevel: ['05'],
+        fullStatement:
+          'The student will determine how the overall structure of a text impacts its meaning.',
+        abbreviatedStatement: 'Evidence Required 1'
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c891ce2e-cf0e-11e7-b442-85aa33bbfd3d',
+        identifier: 'c891ce2e-cf0e-11e7-b442-85aa33bbfd3d',
+        lastChangeDateTime: '2017-11-21T22:58:31+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        CFItemType: 'Evidence Required',
+        CFItemTypeURI: {
+          title: 'Evidence Required',
+          identifier: '62ae8acf-e478-4213-a2d2-aebec5b898df',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/62ae8acf-e478-4213-a2d2-aebec5b898df'
+        },
+        educationLevel: ['05'],
+        fullStatement: 'Evidence Required'
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c8922ba8-cf0e-11e7-bdf9-35f083b6b6ad',
+        identifier: 'c8922ba8-cf0e-11e7-bdf9-35f083b6b6ad',
+        lastChangeDateTime: '2017-11-21T22:58:53+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        CFItemType: 'Evidence Required',
+        CFItemTypeURI: {
+          title: 'Evidence Required',
+          identifier: '62ae8acf-e478-4213-a2d2-aebec5b898df',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/62ae8acf-e478-4213-a2d2-aebec5b898df'
+        },
+        educationLevel: ['05'],
+        fullStatement:
+          'The student will analyze or interpret why the author structured elements within the text in a certain manner and the impact of that structure on meaning.',
+        abbreviatedStatement: 'Evidence Required 2'
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c892cf04-cf0e-11e7-a169-5974ca396f4b',
+        identifier: 'c892cf04-cf0e-11e7-a169-5974ca396f4b',
+        lastChangeDateTime: '2017-11-21T22:59:26+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        CFItemType: 'General Requirements',
+        CFItemTypeURI: {
+          title: 'General Requirements',
+          identifier: 'a2c9fb5b-56f1-4d92-af37-4edbbfcce40f',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/a2c9fb5b-56f1-4d92-af37-4edbbfcce40f'
+        },
+        educationLevel: ['05'],
+        fullStatement:
+          'Texts may be of low to high complexity at grade level. Texts must be rich with external text structures (i.e., flashbacks, chronology, general poem structure) and internal structures (i.e., introduction, conclusion, structure of dialogue, setting, or events) in order to support meaningful analysis.\r\n\r\nRefer to Smarter Balanced Assessment Consortium: English Language Arts & Literacy Computer Adaptive Test (CAT) and Performance Task (PT) Stimulus Specifications for more information on informational text types.',
+        abbreviatedStatement: 'Stimuli/Passages'
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c8929b1a-cf0e-11e7-bd55-85c63d2d05c1',
+        identifier: 'c8929b1a-cf0e-11e7-bd55-85c63d2d05c1',
+        lastChangeDateTime: '2017-11-21T22:59:11+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        CFItemType: 'General Requirements',
+        CFItemTypeURI: {
+          title: 'General Requirements',
+          identifier: 'a2c9fb5b-56f1-4d92-af37-4edbbfcce40f',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/a2c9fb5b-56f1-4d92-af37-4edbbfcce40f'
+        },
+        educationLevel: ['05'],
+        fullStatement: 'Stimulus Information'
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c8925ab0-cf0e-11e7-995d-a30b6fbec7cb',
+        identifier: 'c8925ab0-cf0e-11e7-995d-a30b6fbec7cb',
+        lastChangeDateTime: '2017-11-21T22:59:03+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        CFItemType: 'General Requirements',
+        CFItemTypeURI: {
+          title: 'General Requirements',
+          identifier: 'a2c9fb5b-56f1-4d92-af37-4edbbfcce40f',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/a2c9fb5b-56f1-4d92-af37-4edbbfcce40f'
+        },
+        educationLevel: ['05'],
+        fullStatement: 'General Item Information'
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c8931db0-cf0e-11e7-8348-b1da497920ce',
+        identifier: 'c8931db0-cf0e-11e7-8348-b1da497920ce',
+        lastChangeDateTime: '2017-11-21T23:00:49+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        CFItemType: 'General Requirements',
+        CFItemTypeURI: {
+          title: 'General Requirements',
+          identifier: 'a2c9fb5b-56f1-4d92-af37-4edbbfcce40f',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/a2c9fb5b-56f1-4d92-af37-4edbbfcce40f'
+        },
+        educationLevel: ['05'],
+        fullStatement: 'NA',
+        abbreviatedStatement: 'Key/Construct Relevant Vocabulary'
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c8933750-cf0e-11e7-bf36-4750a4e497a7',
+        identifier: 'c8933750-cf0e-11e7-bf36-4750a4e497a7',
+        lastChangeDateTime: '2017-11-21T23:01:02+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        CFItemType: 'General Requirements',
+        CFItemTypeURI: {
+          title: 'General Requirements',
+          identifier: 'a2c9fb5b-56f1-4d92-af37-4edbbfcce40f',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/a2c9fb5b-56f1-4d92-af37-4edbbfcce40f'
+        },
+        educationLevel: ['05'],
+        fullStatement: 'NA',
+        abbreviatedStatement: 'Allowable Tools'
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c8934f9c-cf0e-11e7-adb5-b1d5b810b51e',
+        identifier: 'c8934f9c-cf0e-11e7-adb5-b1d5b810b51e',
+        lastChangeDateTime: '2017-11-21T23:01:11+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        CFItemType: 'General Requirements',
+        CFItemTypeURI: {
+          title: 'General Requirements',
+          identifier: 'a2c9fb5b-56f1-4d92-af37-4edbbfcce40f',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/a2c9fb5b-56f1-4d92-af37-4edbbfcce40f'
+        },
+        educationLevel: ['05'],
+        fullStatement: 'NA',
+        abbreviatedStatement: 'Development Notes'
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c8936810-cf0e-11e7-9fca-fbdab8edddc9',
+        identifier: 'c8936810-cf0e-11e7-9fca-fbdab8edddc9',
+        lastChangeDateTime: '2017-11-21T23:00:40+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        CFItemType: 'Accessibility',
+        CFItemTypeURI: {
+          title: 'Accessibility',
+          identifier: 'd19c9ae0-bfe0-11e7-bff4-050398278f5a',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/d19c9ae0-bfe0-11e7-bff4-050398278f5a'
+        },
+        educationLevel: ['05'],
+        fullStatement:
+          'Refer to the Smarter Balanced Assessment Consortium: Usability, Accessibility, and Accommodations Guidelines for information on accessibility.',
+        abbreviatedStatement: 'Accessibility Concerns/Guidance'
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c892ea84-cf0e-11e7-a42d-abfd27950857',
+        identifier: 'c892ea84-cf0e-11e7-a42d-abfd27950857',
+        lastChangeDateTime: '2017-11-21T22:59:48+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        CFItemType: 'General Requirements',
+        CFItemTypeURI: {
+          title: 'General Requirements',
+          identifier: 'a2c9fb5b-56f1-4d92-af37-4edbbfcce40f',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/a2c9fb5b-56f1-4d92-af37-4edbbfcce40f'
+        },
+        educationLevel: ['05'],
+        fullStatement: 'NA',
+        abbreviatedStatement: 'Stimuli/Text Complexity'
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c8930370-cf0e-11e7-b3a2-c10ae4569d8e',
+        identifier: 'c8930370-cf0e-11e7-b3a2-c10ae4569d8e',
+        lastChangeDateTime: '2017-11-21T23:00:26+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        CFItemType: 'General Requirements',
+        CFItemTypeURI: {
+          title: 'General Requirements',
+          identifier: 'a2c9fb5b-56f1-4d92-af37-4edbbfcce40f',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/a2c9fb5b-56f1-4d92-af37-4edbbfcce40f'
+        },
+        educationLevel: ['05'],
+        fullStatement:
+          'When a dual-text set contains one literary and one informational text, the literary text (text #1) is the primary focus, and the set of items must include items from the literary stimulus as well as items written across both texts. The informational text (text #2) **must only** be used as a foundational piece for the literary text, and no items can be written for **only** the informational text. If both texts are literary, items may be written to either or both. In all dual-text stimuli sets, between 25 and 40% of the items should be written across both texts. \r\n\r\nWhen developing items from dual-text, Task Model 5 (short-text constructed-response-WR) should be written using the *Appropriate Stems for Dual-Text Stimuli* only to ensure students will have the opportunity to respond in writing to information from both texts. Between 25 and 40% of all other items written in the dual-text set should be written across both texts. \r\n\r\nThe title of the each text should be included in the stem when more than one text is used. Dual text is considered long text.',
+        abbreviatedStatement: 'Dual-Text Stimuli'
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0bec3a-cf0e-11e7-b54f-2fdcf4d5bec7',
+        identifier: 'ca0bec3a-cf0e-11e7-b54f-2fdcf4d5bec7',
+        lastChangeDateTime: '2017-11-21T23:01:58+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        CFItemType: 'Task Model',
+        CFItemTypeURI: {
+          title: 'Task Model',
+          identifier: 'f66a54af-9e35-46d4-8ba6-66606c888f6c',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/f66a54af-9e35-46d4-8ba6-66606c888f6c'
+        },
+        educationLevel: ['05'],
+        fullStatement: 'Task Models',
+        abbreviatedStatement: 'Task Models'
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0c6c46-cf0e-11e7-bd60-05ad12f08e55',
+        identifier: 'ca0c6c46-cf0e-11e7-bd60-05ad12f08e55',
+        lastChangeDateTime: '2017-11-21T23:02:56+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        CFItemType: 'Task Description',
+        CFItemTypeURI: {
+          title: 'Task Description',
+          identifier: 'b0804d18-bb65-11e7-98c9-83def7a9dccd',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/b0804d18-bb65-11e7-98c9-83def7a9dccd'
+        },
+        educationLevel: ['05'],
+        fullStatement:
+          'The **item stem** will prompt the selection of a statement that requires the student to analyze, interpret, or connect ideas regarding text structure or features.\r\n\r\nThe **answer choices** will present four options of similar structure. The correct answer will be a clearly discernible and correct description, analysis, or interpretation of the text structure or features. The **distractors** will be statements that may be plausible to students who 1) misinterpret details in the text or text feature OR 2) make erroneous analyses about the text or text feature.\r\n\r\n**Distractors** will reflect common student errors. \r\n\r\n**Rationales** should state the justification for the type of plausible distractor.',
+        abbreviatedStatement: 'Task Description'
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0c21e6-cf0e-11e7-a681-c1f86765f2ff',
+        identifier: 'ca0c21e6-cf0e-11e7-a681-c1f86765f2ff',
+        lastChangeDateTime: '2017-11-21T23:02:11+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        CFItemType: 'Task Model',
+        CFItemTypeURI: {
+          title: 'Task Model',
+          identifier: 'f66a54af-9e35-46d4-8ba6-66606c888f6c',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/f66a54af-9e35-46d4-8ba6-66606c888f6c'
+        },
+        educationLevel: ['05'],
+        fullStatement: 'Task Model 1'
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0c8a1e-cf0e-11e7-b5c2-33f37acce101',
+        identifier: 'ca0c8a1e-cf0e-11e7-b5c2-33f37acce101',
+        lastChangeDateTime: '2017-11-21T23:03:05+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        CFItemType: 'Stimulus',
+        CFItemTypeURI: {
+          title: 'Stimulus',
+          identifier: '1e025133-1d58-4123-9818-22035889162b',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/1e025133-1d58-4123-9818-22035889162b'
+        },
+        educationLevel: ['05'],
+        fullStatement: 'NA',
+        abbreviatedStatement: 'Stimulus'
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0ca63e-cf0e-11e7-9c02-51d3940702a6',
+        identifier: 'ca0ca63e-cf0e-11e7-9c02-51d3940702a6',
+        lastChangeDateTime: '2017-11-21T23:05:44+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        CFItemType: 'Stem',
+        CFItemTypeURI: {
+          title: 'Stem',
+          identifier: '8415a434-bb66-11e7-bccb-8b103c40dec4',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/8415a434-bb66-11e7-bccb-8b103c40dec4'
+        },
+        educationLevel: ['05'],
+        fullStatement:
+          '-   What effect does [provide text structure/format/feature/etc.] have on the meaning of the passage OR reader’s understanding of [provide element affected by structure, such as main idea, characters, setting, dialogue, plot, etc.]?\r\n\r\n-   What is the **most likely** reason the author [used/included] [provide text structure/format/feature/etc.] in the passage?\r\n\r\n-   The author [used/included] [provide text structure/format/feature/etc.]. What is the **most likely** reason the author wrote the passage this way?\r\n\r\n-   The author [used/included] [provide text structure/format/feature/etc.]. How does this change the [provide element affected by structure, such as main idea, characters, or plot]?\r\n\r\n-   How does the [first paragraph/first stanza/introduction] about [content in text] [add to/affect] [provide element affected by structure, such as main idea, characters, or plot]?\r\n\r\n-   Read the [sentence(s)/paragraph(s)/section(s)/stanza(s)].\r\n[excerpt from text]\r\nHow do[es] the [sentence(s)/paragraph(s)/stanza(s)] about [content in text] [add to/affect] [provide element affected by structure, such as main idea, characters, or plot]?\r\n\r\n-   Read the [sentence(s)/heading(s)/question(s)/quotation(s)/content type/etc.] from the passage.\r\n[excerpt from text]\r\nWhich of these **best** describes why the author [began with/ended with/used] [this/these] [sentence(s)/heading(s)/question(s)/quotation(s)/content type/etc.] in the passage?\r\n\r\n-   Read the [sentence(s)/paragraph(s)/stanza(s) of the passage].\r\n[excerpt from text]\r\nWhy is the difference between [this/these] [sentence(s)/paragraph(s)/stanza(s)] and the one[s] that came [before it/after it] important to the passage?\r\n\r\n-   Read the [sentence(s)/paragraph(s)/stanza(s) of the passage].\r\n[excerpt from text]\r\nSelect the statement that **best** explains why the author chose to include [this/these] [sentence(s)/paragraph(s)/stanza(s)].\r\n\r\n-   Why did the author choose to [begin/end] the passage with [provide structure (paragraph/dialogue/setting/event/flashback/etc.)]?\r\n\r\n-   Why is using [provide text structure] important to understanding [provide character name/the main idea/the purpose/the author or character’s point of view/the introduction/series of events/the conclusion/etc.] in the passage?\r\n\r\n-   What does the author do by [using/beginning with/ending with/including] [provide structure] in the passage?',
+        abbreviatedStatement: 'Appropriate Stems'
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0cc614-cf0e-11e7-a7a0-bdce5f40a6bd',
+        identifier: 'ca0cc614-cf0e-11e7-a7a0-bdce5f40a6bd',
+        lastChangeDateTime: '2017-11-21T23:06:16+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        CFItemType: 'Stem',
+        CFItemTypeURI: {
+          title: 'Stem',
+          identifier: '8415a434-bb66-11e7-bccb-8b103c40dec4',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/8415a434-bb66-11e7-bccb-8b103c40dec4'
+        },
+        educationLevel: ['05'],
+        fullStatement:
+          '-   The author used [provide passage structure/format/feature] in [title text \\#2] to [provide purpose]. What does that tell the reader about [provide element affected by structure] in [title text \\#1]?\r\n\r\n-   How might have the information in [title text \\#2] affected the way [title text \\#1] was written?',
+        abbreviatedStatement: 'Appropriate Stems for Dual-Text Stimuli'
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0ce46e-cf0e-11e7-8b7c-27da4fe17b70',
+        identifier: 'ca0ce46e-cf0e-11e7-8b7c-27da4fe17b70',
+        lastChangeDateTime: '2017-11-21T23:06:26+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        CFItemType: 'Example',
+        CFItemTypeURI: {
+          title: 'Example',
+          identifier: 'c685d17c-bb66-11e7-b6af-3f99116007d0',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/c685d17c-bb66-11e7-b6af-3f99116007d0'
+        },
+        educationLevel: ['05'],
+        fullStatement: 'NA',
+        abbreviatedStatement: 'Examples'
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0d0138-cf0e-11e7-a7ab-eb052f41b715',
+        identifier: 'ca0d0138-cf0e-11e7-a7ab-eb052f41b715',
+        lastChangeDateTime: '2017-11-21T23:06:45+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        CFItemType: 'Rubric',
+        CFItemTypeURI: {
+          title: 'Rubric',
+          identifier: '2fb0cde6-255b-4855-8313-f63e2c82d7af',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/2fb0cde6-255b-4855-8313-f63e2c82d7af'
+        },
+        educationLevel: ['05'],
+        fullStatement: 'Correct response: 1 point; Incorrect response: 0 points',
+        abbreviatedStatement: 'Scoring Rules'
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0d652e-cf0e-11e7-a515-0ffa4e1e0e27',
+        identifier: 'ca0d652e-cf0e-11e7-a515-0ffa4e1e0e27',
+        lastChangeDateTime: '2017-11-21T23:07:42+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        CFItemType: 'Task Description',
+        CFItemTypeURI: {
+          title: 'Task Description',
+          identifier: 'b0804d18-bb65-11e7-98c9-83def7a9dccd',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/b0804d18-bb65-11e7-98c9-83def7a9dccd'
+        },
+        educationLevel: ['05'],
+        fullStatement:
+          'The **item stem** will prompt the selection of two or more statements that require the student to analyze, interpret, or connect ideas regarding text structure or features. The item stem will prompt students to choose **two** answers.\r\n\r\nThe **answer choices** will present **five or six** options of similar structure. Of the options, there will be **two** correct answers. The correct answers will be a clearly discernible and correct description, analysis, or interpretation of the text structure or features. The **distractors** will be statements that may be plausible to students who 1) misinterpret details in the text or text feature OR 2) make erroneous analyses about the text or text feature.\r\n\r\n**Distractors** will reflect common student errors. \r\n\r\n**Rationales** should state the justification for the type of plausible distractor.',
+        abbreviatedStatement: 'Task Description'
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0d1e02-cf0e-11e7-8ef8-43fef9437f37',
+        identifier: 'ca0d1e02-cf0e-11e7-8ef8-43fef9437f37',
+        lastChangeDateTime: '2017-11-21T23:07:30+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        CFItemType: 'Task Model',
+        CFItemTypeURI: {
+          title: 'Task Model',
+          identifier: 'f66a54af-9e35-46d4-8ba6-66606c888f6c',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/f66a54af-9e35-46d4-8ba6-66606c888f6c'
+        },
+        educationLevel: ['05'],
+        fullStatement: 'Task Model 2'
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0d83c4-cf0e-11e7-9b05-d50e37e41f45',
+        identifier: 'ca0d83c4-cf0e-11e7-9b05-d50e37e41f45',
+        lastChangeDateTime: '2017-11-21T23:07:50+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        CFItemType: 'Stimulus',
+        CFItemTypeURI: {
+          title: 'Stimulus',
+          identifier: '1e025133-1d58-4123-9818-22035889162b',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/1e025133-1d58-4123-9818-22035889162b'
+        },
+        educationLevel: ['05'],
+        fullStatement: 'NA',
+        abbreviatedStatement: 'Stimulus'
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0da1ce-cf0e-11e7-87c5-070d138dfbaf',
+        identifier: 'ca0da1ce-cf0e-11e7-87c5-070d138dfbaf',
+        lastChangeDateTime: '2017-11-21T23:11:58+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        CFItemType: 'Stem',
+        CFItemTypeURI: {
+          title: 'Stem',
+          identifier: '8415a434-bb66-11e7-bccb-8b103c40dec4',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/8415a434-bb66-11e7-bccb-8b103c40dec4'
+        },
+        educationLevel: ['05'],
+        fullStatement:
+          '-   What effect does [provide text structure/format/feature/etc.] have on the meaning of the passage OR reader’s understanding of [provide element affected by structure, such as main idea, characters, setting, dialogue, plot, etc.]? Select **two** answers.\r\n\r\n-   What are the **most likely** reasons the author [used/included] [provide text structure/format/feature/etc.] in the passage? Select **two** answers.\r\n\r\n-   The author [used/included] [provide text structure/format/feature/etc.]. What are the **most likely** reasons why the author wrote the passage this way? Select **two** answers.\r\n\r\n-   The author [used/included] [provide text structure/format/feature/etc.]. How does this change the [provide element affected by structure, such as main idea, characters, or plot]? Select **two** answers.\r\n\r\n-   How does the [first paragraph/first stanza/introduction] about [content in text] [add to/affect] [provide element affected by structure, such as main idea, characters, or plot]? Select **two** answers.\r\n\r\n-   Read the [sentence(s)/paragraph(s)/section(s)/stanza(s)].\r\n[excerpt from text]\r\n\r\n-   How do[es] the [sentence(s)/paragraph(s)/stanza(s)] about [content in text] [add to/affect] [provide element affected by structure, such as main idea, characters, or plot]? Select **two** answers.\r\n\r\n-   Read the [sentence(s)/heading(s)/question(s)/quotation(s)/content type/etc.] from the passage.\r\n[excerpt from text that contains a structural element]\r\nWhich of these **best** describes why the author [began with/ended with/used] [this/these] [sentence(s)/heading(s)/question(s)/quotation(s)/content type/etc.] in the passage? Select **two** answers.\r\n\r\n-   Read the [sentence(s)/paragraph(s)/stanza(s)].\r\n[excerpt from text]\r\n\r\n-   Why is the difference between [this/these] [sentence(s)/paragraph(s)/stanza(s)] and the one(s) that came [before it/after it] important to the passage? Select **two** answers.\r\n\r\n-   Read the [sentence(s)/paragraph(s)/stanza(s)].\r\n[excerpt from text that contains a structural element]\r\nChoose the statements that **best** explain why the author chose to include [this/these] [sentence(s)/paragraph(s)/stanza(s)]. Select **two** answers.\r\n\r\n-   Why did the author choose to [begin/end] the passage with [provide structure (paragraph/dialogue/setting/event/flashback/etc.)]? Select **two** answers.\r\n\r\n-   Why is using [provide text structure] important to understanding [character name/the main idea/the purpose/the author or character’s point of view/the introduction/series of events/the conclusion/etc.] in the passage? Select **two** answers.\r\n\r\n-   What does the author do by [using/beginning/ending/including] [provide structure] in the passage? Select **two** answers.',
+        abbreviatedStatement: 'Appropriate Stems'
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0dbdda-cf0e-11e7-b2d0-459396accfe3',
+        identifier: 'ca0dbdda-cf0e-11e7-b2d0-459396accfe3',
+        lastChangeDateTime: '2017-11-21T23:12:56+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        CFItemType: 'Stem',
+        CFItemTypeURI: {
+          title: 'Stem',
+          identifier: '8415a434-bb66-11e7-bccb-8b103c40dec4',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/8415a434-bb66-11e7-bccb-8b103c40dec4'
+        },
+        educationLevel: ['05'],
+        fullStatement:
+          '-   The author used [provide passage structure/format/feature] in [title text \\#2] to [provide purpose]. What does that tell the reader about [provide element affected by structure] in [title text \\#1]? Select **two** answers.\r\n\r\n-   How might have the information in [title text \\#2] affected the way [title text \\#1] was written? Choose **two** answers.',
+        abbreviatedStatement: 'Appropriate Stems for Dual-Text Stimuli'
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0ddac2-cf0e-11e7-8216-d9b9bd59d1d0',
+        identifier: 'ca0ddac2-cf0e-11e7-8216-d9b9bd59d1d0',
+        lastChangeDateTime: '2017-11-21T23:13:05+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        CFItemType: 'Example',
+        CFItemTypeURI: {
+          title: 'Example',
+          identifier: 'c685d17c-bb66-11e7-b6af-3f99116007d0',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/c685d17c-bb66-11e7-b6af-3f99116007d0'
+        },
+        educationLevel: ['05'],
+        fullStatement: 'NA',
+        abbreviatedStatement: 'Examples'
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0df854-cf0e-11e7-bdd1-6b63442f4b3c',
+        identifier: 'ca0df854-cf0e-11e7-bdd1-6b63442f4b3c',
+        lastChangeDateTime: '2017-11-21T23:13:14+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        CFItemType: 'Rubric',
+        CFItemTypeURI: {
+          title: 'Rubric',
+          identifier: '2fb0cde6-255b-4855-8313-f63e2c82d7af',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/2fb0cde6-255b-4855-8313-f63e2c82d7af'
+        },
+        educationLevel: ['05'],
+        fullStatement: 'All correct responses: 1 point; Incorrect response: 0 points',
+        abbreviatedStatement: 'Scoring Rules'
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/5fe48f6e-cf0f-11e7-aaeb-7f4ff8a830d1',
+        identifier: '5fe48f6e-cf0f-11e7-aaeb-7f4ff8a830d1',
+        lastChangeDateTime: '2018-03-01T21:01:41+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        CFItemType: 'Measured Skill',
+        CFItemTypeURI: {
+          title: 'Measured Skill',
+          identifier: '24aabaa0-731d-4745-b70b-248fa0b5290a',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/24aabaa0-731d-4745-b70b-248fa0b5290a'
+        },
+        educationLevel: ['05'],
+        humanCodingScheme: 'E.G5.C1RL.T1.RL.5.1',
+        listEnumeration: '111',
+        fullStatement:
+          'Quote accurately from a text when explaining what the text says explicitly and when drawing inferences from the text.'
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/4b74e146-cf0f-11e7-bb4a-2bbc086b9042',
+        identifier: '4b74e146-cf0f-11e7-bb4a-2bbc086b9042',
+        lastChangeDateTime: '2018-03-01T21:01:41+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        CFItemType: 'Target',
+        CFItemTypeURI: {
+          title: 'Target',
+          identifier: 'ca81997c-078d-56bc-ad4b-7c111f218115',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/ca81997c-078d-56bc-ad4b-7c111f218115'
+        },
+        educationLevel: ['05'],
+        humanCodingScheme: 'E.G5.C1RL.T5',
+        fullStatement:
+          'Compare and explain relationships among literary elements (e.g., characters, setting, events) within or across texts or describe the narrator or speakers point of view within or across texts.',
+        abbreviatedStatement: 'Analysis Within or Across Texts'
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/68321b32-cf0f-11e7-b58c-c105d50a0249',
+        identifier: '68321b32-cf0f-11e7-b58c-c105d50a0249',
+        lastChangeDateTime: '2018-03-01T21:01:41+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        CFItemType: 'Measured Skill',
+        CFItemTypeURI: {
+          title: 'Measured Skill',
+          identifier: '24aabaa0-731d-4745-b70b-248fa0b5290a',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/24aabaa0-731d-4745-b70b-248fa0b5290a'
+        },
+        educationLevel: ['05'],
+        humanCodingScheme: 'E.G5.C1RL.T6.RL.5.5',
+        listEnumeration: '121',
+        fullStatement:
+          'Explain how a series of chapters, scenes, or stanzas fits together to provide the overall structure of a particular story, drama, or poem.'
+      }
+    ],
+    CFAssociations: [
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/c509d12a-cf0e-11e7-b7b6-6957ecfe0a76',
+        identifier: 'c509d12a-cf0e-11e7-b7b6-6957ecfe0a76',
+        lastChangeDateTime: '2017-11-21T22:57:05+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Clarifications',
+          identifier: 'c508f3fe-cf0e-11e7-9827-7d83d076e4e6',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c508f3fe-cf0e-11e7-9827-7d83d076e4e6'
+        },
+        associationType: 'isChildOf',
+        destinationNodeURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        sequenceNumber: 1
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/c8922a54-cf0e-11e7-834b-b103cb8d29b9',
+        identifier: 'c8922a54-cf0e-11e7-834b-b103cb8d29b9',
+        lastChangeDateTime: '2017-11-21T22:53:25+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Evidence Required 1',
+          identifier: 'c891fc6e-cf0e-11e7-951f-2d0792fb2beb',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c891fc6e-cf0e-11e7-951f-2d0792fb2beb'
+        },
+        associationType: 'isChildOf',
+        destinationNodeURI: {
+          title: 'Evidence Required',
+          identifier: 'c891ce2e-cf0e-11e7-b442-85aa33bbfd3d',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c891ce2e-cf0e-11e7-b442-85aa33bbfd3d'
+        }
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/c89259de-cf0e-11e7-99bd-a9a3f81b2d97',
+        identifier: 'c89259de-cf0e-11e7-99bd-a9a3f81b2d97',
+        lastChangeDateTime: '2017-11-21T22:53:25+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Evidence Required',
+          identifier: 'c891ce2e-cf0e-11e7-b442-85aa33bbfd3d',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c891ce2e-cf0e-11e7-b442-85aa33bbfd3d'
+        },
+        associationType: 'isChildOf',
+        destinationNodeURI: {
+          title: 'Item Writing and Scoring Guidelines',
+          identifier: 'c8919a94-cf0e-11e7-bf18-b94251b8e2a7',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c8919a94-cf0e-11e7-bf18-b94251b8e2a7'
+        }
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/c89258b2-cf0e-11e7-ba69-57a9e088574a',
+        identifier: 'c89258b2-cf0e-11e7-ba69-57a9e088574a',
+        lastChangeDateTime: '2017-11-21T22:53:25+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Evidence Required 2',
+          identifier: 'c8922ba8-cf0e-11e7-bdf9-35f083b6b6ad',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c8922ba8-cf0e-11e7-bdf9-35f083b6b6ad'
+        },
+        associationType: 'isChildOf',
+        destinationNodeURI: {
+          title: 'Evidence Required',
+          identifier: 'c891ce2e-cf0e-11e7-b442-85aa33bbfd3d',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c891ce2e-cf0e-11e7-b442-85aa33bbfd3d'
+        }
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/c892e958-cf0e-11e7-ae0a-3b3960601e06',
+        identifier: 'c892e958-cf0e-11e7-ae0a-3b3960601e06',
+        lastChangeDateTime: '2017-11-21T22:53:25+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Stimuli/Passages',
+          identifier: 'c892cf04-cf0e-11e7-a169-5974ca396f4b',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c892cf04-cf0e-11e7-a169-5974ca396f4b'
+        },
+        associationType: 'isChildOf',
+        destinationNodeURI: {
+          title: 'Stimulus Information',
+          identifier: 'c8929b1a-cf0e-11e7-bd55-85c63d2d05c1',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c8929b1a-cf0e-11e7-bd55-85c63d2d05c1'
+        }
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/c8931cfc-cf0e-11e7-96f4-79f7b5835f75',
+        identifier: 'c8931cfc-cf0e-11e7-96f4-79f7b5835f75',
+        lastChangeDateTime: '2017-11-21T22:55:53+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Stimulus Information',
+          identifier: 'c8929b1a-cf0e-11e7-bd55-85c63d2d05c1',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c8929b1a-cf0e-11e7-bd55-85c63d2d05c1'
+        },
+        associationType: 'isChildOf',
+        destinationNodeURI: {
+          title: 'General Item Information',
+          identifier: 'c8925ab0-cf0e-11e7-995d-a30b6fbec7cb',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c8925ab0-cf0e-11e7-995d-a30b6fbec7cb'
+        },
+        sequenceNumber: 1
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/c89382b4-cf0e-11e7-a6ea-fb6c999fb2b4',
+        identifier: 'c89382b4-cf0e-11e7-a6ea-fb6c999fb2b4',
+        lastChangeDateTime: '2017-11-21T22:53:25+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'General Item Information',
+          identifier: 'c8925ab0-cf0e-11e7-995d-a30b6fbec7cb',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c8925ab0-cf0e-11e7-995d-a30b6fbec7cb'
+        },
+        associationType: 'isChildOf',
+        destinationNodeURI: {
+          title: 'Item Writing and Scoring Guidelines',
+          identifier: 'c8919a94-cf0e-11e7-bf18-b94251b8e2a7',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c8919a94-cf0e-11e7-bf18-b94251b8e2a7'
+        }
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/c8933642-cf0e-11e7-a347-39beafb71dcd',
+        identifier: 'c8933642-cf0e-11e7-a347-39beafb71dcd',
+        lastChangeDateTime: '2017-11-21T22:55:53+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Key/Construct Relevant Vocabulary',
+          identifier: 'c8931db0-cf0e-11e7-8348-b1da497920ce',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c8931db0-cf0e-11e7-8348-b1da497920ce'
+        },
+        associationType: 'isChildOf',
+        destinationNodeURI: {
+          title: 'General Item Information',
+          identifier: 'c8925ab0-cf0e-11e7-995d-a30b6fbec7cb',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c8925ab0-cf0e-11e7-995d-a30b6fbec7cb'
+        },
+        sequenceNumber: 3
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/c8934e98-cf0e-11e7-9fbc-d989c10cb453',
+        identifier: 'c8934e98-cf0e-11e7-9fbc-d989c10cb453',
+        lastChangeDateTime: '2017-11-21T22:55:53+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Allowable Tools',
+          identifier: 'c8933750-cf0e-11e7-bf36-4750a4e497a7',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c8933750-cf0e-11e7-bf36-4750a4e497a7'
+        },
+        associationType: 'isChildOf',
+        destinationNodeURI: {
+          title: 'General Item Information',
+          identifier: 'c8925ab0-cf0e-11e7-995d-a30b6fbec7cb',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c8925ab0-cf0e-11e7-995d-a30b6fbec7cb'
+        },
+        sequenceNumber: 4
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/c893670c-cf0e-11e7-b653-13606ee20175',
+        identifier: 'c893670c-cf0e-11e7-b653-13606ee20175',
+        lastChangeDateTime: '2017-11-21T22:55:53+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Development Notes',
+          identifier: 'c8934f9c-cf0e-11e7-adb5-b1d5b810b51e',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c8934f9c-cf0e-11e7-adb5-b1d5b810b51e'
+        },
+        associationType: 'isChildOf',
+        destinationNodeURI: {
+          title: 'General Item Information',
+          identifier: 'c8925ab0-cf0e-11e7-995d-a30b6fbec7cb',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c8925ab0-cf0e-11e7-995d-a30b6fbec7cb'
+        },
+        sequenceNumber: 5
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/c8930262-cf0e-11e7-92b0-85409fd77648',
+        identifier: 'c8930262-cf0e-11e7-92b0-85409fd77648',
+        lastChangeDateTime: '2017-11-21T22:53:25+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Stimuli/Text Complexity',
+          identifier: 'c892ea84-cf0e-11e7-a42d-abfd27950857',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c892ea84-cf0e-11e7-a42d-abfd27950857'
+        },
+        associationType: 'isChildOf',
+        destinationNodeURI: {
+          title: 'Stimulus Information',
+          identifier: 'c8929b1a-cf0e-11e7-bd55-85c63d2d05c1',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c8929b1a-cf0e-11e7-bd55-85c63d2d05c1'
+        }
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/c8931bf8-cf0e-11e7-b887-d76f8eb4347d',
+        identifier: 'c8931bf8-cf0e-11e7-b887-d76f8eb4347d',
+        lastChangeDateTime: '2017-11-21T22:53:25+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Dual-Text Stimuli',
+          identifier: 'c8930370-cf0e-11e7-b3a2-c10ae4569d8e',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c8930370-cf0e-11e7-b3a2-c10ae4569d8e'
+        },
+        associationType: 'isChildOf',
+        destinationNodeURI: {
+          title: 'Stimulus Information',
+          identifier: 'c8929b1a-cf0e-11e7-bd55-85c63d2d05c1',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c8929b1a-cf0e-11e7-bd55-85c63d2d05c1'
+        }
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/c896e9b8-cf0e-11e7-b00e-d31847b8dea7',
+        identifier: 'c896e9b8-cf0e-11e7-b00e-d31847b8dea7',
+        lastChangeDateTime: '2017-11-21T22:57:05+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Item Writing and Scoring Guidelines',
+          identifier: 'c8919a94-cf0e-11e7-bf18-b94251b8e2a7',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c8919a94-cf0e-11e7-bf18-b94251b8e2a7'
+        },
+        associationType: 'isChildOf',
+        destinationNodeURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        sequenceNumber: 4
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/ca0c88b6-cf0e-11e7-959a-6729faff0129',
+        identifier: 'ca0c88b6-cf0e-11e7-959a-6729faff0129',
+        lastChangeDateTime: '2017-11-21T22:53:28+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Task Description',
+          identifier: 'ca0c6c46-cf0e-11e7-bd60-05ad12f08e55',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0c6c46-cf0e-11e7-bd60-05ad12f08e55'
+        },
+        associationType: 'isChildOf',
+        destinationNodeURI: {
+          title: 'Task Model 1',
+          identifier: 'ca0c21e6-cf0e-11e7-a681-c1f86765f2ff',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0c21e6-cf0e-11e7-a681-c1f86765f2ff'
+        }
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/ca0d1d30-cf0e-11e7-9a93-1b21418eeb9b',
+        identifier: 'ca0d1d30-cf0e-11e7-9a93-1b21418eeb9b',
+        lastChangeDateTime: '2017-11-21T22:53:28+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Task Model 1',
+          identifier: 'ca0c21e6-cf0e-11e7-a681-c1f86765f2ff',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0c21e6-cf0e-11e7-a681-c1f86765f2ff'
+        },
+        associationType: 'isChildOf',
+        destinationNodeURI: {
+          title: 'Task Models',
+          identifier: 'ca0bec3a-cf0e-11e7-b54f-2fdcf4d5bec7',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0bec3a-cf0e-11e7-b54f-2fdcf4d5bec7'
+        }
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/ca0ca4fe-cf0e-11e7-bb66-4525077e4967',
+        identifier: 'ca0ca4fe-cf0e-11e7-bb66-4525077e4967',
+        lastChangeDateTime: '2017-11-21T22:53:28+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Stimulus',
+          identifier: 'ca0c8a1e-cf0e-11e7-b5c2-33f37acce101',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0c8a1e-cf0e-11e7-b5c2-33f37acce101'
+        },
+        associationType: 'isChildOf',
+        destinationNodeURI: {
+          title: 'Task Model 1',
+          identifier: 'ca0c21e6-cf0e-11e7-a681-c1f86765f2ff',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0c21e6-cf0e-11e7-a681-c1f86765f2ff'
+        }
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/ca0cc48e-cf0e-11e7-b822-b914b980c3dc',
+        identifier: 'ca0cc48e-cf0e-11e7-b822-b914b980c3dc',
+        lastChangeDateTime: '2017-11-21T22:53:28+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Appropriate Stems',
+          identifier: 'ca0ca63e-cf0e-11e7-9c02-51d3940702a6',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0ca63e-cf0e-11e7-9c02-51d3940702a6'
+        },
+        associationType: 'isChildOf',
+        destinationNodeURI: {
+          title: 'Task Model 1',
+          identifier: 'ca0c21e6-cf0e-11e7-a681-c1f86765f2ff',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0c21e6-cf0e-11e7-a681-c1f86765f2ff'
+        }
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/ca0ce324-cf0e-11e7-9856-0b8c18c2e247',
+        identifier: 'ca0ce324-cf0e-11e7-9856-0b8c18c2e247',
+        lastChangeDateTime: '2017-11-21T22:53:28+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Appropriate Stems for Dual-Text Stimuli',
+          identifier: 'ca0cc614-cf0e-11e7-a7a0-bdce5f40a6bd',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0cc614-cf0e-11e7-a7a0-bdce5f40a6bd'
+        },
+        associationType: 'isChildOf',
+        destinationNodeURI: {
+          title: 'Task Model 1',
+          identifier: 'ca0c21e6-cf0e-11e7-a681-c1f86765f2ff',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0c21e6-cf0e-11e7-a681-c1f86765f2ff'
+        }
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/ca0cffee-cf0e-11e7-9966-4bb0287e330f',
+        identifier: 'ca0cffee-cf0e-11e7-9966-4bb0287e330f',
+        lastChangeDateTime: '2017-11-21T22:53:28+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Examples',
+          identifier: 'ca0ce46e-cf0e-11e7-8b7c-27da4fe17b70',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0ce46e-cf0e-11e7-8b7c-27da4fe17b70'
+        },
+        associationType: 'isChildOf',
+        destinationNodeURI: {
+          title: 'Task Model 1',
+          identifier: 'ca0c21e6-cf0e-11e7-a681-c1f86765f2ff',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0c21e6-cf0e-11e7-a681-c1f86765f2ff'
+        }
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/ca0d1be6-cf0e-11e7-8483-1b2e421df84c',
+        identifier: 'ca0d1be6-cf0e-11e7-8483-1b2e421df84c',
+        lastChangeDateTime: '2017-11-21T22:53:28+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Scoring Rules',
+          identifier: 'ca0d0138-cf0e-11e7-a7ab-eb052f41b715',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0d0138-cf0e-11e7-a7ab-eb052f41b715'
+        },
+        associationType: 'isChildOf',
+        destinationNodeURI: {
+          title: 'Task Model 1',
+          identifier: 'ca0c21e6-cf0e-11e7-a681-c1f86765f2ff',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0c21e6-cf0e-11e7-a681-c1f86765f2ff'
+        }
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/ca0d8202-cf0e-11e7-8e96-83a589468e1d',
+        identifier: 'ca0d8202-cf0e-11e7-8e96-83a589468e1d',
+        lastChangeDateTime: '2017-11-21T22:53:28+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Task Description',
+          identifier: 'ca0d652e-cf0e-11e7-a515-0ffa4e1e0e27',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0d652e-cf0e-11e7-a515-0ffa4e1e0e27'
+        },
+        associationType: 'isChildOf',
+        destinationNodeURI: {
+          title: 'Task Model 2',
+          identifier: 'ca0d1e02-cf0e-11e7-8ef8-43fef9437f37',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0d1e02-cf0e-11e7-8ef8-43fef9437f37'
+        }
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/ca0e15fa-cf0e-11e7-a749-01490540bebc',
+        identifier: 'ca0e15fa-cf0e-11e7-a749-01490540bebc',
+        lastChangeDateTime: '2017-11-21T22:53:28+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Task Model 2',
+          identifier: 'ca0d1e02-cf0e-11e7-8ef8-43fef9437f37',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0d1e02-cf0e-11e7-8ef8-43fef9437f37'
+        },
+        associationType: 'isChildOf',
+        destinationNodeURI: {
+          title: 'Task Models',
+          identifier: 'ca0bec3a-cf0e-11e7-b54f-2fdcf4d5bec7',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0bec3a-cf0e-11e7-b54f-2fdcf4d5bec7'
+        }
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/ca0da084-cf0e-11e7-a331-0307a1829054',
+        identifier: 'ca0da084-cf0e-11e7-a331-0307a1829054',
+        lastChangeDateTime: '2017-11-21T22:53:28+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Stimulus',
+          identifier: 'ca0d83c4-cf0e-11e7-9b05-d50e37e41f45',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0d83c4-cf0e-11e7-9b05-d50e37e41f45'
+        },
+        associationType: 'isChildOf',
+        destinationNodeURI: {
+          title: 'Task Model 2',
+          identifier: 'ca0d1e02-cf0e-11e7-8ef8-43fef9437f37',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0d1e02-cf0e-11e7-8ef8-43fef9437f37'
+        }
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/ca0dbc90-cf0e-11e7-8a5a-e981d1762294',
+        identifier: 'ca0dbc90-cf0e-11e7-8a5a-e981d1762294',
+        lastChangeDateTime: '2017-11-21T22:53:28+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Appropriate Stems',
+          identifier: 'ca0da1ce-cf0e-11e7-87c5-070d138dfbaf',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0da1ce-cf0e-11e7-87c5-070d138dfbaf'
+        },
+        associationType: 'isChildOf',
+        destinationNodeURI: {
+          title: 'Task Model 2',
+          identifier: 'ca0d1e02-cf0e-11e7-8ef8-43fef9437f37',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0d1e02-cf0e-11e7-8ef8-43fef9437f37'
+        }
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/ca0dd982-cf0e-11e7-bd11-25e198758d57',
+        identifier: 'ca0dd982-cf0e-11e7-bd11-25e198758d57',
+        lastChangeDateTime: '2017-11-21T22:53:28+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Appropriate Stems for Dual-Text Stimuli',
+          identifier: 'ca0dbdda-cf0e-11e7-b2d0-459396accfe3',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0dbdda-cf0e-11e7-b2d0-459396accfe3'
+        },
+        associationType: 'isChildOf',
+        destinationNodeURI: {
+          title: 'Task Model 2',
+          identifier: 'ca0d1e02-cf0e-11e7-8ef8-43fef9437f37',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0d1e02-cf0e-11e7-8ef8-43fef9437f37'
+        }
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/ca0df70a-cf0e-11e7-86c4-6764a8aafbdd',
+        identifier: 'ca0df70a-cf0e-11e7-86c4-6764a8aafbdd',
+        lastChangeDateTime: '2017-11-21T22:53:28+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Examples',
+          identifier: 'ca0ddac2-cf0e-11e7-8216-d9b9bd59d1d0',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0ddac2-cf0e-11e7-8216-d9b9bd59d1d0'
+        },
+        associationType: 'isChildOf',
+        destinationNodeURI: {
+          title: 'Task Model 2',
+          identifier: 'ca0d1e02-cf0e-11e7-8ef8-43fef9437f37',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0d1e02-cf0e-11e7-8ef8-43fef9437f37'
+        }
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/ca0e14a6-cf0e-11e7-b7a9-ffc49cbee49a',
+        identifier: 'ca0e14a6-cf0e-11e7-b7a9-ffc49cbee49a',
+        lastChangeDateTime: '2017-11-21T22:53:28+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Scoring Rules',
+          identifier: 'ca0df854-cf0e-11e7-bdd1-6b63442f4b3c',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0df854-cf0e-11e7-bdd1-6b63442f4b3c'
+        },
+        associationType: 'isChildOf',
+        destinationNodeURI: {
+          title: 'Task Model 2',
+          identifier: 'ca0d1e02-cf0e-11e7-8ef8-43fef9437f37',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0d1e02-cf0e-11e7-8ef8-43fef9437f37'
+        }
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/ca12a6ce-cf0e-11e7-9545-09f7a7a57c77',
+        identifier: 'ca12a6ce-cf0e-11e7-9545-09f7a7a57c77',
+        lastChangeDateTime: '2017-11-21T22:57:05+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Task Models',
+          identifier: 'ca0bec3a-cf0e-11e7-b54f-2fdcf4d5bec7',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0bec3a-cf0e-11e7-b54f-2fdcf4d5bec7'
+        },
+        associationType: 'isChildOf',
+        destinationNodeURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        sequenceNumber: 5
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/203f7770-cf0f-11e7-80a8-2b408b99a1c7',
+        identifier: '203f7770-cf0f-11e7-80a8-2b408b99a1c7',
+        lastChangeDateTime: '2017-11-21T22:55:53+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Accessibility Concerns/Guidance',
+          identifier: 'c8936810-cf0e-11e7-9fca-fbdab8edddc9',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c8936810-cf0e-11e7-9fca-fbdab8edddc9'
+        },
+        associationType: 'isChildOf',
+        destinationNodeURI: {
+          title: 'General Item Information',
+          identifier: 'c8925ab0-cf0e-11e7-995d-a30b6fbec7cb',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c8925ab0-cf0e-11e7-995d-a30b6fbec7cb'
+        },
+        sequenceNumber: 2
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/4b74e416-cf0f-11e7-8f79-6780ce7fccac',
+        identifier: '4b74e416-cf0f-11e7-8f79-6780ce7fccac',
+        lastChangeDateTime: '2017-11-21T22:57:05+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'E.G5.C1RL.T5',
+          identifier: '4b74e146-cf0f-11e7-bb4a-2bbc086b9042',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/4b74e146-cf0f-11e7-bb4a-2bbc086b9042'
+        },
+        associationType: 'exactMatchOf',
+        destinationNodeURI: {
+          title: 'Destination Node',
+          identifier: '31b99d87-6394-5819-9a86-f6b70379acf7',
+          uri: 'local:31b99d87-6394-5819-9a86-f6b70379acf7'
+        }
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/4b765ed6-cf0f-11e7-809b-99cc1062d1c3',
+        identifier: '4b765ed6-cf0f-11e7-809b-99cc1062d1c3',
+        lastChangeDateTime: '2017-11-21T22:57:05+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'E.G5.C1RL.T5',
+          identifier: '4b74e146-cf0f-11e7-bb4a-2bbc086b9042',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/4b74e146-cf0f-11e7-bb4a-2bbc086b9042'
+        },
+        associationType: 'isChildOf',
+        destinationNodeURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        sequenceNumber: 2
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/5fe4920c-cf0f-11e7-b987-af5cdb07662a',
+        identifier: '5fe4920c-cf0f-11e7-b987-af5cdb07662a',
+        lastChangeDateTime: '2017-11-21T22:57:39+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'E.G5.C1RL.T1.RL.5.1',
+          identifier: '5fe48f6e-cf0f-11e7-aaeb-7f4ff8a830d1',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/5fe48f6e-cf0f-11e7-aaeb-7f4ff8a830d1'
+        },
+        associationType: 'exactMatchOf',
+        destinationNodeURI: {
+          title: 'Destination Node',
+          identifier: '02437ec8-a703-5aa6-8342-77baa7927fa3',
+          uri: 'local:02437ec8-a703-5aa6-8342-77baa7927fa3'
+        }
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/5fe590b2-cf0f-11e7-be89-c7ff75a1860c',
+        identifier: '5fe590b2-cf0f-11e7-be89-c7ff75a1860c',
+        lastChangeDateTime: '2017-11-21T22:57:53+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'E.G5.C1RL.T1.RL.5.1',
+          identifier: '5fe48f6e-cf0f-11e7-aaeb-7f4ff8a830d1',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/5fe48f6e-cf0f-11e7-aaeb-7f4ff8a830d1'
+        },
+        associationType: 'isChildOf',
+        destinationNodeURI: {
+          title: 'E.G5.C1RL.T5',
+          identifier: '4b74e146-cf0f-11e7-bb4a-2bbc086b9042',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/4b74e146-cf0f-11e7-bb4a-2bbc086b9042'
+        },
+        sequenceNumber: 1
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/68321d58-cf0f-11e7-a869-f12d89d8f422',
+        identifier: '68321d58-cf0f-11e7-a869-f12d89d8f422',
+        lastChangeDateTime: '2017-11-21T22:57:53+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'E.G5.C1RL.T6.RL.5.5',
+          identifier: '68321b32-cf0f-11e7-b58c-c105d50a0249',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/68321b32-cf0f-11e7-b58c-c105d50a0249'
+        },
+        associationType: 'exactMatchOf',
+        destinationNodeURI: {
+          title: 'Destination Node',
+          identifier: 'c5ad6daa-79b4-5c49-a36f-1c1c16af62f3',
+          uri: 'local:c5ad6daa-79b4-5c49-a36f-1c1c16af62f3'
+        }
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/6833039e-cf0f-11e7-91d3-27bb8bd9e4b4',
+        identifier: '6833039e-cf0f-11e7-91d3-27bb8bd9e4b4',
+        lastChangeDateTime: '2017-11-21T22:57:53+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'E.G5.C1RL.T6.RL.5.5',
+          identifier: '68321b32-cf0f-11e7-b58c-c105d50a0249',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/68321b32-cf0f-11e7-b58c-c105d50a0249'
+        },
+        associationType: 'isChildOf',
+        destinationNodeURI: {
+          title: 'E.G5.C1RL.T5',
+          identifier: '4b74e146-cf0f-11e7-bb4a-2bbc086b9042',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/4b74e146-cf0f-11e7-bb4a-2bbc086b9042'
+        },
+        sequenceNumber: 2
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/79ad2db8-cf12-11e7-aeaa-310d339247fe',
+        identifier: '79ad2db8-cf12-11e7-aeaa-310d339247fe',
+        lastChangeDateTime: '2017-11-21T23:19:51+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'E.G5.C1RL.T5',
+          identifier: '4b74e146-cf0f-11e7-bb4a-2bbc086b9042',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/4b74e146-cf0f-11e7-bb4a-2bbc086b9042'
+        },
+        associationType: 'isRelatedTo',
+        destinationNodeURI: {
+          title: 'Destination Node',
+          identifier: 'f5b7cd7c-b997-11e7-95ae-206f2aba0899',
+          uri: 'local:f5b7cd7c-b997-11e7-95ae-206f2aba0899'
+        }
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/7c4da318-cf12-11e7-93be-99b597c45792',
+        identifier: '7c4da318-cf12-11e7-93be-99b597c45792',
+        lastChangeDateTime: '2017-11-21T23:19:55+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'E.G5.C1RL.T5',
+          identifier: '4b74e146-cf0f-11e7-bb4a-2bbc086b9042',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/4b74e146-cf0f-11e7-bb4a-2bbc086b9042'
+        },
+        associationType: 'isRelatedTo',
+        destinationNodeURI: {
+          title: 'Destination Node',
+          identifier: '14de6d3c-b998-11e7-b635-6def5935931f',
+          uri: 'local:14de6d3c-b998-11e7-b635-6def5935931f'
+        }
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/7fa58e36-cf12-11e7-8fd8-db2bfc03f3b6',
+        identifier: '7fa58e36-cf12-11e7-8fd8-db2bfc03f3b6',
+        lastChangeDateTime: '2017-11-21T23:20:01+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Task Model 1',
+          identifier: 'ca0c21e6-cf0e-11e7-a681-c1f86765f2ff',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0c21e6-cf0e-11e7-a681-c1f86765f2ff'
+        },
+        associationType: 'isRelatedTo',
+        destinationNodeURI: {
+          title: 'Destination Node',
+          identifier: 'f5b7cd7c-b997-11e7-95ae-206f2aba0899',
+          uri: 'local:f5b7cd7c-b997-11e7-95ae-206f2aba0899'
+        }
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/8cc2b0c6-cf12-11e7-9b54-270581a08f42',
+        identifier: '8cc2b0c6-cf12-11e7-9b54-270581a08f42',
+        lastChangeDateTime: '2017-11-21T23:20:23+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Task Model 2',
+          identifier: 'ca0d1e02-cf0e-11e7-8ef8-43fef9437f37',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0d1e02-cf0e-11e7-8ef8-43fef9437f37'
+        },
+        associationType: 'isRelatedTo',
+        destinationNodeURI: {
+          title: 'Destination Node',
+          identifier: '14de6d3c-b998-11e7-b635-6def5935931f',
+          uri: 'local:14de6d3c-b998-11e7-b635-6def5935931f'
+        }
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/9abcee4e-cf12-11e7-9264-09f3dec303ff',
+        identifier: '9abcee4e-cf12-11e7-9264-09f3dec303ff',
+        lastChangeDateTime: '2017-11-21T23:20:47+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Task Model 1',
+          identifier: 'ca0c21e6-cf0e-11e7-a681-c1f86765f2ff',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0c21e6-cf0e-11e7-a681-c1f86765f2ff'
+        },
+        associationType: 'isRelatedTo',
+        destinationNodeURI: {
+          title: 'Evidence Required 1',
+          identifier: 'c891fc6e-cf0e-11e7-951f-2d0792fb2beb',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c891fc6e-cf0e-11e7-951f-2d0792fb2beb'
+        }
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/9d46ed90-cf12-11e7-8b84-bfa77e788d9a',
+        identifier: '9d46ed90-cf12-11e7-8b84-bfa77e788d9a',
+        lastChangeDateTime: '2017-11-21T23:20:51+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Task Model 1',
+          identifier: 'ca0c21e6-cf0e-11e7-a681-c1f86765f2ff',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0c21e6-cf0e-11e7-a681-c1f86765f2ff'
+        },
+        associationType: 'isRelatedTo',
+        destinationNodeURI: {
+          title: 'Evidence Required 2',
+          identifier: 'c8922ba8-cf0e-11e7-bdf9-35f083b6b6ad',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c8922ba8-cf0e-11e7-bdf9-35f083b6b6ad'
+        }
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/9f933f36-cf12-11e7-8695-b992a01383f9',
+        identifier: '9f933f36-cf12-11e7-8695-b992a01383f9',
+        lastChangeDateTime: '2017-11-21T23:20:55+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Task Model 2',
+          identifier: 'ca0d1e02-cf0e-11e7-8ef8-43fef9437f37',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0d1e02-cf0e-11e7-8ef8-43fef9437f37'
+        },
+        associationType: 'isRelatedTo',
+        destinationNodeURI: {
+          title: 'Evidence Required 1',
+          identifier: 'c891fc6e-cf0e-11e7-951f-2d0792fb2beb',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c891fc6e-cf0e-11e7-951f-2d0792fb2beb'
+        }
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/a1a28a70-cf12-11e7-b47e-d59da77833d4',
+        identifier: 'a1a28a70-cf12-11e7-b47e-d59da77833d4',
+        lastChangeDateTime: '2017-11-21T23:20:58+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Task Model 2',
+          identifier: 'ca0d1e02-cf0e-11e7-8ef8-43fef9437f37',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0d1e02-cf0e-11e7-8ef8-43fef9437f37'
+        },
+        associationType: 'isRelatedTo',
+        destinationNodeURI: {
+          title: 'Evidence Required 2',
+          identifier: 'c8922ba8-cf0e-11e7-bdf9-35f083b6b6ad',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/c8922ba8-cf0e-11e7-bdf9-35f083b6b6ad'
+        }
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/aba69eee-cf12-11e7-97df-db8272061ac5',
+        identifier: 'aba69eee-cf12-11e7-97df-db8272061ac5',
+        lastChangeDateTime: '2017-11-21T23:21:15+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'E.G5.C1RL.T5',
+          identifier: '4b74e146-cf0f-11e7-bb4a-2bbc086b9042',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/4b74e146-cf0f-11e7-bb4a-2bbc086b9042'
+        },
+        associationType: 'isRelatedTo',
+        destinationNodeURI: {
+          title: 'Destination Node',
+          identifier: '4f54ea14-9018-4551-8997-6370f15bbd19',
+          uri: 'local:4f54ea14-9018-4551-8997-6370f15bbd19'
+        }
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/aefb97ca-cf12-11e7-90b4-090a05073b97',
+        identifier: 'aefb97ca-cf12-11e7-90b4-090a05073b97',
+        lastChangeDateTime: '2017-11-21T23:21:21+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'E.G5.C1RL.T5',
+          identifier: '4b74e146-cf0f-11e7-bb4a-2bbc086b9042',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/4b74e146-cf0f-11e7-bb4a-2bbc086b9042'
+        },
+        associationType: 'isRelatedTo',
+        destinationNodeURI: {
+          title: 'Destination Node',
+          identifier: 'dbe2c246-4427-4fb4-a54a-9873849bb721',
+          uri: 'local:dbe2c246-4427-4fb4-a54a-9873849bb721'
+        }
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/b4b9d5aa-cf12-11e7-bef5-33fc182c7f84',
+        identifier: 'b4b9d5aa-cf12-11e7-bef5-33fc182c7f84',
+        lastChangeDateTime: '2017-11-21T23:21:30+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Task Model 1',
+          identifier: 'ca0c21e6-cf0e-11e7-a681-c1f86765f2ff',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0c21e6-cf0e-11e7-a681-c1f86765f2ff'
+        },
+        associationType: 'isRelatedTo',
+        destinationNodeURI: {
+          title: 'Destination Node',
+          identifier: '4f54ea14-9018-4551-8997-6370f15bbd19',
+          uri: 'local:4f54ea14-9018-4551-8997-6370f15bbd19'
+        }
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/b7085700-cf12-11e7-bf7f-0bb96dc9e96c',
+        identifier: 'b7085700-cf12-11e7-bf7f-0bb96dc9e96c',
+        lastChangeDateTime: '2017-11-21T23:21:34+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Task Model 1',
+          identifier: 'ca0c21e6-cf0e-11e7-a681-c1f86765f2ff',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0c21e6-cf0e-11e7-a681-c1f86765f2ff'
+        },
+        associationType: 'isRelatedTo',
+        destinationNodeURI: {
+          title: 'Destination Node',
+          identifier: 'dbe2c246-4427-4fb4-a54a-9873849bb721',
+          uri: 'local:dbe2c246-4427-4fb4-a54a-9873849bb721'
+        }
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/ba29944e-cf12-11e7-a2b2-6b648ad16fb4',
+        identifier: 'ba29944e-cf12-11e7-a2b2-6b648ad16fb4',
+        lastChangeDateTime: '2017-11-21T23:21:39+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Task Model 2',
+          identifier: 'ca0d1e02-cf0e-11e7-8ef8-43fef9437f37',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0d1e02-cf0e-11e7-8ef8-43fef9437f37'
+        },
+        associationType: 'isRelatedTo',
+        destinationNodeURI: {
+          title: 'Destination Node',
+          identifier: '4f54ea14-9018-4551-8997-6370f15bbd19',
+          uri: 'local:4f54ea14-9018-4551-8997-6370f15bbd19'
+        }
+      },
+      {
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFAssociations/bcc966ca-cf12-11e7-9f9a-a5373b0731a1',
+        identifier: 'bcc966ca-cf12-11e7-9f9a-a5373b0731a1',
+        lastChangeDateTime: '2017-11-21T23:21:44+00:00',
+        CFDocumentURI: {
+          title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+          identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+        },
+        originNodeURI: {
+          title: 'Task Model 2',
+          identifier: 'ca0d1e02-cf0e-11e7-8ef8-43fef9437f37',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItems/ca0d1e02-cf0e-11e7-8ef8-43fef9437f37'
+        },
+        associationType: 'isRelatedTo',
+        destinationNodeURI: {
+          title: 'Destination Node',
+          identifier: 'dbe2c246-4427-4fb4-a54a-9873849bb721',
+          uri: 'local:dbe2c246-4427-4fb4-a54a-9873849bb721'
+        }
+      }
+    ],
+    CFDefinitions: {
+      CFConcepts: [],
+      CFSubjects: [
+        {
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFSubjects/cf91e60e-6674-5a4a-81ef-2bd88981154e',
+          identifier: 'cf91e60e-6674-5a4a-81ef-2bd88981154e',
+          lastChangeDateTime: '2016-11-30T19:11:37+00:00',
+          title: 'English Language Arts',
+          hierarchyCode: 'ELA'
+        }
+      ],
+      CFLicenses: [],
+      CFItemTypes: [
+        {
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/f6e54927-6d0a-4ed6-94f7-3ee1f5ca4fcf',
+          identifier: 'f6e54927-6d0a-4ed6-94f7-3ee1f5ca4fcf',
+          lastChangeDateTime: '2017-05-08T23:06:36+00:00',
+          title: 'Clarification',
+          typeCode: 'Clarification',
+          hierarchyCode: 'Clarification'
+        },
+        {
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/ab8e8fdc-baaa-400f-9dc8-7b737f8b86ff',
+          identifier: 'ab8e8fdc-baaa-400f-9dc8-7b737f8b86ff',
+          lastChangeDateTime: '2017-02-09T18:55:22+00:00',
+          title: 'Section Heading',
+          description:
+            'The section heading of the TEKS for the given grade and subject.  These are captured as Learning Standards in order to facilitate assessed score reporting metrics which are not earmarked against specific standards.  Such as progress measures and scale scores of students.',
+          typeCode: 'ItemType: 23',
+          hierarchyCode: '2'
+        },
+        {
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/62ae8acf-e478-4213-a2d2-aebec5b898df',
+          identifier: '62ae8acf-e478-4213-a2d2-aebec5b898df',
+          lastChangeDateTime: '2017-05-08T23:30:20+00:00',
+          title: 'Evidence Required',
+          typeCode: 'Evidence Required',
+          hierarchyCode: 'Evidence Required'
+        },
+        {
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/a2c9fb5b-56f1-4d92-af37-4edbbfcce40f',
+          identifier: 'a2c9fb5b-56f1-4d92-af37-4edbbfcce40f',
+          lastChangeDateTime: '2017-02-09T18:55:22+00:00',
+          title: 'General Requirements',
+          description:
+            'The General Requirements portion of the TEKS standards in any given sub-section',
+          typeCode: 'ItemType: 26',
+          hierarchyCode: '4'
+        },
+        {
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/d19c9ae0-bfe0-11e7-bff4-050398278f5a',
+          identifier: 'd19c9ae0-bfe0-11e7-bff4-050398278f5a',
+          lastChangeDateTime: '2017-11-02T15:16:36+00:00',
+          title: 'Accessibility',
+          typeCode: 'Accessibility',
+          hierarchyCode: 'Accessibility'
+        },
+        {
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/f66a54af-9e35-46d4-8ba6-66606c888f6c',
+          identifier: 'f66a54af-9e35-46d4-8ba6-66606c888f6c',
+          lastChangeDateTime: '2017-05-10T22:47:21+00:00',
+          title: 'Task Model',
+          typeCode: 'Task Model',
+          hierarchyCode: 'Task Model'
+        },
+        {
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/b0804d18-bb65-11e7-98c9-83def7a9dccd',
+          identifier: 'b0804d18-bb65-11e7-98c9-83def7a9dccd',
+          lastChangeDateTime: '2017-10-27T22:25:08+00:00',
+          title: 'Task Description',
+          typeCode: 'Task Description',
+          hierarchyCode: 'Task Description'
+        },
+        {
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/1e025133-1d58-4123-9818-22035889162b',
+          identifier: '1e025133-1d58-4123-9818-22035889162b',
+          lastChangeDateTime: '2017-05-08T23:24:58+00:00',
+          title: 'Stimulus',
+          typeCode: 'Stimulus',
+          hierarchyCode: 'Stimulus'
+        },
+        {
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/8415a434-bb66-11e7-bccb-8b103c40dec4',
+          identifier: '8415a434-bb66-11e7-bccb-8b103c40dec4',
+          lastChangeDateTime: '2017-10-27T22:31:03+00:00',
+          title: 'Stem',
+          typeCode: 'Stem',
+          hierarchyCode: 'Stem'
+        },
+        {
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/c685d17c-bb66-11e7-b6af-3f99116007d0',
+          identifier: 'c685d17c-bb66-11e7-b6af-3f99116007d0',
+          lastChangeDateTime: '2017-10-27T22:32:54+00:00',
+          title: 'Example',
+          typeCode: 'Example',
+          hierarchyCode: 'Example'
+        },
+        {
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/2fb0cde6-255b-4855-8313-f63e2c82d7af',
+          identifier: '2fb0cde6-255b-4855-8313-f63e2c82d7af',
+          lastChangeDateTime: '2017-05-10T23:04:01+00:00',
+          title: 'Rubric',
+          typeCode: 'Rubric',
+          hierarchyCode: 'Rubric'
+        },
+        {
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/ca81997c-078d-56bc-ad4b-7c111f218115',
+          identifier: 'ca81997c-078d-56bc-ad4b-7c111f218115',
+          lastChangeDateTime: '2016-11-30T19:11:04+00:00',
+          title: 'Target',
+          typeCode: 'Target',
+          hierarchyCode: 'Target'
+        },
+        {
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFItemTypes/24aabaa0-731d-4745-b70b-248fa0b5290a',
+          identifier: '24aabaa0-731d-4745-b70b-248fa0b5290a',
+          lastChangeDateTime: '2016-11-30T17:43:34+00:00',
+          title: 'Measured Skill',
+          description: 'Measured Skill',
+          typeCode: 'Measured Skill',
+          hierarchyCode: 'Measured Skill'
+        }
+      ],
+      CFAssociationGroupings: []
+    }
   }
 ];
