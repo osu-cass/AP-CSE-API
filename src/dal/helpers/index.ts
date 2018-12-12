@@ -46,11 +46,13 @@ export function buildSubjectsAndGrades(res: IGradeAndSubjectResult): IFilterOpti
   return subject.length !== 0 && grades.length !== 0 ? { subject, grades } : undefined;
 }
 
-// function translateClaimNumber(subject: string, claimNumber: string): string {
-//   const claimNum: string = claimNumber[1];
+function translateClaimNumber(subject: string, claimNumber: string): string {
+  const claimNum: string = claimNumber[1];
 
-//   return subject === 'Math' ?  `${claimNum}: mathClaims[claimNumber]` : `${claimNum}: elaClaims[claimNumber]`;
-// }
+  return subject === 'Math'
+    ? `${claimNum}: mathClaims[claimNumber]`
+    : `${claimNum}: elaClaims[claimNumber]`;
+}
 
 export function buildClaimNumbers(
   subject: string,
@@ -60,7 +62,10 @@ export function buildClaimNumbers(
 
   const claimNumbers: IFilterItem[] = dbResult
     .filter(({ claimNumber }: IClaimNumberResult) => filterValue(claimNums, claimNumber))
-    .map(({ claimNumber }: IClaimNumberResult) => ({ code: claimNumber, label: claimNumber }));
+    .map(({ claimNumber }: IClaimNumberResult) => ({
+      code: claimNumber,
+      label: translateClaimNumber(subject, claimNumber)
+    }));
 
   return claimNumbers.length !== 0 ? { claimNumbers } : undefined;
 }
@@ -81,10 +86,12 @@ function filterShortCodeByGrade(grades: string[], shortCode: string): boolean {
 
 function translateTargetShortCode(code: string): string {
   let display: string;
-  // get the target number/letter
-  const target: string = code[code.length - 1];
+
   // split the target short code over '.'
   const codeSegment: string[] = code.split('.');
+  // get the target number/letter
+  const target: string = codeSegment[codeSegment.length - 1];
+  const targetNumber: string = target.slice(1, target.length);
   // get the domain/sub-claim for special case (Math 3, C1)
   const domain: string = codeSegment[2].substring(2);
   const subject: string = codeSegment[0];
@@ -94,10 +101,10 @@ function translateTargetShortCode(code: string): string {
   if (subject === 'M') {
     display =
       claim !== 'C1'
-        ? `Target ${target}: ${mathShortCodes[`${claim}.T${target}`]}`
-        : `Target ${target}: ${mathShortCodes[code]} (${domain})`;
+        ? `Target ${targetNumber}: ${mathShortCodes[`${claim}.${target}`]}`
+        : `Target ${targetNumber}: ${mathShortCodes[code]} (${domain})`;
   } else {
-    display = `Target ${target}: ${elaShortCodes[code]}`;
+    display = `Target ${target}: ${elaShortCodes[`${claim}.${target}`]}`;
   }
 
   return display;
