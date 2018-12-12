@@ -94,7 +94,6 @@ export class SearchClient implements ISearchClient {
     if (query) {
       body.query('multi_match', {
         query,
-        type: 'phrase_prefix',
         fields: [
           'description',
           'target.description',
@@ -131,9 +130,10 @@ export class SearchClient implements ISearchClient {
   public async search(query: IQueryParams): Promise<IClaim[]> {
     let result: IClaim[] = [];
     let response: SearchResponse<{}>;
+    const body: object = this.buildRequestBody(query);
     try {
       response = await this.client.search({
-        body: this.buildRequestBody(query),
+        body,
         type: 'claim',
         index: 'cse'
       });
