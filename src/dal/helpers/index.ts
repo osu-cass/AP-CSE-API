@@ -50,8 +50,8 @@ function translateClaimNumber(subject: string, claimNumber: string): string {
   const claimNum: string = claimNumber[1];
 
   return subject === 'Math'
-    ? `${claimNum}: mathClaims[claimNumber]`
-    : `${claimNum}: elaClaims[claimNumber]`;
+    ? `${claimNum}: ${mathClaims[claimNumber]}`
+    : `${claimNum}: ${elaClaims[claimNumber]}`;
 }
 
 export function buildClaimNumbers(
@@ -104,7 +104,7 @@ function translateTargetShortCode(code: string): string {
         ? `Target ${targetNumber}: ${mathShortCodes[`${claim}.${target}`]}`
         : `Target ${targetNumber}: ${mathShortCodes[code]} (${domain})`;
   } else {
-    display = `Target ${target}: ${elaShortCodes[`${claim}.${target}`]}`;
+    display = `Target ${targetNumber}: ${elaShortCodes[`${claim}.${target}`]}`;
   }
 
   return display;
