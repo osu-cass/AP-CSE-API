@@ -64,7 +64,7 @@ describe('Case API Scraper', () => {
   });
   it('returns valid data for db', async () => {
     mockFetch();
-    const result = await importDbEntries();
+    await importDbEntries();
     expect(fetch.mock.calls.length).toBe(15);
   });
   it('makes shortcodes', () => {
