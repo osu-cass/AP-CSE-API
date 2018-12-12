@@ -44,10 +44,10 @@ export const elaShortCodes: Hash = {
 };
 
 export const mathClaims: Hash = {
-  C1: '1. Content and Procedures',
-  C2: '2. Problem Solving',
-  C3: '3. Communication Reasoning',
-  C4: '4. Modeling and Data Analysis'
+  C1: 'Content and Procedures',
+  C2: 'Problem Solving',
+  C3: 'Communication Reasoning',
+  C4: 'Modeling and Data Analysis'
 };
 
 export const mathShortCodes: Hash = {
