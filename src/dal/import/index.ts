@@ -136,12 +136,25 @@ export async function importDbEntries(): Promise<IClaim[]> {
         }
       });
     }
-    claimArray.push(<IClaim>newClaim);
+    pushToClaimArray(claimArray, newClaim, claim);
   });
 
   return consolidate(claimArray);
 }
-
+export function pushToClaimArray(claimArray: IClaim[], newClaim: IClaim, claim: ISpecDocument) {
+  let temp: IClaim;
+  const endTarg = claim.CFItems[claim.CFItems.length - 1];
+  if (newClaim.target[0].title.includes('Targets ')) {
+    const tNum = parseInt(newClaim.target[0].title.split(' Targets ')[1].split('a')[0], 10);
+    newClaim.target[0].title = `${newClaim.target[0].title.split(' Targets ')[0]} Target ${tNum}a`;
+    temp = JSON.parse(JSON.stringify(newClaim));
+    temp.target[0].shortCode = endTarg.humanCodingScheme;
+    temp.target[0].description = endTarg.fullStatement;
+    temp.target[0].title = `${temp.target[0].title.split(' Target ')[0]} Target ${tNum}b`;
+    claimArray.push(temp);
+  }
+  claimArray.push(newClaim);
+}
 // This function handles target information for multi-grade-and-claim documents
 export function getMultiTarget(claim: ISpecDocument, newClaim: any, DOKDOC: ISpecDocument) {
   const tModels: ITaskModel[] = [];
@@ -531,12 +544,13 @@ export function consolidate(claimArray: IClaim[]): IClaim[] {
   // This forEach fixes an error in the CASE API for E.G5.C1.T6 having an incorrect target shortcode
   finalArray.forEach(c => {
     if (c.shortCode === 'E.G5.C1a') {
-      c.target[c.target.findIndex((t) => t.title.includes('Target 6'))].shortCode = 'E.G5.C1RL.T6';
+      c.target[c.target.findIndex(t => t.title.includes('Target 6'))].shortCode = 'E.G5.C1RL.T6';
     }
   });
 
   return finalArray.filter(c => c.claimNumber !== 'C1' || c.subject === Subject.MATH);
 }
+
 export function expandFirstClaim(finalArray: IClaim[]) {
   const tempArr: IClaim[] = [];
   finalArray.forEach(claim => {
