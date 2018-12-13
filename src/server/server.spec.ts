@@ -23,6 +23,7 @@ jest.mock('../utils/tracer', () => ({
 }));
 
 jest.mock('../dal/import');
+jest.mock('../utils/logger');
 
 jest.mock('../dal/search', () => ({
   SearchClient: jest.fn().mockImplementation(() => ({

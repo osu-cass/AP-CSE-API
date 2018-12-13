@@ -40,7 +40,8 @@ const packages = [
   '080b6490-f08c-11e7-a604-654871858e0d',
   'db93d530-b997-11e7-8abc-3327a9111ac8',
   'ddd1045a-d29f-11e7-8ec6-ebfef2b95d1c',
-  'ddd1045a-d29f-11e7-8ec6-ebfef2b95d1c'
+  'ddd1045a-d29f-11e7-8ec6-ebfef2b95d1c',
+  'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
 ];
 const arr: ISpecDocument[] = [];
 
@@ -56,47 +57,15 @@ describe('Case API Scraper', () => {
     expect(result).toEqual(packages);
   });
   it('imports claim documents', async () => {
-    fetch
-      .once(JSON.stringify(mockData))
-      .mockResponses(
-        [JSON.stringify(mockPack[0])],
-        [JSON.stringify(mockELA)],
-        [JSON.stringify(mockMATH)],
-        [JSON.stringify(mockDOK)],
-        [JSON.stringify(mockMATHPackage)],
-        [JSON.stringify(mockMATHClone)],
-        [JSON.stringify(mockHSMATH)],
-        [JSON.stringify(mockTMATH)],
-        [JSON.stringify(mockPack[1])],
-        [JSON.stringify(mockIT)],
-        [JSON.stringify(mockPack[2])],
-        [JSON.stringify(mockPack[3])],
-        [JSON.stringify(singleGradePT)]
-      );
+    mockFetch();
     const result = await importDocs(arr);
-    expect(fetch.mock.calls.length).toBe(14);
-    expect(result).toBe(13);
+    expect(fetch.mock.calls.length).toBe(15);
+    expect(result).toBe(14);
   });
   it('returns valid data for db', async () => {
-    fetch
-      .once(JSON.stringify(mockData))
-      .mockResponses(
-        [JSON.stringify(mockPack[0])],
-        [JSON.stringify(mockELA)],
-        [JSON.stringify(mockMATH)],
-        [JSON.stringify(mockDOK)],
-        [JSON.stringify(mockMATHPackage)],
-        [JSON.stringify(mockMATHClone)],
-        [JSON.stringify(mockHSMATH)],
-        [JSON.stringify(mockTMATH)],
-        [JSON.stringify(mockPack[1])],
-        [JSON.stringify(mockIT)],
-        [JSON.stringify(mockPack[2])],
-        [JSON.stringify(mockPack[3])],
-        [JSON.stringify(singleGradePT)]
-      );
-    const result = await importDbEntries();
-    expect(fetch.mock.calls.length).toBe(14);
+    mockFetch();
+    await importDbEntries();
+    expect(fetch.mock.calls.length).toBe(15);
   });
   it('makes shortcodes', () => {
     const ELAresult = getClaimShortCode(subject[0], claim, grade);
@@ -119,3 +88,23 @@ describe('Case API Scraper', () => {
     expect(ELAresult).toEqual(claim);
   });
 });
+function mockFetch() {
+  fetch
+    .once(JSON.stringify(mockData))
+    .mockResponses(
+      [JSON.stringify(mockPack[0])],
+      [JSON.stringify(mockELA)],
+      [JSON.stringify(mockMATH)],
+      [JSON.stringify(mockDOK)],
+      [JSON.stringify(mockMATHPackage)],
+      [JSON.stringify(mockMATHClone)],
+      [JSON.stringify(mockHSMATH)],
+      [JSON.stringify(mockTMATH)],
+      [JSON.stringify(mockPack[1])],
+      [JSON.stringify(mockIT)],
+      [JSON.stringify(mockPack[2])],
+      [JSON.stringify(mockPack[3])],
+      [JSON.stringify(singleGradePT)],
+      [JSON.stringify(mockPack[4])]
+    );
+}

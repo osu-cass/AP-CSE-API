@@ -319,6 +319,34 @@ export const mockData = {
       subject: ['Math'],
       adoptionStatus: 'Draft',
       notes: 'G3-5_Claim2_Spec_v3'
+    },
+    {
+      uri:
+        'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+      identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+      lastChangeDateTime: '2018-03-01T21:01:43+00:00',
+      CFPackageURI: {
+        title: 'English Language Arts Specification: Grade 5 Claim 1 Target ',
+        identifier: 'bbc88b2e-cf0e-11e7-8986-0d6dd40bd034',
+        uri:
+          'https://case.smarterbalanced.org/ims/case/v1p0/CFPackages/bbc88b2e-cf0e-11e7-8986-0d6dd40bd034'
+      },
+      subjectURI: [
+        {
+          title: 'English Language Arts',
+          identifier: 'cf91e60e-6674-5a4a-81ef-2bd88981154e',
+          uri:
+            'https://case.smarterbalanced.org/ims/case/v1p0/CFSubjects/cf91e60e-6674-5a4a-81ef-2bd88981154e'
+        }
+      ],
+      officialSourceURL:
+        'https://images.smarterbalanced.org/content/Documents/Item%20Specs/ELA%20Item%20Specs/CAT/ELA%20Grade%203-5_Word/ELA%20Grade%203-5%20Claim%201/ELA%20Grade%203-5%20Claim%201%20Target%206/ELA_Spec_G05_C1_T6.docx',
+      creator: 'Smarter Balanced_ELA CAT Item Specifications',
+      publisher: 'Smarter Balanced Assessment Consortium',
+      title: 'English Language Arts Specification: Grade 5 Claim 1 Target 6',
+      subject: ['English Language Arts'],
+      adoptionStatus: 'Draft',
+      notes: 'ELA_Spec_G05_C1_T6'
     }
   ]
 };
