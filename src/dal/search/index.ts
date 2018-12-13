@@ -94,7 +94,7 @@ export class SearchClient implements ISearchClient {
     if (query) {
       body.query('multi_match', {
         query,
-        type: 'phrase_prefix',
+        type: 'phrase',
         fields: [
           'description',
           'target.description',
