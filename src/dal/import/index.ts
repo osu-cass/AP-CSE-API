@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 import { ISpecDocument } from './interfaces';
-import { IClaim } from '../../models/claim';
-import { IDOK, ITaskModel } from '../../models/target';
+import { IClaim, ClaimExpansion } from '../../models/claim';
+import { IDOK, ITaskModel, ITarget } from '../../models/target';
 
 // This is required for translating specDocuments to an IClaim type
 // tslint:disable:no-unsafe-any no-any
@@ -136,12 +136,27 @@ export async function importDbEntries(): Promise<IClaim[]> {
         }
       });
     }
-    claimArray.push(<IClaim>newClaim);
+    pushToClaimArray(claimArray, newClaim, claim);
   });
 
   return consolidate(claimArray);
 }
-
+export function pushToClaimArray(claimArray: IClaim[], newClaim: IClaim, claim: ISpecDocument) {
+  let temp: IClaim;
+  if (newClaim.target[0].title.includes('Targets ')) {
+    const tNum = parseInt(newClaim.target[0].title.split(' Targets ')[1].split('a')[0], 10);
+    const tCode = `${newClaim.target[0].shortCode.split(`T${tNum}a`)[0]}T${tNum}b`;
+    const targIdx = claim.CFItems.findIndex(i => i.humanCodingScheme === tCode);
+    const endTarg = claim.CFItems[targIdx];
+    newClaim.target[0].title = `${newClaim.target[0].title.split(' Targets ')[0]} Target ${tNum}a`;
+    temp = JSON.parse(JSON.stringify(newClaim));
+    temp.target[0].shortCode = endTarg.humanCodingScheme;
+    temp.target[0].description = endTarg.fullStatement;
+    temp.target[0].title = `${temp.target[0].title.split(' Target ')[0]} Target ${tNum}b`;
+    claimArray.push(temp);
+  }
+  claimArray.push(newClaim);
+}
 // This function handles target information for multi-grade-and-claim documents
 export function getMultiTarget(claim: ISpecDocument, newClaim: any, DOKDOC: ISpecDocument) {
   const tModels: ITaskModel[] = [];
@@ -348,7 +363,7 @@ export function getTarget(claim: IClaim, jsonData: ISpecDocument, DOKDOC: ISpecD
             stdDesc: fullStatement
           });
         }
-        if (p.CFItemType === 'Target') {
+        if (p.CFItemType === 'Target' && p !== jsonData.CFItems[jsonData.CFItems.length -1]) {
           target.description = fullStatement;
         }
         if (p.CFItemType === 'Clarification') {
@@ -526,10 +541,41 @@ export function consolidate(claimArray: IClaim[]): IClaim[] {
   }
   handlePT(finalArray);
   finalArray = removePT(finalArray);
+  expandFirstClaim(finalArray);
 
-  return finalArray;
+  // This forEach fixes an error in the CASE API for E.G5.C1.T6 having an incorrect target shortcode
+  finalArray.forEach(c => {
+    if (c.shortCode === 'E.G5.C1a') {
+      c.target[c.target.findIndex(t => t.title.includes('Target 6'))].shortCode = 'E.G5.C1RL.T6';
+    }
+  });
+
+  return finalArray.filter(c => c.claimNumber !== 'C1' || c.subject === Subject.MATH);
 }
 
+export function expandFirstClaim(finalArray: IClaim[]) {
+  const tempArr: IClaim[] = [];
+  finalArray.forEach(claim => {
+    if (claim.claimNumber === 'C1' && claim.subject === Subject.ELA) {
+      const temp = JSON.parse(JSON.stringify(claim));
+      temp.claimNumber = 'C1a';
+      temp.shortCode = temp.shortCode.replace(claim.claimNumber, temp.claimNumber);
+      temp.target = [];
+      claim.target.forEach(t => {
+        if (parseInt(t.shortCode.split('.')[3].split('T')[1], 10) <= 7) {
+          temp.target.push(t);
+        }
+      });
+      claim.shortCode = claim.shortCode.replace(claim.claimNumber, 'C1b');
+      claim.claimNumber = 'C1b';
+      claim.target = claim.target.filter(
+        t => parseInt(t.shortCode.split('.')[3].split('T')[1], 10) > 7
+      );
+      tempArr.push(temp);
+    }
+  });
+  tempArr.forEach(c => finalArray.push(c));
+}
 export function handlePT(finalArray: IClaim[]) {
   let PTArr: IClaim[] = [];
   let tempIdx;
@@ -549,5 +595,4 @@ export function handlePT(finalArray: IClaim[]) {
 
 export function removePT(finalArray: IClaim[]) {
   return finalArray.filter(claim => !claim.title.includes('Performance'));
-
 }

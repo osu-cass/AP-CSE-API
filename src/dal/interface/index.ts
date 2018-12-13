@@ -85,8 +85,6 @@ export class DbClient implements IDbClient {
       throw new Error(err);
     }
 
-
-
     return exists;
   }
 
