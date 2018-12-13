@@ -143,9 +143,11 @@ export async function importDbEntries(): Promise<IClaim[]> {
 }
 export function pushToClaimArray(claimArray: IClaim[], newClaim: IClaim, claim: ISpecDocument) {
   let temp: IClaim;
-  const endTarg = claim.CFItems[claim.CFItems.length - 1];
   if (newClaim.target[0].title.includes('Targets ')) {
     const tNum = parseInt(newClaim.target[0].title.split(' Targets ')[1].split('a')[0], 10);
+    const tCode = `${newClaim.target[0].shortCode.split(`T${tNum}a`)[0]}T${tNum}b`;
+    const targIdx = claim.CFItems.findIndex(i => i.humanCodingScheme === tCode);
+    const endTarg = claim.CFItems[targIdx];
     newClaim.target[0].title = `${newClaim.target[0].title.split(' Targets ')[0]} Target ${tNum}a`;
     temp = JSON.parse(JSON.stringify(newClaim));
     temp.target[0].shortCode = endTarg.humanCodingScheme;
