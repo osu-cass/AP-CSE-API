@@ -1,5 +1,5 @@
 import { SearchClient } from '.';
-import { esCreate, esDelete, esExists, esSearch } from '../../__mocks__/elasticsearch';
+import { esCreate, esDelete, esExists, esSearch, esIndex } from '../../__mocks__/elasticsearch';
 import { IClaim } from '../../models/claim';
 import { IQueryParams } from '../../routes';
 import { Health } from '../../routes/health';
@@ -25,11 +25,12 @@ describe('search', () => {
     });
 
     it('inserts claims into es', async () => {
-      expect.assertions(3);
-      await client.insertDocuments(<IClaim[]>claims);
-      expect(esExists).toHaveBeenCalledWith({ id: '0', index: 'cse', type: 'claim' });
+      expect.assertions(4);
+      await client.insert(<IClaim[]>claims);
+      expect(esExists).toHaveBeenCalledWith({ index: 'cse' });
       expect(esDelete).toHaveBeenCalledTimes(1);
-      expect(esCreate).toHaveBeenCalledWith({
+      expect(esCreate).toHaveBeenCalledWith({ index: 'cse' });
+      expect(esIndex).toHaveBeenCalledWith({
         id: '0',
         index: 'cse',
         type: 'claim',
@@ -45,13 +46,14 @@ describe('search', () => {
 
     it('fails to insert claims into es', async () => {
       esCreate.mockRejectedValue(new Error('create error'));
-      expect.assertions(4);
+      expect.assertions(5);
       try {
-        await client.insertDocuments(<IClaim[]>claims);
+        await client.insert(<IClaim[]>claims);
       } catch (err) {
-        expect(esExists).toHaveBeenCalledWith({ id: '0', index: 'cse', type: 'claim' });
+        expect(esExists).toHaveBeenCalledWith({ index: 'cse' });
         expect(esDelete).toHaveBeenCalledTimes(1);
-        expect(esCreate).toHaveBeenCalledWith({
+        expect(esCreate).toHaveBeenCalledWith({ index: 'cse' });
+        expect(esIndex).toHaveBeenCalledWith({
           id: '0',
           index: 'cse',
           type: 'claim',
@@ -64,11 +66,12 @@ describe('search', () => {
 
     it('delete and insert claim into es', async () => {
       esExists.mockImplementation(() => true);
-      expect.assertions(3);
-      await client.insertDocuments(<IClaim[]>claims);
-      expect(esExists).toHaveBeenCalledWith({ id: '0', index: 'cse', type: 'claim' });
-      expect(esDelete).toHaveBeenCalledWith({ id: '0', index: 'cse', type: 'claim' });
-      expect(esCreate).toHaveBeenCalledWith({
+      expect.assertions(4);
+      await client.insert(<IClaim[]>claims);
+      expect(esExists).toHaveBeenCalledWith({ index: 'cse' });
+      expect(esDelete).toHaveBeenCalledWith({ index: 'cse' });
+      expect(esCreate).toHaveBeenCalledWith({ index: 'cse' });
+      expect(esIndex).toHaveBeenCalledWith({
         id: '0',
         index: 'cse',
         type: 'claim',
@@ -80,10 +83,10 @@ describe('search', () => {
       esExists.mockRejectedValue(new Error('exist() failed'));
       expect.assertions(4);
       try {
-        await client.insertDocuments(<IClaim[]>claims);
+        await client.insert(<IClaim[]>claims);
       } catch (err) {
         expect(err).toEqual(new Error('exist() failed'));
-        expect(esExists).toHaveBeenCalledWith({ id: '0', index: 'cse', type: 'claim' });
+        expect(esExists).toHaveBeenCalledWith({ index: 'cse' });
         expect(esDelete).toHaveBeenCalledTimes(0);
         expect(esCreate).toHaveBeenCalledTimes(0);
       }
@@ -94,22 +97,20 @@ describe('search', () => {
       esDelete.mockRejectedValue(new Error('delete() failed'));
       expect.assertions(4);
       try {
-        await client.insertDocuments(<IClaim[]>claims);
+        await client.insert(<IClaim[]>claims);
       } catch (err) {
-        expect(err).toEqual(new Error('delete() failed'));
-        expect(esExists).toHaveBeenCalledWith({ id: '0', index: 'cse', type: 'claim' });
-        expect(esDelete).toHaveBeenCalledWith({ id: '0', index: 'cse', type: 'claim' });
+        expect(esExists).toHaveBeenCalledTimes(1);
+        expect(esDelete).toHaveBeenCalledTimes(1);
         expect(esCreate).toHaveBeenCalledTimes(0);
+        expect(err).toEqual(new Error('delete() failed'));
       }
     });
 
     it('fresh insert with no deletions', async () => {
       esExists.mockImplementation(() => false);
-      expect.assertions(3);
+      expect.assertions(1);
       await client.insertDocuments(<IClaim[]>claims);
-      expect(esExists).toHaveBeenCalledWith({ id: '0', index: 'cse', type: 'claim' });
-      expect(esDelete).toHaveBeenCalledTimes(0);
-      expect(esCreate).toHaveBeenCalledTimes(1);
+      expect(esIndex).toHaveBeenCalledWith({body: {shortCode: '0', title: 'test'}, id: '0', index: 'cse', type: 'claim'});
     });
   });
 
@@ -166,7 +167,7 @@ describe('search', () => {
               {
                 multi_match: {
                   query: testQuery.query,
-                  type: 'phrase_prefix',
+                  type: 'phrase',
                   fields: [
                     'description',
                     'target.description',
@@ -227,7 +228,7 @@ describe('search', () => {
         query: {
           multi_match: {
             query: 'test string',
-            type: 'phrase_prefix',
+            type: 'phrase',
             fields: [
               'description',
               'target.description',
