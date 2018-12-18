@@ -67,17 +67,19 @@ export class SearchClient implements ISearchClient {
     }
 
     if (query) {
-      body.query('multi_match', {
-        query,
-        type: 'phrase',
-        fields: [
-          'description',
-          'target.description',
-          'target.evidence.evTitle',
-          'target.evidence.evDesc',
-          'target.stem.stemDesc',
-          'target.stem.shortStem'
-        ]
+      body.query('nested', {
+        multi_match: {
+          query,
+          type: 'phrase',
+          fields: [
+            'description',
+            'target.description',
+            'target.evidence.evTitle',
+            'target.evidence.evDesc',
+            'target.stem.stemDesc',
+            'target.stem.shortStem'
+          ]
+        }
       });
     }
 
