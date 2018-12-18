@@ -4,7 +4,6 @@ import { importDbEntries } from '../../dal/import';
 import { applyTracing } from '../../utils/tracer';
 import { CSEResponse } from '../../server';
 import { IClaim } from '../../models/claim';
-import { search } from '../search/index';
 
 export const handler = async (req: Request, res: CSEResponse): Promise<void> => {
   const { dbClient, searchClient } = res.locals;
