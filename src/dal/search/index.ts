@@ -155,7 +155,7 @@ export class SearchClient implements ISearchClient {
    */
   public async mapIndex(): Promise<void> {
     try {
-      const something = await this.client.indices.putMapping({
+      await this.client.indices.putMapping({
         index: 'cse',
         type: 'claim',
         body: JSON.stringify(mappings)
