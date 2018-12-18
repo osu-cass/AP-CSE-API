@@ -200,7 +200,12 @@ describe('MongoDb client interface', () => {
       it('getClaimNumbers() succeeds', async () => {
         expect.assertions(1);
         await client.connect();
-        expect(await client.getClaimNumbers(grades, subject)).toEqual( {claimNumbers: [{code: 'C1', label: '1: Content and Procedures'}, {code: 'C2', label: '2: Problem Solving'}]});
+        expect(await client.getClaimNumbers(grades, subject)).toEqual({
+          claimNumbers: [
+            { code: 'C1', label: '1: Content and Procedures' },
+            { code: 'C2', label: '2: Problem Solving' }
+          ]
+        });
       });
 
       it('getClaimNumbers() fails', async () => {

@@ -363,7 +363,7 @@ export function getTarget(claim: IClaim, jsonData: ISpecDocument, DOKDOC: ISpecD
             stdDesc: fullStatement
           });
         }
-        if (p.CFItemType === 'Target' && p !== jsonData.CFItems[jsonData.CFItems.length -1]) {
+        if (p.CFItemType === 'Target' && p !== jsonData.CFItems[jsonData.CFItems.length - 1]) {
           target.description = fullStatement;
         }
         if (p.CFItemType === 'Clarification') {
