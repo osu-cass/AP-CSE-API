@@ -11,6 +11,10 @@ export interface ISearchClientOptions {
 }
 export interface ISearchClient {
   insertDocuments(claims: IClaim[]): Promise<void>;
+  insert(claims: IClaim[]): Promise<void>;
+  createIndex(): Promise<void>;
+  deleteIndex(): Promise<void>;
+  mapIndex(): Promise<void>;
   search(query: IQueryParams): Promise<IClaim[]>;
 }
 
@@ -27,36 +31,6 @@ export class SearchClient implements ISearchClient {
       requestTimeout: 120000,
       apiVersion: '6.3'
     });
-  }
-
-  private async documentExists(id: string): Promise<boolean> {
-    let exists: boolean;
-    const existsParams: ExistsParams = {
-      id,
-      index: `cse`,
-      type: `claim`
-    };
-
-    try {
-      // tslint:disable-next-line:no-unsafe-any
-      exists = await this.client.exists(existsParams);
-    } catch (err) {
-      throw err;
-    }
-
-    return exists;
-  }
-
-  private async deleteDocument(id: string): Promise<void> {
-    try {
-      await this.client.delete({
-        id,
-        index: `cse`,
-        type: `claim`
-      });
-    } catch (err) {
-      throw err;
-    }
   }
 
   public async ping(): Promise<Health> {
@@ -118,9 +92,6 @@ export class SearchClient implements ISearchClient {
     for (const claim of claims) {
       const { shortCode } = claim;
       try {
-        if (await this.documentExists(shortCode)) {
-          await this.deleteDocument(shortCode);
-        }
         await this.client.index({
           id: shortCode,
           index: 'cse',
@@ -130,6 +101,38 @@ export class SearchClient implements ISearchClient {
       } catch (err) {
         throw err;
       }
+    }
+  }
+
+  /**
+   * Removes any existing indices from elasticsearch
+   * before reinitializing the index and mapping. Then
+   * the typed documents are inserted.
+   * @param claims
+   */
+  public async insert(claims: IClaim[]): Promise<void> {
+    try {
+      if (await this.client.indices.exists({index: 'cse'})) {
+        await this.deleteIndex();
+      }
+      await this.createIndex();
+      await this.mapIndex();
+      await this.insertDocuments(claims);
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  /**
+   *  Deletes the `cse` index in elasticsearch
+   */
+  public async deleteIndex(): Promise<void> {
+    try {
+      await this.client.indices.delete({
+        index: 'cse'
+      });
+    } catch (err) {
+      throw err;
     }
   }
 
