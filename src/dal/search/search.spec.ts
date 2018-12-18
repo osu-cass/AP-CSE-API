@@ -165,17 +165,19 @@ describe('search', () => {
                 }
               },
               {
-                multi_match: {
-                  query: testQuery.query,
-                  type: 'phrase',
-                  fields: [
-                    'description',
-                    'target.description',
-                    'target.evidence.evTitle',
-                    'target.evidence.evDesc',
-                    'target.stem.stemDesc',
-                    'target.stem.shortStem'
-                  ]
+                nested: {
+                  multi_match: {
+                    query: testQuery.query,
+                    type: 'phrase',
+                    fields: [
+                      'description',
+                      'target.description',
+                      'target.evidence.evTitle',
+                      'target.evidence.evDesc',
+                      'target.stem.stemDesc',
+                      'target.stem.shortStem'
+                    ]
+                  }
                 }
               }
             ]
@@ -226,17 +228,19 @@ describe('search', () => {
       expect.assertions(1);
       expect(client.buildRequestBody({ query })).toEqual({
         query: {
-          multi_match: {
-            query: 'test string',
-            type: 'phrase',
-            fields: [
-              'description',
-              'target.description',
-              'target.evidence.evTitle',
-              'target.evidence.evDesc',
-              'target.stem.stemDesc',
-              'target.stem.shortStem'
-            ]
+          nested: {
+            multi_match: {
+              query: 'test string',
+              type: 'phrase',
+              fields: [
+                'description',
+                'target.description',
+                'target.evidence.evTitle',
+                'target.evidence.evDesc',
+                'target.stem.stemDesc',
+                'target.stem.shortStem'
+              ]
+            }
           }
         }
       });
