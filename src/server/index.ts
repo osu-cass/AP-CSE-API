@@ -147,8 +147,8 @@ export class Server implements IServer {
         logger.info('initializing data store');
         const claims: IClaim[] = await importDbEntries();
         await dbClient.connect();
-        await searchClient.insertDocuments(claims);
         await dbClient.insert(claims);
+        await searchClient.insert(await dbClient.getClaims());
         logger.info('data store init succeeded');
       }
     } catch (err) {
