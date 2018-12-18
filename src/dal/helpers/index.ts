@@ -7,6 +7,10 @@ import {
   IShortCodeResult
 } from '../../models/filter';
 import { Hash, mathShortCodes, elaShortCodes, mathClaims, elaClaims } from '../../utils/static';
+import { IClaim } from '../../models/claim';
+import { ITarget } from '../../models/target';
+import { SearchResponse } from 'elasticsearch';
+import { IQueryParams } from '../../routes';
 
 /**
  * Helper function to filter out high school grades(9, 10, 11, 12)
@@ -125,4 +129,19 @@ export function buildTargetShortCodes(
     }));
 
   return targetShortCodes.length !== 0 ? { targetShortCodes } : undefined;
+}
+
+export function buildSearchResults(response: SearchResponse<{}>, query: IQueryParams): IClaim[] {
+  let results: IClaim[] = [];
+
+  results = response.hits.hits.map(hit => {
+    const claim: IClaim = <IClaim>hit._source;
+    if (query.targetShortCode) {
+      claim.target = claim.target.filter((t: ITarget) => t.shortCode === query.targetShortCode);
+    }
+
+    return claim;
+  });
+
+  return results;
 }

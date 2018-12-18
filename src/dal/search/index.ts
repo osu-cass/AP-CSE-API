@@ -1,10 +1,10 @@
-import { Client, SearchResponse, ExistsParams } from 'elasticsearch';
+import { Client, SearchResponse } from 'elasticsearch';
 import { IClaim } from '../../models/claim';
 import { IQueryParams } from '../../routes';
 import bodybuilder, { Bodybuilder } from 'bodybuilder';
 import { Health } from '../../routes/health';
-import { ITarget } from '../../models/target/index';
 import { mappings } from '../../utils/static';
+import { buildSearchResults } from '../helpers/index';
 
 export interface ISearchClientOptions {
   host: string;
@@ -112,7 +112,7 @@ export class SearchClient implements ISearchClient {
    */
   public async insert(claims: IClaim[]): Promise<void> {
     try {
-      if (await this.client.indices.exists({index: 'cse'})) {
+      if (await this.client.indices.exists({ index: 'cse' })) {
         await this.deleteIndex();
       }
       await this.createIndex();
@@ -175,14 +175,7 @@ export class SearchClient implements ISearchClient {
         type: 'claim',
         index: 'cse'
       });
-      result = response.hits.hits.map(hit => {
-        const claim: IClaim = <IClaim>hit._source;
-        if (query.targetShortCode) {
-          claim.target = claim.target.filter((t: ITarget) => t.shortCode === query.targetShortCode);
-        }
-
-        return claim;
-      });
+      result = buildSearchResults(response, query);
     } catch (err) {
       throw err;
     }
