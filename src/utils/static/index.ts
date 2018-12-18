@@ -188,3 +188,143 @@ export const mathShortCodes: Hash = {
   'M.GHS.C1S.TP':
     'Summarize, represent, and interpret data on a single count or measurement variable'
 };
+
+// tslint:disable-next-line:no-any
+export const mappings: any = {
+  properties: {
+    claimNumber: {
+      type: 'text'
+    },
+    description: {
+      type: 'text'
+    },
+    domain: {
+      properties: {
+        desc: {
+          type: 'text'
+        },
+        title: {
+          type: 'text'
+        }
+      }
+    },
+    grades: {
+      type: 'text'
+    },
+    shortCode: {
+      type: 'text'
+    },
+    subject: {
+      type: 'text'
+    },
+    target: {
+      type: 'nested',
+      properties: {
+        DOK: {
+          properties: {
+            dokCode: {
+              type: 'text'
+            },
+            dokDesc: {
+              type: 'text'
+            },
+            dokShort: {
+              type: 'text'
+            }
+          }
+        },
+        accessibility: {
+          type: 'text'
+        },
+        clarification: {
+          type: 'text'
+        },
+        complexity: {
+          type: 'text'
+        },
+        description: {
+          type: 'text'
+        },
+        devNotes: {
+          type: 'text'
+        },
+        dualText: {
+          type: 'text'
+        },
+        evidence: {
+          properties: {
+            evDesc: {
+              type: 'text'
+            },
+            evTitle: {
+              type: 'text'
+            }
+          }
+        },
+        heading: {
+          type: 'text'
+        },
+        interactionType: {
+          type: 'text'
+        },
+        shortCode: {
+          type: 'text'
+        },
+        standards: {
+          properties: {
+            stdCode: {
+              type: 'text'
+            },
+            stdDesc: {
+              type: 'text'
+            }
+          }
+        },
+        stem: {
+          properties: {
+            shortStem: {
+              type: 'text'
+            },
+            stemDesc: {
+              type: 'text'
+            }
+          }
+        },
+        stimInfo: {
+          type: 'text'
+        },
+        taskModels: {
+          properties: {
+            examples: {
+              type: 'text'
+            },
+            relatedEvidence: {
+              type: 'text'
+            },
+            stimulus: {
+              type: 'text'
+            },
+            taskDesc: {
+              type: 'text'
+            },
+            taskName: {
+              type: 'text'
+            }
+          }
+        },
+        title: {
+          type: 'text'
+        },
+        tools: {
+          type: 'text'
+        },
+        vocab: {
+          type: 'text'
+        }
+      }
+    },
+    title: {
+      type: 'text'
+    }
+  }
+};
