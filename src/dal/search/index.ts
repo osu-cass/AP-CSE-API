@@ -4,6 +4,7 @@ import { IQueryParams } from '../../routes';
 import bodybuilder, { Bodybuilder } from 'bodybuilder';
 import { Health } from '../../routes/health';
 import { ITarget } from '../../models/target/index';
+import { mappings } from '../../utils/static';
 
 export interface ISearchClientOptions {
   host: string;
@@ -109,6 +110,10 @@ export class SearchClient implements ISearchClient {
     return body.build();
   }
 
+  /**
+   * Inserts an array of `IClaim` into the elasticsearch instance
+   * @param claims
+   */
   public async insertDocuments(claims: IClaim[]): Promise<void> {
     for (const claim of claims) {
       const { shortCode } = claim;
@@ -116,15 +121,44 @@ export class SearchClient implements ISearchClient {
         if (await this.documentExists(shortCode)) {
           await this.deleteDocument(shortCode);
         }
-        await this.client.create({
+        await this.client.index({
           id: shortCode,
-          index: `cse`,
-          type: `claim`,
+          index: 'cse',
+          type: 'claim',
           body: claim
         });
       } catch (err) {
         throw err;
       }
+    }
+  }
+
+  /**
+   *  Creates the index in elasticsearch for `cse`
+   */
+  public async createIndex(): Promise<void> {
+    try {
+      await this.client.indices.create({
+        index: 'cse'
+      });
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  /**
+   * Creates the mapping in elasticsearch for type `claim` with
+   * the nested type, `target`
+   */
+  public async mapIndex(): Promise<void> {
+    try {
+      const something = await this.client.indices.putMapping({
+        index: 'cse',
+        type: 'claim',
+        body: JSON.stringify(mappings)
+      });
+    } catch (err) {
+      throw err;
     }
   }
 
