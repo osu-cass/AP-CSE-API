@@ -13,9 +13,7 @@ export const handler = async (req: Request, res: CSEResponse): Promise<void> => 
     const output: IClaim[] = await importDbEntries();
     await dbClient.connect();
     result = await dbClient.insert(output);
-    await searchClient.createIndex();
-    await searchClient.mapIndex();
-    await searchClient.insertDocuments(await dbClient.getClaims());
+    await searchClient.insert(await dbClient.getClaims());
     await dbClient.close();
     res.status(200);
   } catch (err) {
