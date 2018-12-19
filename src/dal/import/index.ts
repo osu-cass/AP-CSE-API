@@ -207,7 +207,7 @@ export function getMultiTarget(claim: ISpecDocument, newClaim: any, DOKDOC: ISpe
           targ.taskModels.push({
             taskName: task.taskName,
             taskDesc: task.taskDesc,
-            examples: task.examples
+            examples: [task.examples]
           });
           iter++;
         }
@@ -402,7 +402,7 @@ export function getTarget(claim: IClaim, jsonData: ISpecDocument, DOKDOC: ISpecD
             taskDesc: fullStatement,
             taskName: jsonData.CFItems[iter + 1].fullStatement,
             stimulus: jsonData.CFItems[iter + 2].fullStatement,
-            examples: jsonData.CFItems[iter + 4].fullStatement,
+            examples: [jsonData.CFItems[iter + 4].fullStatement],
             relatedEvidence: ['']
           });
         }
