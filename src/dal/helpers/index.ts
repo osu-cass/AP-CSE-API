@@ -131,17 +131,32 @@ export function buildTargetShortCodes(
   return targetShortCodes.length !== 0 ? { targetShortCodes } : undefined;
 }
 
-export function buildSearchResults(response: SearchResponse<{}>, query: IQueryParams): IClaim[] {
+export function buildSearchResults(response: SearchResponse<{}>, q: IQueryParams): IClaim[] {
+  const { query, targetShortCode } = q;
   let results: IClaim[] = [];
 
-  results = response.hits.hits.map(hit => {
-    const claim: IClaim = <IClaim>hit._source;
-    if (query.targetShortCode) {
-      claim.target = claim.target.filter((t: ITarget) => t.shortCode === query.targetShortCode);
-    }
+  results = response.hits.hits
+    .map(hit => {
+      const claim: IClaim = <IClaim>hit._source;
+      // tslint:disable:no-any no-unsafe-any
+      if (query && targetShortCode) {
+        claim.target = hit.inner_hits
+          ? hit.inner_hits.target.hits.hits
+              .filter((h: any) => h._source.shortCode === targetShortCode)
+              .map((t: any) => <ITarget>t._source)
+          : [];
+      } else if (query) {
+        claim.target = hit.inner_hits
+          ? <ITarget[]>hit.inner_hits.target.hits.hits.map((t: any) => <ITarget>t._source)
+          : [];
+      } else if (targetShortCode) {
+        claim.target = claim.target.filter((t: ITarget) => t.shortCode === targetShortCode);
+      }
+      // tslint:enable:no-any no-unsafe-any
 
-    return claim;
-  });
+      return claim;
+    })
+    .filter((claim: IClaim) => claim.target && claim.target.length > 0);
 
   return results;
 }

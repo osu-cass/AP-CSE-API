@@ -110,7 +110,12 @@ describe('search', () => {
       esExists.mockImplementation(() => false);
       expect.assertions(1);
       await client.insertDocuments(<IClaim[]>claims);
-      expect(esIndex).toHaveBeenCalledWith({body: {shortCode: '0', title: 'test'}, id: '0', index: 'cse', type: 'claim'});
+      expect(esIndex).toHaveBeenCalledWith({
+        body: { shortCode: '0', title: 'test' },
+        id: '0',
+        index: 'cse',
+        type: 'claim'
+      });
     });
   });
 

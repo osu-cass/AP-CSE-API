@@ -1,10 +1,18 @@
 import { Client, SearchResponse } from 'elasticsearch';
 import { IClaim } from '../../models/claim';
 import { IQueryParams } from '../../routes';
-import bodybuilder, { Bodybuilder } from 'bodybuilder';
+import bodybuilder, { Bodybuilder, QuerySubFilterBuilder } from 'bodybuilder';
 import { Health } from '../../routes/health';
 import { mappings } from '../../utils/static';
 import { buildSearchResults } from '../helpers/index';
+
+const fields: string[] = [
+  'target.description',
+  'target.evidence.evTitle',
+  'target.evidence.evDesc',
+  'target.stem.stemDesc',
+  'target.stem.shortStem'
+];
 
 export interface ISearchClientOptions {
   host: string;
@@ -63,24 +71,19 @@ export class SearchClient implements ISearchClient {
     }
 
     if (targetShortCode) {
-      body.query('match', 'target.shortCode', targetShortCode);
+      body.query('nested', { path: 'target', inner_hits: {} }, (q: QuerySubFilterBuilder) =>
+        q.query('match', 'target.shortCode', targetShortCode)
+      );
     }
 
     if (query) {
-      body.query('nested', {
-        multi_match: {
+      body.query('nested', { path: 'target', inner_hits: {} }, (q: QuerySubFilterBuilder) =>
+        q.query('multi_match', {
           query,
-          type: 'phrase',
-          fields: [
-            'description',
-            'target.description',
-            'target.evidence.evTitle',
-            'target.evidence.evDesc',
-            'target.stem.stemDesc',
-            'target.stem.shortStem'
-          ]
-        }
-      });
+          fields,
+          type: 'phrase'
+        })
+      );
     }
 
     return body.build();
@@ -160,7 +163,7 @@ export class SearchClient implements ISearchClient {
       await this.client.indices.putMapping({
         index: 'cse',
         type: 'claim',
-        body: JSON.stringify(mappings)
+        body: mappings
       });
     } catch (err) {
       throw err;
@@ -169,10 +172,9 @@ export class SearchClient implements ISearchClient {
 
   public async search(query: IQueryParams): Promise<IClaim[]> {
     let result: IClaim[] = [];
-    let response: SearchResponse<{}>;
-    const body: object = this.buildRequestBody(query);
+    const body = this.buildRequestBody(query);
     try {
-      response = await this.client.search({
+      const response: SearchResponse<{}> = await this.client.search({
         body,
         type: 'claim',
         index: 'cse'
