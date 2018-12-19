@@ -165,23 +165,32 @@ describe('search', () => {
                 }
               },
               {
-                match: {
-                  'target.shortCode': testQuery.targetShortCode
+                nested: {
+                  inner_hits: {},
+                  path: 'target',
+                  query: {
+                    match: {
+                      'target.shortCode': testQuery.targetShortCode
+                    }
+                  }
                 }
               },
               {
                 nested: {
-                  multi_match: {
-                    query: testQuery.query,
-                    type: 'phrase',
-                    fields: [
-                      'description',
-                      'target.description',
-                      'target.evidence.evTitle',
-                      'target.evidence.evDesc',
-                      'target.stem.stemDesc',
-                      'target.stem.shortStem'
-                    ]
+                  inner_hits: {},
+                  path: 'target',
+                  query: {
+                    multi_match: {
+                      query: testQuery.query,
+                      type: 'phrase',
+                      fields: [
+                        'target.description',
+                        'target.evidence.evTitle',
+                        'target.evidence.evDesc',
+                        'target.stem.stemDesc',
+                        'target.stem.shortStem'
+                      ]
+                    }
                   }
                 }
               }
@@ -234,17 +243,20 @@ describe('search', () => {
       expect(client.buildRequestBody({ query })).toEqual({
         query: {
           nested: {
-            multi_match: {
-              query: 'test string',
-              type: 'phrase',
-              fields: [
-                'description',
-                'target.description',
-                'target.evidence.evTitle',
-                'target.evidence.evDesc',
-                'target.stem.stemDesc',
-                'target.stem.shortStem'
-              ]
+            inner_hits: {},
+            path: 'target',
+            query: {
+              multi_match: {
+                query: 'test string',
+                type: 'phrase',
+                fields: [
+                  'target.description',
+                  'target.evidence.evTitle',
+                  'target.evidence.evDesc',
+                  'target.stem.stemDesc',
+                  'target.stem.shortStem'
+                ]
+              }
             }
           }
         }
@@ -274,8 +286,10 @@ describe('search', () => {
                 }
               },
               {
-                match: {
-                  'target.shortCode': 'M.G3.C1G.TK'
+                nested: {
+                  inner_hits: {},
+                  path: 'target',
+                  query: { match: { 'target.shortCode': 'M.G3.C1G.TK' } }
                 }
               }
             ]
