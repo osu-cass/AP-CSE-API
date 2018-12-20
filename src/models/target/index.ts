@@ -1,7 +1,7 @@
 export interface ITaskModel {
   taskName: string;
   taskDesc?: string;
-  examples?: string | string[];
+  examples?: string[];
   stimulus?: string;
   relatedEvidence?: string[];
 }
