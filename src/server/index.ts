@@ -13,7 +13,6 @@ import { logger, LoggingStream } from '../utils/logger';
 import { Health, healthCheck } from '../routes/health';
 import { importDbEntries } from '../dal/import';
 import { IClaim } from '../models/claim';
-import { InsertWriteOpResult } from 'mongodb';
 
 /**
  * ServerContext defines a type for the tracer and db client
@@ -148,8 +147,8 @@ export class Server implements IServer {
         logger.info('initializing data store');
         const claims: IClaim[] = await importDbEntries();
         await dbClient.connect();
-        await searchClient.insertDocuments(claims);
         await dbClient.insert(claims);
+        await searchClient.insert(await dbClient.getClaims());
         logger.info('data store init succeeded');
       }
     } catch (err) {

@@ -1,9 +1,13 @@
 let elasticsearch = require.requireActual('elasticsearch');
 
 const client = {
-  exists: jest.fn().mockResolvedValue(true),
-  delete: jest.fn().mockResolvedValue({}),
-  create: jest.fn().mockResolvedValue({}),
+  indices: {
+    exists: jest.fn().mockResolvedValue(true),
+    create: jest.fn().mockResolvedValue({}),
+    delete: jest.fn().mockResolvedValue({}),
+    putMapping: jest.fn().mockResolvedValue({})
+  },
+  index: jest.fn().mockResolvedValue({}),
   search: jest.fn().mockResolvedValue({ hits: { hits: [] } }),
   ping: jest
     .fn()
@@ -19,10 +23,11 @@ elasticsearch = {
   ...elasticsearch
 };
 
-const esExists: jest.Mock = client.exists;
-const esDelete: jest.Mock = client.delete;
-const esCreate: jest.Mock = client.create;
+const esExists: jest.Mock = client.indices.exists;
+const esDelete: jest.Mock = client.indices.delete;
+const esCreate: jest.Mock = client.indices.create;
+const esIndex: jest.Mock = client.index;
 const esSearch: jest.Mock = client.search;
 const esPing: jest.Mock = client.ping;
 
-export { elasticsearch, Client, esExists, esDelete, esCreate, esSearch, esPing };
+export { elasticsearch, Client, esExists, esDelete, esCreate, esIndex, esSearch, esPing };

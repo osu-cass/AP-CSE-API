@@ -17,7 +17,7 @@ describe('init', () => {
 
   beforeAll(() => {
     searchClient = {
-      insertDocuments: jest.fn().mockResolvedValue({})
+      insert: jest.fn().mockResolvedValue({})
     };
     dbClient = {
       connect: jest.fn().mockResolvedValue({}),
