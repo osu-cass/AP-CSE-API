@@ -12,8 +12,7 @@ services:
       - ./dist:/server/dist
     networks:
       - db
-      - search
-      - logs
+      - elastic
     ports:
       - 3000:3000
       - 9222:9222
@@ -41,20 +40,9 @@ services:
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
-  minio:
-    image: minio/minio:RELEASE.2018-08-02T23-11-36Z
-    container_name: minio
-    volumes:
-      - miniodata:/usr/share/minio/data
-    ports:
-      - 9000:9000
-    environment:
-      MINIO_ACCESS_KEY: minio
-      MINIO_SECRET_KEY: minio123
-    command: server /data
-  es-search:
+  elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.3.2
-    container_name: es-search
+    container_name: elasticsearch
     environment:
       - bootstrap.memory_lock=true
       - 'ES_JAVA_OPTS=-Xms512m -Xmx512m'
@@ -63,58 +51,32 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - searchdata:/usr/share/elasticsearch/data
+      - elasticdata:/usr/share/elasticsearch/data
     networks:
-      - search
-  kibana-search:
+      - elastic
+  kibana:
     image: docker.elastic.co/kibana/kibana:6.3.2
-    container_name: kibana-search
+    container_name: kibana
     depends_on:
-      - es-search
+      - elasticsearch
     environment:
-      ELASTICSEARCH_URL: http://es-search:9200
+      ELASTICSEARCH_URL: http://elasticsearch:9200
     networks:
-      - search
+      - elastic
     ports:
       - '5601:5601'
-  es-logs:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.3.2
-    container_name: es-logs
-    hostname: es-logs
-    environment:
-      - bootstrap.memory_lock=true
-      - 'ES_JAVA_OPTS=-Xms512m -Xmx512m'
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    volumes:
-      - logsdata:/usr/share/elasticsearch/data
-    networks:
-      - logs
-  kibana-logs:
-    image: docker.elastic.co/kibana/kibana:6.3.2
-    container_name: kibana-logs
-    depends_on:
-      - es-logs
-    environment:
-      ELASTICSEARCH_URL: http://es-logs:9200
-    networks:
-      - logs
-    ports:
-      - '5602:5601'
   logstash:
     image: docker.elastic.co/logstash/logstash:6.3.2
     container_name: logstash
     environment:
       XPACK_MONITORING_ENABLED: 'false'
     depends_on:
-      - es-logs
+      - elasticsearch
     secrets:
       - source: logstash.conf
         target: /usr/share/logstash/pipeline/logstash.conf
     networks:
-      - logs
+      - elastic
   jaeger-collector:
     image: jaegertracing/jaeger-collector:latest
     environment:
@@ -124,13 +86,13 @@ services:
       - '14268:14268'
       - '9411:9411'
     depends_on:
-      - logstash
+      - elasticsearch
     container_name: jaeger-collector
     hostname: jaeger-collector
     restart: on-failure
     networks:
-      - logs
-    command: ['--es.server-urls=http://es-logs:9200']
+      - elastic
+    command: ['--es.server-urls=http://elasticsearch:9200']
   jaeger-agent:
     image: jaegertracing/jaeger-agent:latest
     ports:
@@ -144,7 +106,7 @@ services:
     container_name: jaeger-agent
     hostname: jaeger-agent
     networks:
-      - logs
+      - elastic
     command: ['--collector.host-port=jaeger-collector:14267']
   jaeger-query:
     image: jaegertracing/jaeger-query:latest
@@ -158,19 +120,17 @@ services:
     container_name: jaeger-query
     hostname: jaeger-query
     networks:
-      - logs
-    command: ['--es.server-urls=http://es-logs:9200', '--log-level=debug']
+      - elastic
+    command: ['--es.server-urls=http://elasticsearch:9200', '--log-level=debug']
 
 secrets:
   logstash.conf:
     file: ./config/logstash.conf
 volumes:
   ? miniodata
-  ? searchdata
-  ? logsdata
+  ? elasticdata
   ? mongodata
 
 networks:
   ? db
-  ? search
-  ? logs
+  ? elastic
