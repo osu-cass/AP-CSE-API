@@ -62,31 +62,26 @@ npm run watch-ts
 Since this API server requires a number of resources for data storage and retrieval, we use `docker-compose` to run the following services for local development:
 
 - [MongoDB](https://www.mongodb.com/) for document storage
-- [Minio](https://minio.io) for object storage
-- [Elasticsearch](https://www.elastic.co/products/elasticsearch) for search indexing
+- [Elasticsearch](https://www.elastic.co/products/elasticsearch) for search indexing and log storage
 - [Logstash](https://www.elastic.co/products/logstash) for log collection
-- [Elasticsearch](https://www.elastic.co/products/elasticsearch) again for log storage
+- [Jaeger](https://www.jaegertracing.io/) for request tracing
 
 We also run a few helpful applications to make development less painful:
 
 - `mongo-express` for investigating the MongoDB instance
-- [Kibana](https://www.elastic.co/products/kibana) for investigating the search-indexing Elasticearch instance
-- [Kibana](https://www.elastic.co/products/kibana) again for investigating the logging Elasticearch instance
+- [Kibana](https://www.elastic.co/products/kibana) for investigating the Elasticearch instance
 
 Use the following table to figure out how to use each of these services in both the API and for debugging:
 
-| Service               |          Exposed Port           | Container Hostname    | Container Port |
-| --------------------- | :-----------------------------: | --------------------- | :------------: |
-| AP-CSE-API            |  [3000](http://localhost:3000)  |                       |      3000      |
-| MongoDB               |                                 | `http://mongo`        |     27017      |
-| mongo-express         |  [8081](http://localhost:8081)  |                       |                |
-| minio                 |  [9000](http://localhost:9000)  | `http://minio`        |      9000      |
-| Elasticearch (search) |                                 | `http://es-search`    |      9200      |
-| Kibana (search)       |  [5601](http://localhost:5601)  |                       |                |
-| Elasticsearch (logs)  |                                 | `http://es-logs`      |      9200      |
-| Kibana (logs)         |  [5602](http://localhost:5602)  |                       |                |
-| Logstash              |                                 | `http://logstash`     |     13337      |
-| Jaeger UI             | [16686](http://localhost:16686) | `http://jaeger-query` |     16686      |
+| Service       |          Exposed Port           | Container Hostname     | Container Port |
+| ------------- | :-----------------------------: | ---------------------- | :------------: |
+| AP-CSE-API    |  [3000](http://localhost:3000)  |                        |      3000      |
+| MongoDB       |                                 | `http://mongo`         |     27017      |
+| mongo-express |  [8081](http://localhost:8081)  |                        |                |
+| Elasticsearch |                                 | `http://elasticsearch` |      9200      |
+| Kibana        |  [5601](http://localhost:5601)  |                        |                |
+| Logstash      |                                 | `http://logstash`      |     13337      |
+| Jaeger UI     | [16686](http://localhost:16686) | `http://jaeger-query`  |     16686      |
 
 #### Running the services
 
