@@ -27,7 +27,12 @@ const docs = [
 const docArr: ISpecDocument[] = [];
 const docNames: string[] = [];
 // tslint:disable:max-func-body-length
-// This function migrates CASE API documents into a new data model.
+/**
+ * This function migrates CASE API documents into a new data model.
+ *
+ * @export
+ * @returns {Promise<IClaim[]>}
+ */
 export async function importDbEntries(): Promise<IClaim[]> {
   let dokSpec: ISpecDocument;
   let newClaim: any = {};
@@ -141,6 +146,15 @@ export async function importDbEntries(): Promise<IClaim[]> {
 
   return consolidate(claimArray);
 }
+
+/**
+ * Handles merging split multi-targets into the main claim array
+ *
+ * @export
+ * @param {IClaim[]} claimArray
+ * @param {IClaim} newClaim
+ * @param {ISpecDocument} claim
+ */
 export function pushToClaimArray(claimArray: IClaim[], newClaim: IClaim, claim: ISpecDocument) {
   let temp: IClaim;
   if (newClaim.target[0].title.includes('Targets ')) {
@@ -157,7 +171,15 @@ export function pushToClaimArray(claimArray: IClaim[], newClaim: IClaim, claim: 
   }
   claimArray.push(newClaim);
 }
-// This function handles target information for multi-grade-and-claim documents
+
+/**
+ * This function handles target information for multi-grade-and-claim documents
+ *
+ * @export
+ * @param {ISpecDocument} claim
+ * @param {*} newClaim
+ * @param {ISpecDocument} DOKDOC
+ */
 export function getMultiTarget(claim: ISpecDocument, newClaim: any, DOKDOC: ISpecDocument) {
   const tModels: ITaskModel[] = [];
   const titleArr: string[] = [];
@@ -237,7 +259,13 @@ export function getMultiTarget(claim: ISpecDocument, newClaim: any, DOKDOC: ISpe
   newClaim.target.shift();
 }
 
-// This function extracts the target-specific shortcode from one of a documents items
+/**
+ * This function extracts the target-specific shortcode from one of a documents items
+ *
+ * @export
+ * @param {ISpecDocument} claim
+ * @returns {(string | undefined)}
+ */
 export function getTargetShortCode(claim: ISpecDocument): string | undefined {
   for (const p of claim.CFItems) {
     if (p.CFItemType === 'Target' && p.humanCodingScheme !== undefined) {
@@ -245,7 +273,16 @@ export function getTargetShortCode(claim: ISpecDocument): string | undefined {
     }
   }
 }
-// This function extracts the claim shortcode in Subject.Grade.Claim format from a document's title
+
+/**
+ * This function extracts the claim shortcode in Subject.Grade.Claim format from a document's title
+ *
+ * @export
+ * @param {string} subject
+ * @param {string} claim
+ * @param {string[]} grade
+ * @returns
+ */
 export function getClaimShortCode(subject: string, claim: string, grade: string[]) {
   const gradeLevel: string | string[] = parseInt(grade[0], 10) > 8 ? 'HS' : grade;
   if (grade.length > 1) {
@@ -259,8 +296,15 @@ export function getClaimShortCode(subject: string, claim: string, grade: string[
   return subject === Subject.ELA ? `E.G${gradeLevel}.${claim}` : `M.G${gradeLevel}.${claim}`;
 }
 
-// This function extracts the claim number from a document's title in CX format (e.g C1, C2, C3)
-// See Data Structure docs for info on the differences between document titles
+/**
+ * This function extracts the claim number from a document's title in CX format (e.g C1, C2, C3)
+ * See Data Structure docs for info on the differences between document titles
+ * @export
+ * @param {string} title
+ * @param {string} subject
+ * @param {string[]} grades
+ * @returns
+ */
 export function getClaim(title: string, subject: string, grades: string[]) {
   let titlecopy = ` ${title}`.slice(1);
   let titlearray = [];
@@ -292,6 +336,13 @@ export function getClaim(title: string, subject: string, grades: string[]) {
   return `C${titlearray[4]}`;
 }
 
+/**
+ * Fetches all the data for each document supplied from fetchAllDocs()
+ *
+ * @export
+ * @param {ISpecDocument[]} arr
+ * @returns
+ */
 export async function importDocs(arr: ISpecDocument[]) {
   const packages: string[] = await fetchAllDocs();
   for (const pack of packages) {
@@ -310,6 +361,12 @@ export async function importDocs(arr: ISpecDocument[]) {
   return packages.length;
 }
 
+/**
+ * Fetches the Identifiers for every document in the CASE DB
+ *
+ * @export
+ * @returns
+ */
 export async function fetchAllDocs() {
   const p: string[] = [];
   const temp = await fetch(
@@ -324,6 +381,12 @@ export async function fetchAllDocs() {
   return p;
 }
 
+/**
+ * Maps Depth-of-knowledge and standards documents
+ *
+ * @export
+ * @returns
+ */
 export function specDocs() {
   const specs: ISpecDocument[] = [];
   for (let i = 0; i < docNames.length; i++) {
@@ -340,7 +403,16 @@ export function specDocs() {
 
   return specs;
 }
+
 // This function extracts target-specific data for a given document
+/**
+ *  Extracts target-specific data for a given document
+ *
+ * @export
+ * @param {IClaim} claim
+ * @param {ISpecDocument} jsonData
+ * @param {ISpecDocument} DOKDOC
+ */
 export function getTarget(claim: IClaim, jsonData: ISpecDocument, DOKDOC: ISpecDocument) {
   if (claim.shortCode.includes('M.GHS.C') && !claim.shortCode.includes('C1')) {
     getMultiTarget(jsonData, claim, DOKDOC);
@@ -394,9 +466,7 @@ export function getTarget(claim: IClaim, jsonData: ISpecDocument, DOKDOC: ISpecD
         if (p.CFItemType === 'Accessibility') {
           target.accessibility = fullStatement;
         }
-        if (
-          p.CFItemType === 'Task Model' && p.fullStatement.includes('Task Model ')
-        ) {
+        if (p.CFItemType === 'Task Model' && p.fullStatement.includes('Task Model ')) {
           target.taskModels.push(getTaskModel(p.identifier, jsonData, p.fullStatement));
           // target.taskModels.push();
         }
@@ -414,6 +484,13 @@ export function getTarget(claim: IClaim, jsonData: ISpecDocument, DOKDOC: ISpecD
   getGenReqs(claim, jsonData);
 }
 
+/**
+ * builds the Related Evidence for Task Models
+ *
+ * @export
+ * @param {IClaim} claim
+ * @param {ISpecDocument} jsonData
+ */
 export function getAssociatedEvidence(claim: IClaim, jsonData: ISpecDocument) {
   const taskAssociations = jsonData.CFAssociations.filter(
     assoc =>
@@ -431,7 +508,13 @@ export function getAssociatedEvidence(claim: IClaim, jsonData: ISpecDocument) {
   }
 }
 
-// This function extracts the target properties that are found under the "General Requirements" itemtypes in a given document
+/**
+ * extracts the target properties that are found under the "General Requirements" itemtypes in a given document
+ *
+ * @export
+ * @param {IClaim} claim
+ * @param {ISpecDocument} jsonData
+ */
 export function getGenReqs(claim: IClaim, jsonData: ISpecDocument) {
   for (const p of jsonData.CFItems) {
     if (p.CFItemType === 'General Requirements') {
@@ -456,7 +539,15 @@ export function getGenReqs(claim: IClaim, jsonData: ISpecDocument) {
     }
   }
 }
-// This function returns the domain for a given ELA document.
+
+/**
+ * returns the domain for a given ELA document.
+ *
+ * @param {string} subject
+ * @param {string} shortCode
+ * @param {ISpecDocument} ELASpec
+ * @returns {(string | undefined)}
+ */
 function getClaimDomain(
   subject: string,
   shortCode: string,
@@ -472,7 +563,16 @@ function getClaimDomain(
 
   return undefined;
 }
-// This function returns the description for a given claim
+
+/**
+ * returns the description for a given claim
+ *
+ * @param {string} subject
+ * @param {string} shortCode
+ * @param {ISpecDocument} ELASpec
+ * @param {ISpecDocument} MATHSpec
+ * @returns {(String || undefined)}
+ */
 function getClaimDesc(
   subject: string,
   shortCode: string,
@@ -493,7 +593,14 @@ function getClaimDesc(
     }
   }
 }
-// This function consolidates all targets that share the same claim number into a singular claim object with an array of targets.
+
+/**
+ *  Consolidates all targets that share the same claim number into a singular claim object with an array of targets.
+ *
+ * @export
+ * @param {IClaim[]} claimArray
+ * @returns {IClaim[]}
+ */
 export function consolidate(claimArray: IClaim[]): IClaim[] {
   let tempArray = [];
   let claimHolder;
@@ -547,6 +654,12 @@ export function consolidate(claimArray: IClaim[]): IClaim[] {
   return finalArray.filter(c => c.claimNumber !== 'C1' || c.subject === Subject.MATH);
 }
 
+/**
+ * Handles Splitting C1 into C1a and C1b claims
+ *
+ * @export
+ * @param {IClaim[]} finalArray
+ */
 export function expandFirstClaim(finalArray: IClaim[]) {
   const tempArr: IClaim[] = [];
   finalArray.forEach(claim => {
@@ -570,6 +683,13 @@ export function expandFirstClaim(finalArray: IClaim[]) {
   });
   tempArr.forEach(c => finalArray.push(c));
 }
+
+/**
+ * Merges Performance Task Targets into their corresponding grade-and-claims
+ *
+ * @export
+ * @param {IClaim[]} finalArray
+ */
 export function handlePT(finalArray: IClaim[]) {
   let PTArr: IClaim[] = [];
   let tempIdx;
@@ -590,21 +710,47 @@ export function handlePT(finalArray: IClaim[]) {
 export function removePT(finalArray: IClaim[]) {
   return finalArray.filter(claim => !claim.title.includes('Performance'));
 }
-// tslint:disable:no-non-null-assertion
-export function getTaskModel(identifier: string, jsonData: ISpecDocument, name: string) {
-  const associations = jsonData.CFAssociations.filter(a => a.destinationNodeURI.identifier === identifier);
-  const descId = associations.find(a => a.originNodeURI.title === 'Task Description')!.originNodeURI.identifier;
-  const stimId = associations.find(a => a.originNodeURI.title === 'Stimulus') ? associations.find(a => a.originNodeURI.title === 'Stimulus')!.originNodeURI.identifier : undefined;
-  const stemId = associations.find(a => a.originNodeURI.title === 'Appropriate Stems')? associations.find(a => a.originNodeURI.title === 'Appropriate Stems')!.originNodeURI.identifier : undefined;
- const stemInfo = stemId ? {
-    stemDesc: jsonData.CFItems.find(c => c.identifier === stemId)!.fullStatement,
-    shortStem: jsonData.CFItems.find(c => c.identifier === stemId)!.abbreviatedStatement,
-  } : undefined;
 
-  return  {
+// tslint:disable:no-non-null-assertion
+/**
+ * Handles building task models with Item Associations
+ *
+ * @export
+ * @param {string} identifier
+ * @param {ISpecDocument} jsonData
+ * @param {string} name
+ * @returns {ITaskModel}
+ */
+export function getTaskModel(
+  identifier: string,
+  jsonData: ISpecDocument,
+  name: string
+): ITaskModel {
+  const associations = jsonData.CFAssociations.filter(
+    a => a.destinationNodeURI.identifier === identifier
+  );
+  const descId = associations.find(a => a.originNodeURI.title === 'Task Description')!.originNodeURI
+    .identifier;
+  const stimId = associations.find(a => a.originNodeURI.title === 'Stimulus')
+    ? associations.find(a => a.originNodeURI.title === 'Stimulus')!.originNodeURI.identifier
+    : undefined;
+  const stemId = associations.find(a => a.originNodeURI.title === 'Appropriate Stems')
+    ? associations.find(a => a.originNodeURI.title === 'Appropriate Stems')!.originNodeURI
+        .identifier
+    : undefined;
+  const stemInfo = stemId
+    ? {
+        stemDesc: jsonData.CFItems.find(c => c.identifier === stemId)!.fullStatement,
+        shortStem: jsonData.CFItems.find(c => c.identifier === stemId)!.abbreviatedStatement
+      }
+    : undefined;
+
+  return {
     taskName: name,
     taskDesc: jsonData.CFItems.find(c => c.identifier === descId)!.fullStatement,
-    stimulus: stimId ? jsonData.CFItems.find(c => c.identifier === stimId)!.fullStatement : undefined,
-    stem : stemInfo
+    stimulus: stimId
+      ? jsonData.CFItems.find(c => c.identifier === stimId)!.fullStatement
+      : undefined,
+    stem: stemInfo
   };
 }
