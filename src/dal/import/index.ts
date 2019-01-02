@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
-import { ISpecDocument } from './interfaces';
+import { ISpecDocument, ICFAssociation } from './interfaces';
 import { IClaim, ClaimExpansion } from '../../models/claim';
-import { IDOK, ITaskModel, ITarget } from '../../models/target';
+import { IDOK, ITaskModel } from '../../models/target';
 
 // This is required for translating specDocuments to an IClaim type
 // tslint:disable:no-unsafe-any no-any
@@ -395,16 +395,10 @@ export function getTarget(claim: IClaim, jsonData: ISpecDocument, DOKDOC: ISpecD
           target.accessibility = fullStatement;
         }
         if (
-          p.CFItemType === 'Task Description' &&
-          jsonData.CFItems[iter + 1].fullStatement.includes('Task Model ')
+          p.CFItemType === 'Task Model' && p.fullStatement.includes('Task Model ')
         ) {
-          target.taskModels.push({
-            taskDesc: fullStatement,
-            taskName: jsonData.CFItems[iter + 1].fullStatement,
-            stimulus: jsonData.CFItems[iter + 2].fullStatement,
-            examples: [jsonData.CFItems[iter + 4].fullStatement],
-            relatedEvidence: ['']
-          });
+          target.taskModels.push(getTaskModel(p.identifier, jsonData, p.fullStatement));
+          // target.taskModels.push();
         }
         if (p.CFItemType === 'Stem') {
           target.stem.push({
@@ -595,4 +589,22 @@ export function handlePT(finalArray: IClaim[]) {
 
 export function removePT(finalArray: IClaim[]) {
   return finalArray.filter(claim => !claim.title.includes('Performance'));
+}
+// tslint:disable:no-non-null-assertion
+export function getTaskModel(identifier: string, jsonData: ISpecDocument, name: string) {
+  const associations = jsonData.CFAssociations.filter(a => a.destinationNodeURI.identifier === identifier);
+  const descId = associations.find(a => a.originNodeURI.title === 'Task Description')!.originNodeURI.identifier;
+  const stimId = associations.find(a => a.originNodeURI.title === 'Stimulus') ? associations.find(a => a.originNodeURI.title === 'Stimulus')!.originNodeURI.identifier : undefined;
+  const stemId = associations.find(a => a.originNodeURI.title === 'Appropriate Stems')? associations.find(a => a.originNodeURI.title === 'Appropriate Stems')!.originNodeURI.identifier : undefined;
+ const stemInfo = stemId ? {
+    stemDesc: jsonData.CFItems.find(c => c.identifier === stemId)!.fullStatement,
+    shortStem: jsonData.CFItems.find(c => c.identifier === stemId)!.abbreviatedStatement,
+  } : undefined;
+
+  return  {
+    taskName: name,
+    taskDesc: jsonData.CFItems.find(c => c.identifier === descId)!.fullStatement,
+    stimulus: stimId ? jsonData.CFItems.find(c => c.identifier === stimId)!.fullStatement : undefined,
+    stem : stemInfo
+  };
 }
