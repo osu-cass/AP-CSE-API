@@ -149,12 +149,11 @@ export async function importDbEntries(): Promise<IClaim[]> {
 
 /**
  * Merges split multi-targets into the main IClaim array
- * @export
- * @param {IClaim[]} claimArray
- * @param {IClaim} newClaim
- * @param {ISpecDocument} claim
+ * @param {IClaim[]} claimArray A reference to the Array of either empty or completed claim documents
+ * @param {IClaim} newClaim A reference to the new CSE Claim to be added to the claim array
+ * @param {ISpecDocument} claim A reference to the CSE Claim's corresponding CASE Claim document
  */
-export function pushToClaimArray(claimArray: IClaim[], newClaim: IClaim, claim: ISpecDocument) {
+ function pushToClaimArray(claimArray: IClaim[], newClaim: IClaim, claim: ISpecDocument) {
   let tempClaim: IClaim;
   if (newClaim.target[0].title.includes('Targets ')) {
     const tNum = parseInt(newClaim.target[0].title.split(' Targets ')[1].split('a')[0], 10);
@@ -173,12 +172,11 @@ export function pushToClaimArray(claimArray: IClaim[], newClaim: IClaim, claim: 
 
 /**
  * Translates target information from multi-grade-and-claim documents
- * @export
- * @param {ISpecDocument} claim
- * @param {*} newClaim
- * @param {ISpecDocument} DOKDOC
+ * @param {ISpecDocument} claim A reference to the current CASE Claim Document
+ * @param {*} newClaim  An empty 'Any' type that will become a new Claim
+ * @param {ISpecDocument} DOKDOC A reference to norm_webb_s_depth_of_knowledge__dok__levels_of_cognitive_difficulty
  */
-export function getMultiTarget(claim: ISpecDocument, newClaim: any, DOKDOC: ISpecDocument) {
+ function getMultiTarget(claim: ISpecDocument, newClaim: any, DOKDOC: ISpecDocument) {
   const taskModels: ITaskModel[] = [];
   const titles: string[] = [];
 
@@ -260,11 +258,10 @@ export function getMultiTarget(claim: ISpecDocument, newClaim: any, DOKDOC: ISpe
 
 /**
  * Extracts the target-specific shortcode from one of a document's items
- * @export
- * @param {ISpecDocument} claim
+ * @param {ISpecDocument} claim A reference to the current CASE claim document
  * @returns {(string | undefined)}
  */
-export function getTargetShortCode(claim: ISpecDocument): string | undefined {
+ function getTargetShortCode(claim: ISpecDocument): string | undefined {
   for (const item of claim.CFItems) {
     if (item.CFItemType === 'Target' && item.humanCodingScheme !== undefined) {
       return item.humanCodingScheme;
@@ -274,13 +271,12 @@ export function getTargetShortCode(claim: ISpecDocument): string | undefined {
 
 /**
  * Extracts the claim shortcode in Subject.Grade.Claim format from a document's title
- * @export
- * @param {string} subject
- * @param {string} claim
- * @param {string[]} grade
+ * @param {string} subject The subject of a given claim @example 'MATH' or 'ELA'
+ * @param {string} claim A String with the Claim number @example 'C1' or 'C4'
+ * @param {string[]} grade An array of one or more grades @example ['08', '09', '10'] or ['03']
  * @returns
  */
-export function getClaimShortCode(subject: string, claim: string, grade: string[]) {
+ export function getClaimShortCode(subject: string, claim: string, grade: string[]) {
   const gradeLevel: string | string[] = parseInt(grade[0], 10) > 8 ? 'HS' : grade;
   if (grade.length > 1) {
     if (parseInt(grade[0], 10) < 9) {
@@ -297,13 +293,12 @@ export function getClaimShortCode(subject: string, claim: string, grade: string[
  * Extracts the claim number from a document's title in CX format (e.g C1, C2, C3)
  * See Data Structure docs for info on the differences between document titles
  * (https://github.com/osu-cass/SB-CSE-Data-Structure)
- * @export
- * @param {string} title
- * @param {string} subject
- * @param {string[]} grades
+ * @param {string} title The title of a claim
+ * @param {string} subject The subject of a given claim @example 'MATH' or 'ELA'
+ * @param {string[]} grades An array of one or more grades @example ['08', '09', '10'] or ['03']
  * @returns
  */
-export function getClaim(title: string, subject: string, grades: string[]) {
+ export function getClaim(title: string, subject: string, grades: string[]) {
   let titlecopy = ` ${title}`.slice(1);
   let titlearray = [];
   if (subject === Subject.ELA) {
@@ -336,8 +331,7 @@ export function getClaim(title: string, subject: string, grades: string[]) {
 
 /**
  * Fetches all the data for each document supplied from fetchAllDocs()
- * @export
- * @param {ISpecDocument[]} arr
+ * @param {ISpecDocument[]} arr A reference to the empty array of documents to be filled
  * @returns {number}
  */
 export async function importDocs(arr: ISpecDocument[]): Promise<number> {
@@ -360,10 +354,9 @@ export async function importDocs(arr: ISpecDocument[]): Promise<number> {
 
 /**
  * Fetches the Identifiers for every document in the CASE DB
- * @export
  * @returns
  */
-export async function fetchAllDocs(): Promise<string[]> {
+ export async function fetchAllDocs(): Promise<string[]> {
   const identifiers: string[] = [];
   const temp = await fetch(
     'https://case.smarterbalanced.org/ims/case/v1p0/CFDocuments?limit=99999999999&offset=0&sort&orderBy&filter&fields'
@@ -378,10 +371,9 @@ export async function fetchAllDocs(): Promise<string[]> {
 
 /**
  * Maps Depth-of-knowledge and standards documents
- * @export
  * @returns {ISpecDocument[]}
  */
-export function specDocs(): ISpecDocument[] {
+ function specDocs(): ISpecDocument[] {
   const specs: ISpecDocument[] = [];
   for (let i = 0; i < docNames.length; i++) {
     if (docNames[i].includes('smarter_balanced_ela_content_specification')) {
@@ -400,12 +392,11 @@ export function specDocs(): ISpecDocument[] {
 
 /**
  *  Extracts target-specific data for a given document
- * @export
- * @param {IClaim} claim
- * @param {ISpecDocument} jsonData
- * @param {ISpecDocument} DOKDOC
+ * @param {IClaim} claim A reference to the in-progress CSE claim document
+ * @param {ISpecDocument} jsonData A reference to the CASE claim document
+ * @param {ISpecDocument} DOKDOC A reference to norm_webb_s_depth_of_knowledge__dok__levels_of_cognitive_difficulty
  */
-export function getTarget(claim: IClaim, jsonData: ISpecDocument, DOKDOC: ISpecDocument): void {
+ function getTarget(claim: IClaim, jsonData: ISpecDocument, DOKDOC: ISpecDocument): void {
   if (claim.shortCode.includes('M.GHS.C') && !claim.shortCode.includes('C1')) {
     getMultiTarget(jsonData, claim, DOKDOC);
   } else {
@@ -477,11 +468,10 @@ export function getTarget(claim: IClaim, jsonData: ISpecDocument, DOKDOC: ISpecD
 
 /**
  * Builds the Related Evidence for Task Models
- * @export
- * @param {IClaim} claim
- * @param {ISpecDocument} jsonData
+ * @param {IClaim} claim A reference to the in-progress CSE claim document
+ * @param {ISpecDocument} jsonData A reference to the CASE claim document
  */
-export function getAssociatedEvidence(claim: IClaim, jsonData: ISpecDocument): void {
+ function getAssociatedEvidence(claim: IClaim, jsonData: ISpecDocument): void {
   const taskAssociations = jsonData.CFAssociations.filter(
     association =>
       association.originNodeURI.title.includes('Task Model ') &&
@@ -500,11 +490,10 @@ export function getAssociatedEvidence(claim: IClaim, jsonData: ISpecDocument): v
 
 /**
  * Extracts the target properties that are found under the "General Requirements" item types in a given document
- * @export
- * @param {IClaim} claim
- * @param {ISpecDocument} jsonData
+ * @param {IClaim} claim A reference to the in-progress CSE claim document
+ * @param {ISpecDocument} jsonData A reference to the CASE claim document
  */
-export function getGenReqs(claim: IClaim, jsonData: ISpecDocument): void {
+ function getGenReqs(claim: IClaim, jsonData: ISpecDocument): void {
   for (const item of jsonData.CFItems) {
     if (item.CFItemType === 'General Requirements') {
       if (item.abbreviatedStatement === 'Key/Construct Relevant Vocabulary') {
@@ -532,9 +521,9 @@ export function getGenReqs(claim: IClaim, jsonData: ISpecDocument): void {
 /**
  * returns the domain for a given ELA document.
  *
- * @param {string} subject
- * @param {string} shortCode
- * @param {ISpecDocument} ELASpec
+ * @param {string} subject The subject of a given claim @example 'MATH' or 'ELA'
+ * @param {string} shortCode The claim shortcode @example 'E.G3.C1' or 'M.GHS.C2'
+ * @param {ISpecDocument} ELASpec A reference to the smarter_balanced_ELA_content_specification
  * @returns {(string | undefined)}
  */
 function getClaimDomain(shortCode: string, ELASpec: ISpecDocument): string | undefined {
@@ -552,10 +541,10 @@ function getClaimDomain(shortCode: string, ELASpec: ISpecDocument): string | und
 
 /**
  * Finds and returns the description for a given claim
- * @param {string} subject
- * @param {string} shortCode
- * @param {ISpecDocument} ELASpec
- * @param {ISpecDocument} MATHSpec
+ * @param {string} subject The subject of a given claim @example 'MATH' or 'ELA'
+ * @param {string} shortCode The claim shortcode @example 'E.G3.C1' or 'M.GHS.C2'
+ * @param {ISpecDocument} ELASpec A reference to the smarter_balanced_ELA_content_specification
+ * @param {ISpecDocument} MATHSpec A reference to the smarter_balanced_math_content_specification
  * @returns {(String || undefined)}
  */
 function getClaimDesc(
@@ -581,11 +570,10 @@ function getClaimDesc(
 
 /**
  *  Merges all targets that share the same claim number into a singular claim object with an array of targets.
- * @export
- * @param {IClaim[]} claimArray
+ * @param {IClaim[]} claimArray A reference to the Array of Claims
  * @returns {IClaim[]}
  */
-export function consolidate(claimArray: IClaim[]): IClaim[] {
+ function consolidate(claimArray: IClaim[]): IClaim[] {
   let tempArray = [];
   let claimHolder;
   let finalArray: IClaim[] = [];
@@ -640,10 +628,9 @@ export function consolidate(claimArray: IClaim[]): IClaim[] {
 
 /**
  * Special case that splits claim C1 into C1a and C1b claims
- * @export
- * @param {IClaim[]} finalArray
+ * @param {IClaim[]} finalArray A reference to the array of Targets
  */
-export function expandFirstClaim(finalArray: IClaim[]): void {
+ function expandFirstClaim(finalArray: IClaim[]): void {
   const claimArray: IClaim[] = [];
   finalArray.forEach(claim => {
     if (claim.claimNumber === 'C1' && claim.subject === Subject.ELA) {
@@ -669,10 +656,9 @@ export function expandFirstClaim(finalArray: IClaim[]): void {
 
 /**
  * Merges Targets of the type 'Performance Task' into their corresponding grade-and-claims
- * @export
- * @param {IClaim[]} finalArray
+ * @param {IClaim[]} finalArray A reference to the array of Targets
  */
-export function handlePT(finalArray: IClaim[]): void {
+ function handlePT(finalArray: IClaim[]): void {
   let PTArr: IClaim[] = [];
   let idx: number;
 
@@ -694,71 +680,85 @@ export function handlePT(finalArray: IClaim[]): void {
  * @param finalArray
  * @returns {IClaim[]}
  */
-export function removePT(finalArray: IClaim[]): IClaim[] {
+ function removePT(finalArray: IClaim[]): IClaim[] {
   return finalArray.filter(claim => !claim.title.includes('Performance'));
 }
 
 // tslint:disable:no-non-null-assertion
 /**
  * Builds task models from Item Associations
- * @export
- * @param {string} identifier
- * @param {ISpecDocument} jsonData
- * @param {string} name
+ * @param {string} identifier The GUID of a Task Model CFItem
+ * @param {ISpecDocument} jsonData A reference to the document
+ * @param {string} name The Task Model name @example 'Task Model 3'
  * @returns {ITaskModel}
  */
-export function getTaskModel(
+ function getTaskModel(
   identifier: string,
   jsonData: ISpecDocument,
   name: string
 ): ITaskModel {
   const associations = jsonData.CFAssociations.filter(
-    association => association.destinationNodeURI.identifier === identifier
+    a => a.destinationNodeURI.identifier === identifier
   );
-
-  const descriptionId = associations.find(
-    association => association.originNodeURI.title === 'Task Description'
-  )!.originNodeURI.identifier;
-
-  const stimulusId = associations.find(
-    association => association.originNodeURI.title === 'Stimulus'
-  )
-    ? associations.find(association => association.originNodeURI.title === 'Stimulus')!
-        .originNodeURI.identifier
-    : undefined;
-
-  const stemId = associations.find(
-    association => association.originNodeURI.title === 'Appropriate Stems'
-  )
-    ? associations.find(association => association.originNodeURI.title === 'Appropriate Stems')!
-        .originNodeURI.identifier
-    : undefined;
-
-    const exampleArr = associations.filter(association => association.originNodeURI.title === 'Examples');
-    let exampleText: string[] | undefined = [];
-    if(exampleArr.length > 0) {
-    exampleArr.forEach(e =>  {
-      if(jsonData.CFItems.find(item => item.identifier === e.originNodeURI.identifier)) {
-        exampleText!.push(jsonData.CFItems.find(item => item.identifier === e.originNodeURI.identifier)!.fullStatement);
-      }
-    });
+  const descriptionId = getAssocId(associations, 'Task Description', false) as string;
+  const stimulusId = getAssocId(associations, 'Stimulus', true);
+  const stemId = getAssocId(associations, 'Appropriate Stems', true);
+  const exampleArr = associations.filter(association => association.originNodeURI.title === 'Examples');
+  const exampleText: string[] | undefined = [];
+  exampleArr.forEach(e => {
+    if (findAssocItem(jsonData, e.originNodeURI.identifier, false)) {
+      exampleText.push(findAssocItem(jsonData, e.originNodeURI.identifier, false));
     }
-    else {
-      exampleText = undefined;
-    }
+  });
 
   return {
     taskName: name,
-    taskDesc: jsonData.CFItems.find(item => item.identifier === descriptionId)!.fullStatement,
+    taskDesc: findAssocItem(jsonData, descriptionId, false),
     stimulus: stimulusId
-      ? jsonData.CFItems.find(item => item.identifier === stimulusId)!.fullStatement
+      ? findAssocItem(jsonData, stimulusId, false)
       : undefined,
-      examples: exampleText,
+    examples: exampleText,
     stem: stemId
       ? {
-          stemDesc: jsonData.CFItems.find(item => item.identifier === stemId)!.fullStatement,
-          shortStem: jsonData.CFItems.find(item => item.identifier === stemId)!.abbreviatedStatement
-        }
+        stemDesc: findAssocItem(jsonData, stemId, false),
+        shortStem: findAssocItem(jsonData, stemId, true),
+      }
       : undefined
   };
+}
+/**
+ * This function returns the item GUID for a queried association in the document
+ *
+ * @param {ICFAssociation[]} associations An array of ICFAssociation Entries to search through
+ * @param {string} title The association title to query for @example 'Task Description' or 'Stimulus'
+ * @param {boolean} optional True means the variable this function is returning to is of type string | undefined
+ * @returns
+ */
+function getAssocId(associations: ICFAssociation[], title: string, optional: boolean) {
+  if (optional) {
+    return associations.find(association => association.originNodeURI.title === title)
+      ? associations.find(association => association.originNodeURI.title === title)!
+        .originNodeURI.identifier
+      : undefined;
+  }
+
+  return associations.find(
+    association => association.originNodeURI.title === title
+  )!.originNodeURI.identifier;
+}
+
+/**
+ * This function will return the fullstatement/abbreviatedstatement that is tied to a CFItem when supplied with an Item GUID
+ *
+ * @param {ISpecDocument} jsonData A reference to the document
+ * @param {string} id GUID of the item you want to find
+ * @param {boolean} abbreviate True returns the found item's abbreviatedstatement. False returns the fullstatement
+ * @returns
+ */
+function findAssocItem(jsonData: ISpecDocument, id: string, abbreviate: boolean) {
+  if(abbreviate) {
+    return jsonData.CFItems.find(item => item.identifier === id)!.abbreviatedStatement;
+  }
+
+  return jsonData.CFItems.find(item => item.identifier === id)!.fullStatement;
 }
