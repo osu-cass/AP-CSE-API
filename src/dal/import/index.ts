@@ -705,11 +705,7 @@ function getClaimDesc(
   const stemId = getAssocId(associations, 'Appropriate Stems', true);
   const exampleArr = associations.filter(association => association.originNodeURI.title === 'Examples');
   const exampleText: string[] | undefined = [];
-  exampleArr.forEach(e => {
-    if (findAssocItem(jsonData, e.originNodeURI.identifier, false)) {
-      exampleText.push(findAssocItem(jsonData, e.originNodeURI.identifier, false));
-    }
-  });
+  getExamples(exampleArr, jsonData, exampleText);
 
   return {
     taskName: name,
@@ -726,6 +722,18 @@ function getClaimDesc(
       : undefined
   };
 }
+function getExamples(exampleArr: ICFAssociation[], jsonData: ISpecDocument, exampleText: string[]) {
+  exampleArr.forEach(e => {
+    if (findAssocItem(jsonData, e.originNodeURI.identifier, false) !== 'Examples') {
+      exampleText.push(findAssocItem(jsonData, e.originNodeURI.identifier, false));
+    }
+    else {
+      const exampleChildren = jsonData.CFAssociations.filter(a => a.destinationNodeURI.title === 'Examples' && a.originNodeURI.title.includes('Example '));
+      exampleChildren.forEach(e => exampleText.push(findAssocItem(jsonData, e.originNodeURI.identifier, false)));
+    }
+  });
+}
+
 /**
  * This function returns the item GUID for a queried association in the document
  *
