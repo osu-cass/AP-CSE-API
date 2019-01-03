@@ -734,12 +734,26 @@ export function getTaskModel(
         .originNodeURI.identifier
     : undefined;
 
+    const exampleArr = associations.filter(association => association.originNodeURI.title === 'Examples');
+    let exampleText: string[] | undefined = [];
+    if(exampleArr.length > 0) {
+    exampleArr.forEach(e =>  {
+      if(jsonData.CFItems.find(item => item.identifier === e.originNodeURI.identifier)) {
+        exampleText!.push(jsonData.CFItems.find(item => item.identifier === e.originNodeURI.identifier)!.fullStatement);
+      }
+    });
+    }
+    else {
+      exampleText = undefined;
+    }
+
   return {
     taskName: name,
     taskDesc: jsonData.CFItems.find(item => item.identifier === descriptionId)!.fullStatement,
     stimulus: stimulusId
       ? jsonData.CFItems.find(item => item.identifier === stimulusId)!.fullStatement
       : undefined,
+      examples: exampleText,
     stem: stemId
       ? {
           stemDesc: jsonData.CFItems.find(item => item.identifier === stemId)!.fullStatement,
