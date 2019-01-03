@@ -736,14 +736,14 @@ export function getTaskModel(
 
   return {
     taskName: name,
-    taskDesc: jsonData.CFItems.find(c => c.identifier === descriptionId)!.fullStatement,
+    taskDesc: jsonData.CFItems.find(item => item.identifier === descriptionId)!.fullStatement,
     stimulus: stimulusId
-      ? jsonData.CFItems.find(c => c.identifier === stimulusId)!.fullStatement
+      ? jsonData.CFItems.find(item => item.identifier === stimulusId)!.fullStatement
       : undefined,
     stem: stemId
       ? {
-          stemDesc: jsonData.CFItems.find(c => c.identifier === stemId)!.fullStatement,
-          shortStem: jsonData.CFItems.find(c => c.identifier === stemId)!.abbreviatedStatement
+          stemDesc: jsonData.CFItems.find(item => item.identifier === stemId)!.fullStatement,
+          shortStem: jsonData.CFItems.find(item => item.identifier === stemId)!.abbreviatedStatement
         }
       : undefined
   };
