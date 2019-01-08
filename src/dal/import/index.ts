@@ -194,14 +194,14 @@ export async function importDbEntries(): Promise<IClaim[]> {
   }
 
   for (let i = 0; i < claim.CFItems.length; i++) {
-    const exampleArr = [];
+    const exampleAssoc = [];
     if (
       claim.CFItems[i].CFItemType === 'Task Model' &&
       claim.CFItems[i].abbreviatedStatement === undefined
     ) {
       for (let j = i + 1; j < claim.CFItems.length; j++) {
         if (claim.CFItems[j].CFItemType === 'Example') {
-          exampleArr.push(claim.CFItems[j].fullStatement);
+          exampleAssoc.push(claim.CFItems[j].fullStatement);
         } else if (claim.CFItems[j].CFItemType === 'Task Model') {
           break;
         }
@@ -209,7 +209,7 @@ export async function importDbEntries(): Promise<IClaim[]> {
       taskModels.push({
         taskName: claim.CFItems[i].fullStatement,
         taskDesc: claim.CFItems[i + 1].fullStatement,
-        examples: exampleArr
+        examples: exampleAssoc
       });
     }
   }
@@ -703,9 +703,9 @@ function getClaimDesc(
   const descriptionId = getAssocId(associations, 'Task Description', false) as string;
   const stimulusId = getAssocId(associations, 'Stimulus', true);
   const stemId = getAssocId(associations, 'Appropriate Stems', true);
-  const exampleArr = associations.filter(association => association.originNodeURI.title === 'Examples');
+  const exampleAssoc = associations.find(association => association.originNodeURI.title === 'Examples' && association.destinationNodeURI.identifier === identifier);
   const exampleText: string[] | undefined = [];
-  getExamples(exampleArr, jsonData, exampleText);
+  getExamples(exampleAssoc!, jsonData, exampleText);
 
   return {
     taskName: name,
@@ -722,16 +722,22 @@ function getClaimDesc(
       : undefined
   };
 }
-function getExamples(exampleArr: ICFAssociation[], jsonData: ISpecDocument, exampleText: string[]) {
-  exampleArr.forEach(e => {
-    if (findAssocItem(jsonData, e.originNodeURI.identifier, false) !== 'Examples') {
-      exampleText.push(findAssocItem(jsonData, e.originNodeURI.identifier, false));
+
+/**
+ * This function builds an array of all related example data for a given Task Model
+ *
+ * @param {ICFAssociation} exampleAssoc The CFAssociation entry for a Task Model <-> Example relationship
+ * @param {ISpecDocument} jsonData A reference to the document
+ * @param {string[]} exampleText The array to be filled with example data
+ */
+function getExamples(exampleAssoc: ICFAssociation, jsonData: ISpecDocument, exampleText: string[]) {
+    if (findAssocItem(jsonData, exampleAssoc.originNodeURI.identifier, false) !== 'Examples') {
+      exampleText.push(findAssocItem(jsonData, exampleAssoc.originNodeURI.identifier, false));
     }
     else {
-      const exampleChildren = jsonData.CFAssociations.filter(a => a.destinationNodeURI.title === 'Examples' && a.originNodeURI.title.includes('Example '));
+      const exampleChildren = jsonData.CFAssociations.filter(a => a.destinationNodeURI.title === 'Examples' && a.destinationNodeURI.identifier === exampleAssoc.originNodeURI.identifier);
       exampleChildren.forEach(e => exampleText.push(findAssocItem(jsonData, e.originNodeURI.identifier, false)));
     }
-  });
 }
 
 /**
