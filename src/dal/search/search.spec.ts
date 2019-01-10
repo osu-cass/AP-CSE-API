@@ -197,7 +197,7 @@ describe('search', () => {
             ]
           }
         },
-        size: 100,
+        size: 100
       };
     });
 
@@ -296,7 +296,7 @@ describe('search', () => {
             ]
           }
         },
-        size: 100,
+        size: 100
       });
     });
   });

@@ -4,6 +4,7 @@ export interface ITaskModel {
   examples?: string[];
   stimulus?: string;
   relatedEvidence?: string[];
+  stem?: IStem;
 }
 
 export interface IStem {

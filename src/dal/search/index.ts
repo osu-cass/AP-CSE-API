@@ -62,9 +62,8 @@ export class SearchClient implements ISearchClient {
 
     if (grades) {
       body.size(100).query('bool', {
-          should: grades.split(',').map((grade: string) => ({ match: { grades: grade } }))
-        }
-      );
+        should: grades.split(',').map((grade: string) => ({ match: { grades: grade } }))
+      });
     }
 
     if (claimNumber) {

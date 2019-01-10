@@ -119,7 +119,9 @@ export function buildTargetShortCodes(
   dbResult: ITargetShortCodeResult[]
 ): IFilterOptions | undefined {
   const flatResult: IShortCodeResult[] = [];
-  dbResult.forEach((res: ITargetShortCodeResult) => flatResult.push(...res.target));
+  dbResult.forEach((res: ITargetShortCodeResult) => {
+    flatResult.push(...res.target);
+  });
 
   const targetShortCodes: IFilterItem[] = flatResult
     .filter(({ shortCode }: IShortCodeResult) => filterShortCodeByGrade(grades, shortCode))
