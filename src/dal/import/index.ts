@@ -618,7 +618,7 @@ function getClaimDesc(
 
   // This forEach fixes an error in the CASE API for E.G5.C1.T6 having an incorrect target shortcode
   finalArray.forEach(claim => {
-    if (claim.shortCode === 'E.G5.C1a') {
+    if (claim.shortCode === 'E.G5.C1') {
       claim.target[claim.target.findIndex(target => target.title.includes('Target 6'))].shortCode = 'E.G5.C1RL.T6';
     }
   });
