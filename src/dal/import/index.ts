@@ -614,7 +614,7 @@ function getClaimDesc(
   }
   handlePT(finalArray);
   finalArray = removePT(finalArray);
-  expandFirstClaim(finalArray);
+
 
   // This forEach fixes an error in the CASE API for E.G5.C1.T6 having an incorrect target shortcode
   finalArray.forEach(claim => {
@@ -623,35 +623,7 @@ function getClaimDesc(
     }
   });
 
-  return finalArray.filter(claim => claim.claimNumber !== 'C1' || claim.subject === Subject.MATH);
-}
-
-/**
- * Special case that splits claim C1 into C1a and C1b claims
- * @param {IClaim[]} finalArray A reference to the array of Targets
- */
- function expandFirstClaim(finalArray: IClaim[]): void {
-  const claimArray: IClaim[] = [];
-  finalArray.forEach(claim => {
-    if (claim.claimNumber === 'C1' && claim.subject === Subject.ELA) {
-      const temp = JSON.parse(JSON.stringify(claim));
-      temp.claimNumber = 'C1a';
-      temp.shortCode = temp.shortCode.replace(claim.claimNumber, temp.claimNumber);
-      temp.target = [];
-      claim.target.forEach(target => {
-        if (parseInt(target.shortCode.split('.')[3].split('T')[1], 10) <= 7) {
-          temp.target.push(target);
-        }
-      });
-      claim.shortCode = claim.shortCode.replace(claim.claimNumber, 'C1b');
-      claim.claimNumber = 'C1b';
-      claim.target = claim.target.filter(
-        target => parseInt(target.shortCode.split('.')[3].split('T')[1], 10) > 7
-      );
-      claimArray.push(temp);
-    }
-  });
-  claimArray.forEach(c => finalArray.push(c));
+  return finalArray;
 }
 
 /**
