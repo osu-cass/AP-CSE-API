@@ -170,7 +170,7 @@ describe('MongoDb client interface', () => {
           claimNumbers: [
             {
               code: 'C1',
-              label: '1: Content and Procedures'
+              label: '1: Concepts and Procedures'
             },
             {
               code: 'C2',
@@ -202,7 +202,7 @@ describe('MongoDb client interface', () => {
         await client.connect();
         expect(await client.getClaimNumbers(grades, subject)).toEqual({
           claimNumbers: [
-            { code: 'C1', label: '1: Content and Procedures' },
+            { code: 'C1', label: '1: Concepts and Procedures' },
             { code: 'C2', label: '2: Problem Solving' }
           ]
         });

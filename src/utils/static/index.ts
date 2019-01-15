@@ -45,9 +45,9 @@ export const elaShortCodes: Hash = {
 };
 
 export const mathClaims: Hash = {
-  C1: 'Content and Procedures',
+  C1: 'Concepts and Procedures',
   C2: 'Problem Solving',
-  C3: 'Communication Reasoning',
+  C3: 'Communicating Reasoning',
   C4: 'Modeling and Data Analysis'
 };
 
@@ -74,8 +74,8 @@ export const mathShortCodes: Hash = {
   'C4.TC': 'State logical assumptions being used',
   'C4.TD': 'Interpret results in the context of a situation.',
   'C4.TE':
-    'Analyze the adequacy of and make improvements to an existing model or develop a mathematical modle of a real phenomenon.',
-  'C4.TF': 'Identify importan quantities in a practical situation and map their relationships. ',
+    'Analyze the adequacy of and make improvements to an existing model or develop a mathematical model of a real phenomenon.',
+  'C4.TF': 'Identify important quantities in a practical situation and map their relationships. ',
   'C4.TG':
     'Identify, analyze, and synthesize relevant external resources to pose or solve problems.',
   // special case for claim 1
