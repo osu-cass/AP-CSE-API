@@ -4,7 +4,8 @@ export interface Hash {
 }
 
 export const elaClaims: Hash = {
-  C1: 'Reading',
+  C1a: 'Literary Reading',
+  C1b: 'Informational Reading',
   C2: 'Writing',
   C3: 'Listening',
   C4: 'Research'
@@ -59,7 +60,7 @@ export const mathShortCodes: Hash = {
   'C2.TD': 'Identify important quantitites in a practical situaion and map ther relationships.',
   'C3.TA': 'Test propositions or conjectures with specific examples.',
   'C3.TB':
-    'Construct , autonomously, chains of reasoning that will justify or refute propositions or conjectures.',
+    'Construct, autonomously, chains of reasoning that will justify or refute propositions or conjectures.',
   'C3.TC': 'State logical assumptions being used.',
   'C3.TD': 'Use the technique of breaking an argument into cases.',
   'C3.TE':
@@ -69,7 +70,7 @@ export const mathShortCodes: Hash = {
   'C4.TA':
     'Apply mathematics to solve problems arising in everday life, society, and the workplace. ',
   'C4.TB':
-    'Construct , autonomously, chains of reasoning to justify mathematical models used, interpretations made, and solutions proposed for a complex problem.',
+    'Construct, autonomously, chains of reasoning to justify mathematical models used, interpretations made, and solutions proposed for a complex problem.',
   'C4.TC': 'State logical assumptions being used',
   'C4.TD': 'Interpret results in the context of a situation.',
   'C4.TE':
