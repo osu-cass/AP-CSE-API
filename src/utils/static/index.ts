@@ -4,8 +4,7 @@ export interface Hash {
 }
 
 export const elaClaims: Hash = {
-  C1a: 'Literary Reading',
-  C1b: 'Informational Reading',
+  C1: 'Reading',
   C2: 'Writing',
   C3: 'Listening',
   C4: 'Research'
