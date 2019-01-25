@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "547e368e-973a-4378-91d2-e003cc0259e9",
+		"_postman_id": "6a0c38b8-6841-4202-83f1-5858c40f0e73",
 		"name": "cse-api/",
 		"description": "Collection of requests for testing the cse-api",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -9,28 +9,6 @@
 		{
 			"name": "initilization",
 			"item": [
-				{
-					"name": "init/",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{api-domain}}/{{init-endpoint}}",
-							"host": [
-								"{{api-domain}}"
-							],
-							"path": [
-								"{{init-endpoint}}"
-							]
-						},
-						"description": "Clears the existing db instance and re-populates in"
-					},
-					"response": []
-				},
 				{
 					"name": "health/",
 					"request": {
@@ -52,6 +30,35 @@
 						"description": "An API Route Health Check"
 					},
 					"response": []
+				},
+				{
+					"name": "init/",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"key\": \"sb_init_CSE_database=AND=elasticsearch\"\n}"
+						},
+						"url": {
+							"raw": "{{api-domain}}/{{init-endpoint}}",
+							"host": [
+								"{{api-domain}}"
+							],
+							"path": [
+								"{{init-endpoint}}"
+							]
+						},
+						"description": "Clears the existing db instance and re-populates in"
+					},
+					"response": []
 				}
 			]
 		},
@@ -59,45 +66,7 @@
 			"name": "requests",
 			"item": [
 				{
-					"name": "target/",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "3fb1fb27-9f1a-4417-b724-57371608fd82",
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{api-domain}}/{{target-endpoint}}/{{target}}",
-							"host": [
-								"{{api-domain}}"
-							],
-							"path": [
-								"{{target-endpoint}}",
-								"{{target}}"
-							]
-						},
-						"description": "Returns an ITarget based on grade, subject, claimNumber, and target.shortCode. As of now, none of these arguments can be null."
-					},
-					"response": []
-				},
-				{
-					"name": "search/ with query only",
+					"name": "filter/ with no url params",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -106,22 +75,16 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{api-domain}}/{{search-endpoint}}/?query={{query}}",
+							"raw": "{{api-domain}}/{{filter-endpoint}}/",
 							"host": [
 								"{{api-domain}}"
 							],
 							"path": [
-								"{{search-endpoint}}",
+								"{{filter-endpoint}}",
 								""
-							],
-							"query": [
-								{
-									"key": "query",
-									"value": "{{query}}"
-								}
 							]
 						},
-						"description": "requests a search result from the api with only the 'query' parameter"
+						"description": "Return all possible grades and subjects if there are no url parameters\n"
 					},
 					"response": []
 				},
@@ -162,7 +125,7 @@
 					"response": []
 				},
 				{
-					"name": "search/ with query, subject, grades, and claim",
+					"name": "filter/ with subject, grades, claimNumber url params",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -171,19 +134,14 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{api-domain}}/{{search-endpoint}}/?query={{query}}&subject={{subject}}&grades={{grades}}&claimNumber={{claim}}",
+							"raw": "{{api-domain}}/{{filter-endpoint}}?subject={{subject}}&grades={{grades}}&claimNumber={{claim}}",
 							"host": [
 								"{{api-domain}}"
 							],
 							"path": [
-								"{{search-endpoint}}",
-								""
+								"{{filter-endpoint}}"
 							],
 							"query": [
-								{
-									"key": "query",
-									"value": "{{query}}"
-								},
 								{
 									"key": "subject",
 									"value": "{{subject}}"
@@ -197,54 +155,8 @@
 									"value": "{{claim}}"
 								}
 							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "search/ with query, subject, grades, claim, and shortcode",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
 						},
-						"url": {
-							"raw": "{{api-domain}}/{{search-endpoint}}/?query={{query}}&subject={{subject}}&grades={{grades}}&claimNumber={{claim}}&targetShortCode={{target}}",
-							"host": [
-								"{{api-domain}}"
-							],
-							"path": [
-								"{{search-endpoint}}",
-								""
-							],
-							"query": [
-								{
-									"key": "query",
-									"value": "{{query}}"
-								},
-								{
-									"key": "subject",
-									"value": "{{subject}}"
-								},
-								{
-									"key": "grades",
-									"value": "{{grades}}"
-								},
-								{
-									"key": "claimNumber",
-									"value": "{{claim}}"
-								},
-								{
-									"key": "targetShortCode",
-									"value": "{{target}}"
-								}
-							]
-						}
+						"description": "Return all possible claim numbers is grade, subject, and claimNumber url parameters are defined"
 					},
 					"response": []
 				},
@@ -317,6 +229,107 @@
 					"response": []
 				},
 				{
+					"name": "search/ with query, subject, grades, and claim",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{api-domain}}/{{search-endpoint}}/?query={{query}}&subject={{subject}}&grades={{grades}}&claimNumber={{claim}}",
+							"host": [
+								"{{api-domain}}"
+							],
+							"path": [
+								"{{search-endpoint}}",
+								""
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "{{query}}"
+								},
+								{
+									"key": "subject",
+									"value": "{{subject}}"
+								},
+								{
+									"key": "grades",
+									"value": "{{grades}}"
+								},
+								{
+									"key": "claimNumber",
+									"value": "{{claim}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "filter/ with subject, grades url params",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{api-domain}}/{{filter-endpoint}}?subject={{subject}}&grades={{grades}}",
+							"host": [
+								"{{api-domain}}"
+							],
+							"path": [
+								"{{filter-endpoint}}"
+							],
+							"query": [
+								{
+									"key": "subject",
+									"value": "{{subject}}"
+								},
+								{
+									"key": "grades",
+									"value": "{{grades}}"
+								}
+							]
+						},
+						"description": "Return all possible claim numbers if grade and subject url parameters are defined"
+					},
+					"response": []
+				},
+				{
+					"name": "search/ with query only",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{api-domain}}/{{search-endpoint}}/?query={{query}}",
+							"host": [
+								"{{api-domain}}"
+							],
+							"path": [
+								"{{search-endpoint}}",
+								""
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "{{query}}"
+								}
+							]
+						},
+						"description": "requests a search result from the api with only the 'query' parameter"
+					},
+					"response": []
+				},
+				{
 					"name": "search/ with subject, grades, claim, and shortcode",
 					"request": {
 						"method": "GET",
@@ -357,7 +370,48 @@
 					"response": []
 				},
 				{
-					"name": "filter/ with no url params",
+					"name": "target/",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3fb1fb27-9f1a-4417-b724-57371608fd82",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{api-domain}}/{{target-endpoint}}/{{target}}",
+							"host": [
+								"{{api-domain}}"
+							],
+							"path": [
+								"{{target-endpoint}}",
+								"{{target}}"
+							]
+						},
+						"description": "Returns an ITarget based on grade, subject, claimNumber, and target.shortCode. As of now, none of these arguments can be null."
+					},
+					"response": []
+				},
+				{
+					"name": "search/ with query, subject, grades, claim, and shortcode",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -366,69 +420,19 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{api-domain}}/{{filter-endpoint}}/",
+							"raw": "{{api-domain}}/{{search-endpoint}}/?query={{query}}&subject={{subject}}&grades={{grades}}&claimNumber={{claim}}&targetShortCode={{target}}",
 							"host": [
 								"{{api-domain}}"
 							],
 							"path": [
-								"{{filter-endpoint}}",
+								"{{search-endpoint}}",
 								""
-							]
-						},
-						"description": "Return all possible grades and subjects if there are no url parameters\n"
-					},
-					"response": []
-				},
-				{
-					"name": "filter/ with subject, grades url params",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{api-domain}}/{{filter-endpoint}}?subject={{subject}}&grades={{grades}}",
-							"host": [
-								"{{api-domain}}"
-							],
-							"path": [
-								"{{filter-endpoint}}"
 							],
 							"query": [
 								{
-									"key": "subject",
-									"value": "{{subject}}"
+									"key": "query",
+									"value": "{{query}}"
 								},
-								{
-									"key": "grades",
-									"value": "{{grades}}"
-								}
-							]
-						},
-						"description": "Return all possible claim numbers if grade and subject url parameters are defined"
-					},
-					"response": []
-				},
-				{
-					"name": "filter/ with subject, grades, claimNumber url params",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{api-domain}}/{{filter-endpoint}}?subject={{subject}}&grades={{grades}}&claimNumber={{claim}}",
-							"host": [
-								"{{api-domain}}"
-							],
-							"path": [
-								"{{filter-endpoint}}"
-							],
-							"query": [
 								{
 									"key": "subject",
 									"value": "{{subject}}"
@@ -440,10 +444,13 @@
 								{
 									"key": "claimNumber",
 									"value": "{{claim}}"
+								},
+								{
+									"key": "targetShortCode",
+									"value": "{{target}}"
 								}
 							]
-						},
-						"description": "Return all possible claim numbers is grade, subject, and claimNumber url parameters are defined"
+						}
 					},
 					"response": []
 				}
