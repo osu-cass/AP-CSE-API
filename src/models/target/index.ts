@@ -34,6 +34,7 @@ export interface ITarget {
   standards: IStandards[];
   DOK: IDOK[];
   interactionType: string;
+  performanceInfo?: string;
   clarification: string;
   heading: string;
   evidence: IEvidence[];

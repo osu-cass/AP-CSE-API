@@ -418,7 +418,7 @@ export async function importDocs(arr: ISpecDocument[]): Promise<number> {
             stdDesc: fullStatement
           });
         }
-        if (p.CFItemType === 'Target' && p !== jsonData.CFItems[jsonData.CFItems.length - 1]) {
+        if (p.CFItemType === 'Target' && p.abbreviatedStatement === target.shortCode) {
           target.description = fullStatement;
         }
         if (p.CFItemType === 'Clarification') {
@@ -462,8 +462,22 @@ export async function importDocs(arr: ISpecDocument[]): Promise<number> {
       }
     }
   }
+  getPTGeneralInfo(claim, jsonData);
   getAssociatedEvidence(claim, jsonData);
   getGenReqs(claim, jsonData);
+}
+
+/**
+ * Finds and sets the special case target descriptions for a Performance Task document
+ *
+ * @param {IClaim} claim
+ * @param {ISpecDocument} jsonData
+ */
+function getPTGeneralInfo(claim: IClaim, jsonData: ISpecDocument) {
+  if(claim.target[0].interactionType === 'PT') {
+    const info = jsonData.CFItems.find(item => item.abbreviatedStatement === 'Performance Task (General Information)');
+    claim.target[0].performanceInfo = info ? info.fullStatement : undefined;
+  }
 }
 
 /**
