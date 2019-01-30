@@ -1,5 +1,5 @@
 import e, { Request, Response, NextFunction, Application } from 'express';
-import http from 'http';
+import http, { RequestOptions } from 'http';
 import signale from 'signale';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
@@ -13,6 +13,7 @@ import { logger, LoggingStream } from '../utils/logger';
 import { Health, healthCheck } from '../routes/health';
 import { importDbEntries } from '../dal/import';
 import { IClaim } from '../models/claim';
+import proxy from 'express-http-proxy';
 
 /**
  * ServerContext defines a type for the tracer and db client
@@ -104,6 +105,13 @@ export class Server implements IServer {
   public routes(): void {
     this.app.use('/api', router);
     this.app.get('/health', healthCheck);
+    this.app.use('/proxy', proxy('https://images.smarterbalanced.org', {proxyReqOptDecorator: (proxyReqOpts: RequestOptions, srcReq: Request) => {
+        // tslint:disable:no-non-null-assertion
+        proxyReqOpts.headers!['Access-Control-Allow-Origin'] = '*';
+
+        return proxyReqOpts;
+    }
+  }));
   }
 
   public configure(): void {
