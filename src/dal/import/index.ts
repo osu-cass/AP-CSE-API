@@ -418,7 +418,7 @@ export async function importDocs(arr: ISpecDocument[]): Promise<number> {
             stdDesc: fullStatement
           });
         }
-        if (p.CFItemType === 'Target' && p.abbreviatedStatement === target.shortCode) {
+        if (p.CFItemType === 'Target') {
           target.description = fullStatement;
         }
         if (p.CFItemType === 'Clarification') {
@@ -474,6 +474,8 @@ export async function importDocs(arr: ISpecDocument[]): Promise<number> {
  * @param {ISpecDocument} jsonData
  */
 function getPTGeneralInfo(claim: IClaim, jsonData: ISpecDocument) {
+  const desc = jsonData.CFItems.find(i => i.CFItemType === 'Target' && i.abbreviatedStatement === claim.target[0].shortCode);
+  claim.target[0].description = desc ? desc.fullStatement : claim.target[0].description;
   if(claim.target[0].interactionType === 'PT') {
     const performanceInfoItem = jsonData.CFItems.find(item => item.abbreviatedStatement === 'Performance Task (General Information)');
     if(performanceInfoItem) {
