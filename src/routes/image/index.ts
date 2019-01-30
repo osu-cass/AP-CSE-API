@@ -28,4 +28,4 @@ export const handler = async (req: Request, res: CSEResponse): Promise<void> => 
   }
 };
 
-export const dbInit = applyTracing('/image', handler);
+export const image = applyTracing('/image', handler);
