@@ -77,6 +77,7 @@
     "elasticsearch": "^15.1.1",
     "event-stream": "3.3.4",
     "express": "^4.16.3",
+    "image-to-base64": "^2.0.1",
     "jaeger-client": "^3.12.0",
     "mongodb": "^3.1.4",
     "morgan": "^1.9.1",
