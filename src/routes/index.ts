@@ -3,7 +3,6 @@ import { dbInit } from './init';
 import { target } from './target';
 import { search } from './search';
 import { filter } from './filter';
-import { image } from './image';
 
 export interface ITargetShortCode {
   targetShortCode: string;
@@ -30,7 +29,6 @@ const router: Router = Router();
 router.get('/search/', search);
 router.get('/filter/', filter);
 router.get('/target/:targetShortCode', target);
-router.get('/image', image);
 router.post('/init', dbInit);
 
 export { router };
