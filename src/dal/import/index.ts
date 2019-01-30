@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 import { ISpecDocument, ICFAssociation } from './interfaces';
 import { IClaim, ClaimExpansion } from '../../models/claim';
-import { IDOK, ITaskModel } from '../../models/target';
+import { IDOK, ITaskModel, IPerformanceInfo } from '../../models/target';
 
 // This is required for translating specDocuments to an IClaim type
 // tslint:disable:no-unsafe-any no-any
@@ -468,15 +468,18 @@ export async function importDocs(arr: ISpecDocument[]): Promise<number> {
 }
 
 /**
- * Finds and sets the special case target descriptions for a Performance Task document
+ * Finds and sets the special case General Information for a Performance Task document
  *
  * @param {IClaim} claim
  * @param {ISpecDocument} jsonData
  */
 function getPTGeneralInfo(claim: IClaim, jsonData: ISpecDocument) {
   if(claim.target[0].interactionType === 'PT') {
-    const info = jsonData.CFItems.find(item => item.abbreviatedStatement === 'Performance Task (General Information)');
-    claim.target[0].performanceInfo = info ? info.fullStatement : undefined;
+    const performanceInfoItem = jsonData.CFItems.find(item => item.abbreviatedStatement === 'Performance Task (General Information)');
+    if(performanceInfoItem) {
+      const info: IPerformanceInfo = {title: 'Performance Task (General Information)', description: performanceInfoItem.fullStatement};
+      claim.target[0].taskModels.push(info);
+    }
   }
 }
 
@@ -492,7 +495,7 @@ function getPTGeneralInfo(claim: IClaim, jsonData: ISpecDocument) {
       association.destinationNodeURI.title.includes('Evidence Required ')
   );
 
-  for (const taskModel of claim.target[0].taskModels) {
+  for (const taskModel of claim.target[0].taskModels as ITaskModel[]) {
     taskModel.relatedEvidence = [];
     for (const taskAssociation of taskAssociations) {
       if (taskAssociation.originNodeURI.title === taskModel.taskName) {
