@@ -98,7 +98,7 @@ describe('Server', () => {
     expect(routesSpy).toHaveBeenCalledTimes(1);
     expect(configureSpy).toHaveBeenCalledTimes(1);
     expect(registerMiddlewareSpy).toHaveBeenCalledTimes(1);
-    expect(use).toHaveBeenCalledTimes(4);
+    expect(use).toHaveBeenCalledTimes(5);
   });
 
   it('gracefully starts server successfully', async () => {
