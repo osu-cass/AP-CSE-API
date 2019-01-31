@@ -120,3 +120,13 @@ This will watch and rebuild the Typescript sourcefiles, and the instance of the 
 #### Debugging
 
 In VSCode, we have a convenient launch configuration for debugging the server from within the Docker container. Simply launch the **Attach to Docker** launch configuration _after you've followed the previous section_, and VSCode will attach a debugger instance. With both the VSCode debug configuration and the `watch-ts` script running, you'll be able use breakpoints to debug the API server as you develop.
+
+## Deployment
+
+Building the deployment is fairly simple. You simply need to build the docker image and push the docker image to docker hub.
+You can do that by doing the following:
+```
+docker build -t {tag name} .
+docker push {tag name}
+```
+For more information on deploying the CSE image please see the CSE configuration repository.
