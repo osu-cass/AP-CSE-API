@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 import { ISpecDocument, ICFAssociation } from './interfaces';
 import { IClaim, ClaimExpansion } from '../../models/claim';
-import { IDOK, ITaskModel } from '../../models/target';
+import { IDOK, ITaskModel, IPerformanceInfo } from '../../models/target';
 
 // This is required for translating specDocuments to an IClaim type
 // tslint:disable:no-unsafe-any no-any
@@ -418,7 +418,7 @@ export async function importDocs(arr: ISpecDocument[]): Promise<number> {
             stdDesc: fullStatement
           });
         }
-        if (p.CFItemType === 'Target' && p !== jsonData.CFItems[jsonData.CFItems.length - 1]) {
+        if (p.CFItemType === 'Target') {
           target.description = fullStatement;
         }
         if (p.CFItemType === 'Clarification') {
@@ -462,8 +462,27 @@ export async function importDocs(arr: ISpecDocument[]): Promise<number> {
       }
     }
   }
+  getPTGeneralInfo(claim, jsonData);
   getAssociatedEvidence(claim, jsonData);
   getGenReqs(claim, jsonData);
+}
+
+/**
+ * Finds and sets the special case General Information for a Performance Task document
+ *
+ * @param {IClaim} claim
+ * @param {ISpecDocument} jsonData
+ */
+function getPTGeneralInfo(claim: IClaim, jsonData: ISpecDocument) {
+  const desc = jsonData.CFItems.find(i => i.CFItemType === 'Target' && i.abbreviatedStatement === claim.target[0].shortCode);
+  claim.target[0].description = desc ? desc.fullStatement : claim.target[0].description;
+  if(claim.target[0].interactionType === 'PT') {
+    const performanceInfoItem = jsonData.CFItems.find(item => item.abbreviatedStatement === 'Performance Task (General Information)');
+    if(performanceInfoItem) {
+      const info: IPerformanceInfo = {title: 'Performance Task (General Information)', description: performanceInfoItem.fullStatement};
+      claim.target[0].taskModels.push(info);
+    }
+  }
 }
 
 /**
@@ -478,7 +497,7 @@ export async function importDocs(arr: ISpecDocument[]): Promise<number> {
       association.destinationNodeURI.title.includes('Evidence Required ')
   );
 
-  for (const taskModel of claim.target[0].taskModels) {
+  for (const taskModel of claim.target[0].taskModels as ITaskModel[]) {
     taskModel.relatedEvidence = [];
     for (const taskAssociation of taskAssociations) {
       if (taskAssociation.originNodeURI.title === taskModel.taskName) {

@@ -45,6 +45,11 @@ export interface ITarget {
   dualText: string;
   accessibility: string;
   stem: IStem[];
-  taskModels: ITaskModel[];
+  taskModels: (ITaskModel | IPerformanceInfo)[];
   rubrics: string[];
+}
+
+export interface IPerformanceInfo {
+  title: string;
+  description: string;
 }
